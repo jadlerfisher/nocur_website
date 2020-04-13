@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <!--Google Font-->
+
+    <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova|Nunito+Sans:700&display=swap" rel="stylesheet">
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/code-html.css" />
+
+
+    <!--scripts-->
+    <script src="scripts/scripts.js"></script>
+
+    <!-- Title -->
+    <title>The Nature of Code Unity Remix</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="header" style="overflow: hidden;">
+            <header>
+                <div id="titleHeader">
+                    The Nature of Code Remixed for Unity
+                </div>
+                <div id="authorHeader">
+                    Originally Written by Daniel Shiffman // Remixed by Joshua A. Fisher
+                </div>
+            </header>
+        </div>
+        <nav>
+            <ul class="nav">
+                <li><a href="index.html">WELCOME</a>
+                </li>
+                <li><a href="acknowledgements.html">ACKNOWLEDGMENTS</a>
+                </li>
+                <li><a href="introduction.html">INTRODUCTION</a>
+                </li>
+                <li><a href="chapterone.html">1. VECTORS</a>
+                </li>
+                <li><a href="chaptertwo.html">2. FORCES</a>
+                </li>
+                <li><a href="chapterthree.html">3. OSCILLATION</a>
+                </li>
+                <li><a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
+                </li>
+                <li><a href="chapterfive.html">5. PHYSICS LIBRARIES</a>
+                </li>
+                <li><a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
+                </li>
+                <li><a href="chapterseven.html">7. CELLULAR AUTOMATA</a>
+                </li>
+                <li><a href="chaptereight.html">8. FRACTALS</a>
+                </li>
+                <li><a href="chapternine.html">9. THE EVOLUTION OF CODE</a>
+                </li>
+                <li><a href="chapterten.html">10. NEURAL NETWORKS</a>
+                </li>
+            </ul>
+        </nav>
+        <section>
+            <h2>
+                Introduction
+            </h2>
+            <h3>“I am two with nature.” <p></p>
+                — Woody Allen
+            </h3>
+            <p>Here we are: the beginning. Well, almost the beginning. If it’s been a while since you’ve done any
+                programming in Processing (or any math, for that matter), this introduction will get your mind back into
+                computational thinking before we approach some of the more difficult and complex material.
+            </p>
+            <p> In Chapter 1, we’re going to talk about the concept of a vector and how it will serve as the building
+                block for simulating motion throughout this book. But before we take that step, let’s think about what
+                it means for something to simply move around the screen. Let’s begin with one of the best-known and
+                simplest simulations of motion—the random walk.
+
+            </p>
+            <p>A vector is typically drawn as a arrow; the direction is indicated by where the arrow is pointing, and
+                the magnitude by the length of the arrow itself.
+            </p>
+            <h2>
+                I.1 Random Walks
+            </h2>
+            <p>Imagine you are standing in the middle of a balance beam. Every ten seconds, you flip a coin. Heads, take
+                a step forward. Tails, take a step backward. This is a random walk—a path defined as a series of random
+                steps. Stepping off that balance beam and onto the floor, you could perform a random walk in two
+                dimensions by flipping that same coin twice with the following results:
+
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Flip 1</th>
+                        <th>Flip 2</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>Heads</p>
+                        </td>
+                        <td>
+                            <p>Heads</p>
+                        </td>
+                        <td>
+                            <p>Step Forward</p>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Heads</p>
+                        </td>
+                        <td>
+                            <p>Tails</p>
+                        </td>
+                        <td>
+                            <p>Step Right</p>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Tails</p>
+                        </td>
+                        <td>
+                            <p>Heads</p>
+                        </td>
+                        <td>
+                            <p>Step Left</p>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Tails</p>
+                        </td>
+                        <td>
+                            <p>Tails</p>
+                        </td>
+                        <td>
+                            <p>Step Left</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Yes, this may seem like a particularly unsophisticated algorithm. Nevertheless, random walks can be used
+                to model phenomena that occur in the real world, from the movements of molecules in a gas to the
+                behavior of a gambler spending a day at the casino. As for us, we begin this book studying a random walk
+                with three goals in mind.
+            </p>
+            <ul>
+                <li>We need to review a programming concept central to this book—object-oriented programming. The random
+                    walker will serve as a template for how we will use object-oriented design to make things that move
+                    around a Unity space.</li>
+                <li>The random walk instigates the two questions that we will ask over and over again throughout this
+                    book: “How do we define the rules that govern the behavior of our objects?” and then, “How do we
+                    implement these rules in Processing?”
+                </li>
+                <li>Throughout the book, we’ll periodically need a basic understanding of randomness, probability, and
+                    Perlin noise. The random walk will allow us to demonstrate a few key points that will come in handy
+                    later.
+                </li>
+
+            </ul>
+            <h2>
+                I.2 The Random Walker Class
+            </h2>
+            <p>Let’s review a bit of object-oriented programming (OOP) first by building a Walker object. This will be
+                only a cursory review. If you have never worked with OOP before, you may want something more
+                comprehensive; I’d suggest stopping here and reviewing the basics of the <a
+                    href="https://www.youtube.com/watch?v=XDAYS-qYe6Y">Unity</a></p>
+            <p>An object in Unity is an entity that has both data and functionality. We are looking to design a Walker
+                object that both keeps track of its data (where it exists on the screen) and has the capability to
+                perform certain actions (such as draw itself or take a step).
+
+
+            </p>
+            <p>A class is the template for building actual instances of objects. Think of a class as the cookie cutter;
+                the objects are the cookies themselves.
+
+            </p>
+            <p>
+                Let’s begin by defining the Walker class—what it means to be a Walker object. The Walker only needs two
+                pieces of data—a number for its x-location and one for its y-location.
+
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                            <pre>
+
+        using System.Collections;
+        using System.Collections.Generic;
+        using UnityEngine;
+
+        public class walker : MonoBehaviour
+        {
+            GameObject walkerGO;
+
+            int x;
+            int y;
+                            </pre>
+                        </code>
+                    </div>
+                </div>
+            </div>
+            <p>Every class must have a constructor, a special function that is called when the object is first created.
+                You can think of it as the object’s setup(). There, we’ll initialize the Walker’s starting location (in
+                this case, the center of the window).
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                            <pre>
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            walkerGO = this.gameObject;
+
+            x = 0;
+            y = 0;
+        }
+                            </pre>
+                        </code>
+                    </div>
+                </div>
+            </div>
+            <p>Finally, in addition to data, classes can be defined with functionality. In this example, a Walker has
+                two functions. We first write a function that allows the object to display itself (as a white sphere).
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                            <pre>
+
+                            </pre>
+                        </code>
+                    </div>
+                </div>
+            </div>
+            <p>The second function directs the Walker object to take a step. Now, this is where things get a bit more
+                interesting. Remember that floor on which we were taking random steps? Well, now we can use a Unity
+                window in that same capacity. There are four possible steps. A step to the right can be simulated by
+                incrementing x (x++); to the left by decrementing x (x--); forward by going down a pixel (y++); and
+                backward by going up a pixel (y--). How do we pick from these four choices? Earlier we stated that we
+                could flip two coins. In Unity, however, when we want to randomly choose from a list of options, we
+                can pick a random number using Random.Range(value1, value2).
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                            <pre>
+
+        //Each frame choose a new Random number 0,1,2,3, or 3.99999999
+        int choice = Random.Range(0, 4);                            
+                            </pre>
+                        </code>
+                    </div>
+                </div>
+            </div>
+            <p>The above line of code picks a random floating point number between 0 and 4 and converts it to an
+                integer, with a result of 0, 1, 2, or 3. Technically speaking, the highest number will never be 4.0, but
+                rather 3.999999999 (with as many 9s as there are decimal places); since the process of converting to an
+                integer lops off the decimal place, the highest int we can get is 3. Next, we take the appropriate step
+                (left, right, up, or down) depending on which random number was picked.
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                            <pre>
+
+    public void step() {
+        //Each frame choose a new Random number 0,1,2,3, 
+        //If the number is equal to one of those values, take a step
+        int choice = Random.Range(0, 4);
+        if (choice == 0)
+        {
+            x++;
+        }
+        else if (choice ==1)
+        {
+            x--;
+        }
+        else if (choice == 3)
+        {
+            y++;
+        }
+        else
+        {
+            y--;
+        }
+        walkerGO.transform.position = new Vector3(x, y, 0F);
+    }
+                            </pre>
+                        </code>
+                    </div>
+                </div>
+            </div>
+            <p>Now that we’ve written the class, it’s time to make an actual Walker object in the main part of our
+                start() and update(). Assuming we are looking to model a single random walk, we declare one global
+                variable of type Walker.
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                            <pre>
+
+        using System.Collections;
+        using System.Collections.Generic;
+        using UnityEngine;
+
+        public class IntroductionFig1 : MonoBehaviour
+        {
+
+            // We need to instantiate the Walker PrefAB
+            public GameObject WalkerPrefab;
+            //And create a variable to track it
+            private GameObject walkerGO;
+            //And then we need to be able to access the walker Component on our walkerGO (Walker Game Object)
+            private walker walkerComp;
+
+            // Start is called before the first frame update
+            void Start()
+            {
+               //Instantiate the prefab
+               walkerGO = Instantiate(WalkerPrefab);
+               // Get the component
+               walkerComp = walkerGO.GetComponent<walker>();
+            }
+
+        }
+                            </pre>
+                        </code>
+                    </div>
+                </div>
+            </div>
+            <p><span class="example">Example I.1: Traditional Random Walker</span></p>
+<div style="--aspect-ratio: 16/9;">
+  <iframe 
+    src="https://www.jafisherportfolio.com/nocur/figures/introduction/figure1/index.html"
+    width="1600"
+    height="900"
+    frameborder="0"
+    id = "I.1"
+  >
+  </iframe>
+</div>
+<p></p>
+<button onclick="reload('I.1')">Reload Figure</button>
+<p></p>
+            <p><i>Each time you see the above Example heading in this book, it means there is a corresponding code
+                    example available on GitHub.</i></p>
+            <p>Finally, during each cycle through update(), we ask the Walker to take a step and draw a sphere.</p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                <pre>
+
+    // Update is called once per frame
+        void Update()
+        {
+            //Have the walker choose a direction
+            walkerComp.step();
+            //Instantiate the sphere in the last previous location to "draw" the path
+            walkerComp.draw();
+        }
+                </pre>
+            </code>
+                    </div>
+                </div>
+            </div>
+            <p>Each time through Update(), we see the trail of the random walk in our Unity Game window.
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                <pre>
+
+    //Now let's draw the path of the Mover by creating spheres in its position in the most recent frame.
+   public void draw()
+    {
+        //This creates a sphere GameObject
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //This sets our ink "sphere game objects" at the position of the Walker GameObject (walkerGO) at the current frame
+        //to draw the path
+        sphere.transform.position = new Vector3(walkerGO.transform.position.x, walkerGO.transform.position.y, 0F);
+    }
+                </pre>
+            </code>
+                    </div>
+                </div>
+            </div>
+            <p>There are a couple improvements we could make to the random walker. For one, this Walker’s step choices
+                are limited to four options—up, down, left, and right. But any given pixel in the window has eight
+                possible neighbors, and a ninth possibility is to stay in the same place.
+            </p>
+            <div id="ImageContainer">
+
+                <img src="https://natureofcode.com/book/imgs/intro/intro_01.png" style="  width: 100%;
+height: 100%;" alt="Figure I.1: ">
+                <p>Figure 1.1: A vector (drawn as an arrow) has magnitude (length of arrow) and direction (which way it
+                    is pointing). </p>
+
+            </div>
+            <p>To implement a Walker object that can step to any neighboring pixel (or stay put), we could pick a number
+                between 0 and 8 (nine possible choices). However, a more efficient way to write the code would be to
+                simply pick from three possible steps along the x-axis (-1, 0, or 1) and three possible steps along the
+                y-axis.
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                <pre>
+    public void step()
+    {
+        int stepx = Random.Range(0, 4) - 1;
+        int stepy = Random.Range(0, 4) - 1;
+
+        x += stepx;
+        y += stepy;
+    }
+                </pre>
+            </code>
+                    </div>
+                </div>
+            </div>
+            <p>
+                Taking this further, we could use floating point numbers (i.e. decimal numbers) for x and y instead and
+                move according to an arbitrary random value between -1 and 1.
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                <pre>
+
+    public void step()
+    {
+
+        float stepx = Random.Range(-1, 1);
+        float stepy = Random.Range(-1, 1);
+
+        x += stepx;
+        y += stepy;
+    }
+                </pre>
+            </code>
+                    </div>
+                </div>
+            </div>
+            <p>All of these variations on the “traditional” random walk have one thing in common: at any moment in time,
+                the probability that the Walker will take a step in a given direction is equal to the probability that
+                the Walker will take a step in any direction. In other words, if there are four possible steps, there is
+                a 1 in 4 (or 25%) chance the Walker will take any given step. With nine possible steps, it’s a 1 in 9
+                (or 11.1%) chance.</p>
+            <p>Conveniently, this is how the Random.Range(value 1, value2) function works. Unity's random number
+                generator (which operates behind the scenes) produces what is known as a “uniform” distribution of
+                numbers. We can test this distribution with a Unity function that counts each time a random number is
+                picked and graphs it as the height of a rectangle.
+            </p>
+            <div style="--aspect-ratio: 16/9;">
+  <iframe 
+    src="https://www.jafisherportfolio.com/nocur/figures/introduction/figure2/index.html"
+    width="1600"
+    height="900"
+    frameborder="0"
+    id="I.2"
+  >
+  </iframe>
+</div>
+<p></p>
+<button onclick="reload('I.2')">Reload Figure</button>
+<p></p>
+            <p><span class="example">Example I.2: Random number distribution</span></p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                <pre>
+
+        using System.Collections;
+        using System.Collections.Generic;
+        using UnityEngine;
+
+        public class IntroductionFig2 : MonoBehaviour
+        {
+            //Because we are in C# and will be modifying the length and items of these values at runtime we need to use a list instead of an array
+            //Read more here: docs.microsoft.com/en-us/dotnet/csharp/programming-guide/arrays/
+
+           public List<int> randomCount = new List<int>();
+           public List<GameObject> cubes = new List<GameObject>();
+
+        // Set a fake creeen height for Unity
+           int height = 0;
+
+            // Start is called before the first frame update
+            void Start()
+            {
+
+            }
+
+            // Update is called once per frame
+            void Update()
+            {
+                //Grab a random number betwen -1 and the number of values in our random number list
+                    int index = Random.Range(-1, randomCount.Count);
+                //if the number does not exist in the list, add it
+                    if (!randomCount.Contains(index))
+                    {
+                        randomCount.Add(index);
+                    }
+
+                    //Create a fake width to maintain our cubes in a reasonable 3D space
+                    int w = 30 / randomCount.Count;
+
+                //For each of the random values, up until 10000 (for memory) create a cube and place it at a new Vector
+                    for (int x = 0; x < randomCount.Count; x++)
+                    {
+                        if (randomCount.Count < 100000)
+                        {
+                            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                //This new vector is created by multiplying the cube's index (an int) and multiplying it by the fake width of the screen. 
+                //The Y coordinate is chosen by subtracting the cube's randomly chosen int and subtracting it from the height. In this case 0.
+                            cube.transform.position = new Vector3(w * x, height-randomCount[x], 0F);
+                //We then add the cube to our other list so we can deal with the scale.
+                            cubes.Add(cube);
+                        }
+                     }
+                for (int y = 0; y < cubes.Count; y++)
+                {
+                    //Now for each of the cubes, we will scale the Y value, its height, by choosing a random value from the list randomCount
+                    cubes[y].transform.localScale = new Vector3(1F, (randomCount[Random.Range(0, randomCount.Count)]), 1F);
+                }
+            }
+        }
+
+                </pre>
+            </code>
+                    </div>
+                </div>
+            </div>
+            <p>The above screenshot shows the result of the sketch running for a few minutes. Notice how each bar of the
+                graph differs in height. Our sample size (i.e. the number of random numbers we’ve picked) is rather
+                small and there are some occasional discrepancies, where certain numbers are picked more often. Over
+                time, with a good random number generator, this would even out.
+            </p>
+            <div class="note">
+                <h4>Pseudo-Random Numbers</h4>
+                <p>The random numbers we get from the Random.Range() function are not truly random; therefore they are
+                    known as “pseudo-random.” They are the result of a mathematical function that simulates randomness.
+                    This function would yield a pattern over time, but that time period is so long that for us, it’s
+                    just as good as pure randomness!
+                </p>
+            </div>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise
+                    I.1
+                </h4>
+                <p>Create a random walker that has a tendency to move down and to the right. (We’ll see the solution to
+                    this in the next section.)
+                </p>
+            </div>
+
+            <h2>
+                I.3 Probability and Non-Uniform Distributions
+            </h2>
+            <p>Remember when you first started programming in Unity? Perhaps you wanted to draw a lot of circles on the
+                screen. So you said to yourself: “Oh, I know. I’ll draw all these circles at random locations, with
+                random sizes and random colors.” In a computer graphics system, it’s often easiest to seed a system with
+                randomness. In this book, however, we’re looking to build systems modeled on what we see in nature.
+                Defaulting to randomness is not a particularly thoughtful solution to a design problem—in particular,
+                the kind of problem that involves creating an organic or natural-looking simulation.</p>
+            <p>With a few tricks, we can change the way we use Random.Range() to produce “non-uniform” distributions of
+                random numbers. This will come in handy throughout the book as we look at a number of different
+                scenarios. When we examine genetic algorithms, for example, we’ll need a methodology for performing
+                “selection”—which members of our population should be selected to pass their DNA to the next generation?
+                Remember the concept of survival of the fittest? Let’s say we have a population of monkeys evolving. Not
+                every monkey will have a equal chance of reproducing. To simulate Darwinian evolution, we can’t simply
+                pick two random monkeys to be parents. We need the more “fit” ones to be more likely to be chosen. We
+                need to define the “probability of the fittest.” For example, a particularly fast and strong monkey
+                might have a 90% chance of procreating, while a weaker one has only a 10% chance.
+            </p>
+            <p>
+                Let’s pause here and take a look at probability’s basic principles. First we’ll examine single event
+                probability, i.e. the likelihood that a given event will occur.
+            </p>
+            <p>
+                If you have a system with a certain number of possible outcomes, the probability of the occurrence of a
+                given event equals the number of outcomes that qualify as that event divided by the total number of all
+                possible outcomes. A coin toss is a simple example—it has only two possible outcomes, heads or tails.
+                There is only one way to flip heads. The probability that the coin will turn up heads, therefore, is one
+                divided by two: 1/2 or 50%.
+            </p>
+            <p>Take a deck of fifty-two cards. The probability of drawing an ace from that deck is:
+            </p>
+            <p><b>number of aces / number of cards = 4 / 52 = 0.077 = ~ 8% </b></p>
+            <p>The probability of drawing a diamond is:
+            </p>
+            <p><b>number of diamonds / number of cards = 13 / 52 = 0.25 = 25% </b></p>
+            <p>We can also calculate the probability of multiple events occurring in sequence. To do this, we simply
+                multiply the individual probabilities of each event.
+            </p>
+            <p>
+                The probability of a coin turning up heads three times in a row is:</p>
+            <p><b>(1/2) * (1/2) * (1/2) = 1/8 (or 0.125) </b></p>
+            <p>…meaning that a coin will turn up heads three times in a row one out of eight times (each “time” being
+                three tosses).</p>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise
+                    I.2
+                </h4>
+                <p>What is the probability of drawing two aces in a row from a deck of fifty-two cards?
+                </p>
+            </div>
+            <p>There are a couple of ways in which we can use the Random.range() function with probability in code. One
+                technique is to fill an array with a selection of numbers—some of which are repeated—then choose random
+                numbers from that array and generate events based on those choices.
+
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                <pre>
+
+        int[] numbers = new[] { 1, 1, 2, 3, 3 };
+        int randomInt = Random.Range(0, (numbers.Length - 1));
+        Debug.Log(randomInt);
+                </pre>
+            </code>
+                    </div>
+                </div>
+            </div>
+            <p>Running this code will produce a 40% chance of printing the value 1, a 20% chance of printing 2, and a
+                40% chance of printing 3.
+
+            </p>
+            <p>We can also ask for a random number (let’s make it simple and just consider random floating point values
+                between 0 and 1) and allow an event to occur only if our random number is within a certain range. For
+                example:
+
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                <pre>
+
+        float prob = 0.10f;
+        float r = Random.Range(0f, 1f);
+        if (r < prob) {
+
+            Debug.Log("Try Again!");
+        
+        }
+                </pre>
+            </code>
+                    </div>
+                </div>
+            </div>
+            <p>This method can also be applied to multiple outcomes. Let’s say that Outcome A has a 60% chance of
+                happening, Outcome B, a 10% chance, and Outcome C, a 30% chance. We implement this in code by picking a
+                random float and seeing into what range it falls.</p>
+            <ul>
+                <li>between 0.00 and 0.60 (60%) –> Outcome A</li>
+                <li>between 0.60 and 0.70 (10%) –> Outcome B</li>
+                <li>between 0.70 and 1.00 (30%) –> Outcome C</li>
+            </ul>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                <pre>
+
+         float num = Random.Range(0f, 1f);
+
+        if (num < 0.6F)
+        {
+            Debug.Log("Outcome A!");
+        }
+        else if (num < 0.7F)
+        {
+            Debug.Log("Outcome B!");
+        }
+        else {
+            Debug.Log("Outcome C!");
+        }
+                </pre>
+            </code>
+                    </div>
+                </div>
+            </div>
+            <p>We could use the above methodology to create a random walker that tends to move to the right. Here is an
+                example of a Walker with the following probabilities:
+            </p>
+            <ul>
+                <li>chance of moving up: 20%</li>
+                <li>chance of moving down: 20%</li>
+                <li>chance of moving left: 20%</li>
+                <li>chance of moving right: 40%</li>
+            </ul>
+<div style="--aspect-ratio: 16/9;">
+  <iframe 
+    src="https://www.jafisherportfolio.com/nocur/figures/introduction/figure3/index.html"
+    width="1600"
+    height="900"
+    frameborder="0"
+    id="I.3"
+  >
+  </iframe>
+</div>
+<p></p>
+<button onclick="reload('I.3')">Reload Figure</button>
+<p></p>
+            <p><span class="example">Example I.3: Walker that tends to move to the right</span></p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+                <pre>
+        using System.Collections;
+        using System.Collections.Generic;
+        using UnityEngine;
+
+        public class WalkerIntro3 : MonoBehaviour
+        {
+            public int x;
+            public int y;
+            float num;
+            GameObject walkerGO;
+
+            // Start is called before the first frame update
+            void Start()
+            {
+                walkerGO = this.gameObject;
+
+                x = 0;
+                y = 0;
+            }
+
+            // Update is called once per frame
+            void Update()
+            {
+                num = Random.Range(0f, 1f);
+                Debug.Log(num);
+
+            }
+
+            public void step()
+            {
+                //Each frame choose a new Random number 0-1;
+                //If the number is less than the the float take a step
+                if (num < 0.4F)
+            {
+                    x++;
+                }
+                else if (num < 0.6F)
+            {
+                    x--;
+                }
+                else if (num < .8F)
+            {
+                    y++;
+                }
+                else
+                {
+                    y--;
+                }
+                walkerGO.transform.position = new Vector3(x, y, 0F);
+            }
+
+            //Now let's draw the path of the Mover by creating spheres in its position in the most recent frame.
+            public void draw()
+            {
+                //This creates a sphere GameObject
+                GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //This sets our ink "sphere game objects" at the position of the Walker GameObject (walkerGO) at the current frame
+                //to draw the path
+                sphere.transform.position = new Vector3(walkerGO.transform.position.x, walkerGO.transform.position.y, 0F);
+            }
+        }
+
+                </pre>
+            </code>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise
+                    I.3
+                </h4>
+                <p>Create a random walker with dynamic probabilities. For example, can you give it a 50% chance of
+                    moving in the direction of the mouse?
+                </p>
+            </div>
+            <h2>I.4 A Normal Distribution of Random Numbers</h2>
+            <p>Let’s go back to that population of simulated Unity monkeys. Your program generates a thousand Monkey
+                objects, each with a height value between 2 and 3 (as this is a world of monkeys that have heights
+                between 2 and 3 meters (the units of Unity)).</p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+    <pre>
+        float h = Random.Range(20,30);
+    </pre>
+</code>
+                    </div>
+                </div>
+            </div>
+            <p>Does this accurately depict the heights of real-world beings? Think of a crowded sidewalk in New York
+                City. Pick any person off the street and it may appear that their height is random. Nevertheless, it’s
+                not the kind of random that Random.Range() produces. People’s heights are not uniformly distributed;
+                there are a great deal more people of average height than there are very tall or very short ones. To
+                simulate nature, we may want it to be more likely that our monkeys are of average height (2.5 meters),
+                yet still allow them to be, on occasion, very short or very tall.
+            </p>
+            <p>
+                A distribution of values that cluster around an average (referred to as the “mean”) is known as a
+                “normal” distribution. It is also called the Gaussian distribution (named for mathematician Carl
+                Friedrich Gauss) or, if you are French, the Laplacian distribution (named for Pierre-Simon Laplace).
+                Both mathematicians were working concurrently in the early nineteenth century on defining such a
+                distribution.
+            </p>
+            <p>When you graph the distribution, you get something that looks like the following, informally known as a
+                bell curve:
+            </p>
+            <div id="ImageContainer" style="overflow: hidden;">
+
+                <img src="https://natureofcode.com/book/imgs/intro/intro_02.png" style="  width: 50%;
+height: 100%; float:left;" alt="Figure I.2: ">
+
+
+                <img src="https://natureofcode.com/book/imgs/intro/intro_03.png" style="  width: 50%;
+                height: 100%; float:left;" alt="Figure I.3: ">
+                <br></br>
+
+            </div>
+            <p>Figure I.1 and I.2: </p>
+
+            <p>The curve is generated by a mathematical function that defines the probability of any given value
+                occurring as a function of the mean (often written as μ, the Greek letter mu) and standard deviation (σ,
+                the Greek letter sigma).
+
+            </p>
+            <p>The mean is pretty easy to understand. In the case of our height values between 2 and 3, you probably
+                have an intuitive sense of the mean (i.e. average) as 2.5. However, what if I were to say that the
+                standard deviation is 3 or 15? What does this mean for the numbers? The graphs above should give us a
+                hint. The graph on the left shows us the distribution with a very low standard deviation, where the
+                majority of the values cluster closely around the mean. The graph on the right shows us a higher
+                standard deviation, where the values are more evenly spread out from the average.
+
+            </p>
+            <p>The numbers work out as follows: Given a population, 68% of the members of that population will have
+                values in the range of one standard deviation from the mean, 98% within two standard deviations, and
+                99.7% within three standard deviations. Given a standard deviation of 5 pixels, only 0.3% of the monkey
+                heights will be less than 235 pixels (three standard deviations below the mean of 250) or greater than
+                265 pixels (three standard deviations above the mean of 250).
+
+            </p>
+
+            <div class="note">
+                <h4>
+                    Calculating Mean and Standard Deviation
+                </h4>
+                <p>Consider a class of ten students who receive the following scores (out of 100) on a test:
+                </p>
+                <p><i>85, 82, 88, 86, 85, 93, 98, 40, 73, 83
+                    </i></p>
+                <p><i><b>The mean is the average: 81.3 </b></i></p>
+                <p>The standard deviation is calculated as the square root of the average of the squares of deviations
+                    around the mean. In other words, take the difference from the mean for each person and square it
+                    (variance). Calculate the average of all these values and take the square root as the standard
+                    deviation.
+                </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Score</th>
+                            <th>Difference from Mean</th>
+                            <th>Variance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>85</p>
+                            </td>
+                            <td>
+                                <p>85-81.3 = 3.7</p>
+                            </td>
+                            <td>
+                                <p>(3.7)2 = 13.69</p>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>40</p>
+                            </td>
+                            <td>
+                                <p>40-81.3 = -41.3</p>
+                            </td>
+                            <td>
+                                <p>(-41.3)2 = 1705.69
+                                </p>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>etc.</p>
+                            </td>
+                            <td>
+                                <p></p>
+                            </td>
+                            <td>
+                                <p></p>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <p></p>
+                            </td>
+                            <td>
+                                <p><b>Average Variance</b></p>
+                            </td>
+                            <td>
+                                <p><b>254.23</b></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><b>The standard deviation is the square root of the average variance: 15.13 </b></p>
+            </div>
+            <p>Luckily for us, to use a normal distribution of random numbers in Unity, we don’t have to do any of these
+                calculations ourselves. Instead, we can make use of a class known as Random.Range, which we get for free
+                as part of the default C# libraries imported into Unity.
+
+            </p>
+         
+            <p>If we want to produce a random number with a normal (or Gaussian) distribution each time we run through
+                update(), it’s as easy as calling the function nextGaussian().
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+    <pre>
+        //To create a Gaussian distribution in Unity we can actually use Random.Range() on two separate Random.Ranges
+        float num = Random.Range(Random.Range(-10, 10), Random.Range(-10, 10));
+    </pre>
+</code>
+                    </div>
+                </div>
+            </div>
+            <p>Here’s the thing. What are we supposed to do with this value? What if we wanted to use it, for example,
+                to assign the x-position of a shape we draw on screen?
+
+
+            </p>
+            <p>The nextGaussian() function returns a normal distribution of random numbers with the following
+                parameters: a mean of zero and a standard deviation of one. Let’s say we want a mean of 320 (the center
+                horizontal pixel in a window of width 640) and a standard deviation of 60 pixels. We can adjust the
+                value to our parameters by multiplying it by the standard deviation and adding the mean.
+            </p>
+            <div style="--aspect-ratio: 16/9;">
+  <iframe 
+    src="https://www.jafisherportfolio.com/nocur/figures/introduction/figure4/index.html"
+    width="1600"
+    height="900"
+    frameborder="0"
+    Id="I.4"
+  >
+  </iframe>
+</div>
+<p></p>
+<button onclick="reload('I.4')">Reload Figure</button>
+<p></p>
+            <p><span class="example">Example I.4: Gaussian distribution</span></p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+    <pre>
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        //To create a Gaussian distribution in Unity we can actually use Random.Range() on two separate Random.Ranges
+        float num = Random.Range(Random.Range(-10, 10), Random.Range(-10, 10));
+        float sd = 1;
+        float mean = 4;
+
+        float x = sd*(num + mean);
+
+        //This creates a sphere GameObject
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //This sets our ink "sphere game objects" at the position of the Walker GameObject (walkerGO) at the current frame
+        //to draw the path
+        sphere.transform.position = new Vector3(x, 0F, 0F);
+    }
+    </pre>
+</code>
+                    </div>
+                </div>
+            </div>
+            <p>By drawing the ellipses on top of each other with some transparency, we can actually see the
+                distribution. The brightest spot is near the center, where most of the values cluster, but every so
+                often circles are drawn farther to the right or left of the center.</p>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise
+                    I.4
+                </h4>
+                <p>Consider a simulation of paint splatter drawn as a collection of colored dots. Most of the paint
+                    clusters around a central location, but some dots do splatter out towards the edges. Can you use a
+                    normal distribution of random numbers to generate the locations of the dots? Can you also use a
+                    normal distribution of random numbers to generate a color palette?
+                </p>
+            </div>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise
+                    I.5
+                </h4>
+                <p>A Gaussian random walk is defined as one in which the step size (how far the object moves in a given
+                    direction) is generated with a normal distribution. Implement this variation of our random walk.
+                </p>
+            </div>
+            <h2>I.5 A Custom Distribution of Random Numbers</h2>
+            <p>There will come a time in your life when you do not want a uniform distribution of random values, or a
+                Gaussian one. Let’s imagine for a moment that you are a random walker in search of food. Moving randomly
+                around a space seems like a reasonable strategy for finding something to eat. After all, you don’t know
+                where the food is, so you might as well search randomly until you find it. The problem, as you may have
+                noticed, is that random walkers return to previously visited locations many times (this is known as
+                “oversampling”). One strategy to avoid such a problem is to, every so often, take a very large step.
+                This allows the walker to forage randomly around a specific location while periodically jumping very far
+                away to reduce the amount of oversampling. This variation on the random walk (known as a Lévy flight)
+                requires a custom set of probabilities. Though not an exact implementation of a Lévy flight, we could
+                state the probability distribution as follows: the longer the step, the less likely it is to be picked;
+                the shorter the step, the more likely.
+            </p>
+            <p>Earlier in this prologue, we saw that we could generate custom probability distributions by filling an
+                array with values (some duplicated so that they would be picked more frequently) or by testing the
+                result of random(). We could implement a Lévy flight by saying that there is a 1% chance of the walker
+                taking a large step.
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+    <pre>
+        float r = random(1);
+        if (r < 0.01) {
+            xstep = Random.Range(-100,100);
+            ystep = Random.Range(-100,100);
+        } else {
+            xstep = Random.Range(-1,1);
+            ystep = Random.Range(-1,1);
+        }
+    </pre>
+</code>
+                    </div>
+                </div>
+            </div>
+            <p>However, this reduces the probabilities to a fixed number of options. What if we wanted to make a more
+                general rule—the higher a number, the more likely it is to be picked? 3.145 would be more likely to be
+                picked than 3.144, even if that likelihood is just a tiny bit greater. In other words, if x is the
+                random number, we could map the likelihood on the y-axis with y = x.
+            </p>
+            <div id="ImageContainer">
+
+                <img src="https://natureofcode.com/book/imgs/intro/intro_04.png" style="  width: 100%;
+height: 100%;" alt="Figure I.4: ">
+                <p>Figure I.4: </p>
+
+            </div>
+            <p>If we can figure out how to generate a distribution of random numbers according to the above graph, then
+                we will be able to apply the same methodology to any curve for which we have a formula.
+
+
+            </p>
+            <p>One solution is to pick two random numbers instead of one. The first random number is just that, a random
+                number. The second one, however, is what we’ll call a “qualifying random value.” It will tell us whether
+                to use the first one or throw it away and pick another one. Numbers that have an easier time qualifying
+                will be picked more often, and numbers that rarely qualify will be picked infrequently. Here are the
+                steps (for now, let’s consider only random values between 0 and 1):
+            </p>
+            <ul>
+                <li>Pick a random number: R1</li>
+                <li>Compute a probability P that R1 should qualify. Let’s try: P = R1.</li>
+                <li>Pick another random number: R2 </li>
+                <li>If R2 is less than P, then we have found our number—R1!</li>
+                <li>If R2 is not less than P, go back to step 1 and start over.</li>
+            </ul>
+            <p>Here we are saying that the likelihood that a random value will qualify is equal to the random number
+                itself. Let’s say we pick 0.1 for R1. This means that R1 will have a 10% chance of qualifying. If we
+                pick 0.83 for R1 then it will have a 83% chance of qualifying. The higher the number, the greater the
+                likelihood that we will actually use it.
+
+
+            </p>
+            <p>Here is a function (named for the Monte Carlo method, which was named for the Monte Carlo casino) that
+                implements the above algorithm, returning a random value between 0 and 1.
+
+            </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+    <pre>
+    float montecarlo()
+    {
+        while (true)
+        {
+            float r1 = Random.Range(0, 1);
+            float probability = r1;
+            float r2 = Random.Range(0, 1);
+
+            if (r2 < probability)
+            {
+                return r1;
+            }
+
+        }
+    }
+    </pre>
+</code>
+                    </div>
+                </div>
+            </div>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise
+                    I.6
+                </h4>
+                <p>Use a custom probability distribution to vary the size of a step taken by the random walker. The step
+                    size can be determined by influencing the range of values picked. Can you map the probability
+                    exponentially—i.e. making the likelihood that a value is picked equal to the value squared?
+                </p>
+                <div class="source-code">
+                    <div class="code-block">
+                        <div class="code-comment-pair no-comment">
+                            <code>
+        <pre>
+
+            float stepsize = Random.Range(0,10);
+
+            float stepx = Random.Range(-stepsize,stepsize);
+            float stepy = Random.Range(-stepsize, stepsize);
+
+            x += stepx;
+            y += stepy;
+        </pre>
+    </code>
+                        </div>
+                    </div>
+                </div>
+                <p>(Later we’ll see how to do this more efficiently using vectors.) </p>
+            </div>
+            <h2>I.6 Perlin Noise (A Smoother Approach)</h2>
+            <p>A good random number generator produces numbers that have no relationship and show no discernible
+                pattern. As we are beginning to see, a little bit of randomness can be a good thing when programming
+                organic, lifelike behaviors. However, randomness as the single guiding principle is not necessarily
+                natural. An algorithm known as “Perlin noise,” named for its inventor Ken Perlin, takes this concept
+                into account. Perlin developed the noise function while working on the original Tron movie in the early
+                1980s; it was designed to create procedural textures for computer-generated effects. In 1997 Perlin won
+                an Academy Award in technical achievement for this work. Perlin noise can be used to generate various
+                effects with natural qualities, such as clouds, landscapes, and patterned textures like marble.
+            </p>
+            <p>Perlin noise has a more organic appearance because it produces a naturally ordered (“smooth”) sequence of
+                pseudo-random numbers. The graph on the left below shows Perlin noise over time, with the x-axis
+                representing time; note the smoothness of the curve. The graph on the right shows pure random numbers
+                over time. (The code for generating these graphs is available in the accompanying book downloads.)
+            </p>
+            <div id="ImageContainer" style="overflow: hidden;">
+
+                <img src="https://natureofcode.com/book/imgs/intro/intro_05.png" style="  width: 50%;
+height: 100%; float:left;" alt="Figure I.2: ">
+
+
+                <img src="https://natureofcode.com/book/imgs/intro/intro_06.png" style="  width: 50%;
+    height: 100%; float:left;" alt="Figure I.3: ">
+                <br></br>
+
+            </div>
+            <p>Figure I.5: Noise and I.6:Random </p>
+            <p>Unity (?) has a built-in implementation of the Perlin noise algorithm: the function noise(). The noise()
+                function takes one, two, or three arguments, as noise is computed in one, two, or three dimensions.
+                Let’s start by looking at one-dimensional noise.
+            </p>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Noise Detail
+
+                </h4>
+                <p>The Processing noise reference tells us that noise is calculated over several “octaves.” Calling the
+                    noiseDetail() function will change both the number of octaves and their importance relative to one
+                    another. This in turn changes how the noise function behaves.
+
+                    An online lecture by Ken Perlin lets you learn more about how noise works from <a
+                        href="http://www.noisemachine.com/talk1/">Perlin himself.</a></p>
+            </div>
+            <p>Consider drawing a circle in our Processing window at a random x-location.
+            </p>
+    
+            <p>Now, instead of a random x-location, we want a Perlin noise x-location that is “smoother.” You might
+                think that all you need to do is replace random() with noise(), i.e.
+
+            </p>
+            
+            <p>While conceptually this is exactly what we want to do—calculate an x-value that ranges between 0 and the
+                width according to Perlin noise—this is not the correct implementation. While the arguments to the
+                random() function specify a range of values between a minimum and a maximum, noise() does not work this
+                way. Instead, the output range is fixed—it always returns a value between 0 and 1. We’ll see in a moment
+                that we can get around this easily with Processing’s map() function, but first we must examine what
+                exactly noise() expects us to pass in as an argument.
+
+            </p>
+            <p>We can think of one-dimensional Perlin noise as a linear sequence of values over time. For example:
+
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Noise Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>0</p>
+                        </td>
+                        <td>
+                            <p>0.365</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>1</p>
+                        </td>
+                        <td>
+                            <p>0.363</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>2</p>
+                        </td>
+                        <td>
+                            <p>0.363</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>3</p>
+                        </td>
+                        <td>
+                            <p><b>0.364</b></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>4</p>
+                        </td>
+                        <td>
+                            <p><b>0.366</b></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Now, in order to access a particular noise value in Unity, we have to pass a specific "moment in time" to
+                the noise() function. For example: </p>
+            <div class="source-code">
+                <div class="code-block">
+                    <div class="code-comment-pair no-comment">
+                        <code>
+    <pre>
+
+        float height = heightScale * Mathf.PerlinNoise(Time.time * .5f, 0.0f);
+        float width = widthScale * Mathf.PerlinNoise(Time.time * 1, 0.0f);
+    </pre>
+</code>
+                    </div>
+                </div>
+            </div>
+            <div id="ImageContainer">
+
+                <img src="https://natureofcode.com/book/imgs/intro/intro_07.png" style="  width: 100%;
+height: 100%;" alt="Figure I.7: ">
+                <p>Figure I.7: </p>
+                <p>Try running the code several times, incrementing t by 0.01, 0.02, 0.05, 0.1, 0.0001, and you will see
+                    different results.
+
+                </p>
+                </div>
+                <h4>Mapping Noise</h4>
+                <p>Now we’re ready to answer the question of what to do with the noise value. Once we have the value
+                    with a range between 0 and 1, it’s up to us to map that range to what we want. The easiest way to do
+                    this is with Processing’s map() function. The map() function takes five arguments. First up is the
+                    value we want to map, in this case n. Then we have to give it the value’s current range (minimum and
+                    maximum), followed by our desired range.
+
+                </p>
+                <div id="ImageContainer">
+
+                    <img src="https://natureofcode.com/book/imgs/intro/intro_08.png" style="  width: 100%;
+height: 100%;" alt="Figure I.8: ">
+                    <p>Figure I.8: </p>
+                </div>
+                <p>In this case, we know that noise has a range between 0 and 1, but we’d like to draw our circle with a
+                    range between 0 and the window’s width.
+                </p>
+                <div class="source-code">
+                    <div class="code-block">
+                        <div class="code-comment-pair no-comment">
+                            <code>
+    <pre>
+        
+        float width = widthScale * Mathf.PerlinNoise(Time.time * 1, 0.0f);
+
+    </pre>
+</code>
+                        </div>
+                    </div>
+                </div>
+                <p>We can apply the exact same logic to our random walker, and assign both its x- and y-values according
+                    to Perlin noise.
+                </p>
+                <p><span class="example">Example I.5: Perlin noise walker</span></p>
+            <div style="--aspect-ratio: 16/9;">
+  <iframe 
+    src="https://www.jafisherportfolio.com/nocur/figures/introduction/figure5/index.html"
+    width="1600"
+    height="900"
+    frameborder="0"
+    Id="I.5"
+  >
+  </iframe>
+</div>
+<p></p>
+<button onclick="reload('I.2')">Reload Figure</button>
+<p></p>
+                <div class="source-code">
+                    <div class="code-block">
+                        <div class="code-comment-pair no-comment">
+                            <code>
+    <pre>
+        using System.Collections;
+        using System.Collections.Generic;
+        using UnityEngine;
+
+        public class IntroductionFig5 : MonoBehaviour
+        {
+            // We need to instantiate the Walker PrefAB
+            public GameObject WalkerPrefab;
+            //And create a variable to track it
+            private GameObject walkerGO;
+            //And then we need to be able to access the walker Component on our walkerGO (Walker Game Object)
+            private WalkerIntro5 walkerComp;
+
+            // Start is called before the first frame update
+            void Start()
+            {
+                //Instantiate the prefab
+                walkerGO = Instantiate(WalkerPrefab);
+                // Get the component
+                walkerComp = walkerGO.GetComponent<WalkerIntro5>();
+            }
+
+            // Update is called once per frame
+            void Update()
+            {
+                //Have the walker move
+                walkerComp.step();
+            }
+        }
+
+        public class WalkerIntro5 : MonoBehaviour
+        {
+            //GameObject
+            float x, y;
+            GameObject walkerGo;
+
+            //Perlin
+            float tx, ty;
+            float noiseyness = 1; //tweak this to adjust how random the motion is
+
+            float heightScale = 2;
+            float widthScale = 1;
+
+            float xScale, yScale;
+
+            // Start is called before the first frame update
+            void Start()
+            {
+                walkerGo = this.gameObject;
+                tx = 0;
+                ty = 1;
+            }
+
+            // Update is called once per frame
+            void Update()
+            {
+                widthScale += .02f;
+                heightScale += .001f;
+            }
+
+            public void step()
+            {
+                float height = heightScale * Mathf.PerlinNoise(Time.time * .5f, 0.0f);
+                float width = widthScale * Mathf.PerlinNoise(Time.time * 1, 0.0f);
+                Vector3 pos = transform.position;
+                pos.y = height;
+                pos.x = width;
+                this.gameObject.transform.position = pos;
+            }
+        }
+
+
+    </pre>
+</code>
+                        </div>
+                    </div>
+                </div>
+                <p>Notice how the above example requires an additional pair of variables: tx and ty. This is because we
+                    need to keep track of two time variables, one for the x-location of the Walker object and one for
+                    the y-location. But there is something a bit odd about these variables. Why does tx start at 0 and
+                    ty at 10,000? While these numbers are arbitrary choices, we have very specifically initialized our
+                    two time variables with different values. This is because the noise function is deterministic: it
+                    gives you the same result for a specific time t each and every time. If we asked for the noise value
+                    at the same time t for both x and y, then x and y would always be equal, meaning that the Walker
+                    object would only move along a diagonal. Instead, we simply use two different parts of the noise
+                    space, starting at 0 for x and 10,000 for y so that x and y can appear to act independently of each
+                    other.
+                </p>
+                <div id="ImageContainer">
+
+                    <img src="https://natureofcode.com/book/imgs/intro/intro_09.png" style="  width: 100%;
+height: 100%;" alt="Figure I.9: ">
+                    <p>Figure I.9: </p>
+                </div>
+                <p>In truth, there is no actual concept of time at play here. It’s a useful metaphor to help us
+                    understand how the noise function works, but really what we have is space, rather than time. The
+                    graph above depicts a linear sequence of noise values in a one-dimensional space, and we can ask for
+                    a value at a specific x-location whenever we want. In examples, you will often see a variable named
+                    xoff to indicate the x-offset along the noise graph, rather than t for time (as noted in the
+                    diagram).
+
+                </p>
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise
+                        I.7
+                    </h4>
+                    <p>In the above random walker, the result of the noise function is mapped directly to the Walker’s
+                        location. Create a random walker where you instead map the result of the noise() function to a
+                        Walker’s step size.</p>
+                </div>
+                <h4>Two-Dimensional Noise</h4>
+                <p>This idea of noise values living in a one-dimensional space is important because it leads us right
+                    into a discussion of two-dimensional space. Let’s think about this for a moment. With
+                    one-dimensional noise, we have a sequence of values in which any given value is similar to its
+                    neighbor. Because the value is in one dimension, it only has two neighbors: a value that comes
+                    before it (to the left on the graph) and one that comes after it (to the right).</p>
+                <div id="ImageContainer" style="overflow: hidden;">
+
+                    <img src="https://natureofcode.com/book/imgs/intro/intro_10.png" style="  width: 50%;
+height: 100%; float:left;" alt="Figure I.10: 1D Noise">
+
+
+                    <img src="https://natureofcode.com/book/imgs/intro/intro_11.png" style="  width: 50%;
+    height: 100%; float:left;" alt="Figure I.11: 2D Noise ">
+                    <br></br>
+
+                </div>
+                <p>Figure I.10: 1D Noise and I.11: 2D Noise </p>
+                <p>Two-dimensional noise works exactly the same way conceptually. The difference of course is that we
+                    aren’t looking at values along a linear path, but values that are sitting on a grid. Think of a
+                    piece of graph paper with numbers written into each cell. A given value will be similar to all of
+                    its neighbors: above, below, to the right, to the left, and along any diagonal.
+
+                </p>
+                <P>If you were to visualize this graph paper with each value mapped to the brightness of a color, you
+                    would get something that looks like clouds. White sits next to light gray, which sits next to gray,
+                    which sits next to dark gray, which sits next to black, which sits next to dark gray, etc.
+
+                </P>
+                <div id="ImageContainer">
+
+                    <img src="https://natureofcode.com/book/imgs/intro/intro_ex06.png" style="  width: 100%;
+height: 100%;" alt="Noise 2D">
+                </div>
+                <p>This is why noise was originally invented. You tweak the parameters a bit or play with color to make
+                    the resulting image look more like marble or wood or any other organic texture.
+
+                </p>
+                <p>Let’s take a quick look at how to implement two-dimensional noise in Unity. If you wanted to color
+                    every pixel of a window randomly, you would need a nested loop, one that accessed each pixel and
+                    picked a random brightness.
+
+                </p>
+                This is a nice start conceptually—it gives you a noise value for every (x,y) location in our
+                    two-dimensional space. The problem is that this won’t have the cloudy quality we want. Jumping from
+                    pixel 200 to pixel 201 is too large of a jump through noise. Remember, when we worked with
+                    one-dimensional noise, we incremented our time variable by 0.01 each frame, not by 1! A pretty good
+                    solution to this problem is to just use different variables for the noise arguments. For example, we
+                    could increment a variable called xoff each time we move horizontally, and a yoff variable each time
+                    we move vertically through the nested loops.
+                </p>
+                <p><span class="example">Example I.6: 2D Perlin noise</span></p>
+                <div class="source-code">
+                    <div class="code-block">
+                        <div class="code-comment-pair no-comment">
+                            <code>
+    <pre>
+        using UnityEngine;
+        using System.Collections;
+
+        // Create a texture and fill it with Perlin noise.
+        // Try varying the xOrg, yOrg and scale values in the inspector
+        // while in Play mode to see the effect they have on the noise.
+
+        public class ExampleScript : MonoBehaviour
+        {
+            // Width and height of the texture in pixels.
+            public int pixWidth;
+            public int pixHeight;
+
+            // The origin of the sampled area in the plane.
+            public float xOrg;
+            public float yOrg;
+
+            // The number of cycles of the basic noise pattern that are repeated
+            // over the width and height of the texture.
+            public float scale = 1.0F;
+
+            private Texture2D noiseTex;
+            private Color[] pix;
+            private Renderer rend;
+
+            void Start()
+            {
+                rend = GetComponent<Renderer>();
+
+                // Set up the texture and a Color array to hold pixels during processing.
+                noiseTex = new Texture2D(pixWidth, pixHeight);
+                pix = new Color[noiseTex.width * noiseTex.height];
+                rend.material.mainTexture = noiseTex;
+            }
+
+            void CalcNoise()
+            {
+                // For each pixel in the texture...
+                float y = 0.0F;
+
+                while (y < noiseTex.height)
+                {
+                    float x = 0.0F;
+                    while (x < noiseTex.width)
+                    {
+                        float xCoord = xOrg + x / noiseTex.width * scale;
+                        float yCoord = yOrg + y / noiseTex.height * scale;
+                        float sample = Mathf.PerlinNoise(xCoord, yCoord);
+                        pix[(int)y * noiseTex.width + (int)x] = new Color(sample, sample, sample);
+                        x++;
+                    }
+                    y++;
+                }
+
+                // Copy the pixel data to the texture and load it into the GPU.
+                noiseTex.SetPixels(pix);
+                noiseTex.Apply();
+            }
+
+            void Update()
+            {
+                CalcNoise();
+            }
+        }
+
+    </pre>
+</code>
+                        
+
+                        </div>
+                    </div>
+                </div>
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise
+                        I.8
+                    </h4>
+                    <p>Play with color, noiseDetail(), and the rate at which xoff and yoff are incremented to achieve
+                        different visual effects. </p>
+                </div>
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise
+                        I.9
+                    </h4>
+                    <p>Add a third argument to noise that increments once per cycle through Update() to animate the
+                        two-dimensional noise. </p>
+                </div>
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise
+                        I.10
+                    </h4>
+                    <p>Use the noise values as the elevations of a landscape. See the screenshot below as a reference.
+                    </p>
+                    <div id="ImageContainer">
+
+                        <img src="https://natureofcode.com/book/imgs/intro/intro_exc10.png" style="  width: 100%;
+    height: 100%;" alt="Noise 2D">
+                    </div>
+                </div>
+                <p>We’ve examined several traditional uses of Perlin noise in this section. With one-dimensional noise,
+                    we used smooth values to assign the location of an object to give the appearance of wandering. With
+                    two-dimensional noise, we created a cloudy pattern with smoothed values on a plane of pixels. It’s
+                    important to remember, however, that Perlin noise values are just that—values. They aren’t
+                    inherently tied to pixel locations or color. Any example in this book that has a variable could be
+                    controlled via Perlin noise. When we model a wind force, its strength could be controlled by Perlin
+                    noise. Same goes for the angles between the branches in a fractal tree pattern, or the speed and
+                    direction of objects moving along a grid in a flow field simulation.
+
+                </p>
+                <h2>I.7 Onward</h2>
+                <p>We began this chapter by talking about how randomness can be a crutch. In many ways, it’s the most
+                    obvious answer to the kinds of questions we ask continuously—how should this object move? What color
+                    should it be? This obvious answer, however, can also be a lazy one.
+
+                </p>
+                <p>As we finish off the introduction, it’s also worth noting that we could just as easily fall into the
+                    trap of using Perlin noise as a crutch. How should this object move? Perlin noise! What color should
+                    it be? Perlin noise! How fast should it grow? Perlin noise!
+
+                </p>
+                <p>The point of all of this is not to say that you should or shouldn’t use randomness. Or that you
+                    should or shouldn’t use Perlin noise. The point is that the rules of your system are defined by you,
+                    and the larger your toolbox, the more choices you’ll have as you implement those rules. The goal of
+                    this book is to fill your toolbox. If all you know is random, then your design thinking is limited.
+                    Sure, Perlin noise helps, but you’ll need more. A lot more.
+
+                </p>
+                <p>I think we’re ready to begin.
+
+                </p>
+                <footer>
+                    <div class="footer" style="width: 33%;   float:left;
+                padding-left: 5px;">
+                        <h4>Licenses</h4>
+                        <p>
+                            <a class="license-badge" rel="license"
+                                href="http://creativecommons.org/licenses/by-nc/3.0/"><img
+                                    alt="Creative Commons License" style="border-width:0"
+                                    src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
+                            <a class="license-badge" rel="license"
+                                href="http://creativecommons.org/licenses/LGPL/2.1/"><img alt="LGPL License"
+                                    style="border-width:0" src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
+                        </p>
+
+                        <p>
+                            The book's text and illustrations are licensed under a <a rel="license"
+                                href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
+                                Attribution-NonCommercial 3.0 Unported License</a>.
+                        </p>
+
+                        <p>
+                            All of the book's source code is licensed under the <a rel="license"
+                                href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public
+                                License</a>
+                            as published by the Free Software Foundation; either version 2.1 of the License, or (at your
+                            option) any later version.
+                        </p>
+                    </div>
+                    <div class="footer" style="width: 33%;   float:left; padding-left: 5px;">
+                        <h4>Remixer</h4>
+                        <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
+                                Arts and Media Program</a> at Columbia College Chicago.</p>
+
+                        <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+
+                        <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
+                                href="https://github.com/jadlerfisher">GitHub</a></p>
+
+                    </div>
+                    <div class="footer" style="width: 33%;   float:left;
+                padding-left: 5px;">
+                        <h4>Author</h4>
+                        <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
+                                Telecommunications Program</a> at New York University.</p>
+
+                        <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
+
+                        <p><a href="https://twitter.com/shiffman">Twitter</a> <a
+                                href="http://github.com/shiffman">GitHub</a></p>
+
+                    </div>
+                </footer>
+        </section>
+    </div>
+
+    <script>
+
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                document.getElementById("header").style.fontSize = "16px";
+                document.getElementById("header").style.padding = "10px 30px 10px 30px"; /* Some padding */
+                document.getElementById("authorHeader").style.float = "right";
+                document.getElementById("titleHeader").style.float = "left";
+
+
+            } else {
+                document.getElementById("header").style.fontSize = "20px";
+                document.getElementById("header").style.padding = "10px 10px"; /* Some padding */
+                document.getElementById("authorHeader").style.float = "";
+                document.getElementById("titleHeader").style.float = "";
+
+            }
+        }
+
+        
+        function reload(iframeid) {
+            document.getElementById(iframeid).src = document.getElementById(iframeid).src
+        }
+
+    </script>
+</body>
+
+</html>

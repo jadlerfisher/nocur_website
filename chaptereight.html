@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <!--Google Font-->
+
+    <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova|Nunito+Sans:700&display=swap" rel="stylesheet">
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="css/main.css" />
+
+    <!-- Title -->
+    <title>The Nature of Code Unity Remix</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="header" style="overflow: hidden;">
+            <header>
+                <div id="titleHeader">
+                    The Nature of Code Remixed for Unity
+                </div>
+                <div id="authorHeader">
+                    Originally Written by Daniel Shiffman // Remixed by Joshua A. Fisher
+                </div>
+            </header>
+        </div>
+        <nav>
+            <ul class="nav">
+                <li><a href="index.html">WELCOME</a>
+                </li>
+                <li><a href="acknowledgements.html">ACKNOWLEDGMENTS</a>
+                </li>
+                <li><a href="introduction.html/">INTRODUCTION</a>
+                </li>
+                <li><a href="chapterone.html">1. VECTORS</a>
+                </li>
+                <li><a href="chaptertwo.html">2. FORCES</a>
+                </li>
+                <li><a href="chapterthree.html">3. OSCILLATION</a>
+                </li>
+                <li><a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
+                </li>
+                <li><a href="chapterfive.html">5. PHYSICS LIBRARIES</a>
+                </li>
+                <li><a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
+                </li>
+                <li><a href="chapterseven.html">7. CELLULAR AUTOMATA</a>
+                </li>
+                <li><a href="chaptereight.html">8. FRACTALS</a>
+                </li>
+                <li><a href="chapternine.html">9. THE EVOLUTION OF CODE</a>
+                </li>
+                <li><a href="chapterten.html">10. NEURAL NETWORKS</a>
+                </li>
+            </ul>
+        </nav>
+        <section>
+            <h2>
+                Chapter 8. Fractals
+
+            </h2>
+            <h3>“Pathological monsters! cried the terrified mathematician<p></p>
+                Every one of them a splinter in my eye<p></p>
+                I hate the Peano Space and the Koch Curve<p></p>
+                I fear the Cantor Ternary Set<p></p>
+                The Sierpinski Gasket makes me wanna cry<p></p>
+                And a million miles away a butterfly flapped its wings<p></p>
+                On a cold November day a man named Benoit Mandelbrot was born”<p></p>
+
+                <p></p>
+                — Jonathan Coulton, lyrics from “Mandelbrot Set”
+            </h3>
+            <p>Once upon a time, I took a course in high school called “Geometry.” Perhaps you did too. You learned
+                about shapes in one dimension, two dimensions, and maybe even three. What is the circumference of a
+                circle? The area of a rectangle? The distance between a point and a line? Come to think of it, we’ve
+                been studying geometry all along in this book, using vectors to describe the motion of bodies in
+                Cartesian space. This sort of geometry is generally referred to as Euclidean geometry, after the Greek
+                mathematician Euclid.
+            </p>
+
+
+
+
+
+
+
+            <footer>
+                <div class="footer" style="width: 33%;   float:left;
+                padding-left: 5px;">
+                    <h4>Licenses</h4>
+                    <p>
+                        <a class="license-badge" rel="license"
+                            href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
+                                style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
+                        <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
+                                alt="LGPL License" style="border-width:0"
+                                src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
+                    </p>
+
+                    <p>
+                        The book's text and illustrations are licensed under a <a rel="license"
+                            href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
+                            Attribution-NonCommercial 3.0 Unported License</a>.
+                    </p>
+
+                    <p>
+                        All of the book's source code is licensed under the <a rel="license"
+                            href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public
+                            License</a>
+                        as published by the Free Software Foundation; either version 2.1 of the License, or (at your
+                        option) any later version.
+                    </p>
+                </div>
+                <div class="footer" style="width: 33%;   float:left; padding-left: 5px;">
+                    <h4>Remixer</h4>
+                    <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
+                            Arts and Media Program</a> at Columbia College Chicago.</p>
+
+                    <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+
+                    <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
+                            href="https://github.com/jadlerfisher">GitHub</a></p>
+
+                </div>
+                <div class="footer" style="width: 33%;   float:left;
+                padding-left: 5px;">
+                    <h4>Author</h4>
+                    <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
+                            Telecommunications Program</a> at New York University.</p>
+
+                    <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
+
+                    <p><a href="https://twitter.com/shiffman">Twitter</a> <a
+                            href="http://github.com/shiffman">GitHub</a></p>
+
+                </div>
+            </footer>
+        </section>
+    </div>
+
+    <script>
+
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                document.getElementById("header").style.fontSize = "16px";
+                document.getElementById("header").style.padding = "10px 30px 10px 30px"; /* Some padding */
+                document.getElementById("authorHeader").style.float = "right";
+                document.getElementById("titleHeader").style.float = "left";
+
+
+            } else {
+                document.getElementById("header").style.fontSize = "20px";
+                document.getElementById("header").style.padding = "10px 10px"; /* Some padding */
+                document.getElementById("authorHeader").style.float = "";
+                document.getElementById("titleHeader").style.float = "";
+
+            }
+        }
+    </script>
+</body>
+
+</html>
