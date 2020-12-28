@@ -5,16 +5,39 @@
     <!-- Meta -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="description" content="The Nature of Code revised for use in Unity with C#.">
+    <meta name="author" content="Joshua A. Fisher, Ph.D.">
 
     <!--Google Font-->
 
     <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova|Nunito+Sans:700&display=swap" rel="stylesheet">
 
+
+
+
+
+	<meta property="og:title" content="The Nature of Code Unity Remix">
+	<meta property="og:description" content="The Nature of Code revised for use in Unity with C#.">
+	<meta property="og:url" content="https://natureofcodeunity.com/">
+	<meta property="og:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+
+
+	<meta name="twitter:title" content="The Nature of Code Unity Remix">
+	<meta name="twitter:description" content="The Nature of Code revised for use in Unity with C#.">
+	<meta name="twitter:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+	<meta name="twitter:card" content="summary_large_image">
+
     <!-- CSS Styles -->
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/code-html.css" />
+    <link rel="stylesheet" href="css/github-embed.css" />
+
 
     <!--scripts-->
-    <script src="scripts/scripts.js"></script>
+    <!--<script src="scripts/scripts.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+
 
     <!-- Title -->
     <title>The Nature of Code Unity Remix</title>
@@ -34,31 +57,44 @@
         </div>
         <nav>
             <ul class="nav">
-                <li><a href="index.html">WELCOME</a>
+                <li>
+                    <a href="index.html">WELCOME</a>
                 </li>
-                <li><a href="acknowledgements.html">ACKNOWLEDGMENTS</a>
+                <li>
+                    <a href="acknowledgements.html">ACKNOWLEDGMENTS</a>
                 </li>
-                <li><a href="introduction.html">INTRODUCTION</a>
+                <li>
+                    <a href="introduction.html">INTRODUCTION</a>
                 </li>
-                <li><a href="chapterone.html">1. VECTORS</a>
+                <li>
+                    <a href="chapterone.html">1. VECTORS</a>
                 </li>
-                <li><a href="chaptertwo.html">2. FORCES</a>
+                <li>
+                    <a href="chaptertwo.html">2. FORCES</a>
                 </li>
-                <li><a href="chapterthree.html">3. OSCILLATION</a>
+                <li>
+                    <a href="chapterthree.html">3. OSCILLATION</a>
                 </li>
-                <li><a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
+                <li>
+                    <a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
                 </li>
-                <li><a href="chapterfive.html">5. PHYSICS LIBRARIES</a>
+                <li>
+                    <a href="chapterfive.html">5. PHYSICS COMPONENTS</a>
                 </li>
-                <li><a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
+                <li>
+                    <a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
                 </li>
-                <li><a href="chapterseven.html">7. CELLULAR AUTOMATA</a>
+                <li>
+                    <a href="chapterseven.html">7. CELLULAR AUTOMATA</a>
                 </li>
-                <li><a href="chaptereight.html">8. FRACTALS</a>
+                <li>
+                    <a href="chaptereight.html">8. FRACTALS</a>
                 </li>
-                <li><a href="chapternine.html">9. THE EVOLUTION OF CODE</a>
+                <li>
+                    <a href="chapternine.html">9. THE EVOLUTION OF CODE</a>
                 </li>
-                <li><a href="chapterten.html">10. NEURAL NETWORKS</a>
+                <li>
+                    <a href="chapterten.html">10. NEURAL NETWORKS</a>
                 </li>
             </ul>
         </nav>
@@ -66,20 +102,24 @@
             <h2>
                 Chapter 2. Forces
             </h2>
-            <h3>“Don’t underestimate the Force.”
+            <h3>
+                “Don’t underestimate the Force.”
                 <p></p>
                 — Darth Vader
             </h3>
-            <p>In the final example of Chapter 1, we saw how we could calculate a dynamic acceleration based on a vector
+            <p>
+                In the final example of Chapter 1, we saw how we could calculate a dynamic acceleration based on a vector
                 pointing from a circle on the screen to the mouse location. The resulting motion resembled a magnetic
                 attraction between circle and mouse, as if some force were pulling the circle in towards the mouse. In
                 this chapter we will formalize our understanding of the concept of a force and its relationship to
                 acceleration. Our goal, by the end of this chapter, is to understand how to make multiple objects move
-                around the screen and respond to a variety of environmental forces.</p>
+                around the screen and respond to a variety of environmental forces.
+            </p>
             <h2>
                 2.1 Forces and Newton’s Laws of Motion
             </h2>
-            <p>Before we begin examining the practical realities of simulating forces in code, let’s take a conceptual
+            <p>
+                Before we begin examining the practical realities of simulating forces in code, let’s take a conceptual
                 look at what it means to be a force in the real world. Just like the word “vector,” “force” is often
                 used to mean a variety of things. It can indicate a powerful intensity, as in “She pushed the boulder
                 with great force” or “He spoke forcefully.” The definition of force that we care about is much more
@@ -88,26 +128,32 @@
             <h4>
                 <center>A force is a vector that causes an object with mass to accelerate.</center>
             </h4>
-            <p>The good news here is that we recognize the first part of the definition: a force is a vector. Thank
-                goodness we just spent a whole chapter learning what a vector is and how to program with PVectors!
+            <p>
+                The good news here is that we recognize the first part of the definition: a force is a vector. Thank
+                goodness we just spent a whole chapter learning what a vector is and how to program with Vector2s!
             </p>
-            <p>Let’s look at Newton’s three laws of motion in relation to the concept of a force.
+            <p>
+                Let’s look at Newton’s three laws of motion in relation to the concept of a force.
             </p>
             <h3>Newton’s First Law</h3>
-            <p>Newton’s first law is commonly stated as:
+            <p>
+                Newton’s first law is commonly stated as:
             </p>
             <p><b>An object at rest stays at rest and an object in motion stays in motion.</b></p>
             <p>However, this is missing an important element related to forces. We could expand it by stating:</p>
             <h4>
-                <center>An object at rest stays at rest and an object in motion stays in motion at a constant speed and
+                <center>
+                    An object at rest stays at rest and an object in motion stays in motion at a constant speed and
                     direction unless acted upon by an unbalanced force.
                 </center>
             </h4>
-            <p>By the time Newton came along, the prevailing theory of motion—formulated by Aristotle—was nearly two
+            <p>
+                By the time Newton came along, the prevailing theory of motion—formulated by Aristotle—was nearly two
                 thousand years old. It stated that if an object is moving, some sort of force is required to keep it
                 moving. Unless that moving thing is being pushed or pulled, it will simply slow down or stop. Right?
             </p>
-            <p>This, of course, is not true. In the absence of any forces, no force is required to keep an object
+            <p>
+                This, of course, is not true. In the absence of any forces, no force is required to keep an object
                 moving. An object (such as a ball) tossed in the earth’s atmosphere slows down because of air resistance
                 (a force). An object’s velocity will only remain constant in the absence of any forces or if the forces
                 that act on it cancel each other out, i.e. the net force adds up to zero. This is often referred to as
@@ -119,90 +165,114 @@
                 <img src="https://natureofcode.com/book/imgs/chapter02/ch02_01.png" style="  width: 100%;
             height: 100%;" alt="Figure 2.1: The pendulum doesn't move because all the forces cancel each other out (add up to a net force of zero).
                     ">
-                <p>Figure 2.1: The pendulum doesn't move because all the forces cancel each other out (add up to a net
-                    force of zero).
-                </p>
+
             </div>
-            <p>In our Unity world, we could restate Newton’s first law as follows:
+            <p>
+                Figure 2.1: The pendulum doesn't move because all the forces cancel each other out (add up to a net
+                force of zero).
+            </p>
+            <p>
+                In our Unity world, we could restate Newton’s first law as follows:
             </p>
             <h4>
-                <center>An object’s PVector velocity will remain constant if it is in a state of equilibrium.
+                <center>
+                    An object’s Vector2 velocity will remain constant if it is in a state of equilibrium.
                 </center>
             </h4>
-            <p>Skipping Newton’s second law (arguably the most important law for our purposes) for a moment, let’s move
+            <p>
+                Skipping Newton’s second law (arguably the most important law for our purposes) for a moment, let’s move
                 on to the third law.
             </p>
             <h3>Newton’s Third Law</h3>
             <p>This law is often stated as:</p>
             <h4>
-                <center>For every action there is an equal and opposite reaction.
+                <center>
+                    For every action there is an equal and opposite reaction.
                 </center>
             </h4>
-            <p>This law frequently causes some confusion in the way that it is stated. For one, it sounds like one force
+            <p>
+                This law frequently causes some confusion in the way that it is stated. For one, it sounds like one force
                 causes another. Yes, if you push someone, that someone may actively decide to push you back. But this is
                 not the action and reaction we are talking about with Newton’s third law.
             </p>
-            <p>Let’s say you push against a wall. The wall doesn’t actively decide to push back on you. There is no
+            <p>
+                Let’s say you push against a wall. The wall doesn’t actively decide to push back on you. There is no
                 “origin” force. Your push simply includes both forces, referred to as an “action/reaction pair.”
             </p>
-            <p>A better way of stating the law might be:
+            <p>
+                A better way of stating the law might be:
             </p>
             <h4>
-                <center>Forces always occur in pairs. The two forces are of equal strength, but in opposite directions.
+                <center>
+                    Forces always occur in pairs. The two forces are of equal strength, but in opposite directions.
                 </center>
             </h4>
-            <p>Now, this still causes confusion because it sounds like these forces would always cancel each other out.
+            <p>
+                Now, this still causes confusion because it sounds like these forces would always cancel each other out.
                 This is not the case. Remember, the forces act on different objects. And just because the two forces are
                 equal, it doesn’t mean that the movements are equal (or that the objects will stop moving).
             </p>
-            <p>Try pushing on a stationary truck. Although the truck is far more powerful than you, unlike a moving one,
+            <p>
+                Try pushing on a stationary truck. Although the truck is far more powerful than you, unlike a moving one,
                 a stationary truck will never overpower you and send you flying backwards. The force you exert on it is
                 equal and opposite to the force exerted on your hands. The outcome depends on a variety of other
                 factors. If the truck is a small truck on an icy downhill, you’ll probably be able to get it to move. On
                 the other hand, if it’s a very large truck on a dirt road and you push hard enough (maybe even take a
                 running start), you could injure your hand.
             </p>
-            <p>And if you are wearing roller skates when you push on that truck?
+            <p>
+                And if you are wearing roller skates when you push on that truck?
             </p>
             <div id="ImageContainer">
 
                 <img src="https://natureofcode.com/book/imgs/chapter02/ch02_02.png" style="  width: 100%;
 height: 100%;" alt="Figure 2.2: T">
-                <p>Figure 2.2
+                <p>
+                    Figure 2.2
                 </p>
             </div>
-            <p>You’ll accelerate away from the truck, sliding along the road while the truck stays put. Why do you slide
+            <p>
+                You’ll accelerate away from the truck, sliding along the road while the truck stays put. Why do you slide
                 but not the truck? For one, the truck has a much larger mass (which we’ll get into with Newton’s second
                 law). There are other forces at work too, namely the friction of the truck’s tires and your roller
                 skates against the road.
             </p>
-            <h3>Newton’s Third Law (as seen through the eyes of this Remix)
+            <h3>
+                Newton’s Third Law (as seen through the eyes of this Remix)
             </h3>
             <h4>
-                <center>If we calculate a Vector3 f that is a force of object A on object B, we must also apply the
+                <center>
+                    If we calculate a Vector2 f that is a force of object A on object B, we must also apply the
                     force that B exerts on object A.
                 </center>
             </h4>
-            <p>We’ll see that in the world of Unity programming, we don’t always have to stay true to the above.
+            <p>
+                We’ll see that in the world of Unity programming, we don’t always have to stay true to the above.
                 Sometimes, such as in the case of see gravitational attraction between bodies, we’ll want to model equal
                 and opposite forces. Other times, such as when we’re simply saying, “Hey, there’s some wind in the
                 environment,” we’re not going to bother to model the force that a body exerts back on the air. In fact,
                 we’re not modeling the air at all! Remember, we are simply taking inspiration from the physics of the
                 natural world, not simulating everything with perfect precision.
             </p>
-            <h2>2.2 Forces and this Remix—Newton’s Second Law as a Function
+            <h2>
+                2.2 Forces and this Remix—Newton’s Second Law as a Function
             </h2>
-            <p>And here we are at the most important law for this section.
+            <p>
+                And here we are at the most important law for this section.
             </p>
-            <h3>Newton’s Second Law
+            <h3>
+                Newton’s Second Law
             </h3>
-            <p>This law is stated as:
+            <p>
+                This law is stated as:
             </p>
             <h4>
-                <center>Force equals mass times acceleration.
+                <center>
+                    Force equals mass times acceleration.
                 </center>
             </h4>
-            <p>Or:
+            <p>
+                Or:
             </p>
             <p>
                 Why is this the most important law for us? Well, let’s write it a different way.
@@ -210,197 +280,179 @@ height: 100%;" alt="Figure 2.2: T">
             <p>
                 Acceleration is directly proportional to force and inversely proportional to mass. This means that if
                 you get pushed, the harder you are pushed, the faster you’ll move (accelerate). The bigger you are, the
-                slower you’ll move.</p>
+                slower you’ll move.
+            </p>
             <div class="note">
-                <h4>Weight vs. Mass
+                <h4>
+                    Weight vs. Mass
                 </h4>
                 <ul>
-                    <li>The mass of an object is a measure of the amount of matter in the object (measured in
-                        kilograms).</li>
-                    <li>Weight, though often mistaken for mass, is technically the force of gravity on an object. From
+                    <li>
+                        The mass of an object is a measure of the amount of matter in the object (measured in
+                        kilograms).
+                    </li>
+                    <li>
+                        Weight, though often mistaken for mass, is technically the force of gravity on an object. From
                         Newton’s second law, we can calculate it as mass times the acceleration of gravity (w = m * g).
                         Weight is measured in newtons.
                     </li>
-                    <li>Density is defined as the amount of mass per unit of volume (grams per cubic centimeter, for
+                    <li>
+                        Density is defined as the amount of mass per unit of volume (grams per cubic centimeter, for
                         example).
                     </li>
                 </ul>
-                <p>Note that an object that has a mass of one kilogram on earth would have a mass of one kilogram on the
+                <p>
+                    Note that an object that has a mass of one kilogram on earth would have a mass of one kilogram on the
                     moon. However, it would weigh only one-sixth as much.
 
                 </p>
             </div>
-            <p>Now, in the world of this Remix, what is mass anyway? Aren’t we dealing with pixels? To start in a
+            <p>
+                Now, in the world of this Remix, what is mass anyway? Aren’t we dealing with pixels? To start in a
                 simpler place, let’s say that in our pretend pixel world, all of our objects have a mass equal to 1. F/
                 1 = F. And so:
             </p>
-            <p>The acceleration of an object is equal to force. This is great news. After all, we saw in Chapter 1 that
+            <p>
+                The acceleration of an object is equal to force. This is great news. After all, we saw in Chapter 1 that
                 acceleration was the key to controlling the movement of our objects on screen. Location is adjusted by
                 velocity, and velocity by acceleration. Acceleration was where it all began. Now we learn that force is
                 truly where it all begins.
             </p>
-            <p>Let’s take our Mover class, with location, velocity, and acceleration.
+            <p>
+                Let’s take our Mover class, with location, velocity, and acceleration.
             </p>
-            <div class="note">
-                <p>Grab code from Git</p>
-            </div>
-            <p>Now our goal is to be able to add forces to this object, perhaps saying:
+            <pre class="prettyprint">
+
+    public class Mover
+    {
+        // The basic properties of a mover class
+        public Vector2 location, velocity, acceleration;
+    }
+            </pre>
+            <p>
+                Now our goal is to be able to add forces to this object, perhaps saying:
             </p>
-            <div class="note">
-                applyForce(wind);
-            </div>
+            <pre class="prettyprint">
+
+    // ForceMode.Impulse takes mass into account
+    mover.body.AddForce(wind, ForceMode.Impulse);
+
+            </pre>
             <p>or:</p>
-            <div class="note">
-                applyForce(gravity);
-            </div>
-            <p>where wind and gravity are Vector3s. According to Newton’s second law, we could implement this function
+            <pre class="prettyprint">
+
+    mover.body.AddForce(gravity, ForceMode.Impulse);
+            </pre>
+            <p>
+                where wind and gravity are Vector2s. According to Newton’s second law, we could implement this function that is part of Unity's Rigidbody component.
                 as follows.
             </p>
-            <div class="note">
-                <p>void applyForce(Vector3 force) {</p>
-                <p>Newton’s second law at its simplest.</p>
-                <p>acceleration = force;</p>
-                <p>}</p>
-            </div>
-            <h2>2.3 Force Accumulation
+            <pre class="prettyprint">
+
+    //body is the Rigidbody component. We apply forces to that Ridigbody.
+    someGameObject.body.AddForce(force, ForceMode.Impulse)
+
+    //The application of Vector2 force in this instance can be understood as
+    acceleration = force
+
+    //Which we can handle through the Rigidbody component
+    //Use Acceleration as the force on the Rigidbody
+    //As both are Vector2s
+
+    someGameObject.body.AddForce(m_NewForce, ForceMode.Acceleration);
+
+                </pre>
+            <p>A Rigidbody gives us control of an object's position through physics simulation. Adding a Rigidbody component to an object will put its motion under the control of Unity's physics engine. Even without adding any code, a Rigidbody object will be pulled downward by gravity.</p>
+            <p>The Rigidbody also has a scripting API that lets you apply forces to the object and control it in a physically realistic way. For example, a car's behaviour can be specified in terms of the forces applied by the wheels. Given this information, the physics engine can handle most other aspects of the car's motion, so it will accelerate realistically and respond correctly to collisions.
+            </p>
+            <p>A common problem when starting out with Rigidbodies is that the game physics appears to run in "slow motion". This is actually due to the scale used for your models. The default gravity settings assume that one world unit corresponds to one metre of distance. With non-physical games, it doesn't make much difference if your models are all 100 units long but when using physics, they will be treated as very large objects. If a large scale is used for objects that are supposed to be small, they will appear to fall very slowly - the physics engine thinks they are very large objects falling over very large distances. With this in mind, be sure to keep your objects more or less at their scale in real life (so a car should be about 4 units = 4 metres, for example).
+            </p>
+            <h2>
+                2.3 Force Accumulation
             </h2>
-            <p>This looks pretty good. After all, acceleration = force is a literal translation of Newton’s second law
+            <p>
+                This looks pretty good. After all, acceleration = force is a literal translation of Newton’s second law
                 (without mass). Nevertheless, there’s a pretty big problem here. Let’s return to what we are trying to
                 accomplish: creating a moving object on the screen that responds to wind and gravity.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                applyForce(gravity);
-                applyForce(wind);
+            <pre class="prettyprint">
+
+    mover.body.AddForce(wind, ForceMode.Impulse);
+    //Unity give us a few options for how we apply force. Impulse does it as a burst. This makes it great for wind. ForceMode.Force, allows us to add a continuous force like gravity.
+    mover.body.AddForce(gravity, ForceMode.Force);
             </pre>
-        </code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Ok, let’s be the computer for a moment. First, we call applyForce() with wind. And so the Mover object’s
-                acceleration is now assigned the PVector wind. Second, we call applyForce() with gravity. Now the Mover
-                object’s acceleration is set to the gravity PVector. Third, we call update(). What happens in update()?
+            <p>
+                Ok, let’s be the computer for a moment. First, we call the Rigidybody's AddForce() with wind. And so the Mover object’s
+                acceleration is now assigned the Vector2 wind. Second, we call AddForce() with gravity. Now the Mover
+                object’s acceleration is set to the gravity Vector2. Third, we call update(). What happens in update()?
                 Acceleration is added to velocity.
             </p>
-            <div class="note">
-                velocity += acceleration;
-            </div>
-            <p>We’re not going to see any error in Unity, but zoinks! We’ve got a major problem. What is the value of
-                acceleration when it is added to velocity? It is equal to the gravity force. Wind has been left out! If
-                we call applyForce() more than once, it overrides each previous call. How are we going to handle more
-                than one force?
-            </p>
-            <p>The truth of the matter here is that we started with a simplified statement of Newton’s second law.
-                Here’s a more accurate way to put it:
-            </p>
-            <h4>
-                <center>Net Force equals mass times acceleration.
-                </center>
-            </h4>
-            <p>Or, acceleration is equal to the sum of all forces divided by mass. This makes perfect sense. After all,
+            <p>Acceleration is equal to the sum of all forces divided by mass. That is why we can AddForce() with both gravity and wind and they don't cancel one another out. This makes perfect sense. After all,
                 as we saw in Newton’s first law, if all the forces add up to zero, an object experiences an equilibrium
                 state (i.e. no acceleration). Our implementation of this is through a process known as force
                 accumulation. It’s actually very simple; all we need to do is add all of the forces together. At any
                 given moment, there might be 1, 2, 6, 12, or 303 forces. As long as our object knows how to accumulate
                 them, it doesn’t matter how many forces act on it.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                <pre>
-    void applyForce(Vector3 force){
-        acceleration += force;
-    }
-</pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-
-            <p>Now, we’re not finished just yet. Force accumulation has one more piece. Since we’re adding all the
+            <p>
+                Now, we’re not finished just yet. Force accumulation has one more piece. Since we’re adding all the
                 forces together at any given moment, we have to make sure that we clear acceleration (i.e. set it to
                 zero) before each time update() is called. Let’s think about wind for a moment. Sometimes the wind is
                 very strong, sometimes it’s weak, and sometimes there’s no wind at all. At any given moment, there might
                 be a huge gust of wind, say, when the user holds down the mouse.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                <pre>
-if (Input.GetMouseButtonDown(0)){
-    Vector3 wind = new Vector3(0,1,0);
-    mover.applyForce(wind);
-}
+            <pre class="prettyprint">
+
+    if (Input.GetMouseButtonDown(0)){
+        Vector2 wind = new Vector2(0,1,0);
+        mover.body.AddForce(wind, ForceMode.Impulse);
+    }
                 </pre>
-            </code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>When the user releases the mouse, the wind will stop, and according to Newton’s first law, the object
-                will continue to move at a constant velocity. However, if we had forgotten to reset acceleration to
-                zero, the gust of wind would still be in effect. Even worse, it would add onto itself from the previous
-                frame, since we are accumulating forces! Acceleration, in our simulation, has no memory; it is simply
-                calculated based on the environmental forces present at a moment in time. This is different than, say,
-                location, which must remember where the object was in the previous frame in order to move properly to
-                the next.
-            </p>
-            <p>The easiest way to implement clearing the acceleration for each frame is to multiply the Vector3 by 0 at
-                the end of update().
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-get code
-    </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
+            <p>
+                When the user releases the mouse, the wind will stop, and according to Newton’s first law, the object
+                will continue to move at a constant velocity. </p>
+
             <div class="note">
                 <h4 style="text-align:right;">
                     Exercise
                     2.1
                 </h4>
-                <p>Using forces, simulate a helium-filled balloon floating upward and bouncing off the top of a window.
+                <p>
+                    Using forces, simulate a helium-filled balloon floating upward and bouncing off the top of a window.
                     Can you add a wind force that changes over time, perhaps according to Perlin noise?
                 </p>
             </div>
             <h2>
                 2.4 Forces and Newton’s Laws of Motion
             </h2>
-            <p>OK. We’ve got one tiny little addition to make before we are done with integrating forces into our Mover
+            <p>
+                OK. We’ve got one tiny little addition to make before we are done with integrating forces into our Mover
                 class and are ready to look at examples. After all, Newton’s second law is really F→=M×A→, not A→=F→.
-                Incorporating mass is as easy as adding an instance variable to our class, but we need to spend a little
-                more time here because a slight complication will emerge.</p>
-            <p>First we just need to add mass.</p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-get code
-    </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
+                Incorporating mass is as it is part of the RigidBody component.
+            </p>
+            <p>First we need to add mass and take into account the volume of the GameObject.</p>
+            <pre class="prettyprint">
+
+    public class Mover
+    {
+        // The basic properties of a mover class
+        public Vector2 location, velocity, acceleration;
+        //Addin the Rigidbody to apply forces, give this object mass, and more physics galore.
+        public Rigidbody body;
+
+        // We need to calculate the mass of the sphere.
+        // Assuming the sphere is of even density throughout,
+        // the mass will be proportional to the volume.
+        body.mass = (4f / 3f) * Mathf.PI * radius * radius * radius;
+    }
+                </pre>
+
             <div class="note">
                 <h4>
                     Units of Measurement
                 </h4>
-                <p>Now that we are introducing mass, it’s important to make a quick note about units of measurement. In
+                <p>
+                    Now that we are introducing mass, it’s important to make a quick note about units of measurement. In
                     the real world, things are measured in specific units. We say that two objects are 3 meters apart,
                     the baseball is moving at a rate of 90 miles per hour, or this bowling ball has a mass of 6
                     kilograms. As we’ll see later in this book, sometimes we will want to take real-world units into
@@ -415,481 +467,446 @@ get code
                     A small metal ball could have a much higher mass than a large balloon due to its higher density.
                 </p>
             </div>
-            <p>Mass is a scalar (float), not a vector, as it’s just one number describing the amount of matter in an
+            <p>
+                Mass is a scalar (float), not a vector, as it’s just one number describing the amount of matter in an
                 object. We could be fancy about things and compute the area of a shape as its mass, but it’s simpler to
                 begin by saying, “Hey, the mass of this object is…um, I dunno…how about 10?”
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-get code
-    </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>This isn’t so great since things only become interesting once we have objects with varying mass, but
+            <pre class="prettyprint">
+
+    public class Mover
+    {
+        // The basic properties of a mover class
+        public Vector2 location = Vector2.zero;
+        public Vector2 velocity =  Vector2.zero;
+        public Vector2 acceleration = Vector2.zero;
+        //Addin the Rigidbody to apply forces, give this object mass, and more physics galore.
+        public Rigidbody body;
+
+        // We would usually  calculate the mass of the sphere.
+        // Assuming the sphere is of even density throughout,
+        // the mass will be proportional to the volume. This time,
+        // we are just making it 10.
+        body.mass = 10f;
+    }
+            </pre>
+
+            <p>
+                This isn’t so great since things only become interesting once we have objects with varying mass, but
                 it’ll get us started. Where does mass come in? We use it while applying Newton’s second law to our
-                object.
+                object. In fact, this is exactly what ForceMode handles. ForceMode allows you to choose from four different ways to affect the GameObject using this Force: Acceleration, Force, Impulse, and VelocityChange.
+                We already discussed Accelertion mode, which allows us to use the object's acceleration as its force. Another is Impulse mode, which involves using the Rigidbody’s mass to apply an instant impulse force.  ForceMode.Force,
+                uses a continuous force on the Rigidbody considering its mass. VelocityChange ignores mass and so we will be ignoring it. Gravity would be continuous and so use ForceMode.Force where as wind would be an impulse and use ForceMode.Impulse.
+
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-get code
-    </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Yet again, even though our code looks quite reasonable, we have a fairly major problem here. Consider the
-                following scenario with two Mover objects, both being blown away by a wind force.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-get code
-    </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
+            <pre class="prettyprint">
+
+    //A continuous force that takes mass into account
+    body.AddForce(gravity, ForceMode.Force);
+
+    //An impulse, burst force that takes mass into account
+    body.AddForce(wind, ForceMode.Impulse);
+
+</pre>
             <h2>
                 2.4 Creating Forces
             </h2>
-            <p>Let’s take a moment to remind ourselves where we are. We know what a force is (a vector), and we know how
+            <p>
+                Let’s take a moment to remind ourselves where we are. We know what a force is (a vector), and we know how
                 to apply a force to an object (divide it by mass and add it to the object’s acceleration vector). What
                 are we missing? Well, we have yet to figure out how we get a force in the first place. Where do forces
                 come from?
             </p>
-            <p>In this chapter, we’ll look at two methods for creating forces in our Unity world.
+            <p>
+                In this chapter, we’ll look at two methods for creating forces in our Unity world.
             </p>
             <ul>
-                <li>Make up a force! After all, you are the programmer, the creator of your world. There’s no reason why
+                <li>
+                    Make up a force! After all, you are the programmer, the creator of your world. There’s no reason why
                     you can’t just make up a force and apply it.
                 </li>
-                <li>Model a force! Yes, forces exist in the real world. And physics textbooks often contain formulas for
+                <li>
+                    Model a force! Yes, forces exist in the real world. And physics textbooks often contain formulas for
                     these forces. We can take these formulas, translate them into source code, and model real-world
                     forces in Unity.
                 </li>
             </ul>
-            <p>The easiest way to make up a force is to just pick a number. Let’s start with the idea of simulating
+            <p>
+                The easiest way to make up a force is to just pick a number. Let’s start with the idea of simulating
                 wind. How about a wind force that points to the right and is fairly weak? Assuming a Mover object m, our
                 code would look like:
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
+            <pre class="prettyprint">
 
-Vector3 wind = new Vector3(0,1,0);
-mover.applyForce(wind);
+    Vector2 wind = new Vector2(0,1);
+    mover.body.AddForce(wind, ForceMode.Impulse);
 
     </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>The result isn’t terribly interesting, but it is a good place to start. We create a Vector3 object,
+
+            <p>
+                The result isn’t terribly interesting, but it is a good place to start. We create a Vector2 object,
                 initialize it, and pass it into an object (which in turn will apply it to its own acceleration). If we
                 wanted to have two forces, perhaps wind and gravity (a bit stronger, pointing down), we might write the
                 following:
             </p>
             <p><span class="example">Example 2.1: Forces</span></p>
-            <div style="--aspect-ratio: 16/9;">
-                <iframe src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure1/index.html" width="1600"
-                    height="900" frameborder="0" Id="2.1">
-                </iframe>
-            </div>
-            <p></p>
-            <button onclick="reload('2.1')">Reload Figure</button>
-            <p></p>
-            <p>Now we have two forces, pointing in different directions with different magnitudes, both applied to
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs0" id="tab0a" checked />
+                    <label for="tab0a"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel0"
+                           tabindex="2">Code</label>
+                    <div id="tab-content1"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example1" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs0" id="tab0b" />
+                    <label for="tab0b"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel1"
+                           tabindex="3">Demo</label>
+                    <div id="tab-content2"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure1/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="2.1">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                Now we have two forces, pointing in different directions with different magnitudes, both applied to
                 object m. We’re beginning to get somewhere. We’ve now built a world for our objects in the Unity Remix, an
                 environment to which they can actually respond.
             </p>
-            <p>Let’s look at how we could make this example a bit more exciting with many objects of varying mass. To do
+            <p>
+                Let’s look at how we could make this example a bit more exciting with many objects of varying mass. To do
                 this, we’ll need a quick review of object-oriented programming. Again, we’re not covering all the basics
                 of programming here (for that you can check out any of the intro Untity books listed in the
                 introduction). However, since the idea of creating a world filled with objects is pretty fundamental to
                 all the examples in this book, it’s worth taking a moment to walk through the steps of going from one
                 object to many.
             </p>
-            <p>This is where we are with the Mover class as a whole. Notice how it is identical to the Mover class
-                created in Chapter 1, with two additions—mass and a new applyForce() function.
+            <p>
+                This is where we are with the Mover class as a whole. Notice how it is identical to the Mover class
+                created in Chapter 1, with additions--the Rigidbody component and the ability to use its AddForce().
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
+            <pre class="prettyprint">
 
-        public class moverChapter2 : MonoBehaviour
+   public class Mover2_1
+    {
+        public Rigidbody body;
+        private GameObject gameObject;
+        private float radius;
+
+        private float xMin;
+        private float xMax;
+        private float yMin;
+
+        public Mover2_1(Vector3 position, float xMin, float xMax, float yMin)
         {
-        
-            // Create your speed variables for the mover class
-            public Vector3 location;
-            public Vector3 velocity;
-            public Vector3 acceleration;
-            public Vector3 topSpeed;
-        
-            //Create a variable to access the Mover's information
-            private GameObject mover;
-            //Float coordinates for our Little Mover
-            public float x = 0f;
-            public float y = 0f;
-            public float z = 0f;
-        
-            private float xMin = -10f, xMax = 10f, yMin = -10f, yMax = 10f, zMin = -10f, zMax = 10f;
-            private bool xHit = true, yHit = true, zHit = true;
-        
-        
-            //The Object now has mass
-            public float mass = 1f;
-        
-        
-        
-            //Bounds of exercise
-             private Vector3 exerciseBounds;
-        
-        
-            // Start is called before the first frame update
-            void Awake()
-            {
-        
-                //assign the mover's GameObject to the varaible
-                mover = this.gameObject;
-        
-                //Set the initial spawn location to 0,0,0
-                location = new Vector3(x, y, z);
-        
-                //Assign that spawn location to the mover
-                mover.transform.position = location;
-                acceleration = new Vector3(0f, 0f, 0f);
-        
-                mover.transform.localScale *= mass;
-        
-        
-                //Create boundaries
-                exerciseBounds = Camera.main.WorldToViewportPoint(transform.position);
-                exerciseBounds.x = Mathf.Clamp01(exerciseBounds.x);
-                exerciseBounds.y = Mathf.Clamp01(exerciseBounds.y);
-            }
-        
-            // Update is called once per frame
-            void Update()
-            {
-                mover.transform.position = location;
-        
-                if ((location.x/10) <= exerciseBounds.x && (location.y / 10) <= exerciseBounds.y){
-        
-                        if (velocity.magnitude <= topSpeed.magnitude)
-                           {
-                    //        add the value of acceleration each frame to the mover's velocity
-                            velocity += new Vector3(acceleration.x, acceleration.y, acceleration.z);
-                    //        add that velocity value to the transform of the mover's position
-                            location += new Vector3(velocity.x, velocity.y, velocity.z);
-                            multiplyVector(acceleration, 0);
-        
-                           }
-        
-                } else if ((location.x/10) >= exerciseBounds.x) {
-        
-                    velocity.x *= -1;
-                    location.x = exerciseBounds.x*9;
-        
-        
-        
-                } else if ((location.x / 10) < 0){
-                    
-                    velocity.x *= -1;
-                    location.x = 0f;
-                }
-                else if ((location.y / 10) > exerciseBounds.y)
-                {
-        
-                    velocity.y *= -1;
-                    location.y = exerciseBounds.y * 9;
-        
-        
-                }
-        
-        
-            }
-         
-            public void subtractVector(Vector3 originalV3, Vector3 v3)
-            {
-                // Dividing the subtraction by 100 to keep the cursor on the screen in this example
-                x = originalV3.x - v3.x;
-                y = originalV3.y - v3.y;
-                z = originalV3.z - v3.z;
-        
-                Vector3 subtractedVector = new Vector3(x, y, z);
-                subtractedVector.Normalize();
-        
-                multiplyVector(subtractedVector, .0003f);
-        
-            }
-        
-        
-            //Adding the multiplying vector function to manage the speed
-            void multiplyVector(Vector3 transformPosition, float n)
-            {
-                x = transformPosition.x * n;
-                y = transformPosition.y * n;
-                z = transformPosition.z * n;
-        
-                acceleration = new Vector3(x, y, z);
-            }
-        
-            //Newton's second law
-            //Receive a force, divide by mass, and add to acceleration
-            public void applyForce(Vector3 force)
-            {
-                Vector3 f = force / mass;
-                acceleration = acceleration + f;
-            }
-                
-        }        
+            this.xMin = xMin;
+            this.xMax = xMax;
+            this.yMin = yMin;
 
-    </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Now that our class is set, we can choose to create, say, one hundred Mover objects with an array.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-        public List<GameObject> Movers = new List<GameObject>();
+            // Create the components required for the mover
+            gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            body = gameObject.AddComponent<Rigidbody>();
+            // Remove functionality that come with the primitive that we don't want
+            gameObject.GetComponent<SphereCollider>().enabled = false;
+            Object.Destroy(gameObject.GetComponent<SphereCollider>());
 
-    </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-    void Start(){
-        for (int i = 0; i < amountMovers; i++)
+            // Generate a radius of 1f for this mover
+            radius = 1f;
+
+            // Place our mover at the specified spawn position relative
+            // to the bottom of the sphere
+            gameObject.transform.position = position + Vector3.up * radius;
+
+            // The default diameter of the sphere is one unit
+            // This means we have to multiple the radius by two when scaling it up
+            gameObject.transform.localScale = 2 * radius * Vector3.one;
+
+            // We need to calculate the mass of the sphere.
+            // Assuming the sphere is of even density throughout,
+            // the mass will be proportional to the volume.
+            body.mass = (4f / 3f) * Mathf.PI * radius * radius * radius;
+        }
+
+        // Checks to ensure the body stays within the boundaries
+        public void CheckBoundaries()
         {
-            Mover = Instantiate(Mover);
+            Vector3 restrainedVelocity = body.velocity;
+            if (body.position.y - radius < yMin)
+            {
+                // Using the absolute value here is an important safe
+                // guard for the scenario that it takes multiple ticks
+                // of FixedUpdate for the mover to return to its boundaries.
+                // The intuitive solution of flipping the velocity may result
+                // in the mover not returning to the boundaries and flipping
+                // direction on every tick.
+                restrainedVelocity.y = Mathf.Abs(restrainedVelocity.y);
+            }
+            if (body.position.x - radius < xMin)
+            {
+                restrainedVelocity.x = Mathf.Abs(restrainedVelocity.x);
+            }
+            else if (body.position.x + radius > xMax)
+            {
+                restrainedVelocity.x = -Mathf.Abs(restrainedVelocity.x);
+            }
+            body.velocity = restrainedVelocity;
         }
     }
     </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>We can create a variety of Mover objects: big ones, small ones, ones that start on the left side of the
-                screen, ones that start on the right, etc.</p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-        void Start()
-        {
-            gravity = new Vector3(0f, 0.0001f, 0f);
-            wind = new Vector3(0.00001f, 0f, 0f);
-    
-            // We need to instantiate our Little Movers before we can put them in a List. 
-            for (int i = 0; i < amountMovers; i++)
-            {
-                Mover = Instantiate(Mover);
-                Mover.GetComponent<moverChapter2>().location = new Vector3 (Random.Range(-5f,5f), Random.Range(0f,1f), 0f);
-                Movers.Add(Mover);  
-    
-            }
 
-            //Now let us alter the mass of each based on its location
-            foreach(GameObject mover in Movers)
-            {
-                mover.GetComponent<moverChapter2>().alterMass();
-            }
+            <p>
+                Now that our class is set, we can choose to create, say, thirty Mover objects with a List.
+            </p>
+            <pre class="prettyprint">
+
+    private List<Mover2_1> Movers = new List<Mover2_1>();
+
+    void Start()
+    {
+    // Create copys of our mover and add them to our list
+        while (Movers.Count < 30)
+        {
+            Movers.Add(new Mover2_2(
+                        moverSpawnTransform.position,
+                        leftWallX,
+                        rightWallX,
+                        floorY
+                    ));
         }
+    }
     </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>For each mover created, the mass is set to a random value between 0.1 and 5, the starting x-location is
-                set to 0, and the starting y-location is set to 0. Certainly, there are all sorts of ways we might
+
+            <p>
+                We can create a variety of Mover objects: big ones, small ones, ones that start on the left side of the
+                screen, ones that start on the right, etc.
+            </p>
+            <p>
+                For each mover created, the mass is set to a random value between 0.1 and .4. Certainly, there are all sorts of ways we might
                 choose to initialize the objects; this is just a demonstration of one possibility.
             </p>
-            <p>Once the array of objects is declared, created, and initialized, the rest of the code is simple. We run
+            <pre class="prettyprint">
+
+    // Generate random radius for this mover which impacts its mass
+    radius = Random.Range(0.1f, 0.4f);
+
+    // The default diameter of the sphere is one unit
+    // This means we have to multiple the radius by two when scaling it up
+    gameObject.transform.localScale = 2 * radius * Vector3.one;
+
+    // We need to calculate the mass of the sphere.
+    // Assuming the sphere is of even density throughout,
+    // the mass will be proportional to the volume.
+    body.mass = (4f / 3f) * Mathf.PI * radius * radius * radius;
+
+            </pre>
+            <p>
+                Once the list of objects is declared, created, and initialized, the rest of the code is simple. We run
                 through every object, hand them each the forces in the environment, and enjoy the show.
             </p>
             <p><span class="example">Example 2.2: Forces Acting on Many Objects</span></p>
-            <div style="--aspect-ratio: 16/9;">
-                <iframe src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure2/index.html" width="1600"
-                    height="900" frameborder="0" Id="2.2">
-                </iframe>
-            </div>
-            <p></p>
-            <button onclick="reload('2.2')">Reload Figure</button>
-            <p></p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-        // Update is called once per frame
-    void Update()
-    {
-        //Apply the forces to each of the GameObjects
-        for (int i = 0; i < Movers.Count; i++)
-        {
-            Movers[i].GetComponent<moverChapter2>().applyForce(wind);
-            Movers[i].GetComponent<moverChapter2>().applyForce(gravity);
-        }
-    }
-    </pre>
-</code>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs2" id="tab3" checked />
+                    <label for="tab3"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel3"
+                           tabindex="0">Code</label>
+                    <div id="tab-content3"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example2" style="height: 500px"></div>
                     </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Note how in the above image, the smaller circles reach the right of the window faster than the larger
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs2" id="tab4" />
+                    <label for="tab4"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel4"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content4"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure2/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="2.2">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                Note how in the above image, the smaller circles reach the right of the window faster than the larger
                 ones. This is because of our formula: acceleration = force divided by mass. The larger the mass, the
                 smaller the acceleration.
             </p>
             <div class="note">
                 <h4 style="text-align:right;">
                     Exercise
+                    2.2
+                </h4>
+                <p>
+                    Create create an example where the Ridigbody's mass is dyanmic.
+                </p>
+            </div>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise
                     2.3
                 </h4>
-                <p>Instead of objects bouncing off the edge of the wall, create an example in which an invisible force
+                <p>
+                    Instead of objects bouncing off the edge of the wall, create an example in which an invisible force
                     pushes back on the objects to keep them in the window. Can you weight the force according to how far
                     the object is from an edge—i.e., the closer it is, the stronger the force?
                 </p>
             </div>
-            <h2>2.6 Gravity on Earth and Modeling a Force
+            <h2>
+                2.6 Gravity on Earth and Modeling a Force
             </h2>
-            <p>You may have noticed something woefully inaccurate about this last example. The smaller the circle, the
-                faster it falls. There is a logic to this; after all, we just stated (according to Newton’s second law)
-                that the smaller the mass, the higher the acceleration. But this is not what happens in the real world.
+            <p>
                 If you were to climb to the top of the Leaning Tower of Pisa and drop two balls of different masses,
                 which one will hit the ground first? According to legend, Galileo performed this exact test in 1589,
                 discovering that they fell with the same acceleration, hitting the ground at the same time. Why is this?
-                As we will see later in this chapter, the force of gravity is calculated relative to an object’s mass.
-                The bigger the object, the stronger the force. So if the force is scaled according to mass, it is
-                canceled out when acceleration is divided by mass. We can implement this in our sketch rather easily by
-                multiplying our made-up gravity force by mass.
+                The force of gravity is calculated relative to an object’s mass. The bigger the object, the stronger the force.
+                So if the force is scaled according to mass, it is canceled out when acceleration is divided by mass.
+                We can implement this in our scene rather easily by using the Rigidbody's gravity, which can be modified in Unity's settings,
+                or by creating our own gravity Vector2 force and using body.AddForce(gravity, ForceMode.Force);
             </p>
             <p><span class="example">Example 2.3: Gravity scaled by mass</span></p>
-            <div style="--aspect-ratio: 16/9;">
-                <iframe src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure3/index.html" width="1600"
-                    height="900" frameborder="0" Id="2.2">
-                </iframe>
-            </div>
-            <p></p>
-            <button onclick="reload('2.3')">Reload Figure</button>
-            <p></p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-    <pre>
-        // Update is called once per frame
-        void Start()
-        {
-            wind = new Vector3(0.00001f, 0f, 0f);
-    
-            // We need to instantiate our Little Movers before we can put them in a List. 
-            for (int i = 0; i < amountMovers; i++)
-            {
-                Mover = Instantiate(Mover);
-                Mover.GetComponent<moverChapter2>().location = new Vector3(Random.Range(-5f, 5f), Random.Range(0f, 1f), 0f);
-                Movers.Add(Mover);
-    
-            }
-    
-            //Now let us alter the mass of each based on its location
-            foreach (GameObject mover in Movers)
-            {
-                mover.GetComponent<moverChapter2>().alterMass();
-            }
-    
-        }
-
-        void Update()
-        {
-    
-            //Apply the forces to each of the GameObjects
-            for (int i = 0; i < Movers.Count; i++)
-            {
-                gravity = new Vector3(0, .0001f * Movers[i].GetComponent<moverChapter2>().mass, 0f);
-    
-                Movers[i].GetComponent<moverChapter2>().applyForce(wind);
-                Movers[i].GetComponent<moverChapter2>().applyForce(gravity);
-    
-            }
-        }
-    </pre>
-</code>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs3" id="tab5" checked />
+                    <label for="tab5"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel5"
+                           tabindex="0">Code</label>
+                    <div id="tab-content5"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example3" style="height: 500px"></div>
                     </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>While the objects now fall at the same rate, because the strength of the wind force is independent of
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs3" id="tab6" />
+                    <label for="tab6"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel6"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content6"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure3/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="2.3">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                While the objects now fall at the same rate, because the strength of the wind force is independent of
                 mass, the smaller objects still accelerate to the right more quickly.
             </p>
             <p>
-                Making up forces will actually get us quite far. The world of Unity is a pretend world of meters and you
+                Making up forces will actually get us quite far. The world of Unity is a pretend world and you
                 are its master. So whatever you deem appropriate to be a force, well by golly, that’s the force it
                 should be. Nevertheless, there may come a time where you find yourself wondering: “But how does it
                 really all work?”
             </p>
-            <p>Open up any high school physics textbook and you will find some diagrams and formulas describing many
+            <p>
+                Open up any high school physics textbook and you will find some diagrams and formulas describing many
                 different forces—gravity, electromagnetism, friction, tension, elasticity, and more. In this chapter
                 we’re going to look at two forces—friction and gravity. The point we’re making here is not that friction
                 and gravity are fundamental forces that you always need to have in your Unity scenes. Rather, we
                 want to evaluate these two forces as case studies for the following process:
             </p>
             <ul>
-                <li>Understanding the concept behind a force
+                <li>
+                    Understanding the concept behind a force
                 </li>
-                <li>Deconstructing the force’s formula into two parts:
+                <li>
+                    Deconstructing the force’s formula into two parts:
                 </li>
                 <ul>
-                    <li>How do we compute the force’s direction?
+                    <li>
+                        How do we compute the force’s direction?
                     </li>
-                    <li>How do we compute the force’s magnitude?
+                    <li>
+                        How do we compute the force’s magnitude?
                     </li>
                 </ul>
-                <li>Translating that formula into Unity code that calculates a Vector3 to be sent through our Mover's
-                    applyForce() function
+                <li>
+                    Translating that formula into Unity code that calculates a Vector2 to be sent through our Mover's
+                    AddForce() function
                 </li>
             </ul>
-            <p>If we can follow the above steps with two forces, then hopefully if you ever find yourself Googling
+            <p>
+                If we can follow the above steps with two forces, then hopefully if you ever find yourself Googling
                 “atomic nuclei weak nuclear force” at 3 a.m., you will have the skills to take what you find and adapt
                 it for Unity.
             </p>
             <h2>2.7 Friction</h2>
-            <p>Let’s begin with friction and follow our steps.
+            <p>
+                Let’s begin with friction and follow our steps.
             </p>
-            <p>Friction is a dissipative force. A dissipative force is one in which the total energy of a system
+            <p>
+                Friction is a dissipative force. A dissipative force is one in which the total energy of a system
                 decreases when an object is in motion. Let’s say you are driving a car. When you press your foot down on
                 the brake pedal, the car’s brakes use friction to slow down the motion of the tires. Kinetic energy
                 (motion) is converted into thermal energy (heat). Whenever two surfaces come into contact, they
@@ -897,69 +914,64 @@ mover.applyForce(wind);
                 body at rest against a surface) and kinetic friction (a body in motion against a surface), but for our
                 purposes, we are only going to look at the kinetic case.
             </p>
-            <p>Here’s the formula for friction:
+            <p>
+                Here’s the formula for friction:
             </p>
             <div id="ImageContainer">
 
                 <img src="https://natureofcode.com/book/imgs/chapter02/ch02_03.png" style="  width: 100%;
 height: 100%;" alt="The formular for friction.
         ">
-                <p>Figure 2.3: The forumula for friction.
+                <p>
+                    Figure 2.3: The forumula for friction.
                 </p>
             </div>
-            <p>It’s now up to us to separate this formula into two components that determine the direction of friction
+            <p>
+                It’s now up to us to separate this formula into two components that determine the direction of friction
                 as well as the magnitude. Based on the diagram above, we can see that friction points in the opposite
                 direction of velocity. In fact, that’s the part of the formula that says -1 * v∧, or -1 times the
                 velocity unit vector. This would mean taking the velocity vector, normalizing it, and multiplying by -1.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
-
+            <pre class="prettyprint">
 
     //Friction
+    private float frictionStrength = 0.5f;
 
-        Vector3 friction = velocity;
-        Vector3.Normalize(friction);
-        friction *= -1f;
+    // Apply a friction force that directly opposes the current motion
+    Vector3 friction = mover.body.velocity;
+    friction.Normalize();
+    friction *= -frictionStrength;
+    //We use ForceMode.Force because we need to use the Vector2 of the above line as  Force
+    mover.body.AddForce(friction, ForceMode.Force);
+
 
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Notice two additional steps here. First, it’s important to make a copy of the velocity vector, as we
+
+            <p>
+                Notice two additional steps here. First, it’s important to make a copy of the velocity vector, as we
                 don’t want to reverse the object’s direction by accident. Second, we normalize the vector. This is
                 because the magnitude of friction is not associated with how fast it is moving, and we want to start
                 with a friction vector of magnitude 1 so that it can easily be scaled.
             </p>
-            <p>According to the formula, the magnitude is μ * N. μ, the Greek letter mu (pronounced “mew”), is used here
+            <p>
+                According to the formula, the magnitude is μ * N. μ, the Greek letter mu (pronounced “mew”), is used here
                 to describe the coefficient of friction. The coefficient of friction establishes the strength of a
                 friction force for a particular surface. The higher it is, the stronger the friction; the lower, the
                 weaker. A block of ice, for example, will have a much lower coefficient of friction than, say,
                 sandpaper. Since we’re in a pretend Unity world, we can arbitrarily set the coefficient based on how
                 much friction we want to simulate.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
 
+            </p>
+            <pre class="prettyprint">
 
     //Friction
-    float c = .01f;
+    private float frictionStrength = 0.5f;
+
 
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Now for the second part: N. N refers to the normal force, the force perpendicular to the object’s motion
+
+            <p>
+                Now for the second part: N. N refers to the normal force, the force perpendicular to the object’s motion
                 along a surface. Think of a vehicle driving along a road. The vehicle pushes down against the road with
                 gravity, and Newton’s third law tells us that the road in turn pushes back against the vehicle. That’s
                 the normal force. The greater the gravitational force, the greater the normal force. As we’ll see in the
@@ -969,112 +981,95 @@ height: 100%;" alt="The formular for friction.
                 doesn’t point in the same direction as gravity. We’ll need to know something about angles and
                 trigonometry.
             </p>
-            <p>All of these specifics are important; however, in Unity, a “good enough” simulation can be achieved
+            <p>
+                All of these specifics are important; however, in Unity, a “good enough” simulation can be achieved
                 without them. We can, for example, make friction work with the assumption that the normal force will
                 always have a magnitude of 1. When we get into trigonometry in the next chapter, we’ll remember to
                 return to this question and make our friction example a bit more sophisticated. Therefore:
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
+            <pre class="prettyprint">
 
-    float normal = 1;
+    friction.Normalize();
+
 
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Now that we have both the magnitude and direction for friction, we can put it all together…
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
 
-    //Friction
-        friction = velocity;
-        Vector3.Normalize(friction);
-        friction *= -1f;
-        float normal = 0;
-        float frictionMag = c * normal;
-        friction *= frictionMag;
+            <p>
+                Now that we have both the magnitude and direction for friction, we can put it all together…
+            </p>
+            <pre class="prettyprint">
+
+    // ForceMode.Impulse takes mass into account
+    mover.body.AddForce(wind, ForceMode.Impulse);
+
+    // Apply a friction force that directly opposes the current motion
+    Vector3 friction = mover.body.velocity;
+    friction.Normalize();
+    friction *= -frictionStrength;
+    mover.body.AddForce(friction, ForceMode.Force);
+
 
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>…and add it to our “forces” example, where many objects experience wind, gravity, and now friction:
+
+            <p>
+                …and add it to our “forces” example, where many objects experience wind, gravity, and now friction:
             </p>
+<div class="content-box">
+<center>
+<img  style="padding: 10px; height: 460px" src="images/gifs/noFriction.gif" alt="No Friction" />An example where mass is not taken into account when computing friction.</img>
+<img  style="padding: 10px; height: 460px"src="images/gifs/withFriction.gif" alt="With Friction" />An example where mass is taken into account when computing friction.</img>
+</center>
+</div>
             <p><span class="example">Example 2.4: Including Friction</span></p>
-            <div style="--aspect-ratio: 16/9;">
-                <iframe src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure4/index.html" width="1600"
-                    height="900" frameborder="0" Id="2.4">
-                </iframe>
-            </div>
-            <p></p>
-            <button onclick="reload('2.4')">Reload Figure</button>
-            <p></p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-            <pre>
-            
-                mover.transform.position = location;
 
-                if ((location.x / 10) <= exerciseBounds.x && (location.y / 10) <= exerciseBounds.y)
-                {
-                    
-                        //        add the value of acceleration each frame to the mover's velocity
-                        velocity += new Vector3(acceleration.x, acceleration.y, acceleration.z);
-                        //        add that velocity value to the transform of the mover's position
-                        location += new Vector3(velocity.x, velocity.y, velocity.z);
-                        multiplyVector(acceleration, 0);
-                    
-                }
-                else if ((location.x / 10) >= exerciseBounds.x)
-                {
-                    velocity.x *= -1;
-                    location.x = exerciseBounds.x * 9;
-                }
-                else if ((location.x / 10) < 0)
-                {
-                    velocity.x *= -1;
-                    location.x = 0f;
-                }
-                else if ((location.y / 10) > exerciseBounds.y)
-                {
-                    velocity.y *= -1;
-                    location.y = exerciseBounds.y * 9;
-                }
-        
-        
-        
-                //Friction
-        
-                friction = velocity;
-                Vector3.Normalize(friction);
-                friction *= -1f;
-                float normal = 0;
-        
-                float frictionMag = c * normal;
-        
-                friction *= frictionMag;
-            
-            </pre>
-            </code>
+
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs4" id="tab7" checked />
+                    <label for="tab7"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel7"
+                           tabindex="0">Code</label>
+                    <div id="tab-content7"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example4" style="height: 500px"></div>
                     </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Running this example, you’ll notice that the circles don’t even make it to the right side of the window.
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs4" id="tab8" />
+                    <label for="tab8"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel8"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content8"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure4/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="2.4">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                Running this example, you’ll notice that the circles don’t even make it to the right side of the window.
                 Since friction continuously pushes against the object in the opposite direction of its movement, the
                 object continuously slows down. This can be a useful technique or a problem depending on the goals of
                 your visualization.
@@ -1084,187 +1079,222 @@ height: 100%;" alt="The formular for friction.
                     Exercise
                     2.4
                 </h4>
-                <p>Create pockets of friction in a Unity Scene so that objects only experience friction when crossing
+                <p>
+                    Create pockets of friction in a Unity Scene so that objects only experience friction when crossing
                     over those pockets. What if you vary the strength (friction coefficient) of each area? What if you
                     make some pockets feature the opposite of friction—i.e., when you enter a given pocket you actually
                     speed up instead of slowing down?
                 </p>
             </div>
-            <h2>2.8 Air and Fluid Resistance
+            <h2>
+                2.8 Air and Fluid Resistance
             </h2>
             <div id="ImageContainer">
 
                 <img src="https://natureofcode.com/book/imgs/chapter02/ch02_01.png" style="  width: 100%;
             height: 100%;" alt="Figure 2.4">
-                <p>Figure 2.4
+                <p>
+                    Figure 2.4
                 </p>
             </div>
             <p>
-                Friction also occurs when a body passes through a liquid or gas. This force has many different names,
+                Friction also occurs when a body passes through a fluid or gas. This force has many different names,
                 all really meaning the same thing: viscous force, drag force, fluid resistance. While the result is
                 ultimately the same as our previous friction examples (the object slows down), the way in which we
                 calculate a drag force will be slightly different. Let’s look at the formula:
             </p>
-            <p>Let’s implement this force in our Mover class example with one addition. When we wrote our friction
+            <p>
+                Let’s implement this force in our Mover class example with one addition. When we wrote our friction
                 example, the force of friction was always present. Whenever an object was moving, friction would slow it
-                down. Here, let’s introduce an element to the environment—a “liquid” that the Mover objects pass
-                through. The Liquid object will be a rectangle and will know about its location, width, height, and
+                down. Here, let’s introduce an element to the environment—a “fluid” that the Mover objects pass
+                through. The fluid object will be a rectangle and will know about its location, width, height, and
                 “coefficient of drag”—i.e., is it easy for objects to move through it (like air) or difficult (like
                 molasses)? In addition, it should include a function to draw itself on the screen (and two more
-                functions, which we’ll see in a moment). </p>
+                functions, which we’ll see in a moment).
+            </p>
             <p></p>
-            <p>Now comes an interesting question: how do we get the Mover object to talk to the Liquid object? In other
+            <p>
+                Now comes an interesting question: how do we get the Mover object to talk to the fluid object? In other
                 words, we want to execute the following:
             </p>
-            <p>When a mover passes through a liquid it experiences a drag force.</p>
+            <p>When a mover passes through a fluid it experiences a drag force.</p>
 
-            <p>…or in object-oriented speak (assuming we are looping through an array of Mover objects with index i):
-            </p>
-
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-            <pre>
-
-                if (Movers[i].GetComponent<moverChapter2_5>().collided)
-                    {
-                       Movers[i].GetComponent<moverChapter2_5>().drag();
-                    }
-
-            </pre>
-        </code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>The above code tells us that we need to add two functions to the Mover class: (1) a function that
-                determines if a Mover object is inside the Liquid object, and (2) a function that computes and applies a
-                drag force on the Mover object.
-            </p>
-            <p>The first is easy; we can simply use a conditional statement to determine if the location vector rests
-                inside the rectangle defined by the liquid.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-            <pre>
-                // using colliders in Unity we can see if the object has indeed collided with an object.
-                // for now, let's create the bool
-                public bool collided = false;
-
-                //then in the Mover class you will run these methods.
-                void OnTriggerEnter(Collider cube) {
-
-                    collided = true;
-            
-                    Debug.Log("calling it");
-            
-                }
-
-                public void drag()
-                {
-                    float speed = Vector3.Magnitude(velocity);
-                    float dragMagnitude = 1*c * speed * speed;
-            
-                    Vector3 drag = velocity;
-                    drag *= -1f;
-                    drag.Normalize();
-            
-                    drag *= dragMagnitude;
-                    applyForce(drag);
-            
-                }
-
-
-            </pre>
-        </code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>The drag() function above is a bit more complicated; however, we’ve written the code for it already. This
-                is simply an implementation of our formula. The drag force is equal to the coefficient of drag
-                multiplied by the speed of the Mover squared in the opposite direction of velocity!
-            </p>
             <p>
-                And with these two functions added to the Mover class, we’re ready to put it all together in the main
-                tab:
-
+                …or in object-oriented speak (assuming we are looping through an array of Mover objects with index i):
             </p>
 
-            <p><span class="example">Example 2.5: Fluid Resistance</span></p>
-            <div style="--aspect-ratio: 16/9;">
-                <iframe src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure5/index.html" width="1600"
-                    height="900" frameborder="0" Id="2.5">
-                </iframe>
-            </div>
-            <p></p>
-            <button onclick="reload('2.5')">Reload Figure</button>
-            <p></p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-        <pre>
-            public class Chapter2Fig5 : MonoBehaviour
+            <pre class="prettyprint">
+
+    private List<Mover2_5> Movers = new List<Mover2_5>();
+    private List<Fluid2_5> Fluids = new List<Fluid2_5>();
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Create copys of our mover and add them to our list
+        while (Movers.Count < 30)
+        {
+            Vector3 moverSpawnPosition = moverSpawnTransform.position + Vector3.right * Random.Range(-7,7);
+            Movers.Add(new Mover2_5(
+                moverSpawnPosition,
+                floorY
+            ));
+        }
+        // Add the fluid to our scene
+        Fluids.Add(new Fluid2_5(
+            fluidCornerA.position,
+            fluidCornerB.position,
+            fluidDrag,
+            waterMaterial
+        ));
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        // Apply the forces to each of the Movers
+        foreach (Mover2_5 mover in Movers)
+        {
+            // Check for interaction with any of our fluids
+            foreach(Fluid2_5 fluid in Fluids)
             {
-                public List<GameObject> Movers = new List<GameObject>();
-                public GameObject Mover;
-                public int amountMovers;
-            
-                private Vector3 wind;
-                private Vector3 gravity;
-            
-                // Start is called before the first frame update
-                void Start()
+                if(mover.IsInside(fluid))
                 {
-                    // We need to instantiate our Little Movers before we can put them in a List. 
-                    for (int i = 0; i < amountMovers; i++)
-                    {
-                        Mover = Instantiate(Mover);
-                        Mover.GetComponent<moverChapter2_5>().location = new Vector3(Random.Range(-10f, 10f), Random.Range(4f, 10f), 0f);
-                        Movers.Add(Mover);
-            
-                    }
-            
-                    //Now let us alter the mass of each based on its location
-                    foreach (GameObject mover in Movers)
-                    {
-                        mover.GetComponent<moverChapter2_5>().alterMass();
-                    }
-            
-                }
-            
-                // Update is called once per frame
-                void FixedUpdate()
-                {
-            
-                    //Apply the forces to each of the GameObjects
-                    for (int i = 0; i < Movers.Count; i++)
-                    {
-                        gravity = new Vector3(0, -.0001f * Movers[i].GetComponent<moverChapter2_5>().mass, 0f);
-            
-                        Movers[i].GetComponent<moverChapter2_5>().applyForce(gravity);
-            
-                        if (Movers[i].GetComponent<moverChapter2_5>().collided)
-                        {
-                           Movers[i].GetComponent<moverChapter2_5>().drag();
-                        }
-            
-            
-                    }
+                    // Apply a friction force that directly opposes the current motion
+                    Vector3 friction = mover.body.velocity;
+                    friction.Normalize();
+                    friction *= -fluid.dragCoefficient;
+                    mover.body.AddForce(friction, ForceMode.Force);
                 }
             }
-        </pre>
-    </code>
+
+            mover.CheckBoundaries();
+        }
+    }
+            </pre>
+
+            <p>
+                The above code tells us that we need to add two functions to the Mover class: (1) a function that
+                determines if a Mover object is inside the Fluid object, and (2) a function or property that computes and applies a
+                drag force on the Mover object.
+            </p>
+            <p>
+                The first is easy; we can simply use a conditional statement to determine if the location vector rests
+                inside the rectangle defined by the fluid.
+            </p>
+            <p>As a note, the Rigidbody component has a drag property that you can access.</p>
+            <pre class="prettyprint">
+
+    if(mover.IsInside(fluid))
+    {
+        // Apply a friction force that directly opposes the current motion
+        Vector3 friction = mover.body.velocity;
+        friction.Normalize();
+        friction *= -fluid.dragCoefficient;
+        mover.body.AddForce(friction, ForceMode.Force);
+    }
+            </pre>
+
+            <p>
+                The dragCoefficient property  is a bit more complicated; however, we’ve written the code for it already. This
+                is simply an implementation of our formula. The drag force is equal to the coefficient of drag
+                multiplied by the speed of the Mover squared in the opposite direction of velocity! This is what is occurring above. However, we need to set the dragCoefficient in the Fluid2_5 class.
+                We can always set this in the inspector.
+            </p>
+            <pre class="prettyprint">
+
+    public class Fluid2_5
+    {
+        public Vector3 minBoundary;
+        public Vector3 maxBoundary;
+        public float dragCoefficient;
+
+        public Fluid2_5(Vector3 corner1, Vector3 corner2, float dragCoefficient, Material material)
+        {
+            // Get the minimum and maximum corners of the rectangular prism
+            // This code allows the designer to place the volume corners at
+            // any of the eight possible diagonals of a rectangular prism.
+            minBoundary = new Vector3(
+                Mathf.Min(corner1.x, corner2.x),
+                Mathf.Min(corner1.y, corner2.y),
+                Mathf.Min(corner1.z, corner2.z)
+            );
+            maxBoundary = new Vector3(
+                Mathf.Max(corner1.x, corner2.x),
+                Mathf.Max(corner1.y, corner2.y),
+                Mathf.Max(corner1.z, corner2.z)
+            );
+            this.dragCoefficient = dragCoefficient;
+
+            // Create the presence of the object in 3D space
+            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            obj.GetComponent<Renderer>().material = material;
+            // Remove undesired components that come with the primitive
+            obj.GetComponent<BoxCollider>().enabled = false;
+            Object.Destroy(obj.GetComponent<BoxCollider>());
+            // Position and scale the new cube to match the boundaries.
+            obj.transform.position = (corner1 + corner2) / 2;
+            obj.transform.localScale = new Vector3(
+                Mathf.Abs(corner2.x - corner1.x),
+                Mathf.Abs(corner2.y - corner1.y),
+                Mathf.Abs(corner2.z - corner1.z)
+            );
+        }
+    }
+            </pre>
+            <p>
+                And with these two properties added to the Mover class, we’re ready to put it all together in the main
+                tab:
+            </p>
+            <p><span class="example">Example 2.5: Fluid Resistance</span></p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs5" id="tab9" checked />
+                    <label for="tab9"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel9"
+                           tabindex="0">Code</label>
+                    <div id="tab-content9"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example5" style="height: 500px"></div>
                     </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Running the example, you should notice that we are simulating balls falling into water. The objects only
-                slow down when crossing through the gray area at the bottom of the window (representing the liquid).
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs5" id="tab10" />
+                    <label for="tab10"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel10"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content10"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure5/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="2.5">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                Running the example, you should notice that we are simulating balls falling into water. The objects only
+                slow down when crossing through the gray area at the bottom of the window (representing the fluid).
                 You’ll also notice that the smaller objects slow down a great deal more than the larger objects.
                 Remember Newton’s second law? A = F / M. Acceleration equals force divided by mass. A massive object
                 will accelerate less. A smaller object will accelerate more. In this case, the acceleration we’re
@@ -1276,7 +1306,8 @@ height: 100%;" alt="The formular for friction.
                     Exercise
                     2.5
                 </h4>
-                <p>Take a look at our formula for drag again: drag force = coefficient * speed * speed. The faster an
+                <p>
+                    Take a look at our formula for drag again: drag force = coefficient * speed * speed. The faster an
                     object moves, the greater the drag force against it. In fact, an object not moving in water
                     experiences no drag at all. Expand the example to drop the balls from different heights. How does
                     this affect the drag as they hit the water?
@@ -1287,7 +1318,8 @@ height: 100%;" alt="The formular for friction.
                     Exercise
                     2.6
                 </h4>
-                <p>The formula for drag also included surface area. Can you create a simulation of boxes falling into
+                <p>
+                    The formula for drag also included surface area. Can you create a simulation of boxes falling into
                     water with a drag force dependent on the length of the side hitting the water?
                 </p>
             </div>
@@ -1296,13 +1328,15 @@ height: 100%;" alt="The formular for friction.
                     Exercise
                     2.7
                 </h4>
-                <p>Fluid resistance does not only work opposite to the velocity vector, but also perpendicular to it.
+                <p>
+                    Fluid resistance does not only work opposite to the velocity vector, but also perpendicular to it.
                     This is known as “lift-induced drag” and will cause an airplane with an angled wing to rise in
                     altitude. Try creating a simulation of lift.
                 </p>
             </div>
             <h2>2.9 Gravitational Attraction</h2>
-            <p>Probably the most famous force of all is gravity. We humans on earth think of gravity as an apple hitting
+            <p>
+                Probably the most famous force of all is gravity. We humans on earth think of gravity as an apple hitting
                 Isaac Newton on the head. Gravity means that stuff falls down. But this is only our experience of
                 gravity. In truth, just as the earth pulls the apple towards it due to a gravitational force, the apple
                 pulls the earth as well. The thing is, the earth is just so freaking big that it overwhelms all the
@@ -1313,131 +1347,127 @@ height: 100%;" alt="The formular for friction.
 
                 <img src="https://natureofcode.com/book/imgs/chapter02/ch02_06.png" style="  width: 100%;
 height: 100%;" alt="Figure 2.16">
-                <p>Figure 2.6
+                <p>
+                    Figure 2.6
                 </p>
             </div>
             <p>Let’s examine this formula a bit more closely.</p>
             <ul>
-                <li>F refers to the gravitational force, the vector we ultimately want to compute and pass into our
-                    applyForce() function.
+                <li>
+                    F refers to the gravitational force, the vector we ultimately want to compute and pass into our
+                    AddForce() function.
                 </li>
-                <li>G is the universal gravitational constant, which in our world equals 6.67428 x 10-11 meters cubed
+                <li>
+                    G is the universal gravitational constant, which in our world equals 6.67428 x 10-11 meters cubed
                     per kilogram per second squared. This is a pretty important number if your name is Isaac Newton or
                     Albert Einstein. It’s not an important number if you are a C# programmer. Again, it’s a
                     constant that we can use to make the forces in our world weaker or stronger. Just making it equal to
                     one and ignoring it isn’t such a terrible choice either.
                 </li>
-                <li>m1 and m2 are the masses of objects 1 and 2. As we saw with Newton’s second law (F→=M×A→), mass is
+                <li>
+                    m1 and m2 are the masses of objects 1 and 2. As we saw with Newton’s second law (F→=M×A→), mass is
                     also something we could choose to ignore. After all, shapes drawn on the screen don’t actually have
                     a physical mass. However, if we keep these values, we can create more interesting simulations in
                     which “bigger” objects exert a stronger gravitational force than smaller ones.
                 </li>
-                <li>r∧ refers to the unit vector pointing from object 1 to object 2. As we’ll see in a moment, we can
-                    compute this direction vector by subtracting the location of one object from the other.</li>
-                <li>r2 refers to the distance between the two objects squared. Let’s take a moment to think about this a
+                <li>
+                    r∧ refers to the unit vector pointing from object 1 to object 2. As we’ll see in a moment, we can
+                    compute this direction vector by subtracting the location of one object from the other.
+                </li>
+                <li>
+                    r2 refers to the distance between the two objects squared. Let’s take a moment to think about this a
                     bit more. With everything on the top of the formula—G, m1, m2—the bigger its value, the stronger the
                     force. Big mass, big force. Big G, big force. Now, when we divide by something, we have the
                     opposite. The strength of the force is inversely proportional to the distance squared. The farther
                     away an object is, the weaker the force; the closer, the stronger.
                 </li>
             </ul>
-            <p>Hopefully by now the formula makes some sense to us. We’ve looked at a diagram and dissected the
+            <p>
+                Hopefully by now the formula makes some sense to us. We’ve looked at a diagram and dissected the
                 individual components of the formula. Now it’s time to figure out how we translate the math into
                 C# code. Let’s make the following assumptions.
             </p>
             <ul>
-                <li>Each object has a location: Vector3 location1 and Vector3 location2.
+                <li>
+                    Each object has a location: Vector2 location1 and Vector2 location2.
                 </li>
-                <li>Each object has a mass: float mass1 and float mass2.
+                <li>
+                    Each object has a mass: float mass1 and float mass2.
                 </li>
-                <li>There is a variable float G for the universal gravitational constant.
+                <li>
+                    There is a variable float G for the universal gravitational constant.
                 </li>
             </ul>
-            <p>Given these assumptions, we want to compute Vector3 force, the force of gravity. We’ll do it in two
+            <p>
+                Given these assumptions, we want to compute Vector2 force, the force of gravity. We’ll do it in two
                 parts. First, we’ll compute the direction of the force r∧ in the formula above. Second, we’ll calculate
-                the strength of the force according to the masses and distance.</p>
-            <p>Remember in Chapter 1, when we figured out how to have an object accelerate towards the mouse? (See
+                the strength of the force according to the masses and distance.
+            </p>
+            <p>
+                Remember in Chapter 1, when we figured out how to have an object accelerate towards the mouse? (See
                 Figure 2.7.)
             </p>
             <div id="ImageContainer">
 
                 <img src="https://natureofcode.com/book/imgs/chapter02/ch02_07.png" style="  width: 100%;
 height: 100%;" alt="Figure 2.7">
-                <p>Figure 2.7
+                <p>
+                    Figure 2.7
                 </p>
             </div>
-            <p>A vector is the difference between two points. To make a vector that points from the circle to the mouse,
+            <p>
+                A vector is the difference between two points. To make a vector that points from the circle to the mouse,
                 we simply subtract one point from another:
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
 
- Vector3 dir = Input.mousePosition - location;
+            <pre class="prettyprint">
 
-</pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>In our case, the direction of the attraction force that object 1 exerts on object 2 is equal to:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
 
- Vector3 dir = Input.mousePosition - location;
+ Vector2 dir = Input.mousePosition - location;
+
 
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>In our case, the direction of the attraction force that object 1 exerts on object 2 is equal to:
+
+            <p>
+                In our case, the direction of the attraction force that object 1 exerts on object 2 is equal to:
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-        <pre>
-        
-         Vector3 dir = location1 - location2;
+
+            <pre class="prettyprint">
+
+ Vector2 dir = Input.mousePosition - location;
+
+
+</pre>
+
+            <p>
+                In our case, the direction of the attraction force that object 1 exerts on object 2 is equal to:
+            </p>
+            <pre class="prettyprint">
+
+
+         Vector2 dir = location1 - location2;
          dir.normalized;
-       
+
         </pre>
-        </code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Don’t forget that since we want a unit vector, a vector that tells us about direction only, we’ll need to
+
+            <p>
+                Don’t forget that since we want a unit vector, a vector that tells us about direction only, we’ll need to
                 normalize the vector after subtracting the locations.
             </p>
-            <p>OK, we’ve got the direction of the force. Now we just need to compute the magnitude and scale the vector
+            <p>
+                OK, we’ve got the direction of the force. Now we just need to compute the magnitude and scale the vector
                 accordingly.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
+            <pre class="prettyprint">
+
 
     float m = (G * mass1 * mass2) / (distance * distance);
     dir *= m;
-    
+
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>The only problem is that we don’t know the distance. G, mass1, and mass2 were all givens, but we’ll need
+
+            <p>
+                The only problem is that we don’t know the distance. G, mass1, and mass2 were all givens, but we’ll need
                 to actually compute distance before the above code will work. Didn’t we just make a vector that points
                 all the way from one location to another? Wouldn’t the length of that vector be the distance between two
                 objects?
@@ -1446,141 +1476,129 @@ height: 100%;" alt="Figure 2.7">
 
                 <img src="https://natureofcode.com/book/imgs/chapter02/ch02_08.png" style="  width: 100%;
 height: 100%;" alt="Figure 2.8">
-                <p>Figure 2.8
+                <p>
+                    Figure 2.8
                 </p>
             </div>
-            <p>Well, if we add just one line of code and grab the magnitude of that vector before normalizing it, then
+            <p>
+                Well, if we add just one line of code and grab the magnitude of that vector before normalizing it, then
                 we’ll have the distance.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
+            <pre class="prettyprint">
 
-    Vector3 force = location1 - location2;
+    Vector2 force = location1 - location2;
     float distance = force.magnitude;
-    
+
     float m = (G * mass1 * mass2) / (distance * distance);
     force *= m;
-    
+
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Note that I also renamed the Vector3 “dir” as “force.” After all, when we’re finished with the
-                calculations, the Vector3 we started with ends up being the actual force vector we wanted all along.
+
+            <p>
+                Note that I also renamed the Vector2 “dir” as “force.” After all, when we’re finished with the
+                calculations, the Vector2 we started with ends up being the actual force vector we wanted all along.
             </p>
-            <p>Now that we’ve worked out the math and the code for calculating an attractive force (emulating gravity),
+            <p>
+                Now that we’ve worked out the math and the code for calculating an attractive force (emulating gravity),
                 we need to turn our attention to applying this technique in the context of an actual Unity scene. In
-                Example 2.1, you may recall how we created a simple Mover object—a class with Vector3's location,
-                velocity, and acceleration as well as an applyForce(). Let’s take this exact class and put it in a scene
+                Example 2.1, you may recall how we created a simple Mover object—a class with Vector2's location,
+                velocity, and acceleration as well as an AddForce(). Let’s take this exact class and put it in a scene
                 with:
             </p>
             <ul>
-                <li>A single Mover object.
+                <li>
+                    A single Mover object.
                 </li>
-                <li>A single Attractor object (a new class that will have a fixed location).
+                <li>
+                    A single Attractor object (a new class that will have a fixed location).
                 </li>
             </ul>
             <div id="ImageContainer">
 
                 <img src="https://natureofcode.com/book/imgs/chapter02/ch02_09.png" style="  width: 100%;
 height: 100%;" alt="Figure 2.9">
-                <p>Figure 2.9
+                <p>
+                    Figure 2.9
                 </p>
             </div>
-            <p>The Mover object will experience a gravitational pull towards the Attractor object, as illustrated in
+            <p>
+                The Mover object will experience a gravitational pull towards the Attractor object, as illustrated in
                 Figure 2.9.
             </p>
-            <p>We can start by making the new Attractor class very simple—giving it a location and a mass, along with a
+            <p>
+                We can start by making the new Attractor class very simple—giving it a location and a mass, along with a
                 function to display itself (tying mass to size).
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
+            <            <pre class="prettyprint">
 
     public class attractorChapter2_6 : MonoBehaviour
 {
 
     float G = 657f;
     float mass;
-    Vector3 location;
+    Vector2 location;
 
     void Start() {
         mass = 10000f;
         location = this.gameObject.transform.position;
     }
 
-    void FixedUpdate() {   
-    
+    void FixedUpdate() {
+
     }
 
 
-    public Vector3 attract(moverChapter2_6 mover) {
-       Vector3 difference = location - mover.location;
+    public Vector2 attract(moverChapter2_6 mover) {
+       Vector2 difference = location - mover.location;
         float dist = difference.magnitude;
-        Vector3 gravityDirection = difference.normalized;
+        Vector2 gravityDirection = difference.normalized;
         float gravity = 6.7f * (mass * mover.mass) / (dist * dist);
 
-        Vector3 gravityVector = (gravityDirection * gravity);
+        Vector2 gravityVector = (gravityDirection * gravity);
 
         return gravityVector;
     }
 }
-    
+
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>And in our main program, we can add an instance of the Attractor class.
+
+            <p>
+                And in our main program, we can add an instance of the Attractor class.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
+            <pre class="prettyprint">
+
 
     public class Chapter2Fig6 : MonoBehaviour
-    {    
+    {
         public GameObject a;
         public GameObject m;
-        Vector3 force;
-    
+        Vector2 force;
+
         private attractorChapter2_6 aC26;
         private moverChapter2_6 mC26;
-    
+
         // Start is called before the first frame update
         void Start()
         {
             a = Instantiate(a);
-            m = Instantiate(m, new Vector3(4f, 0f, 0f), Quaternion.identity);
-    
+            m = Instantiate(m, new Vector2(4f, 0f, 0f), Quaternion.identity);
+
             aC26 = a.GetComponent<attractorChapter2_6>();
             mC26 = m.GetComponent<moverChapter2_6>();
         }
-    
+
         // Update is called once per frame
         void FixedUpdate()
         {
             force = aC26.attract(mC26);
-            mC26.applyForce( new Vector3 (1f, 0f, 0f));
-            mC26.applyForce(force);
+            mC26.AddForce( new Vector2 (1f, 0f, 0f));
+            mC26.AddForce(force);
         }
     }
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>This is a good structure: a main program with a Mover and an Attractor object, and a class to handle the
+
+            <p>
+                This is a good structure: a main program with a Mover and an Attractor object, and a class to handle the
                 variables and behaviors of movers and attractors. The last piece of the puzzle is how to get one object
                 to attract the other. How do we get these two objects to talk to each other?
             </p>
@@ -1595,122 +1613,108 @@ height: 100%;" alt="Figure 2.9">
                     <td>attraction(a,m);</td>
                 </tr>
                 <tr>
-                    <td>2. A function in the Attractor class that receives a Mover:
+                    <td>
+                        2. A function in the Attractor class that receives a Mover:
                     </td>
-                    <td>a.attract(m);
+                    <td>
+                        a.attract(m);
                     </td>
                 </tr>
                 <tr>
                     <td>3. A function in the Mover class that receives an Attractor:</td>
-                    <td>m.attractedTo(a);
+                    <td>
+                        m.attractedTo(a);
                     </td>
                 </tr>
                 <tr>
-                    <td>A function in the Attractor class that receives a Mover and returns a Vector3, which is the
-                        attraction force. That attraction force is then passed into the Mover's applyForce() function
+                    <td>
+                        A function in the Attractor class that receives a Mover and returns a Vector2, which is the
+                        attraction force. That attraction force is then passed into the Mover's AddForce() function
                     </td>
-                    <td>Vector3 f = a.attract(m);
-                        m.applyForce(f);</td>
+                    <td>
+                        Vector2 f = a.attract(m);
+                        m.AddForce(f);
+                    </td>
                 </tr>
             </table>
-            <p>and so on. . .
+            <p>
+                and so on. . .
             </p>
-            <p>It’s good to look at a range of options for making objects talk to each other, and you could probably
+            <p>
+                It’s good to look at a range of options for making objects talk to each other, and you could probably
                 make arguments for each of the above possibilities. I’d like to at least discard the first one, since an
                 object-oriented approach is really a much better choice over an arbitrary function not tied to either
                 the Mover or Attractor class. Whether you pick option 2 or option 3 is the difference between saying
                 “The attractor attracts the mover” or “The mover is attracted to the attractor.” Number 4 is really my
                 favorite, at least in terms of where we are in this book. After all, we spent a lot of time working out
-                the applyForce() function, and I think our examples will be clearer if we continue with the same
+                the AddForce() function, and I think our examples will be clearer if we continue with the same
                 methodology.
             </p>
-            <p>In other words, where we once had:
+            <p>
+                In other words, where we once had:
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
-    
-    Vector3 f =  new Vector3 (0, 0.1f, 0);
-    m.applyForce(f);
+            <pre class="prettyprint">
+
+
+    Vector2 f =  new Vector2 (0, 0.1f, 0);
+    m.AddForce(f);
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>We now have:
+
+            <p>
+                We now have:
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-            <pre>
-                
-                Vector3 f =  new Vector3 (0, 0.1f, 0);
+            <pre class="prettyprint">
+
+
+                Vector2 f =  new Vector2 (0, 0.1f, 0);
                 force = aC26.attract(mC26);
-                mC26.applyForce(force);
+                mC26.AddForce(force);
 
             </pre>
-            </code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>And so our Update() function can now be written as:
+
+            <p>
+                And so our Update() function can now be written as:
 
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                        <pre>
-                            
-                            void FixedUpdate()
-                            {
-                                force = aC26.attract(mC26);
-                                mC26.applyForce( new Vector3 (1f, 0f, 0f));
-                                mC26.applyForce(force);
-                        
-                            }
-        
-                        </pre>
-                        </code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>We’re almost there. Since we decided to put the attract() function inside of the Attractor class, we’ll
-                need to actually write that function. The function needs to receive a Mover object and return a Vector3,
+            <pre class="prettyprint">
+
+
+    void FixedUpdate()
+    {
+        force = aC26.attract(mC26);
+        mC26.AddForce( new Vector2 (1f, 0f, 0f));
+        mC26.AddForce(force);
+
+    }
+
+         </pre>
+
+            <p>
+                We’re almost there. Since we decided to put the attract() function inside of the Attractor class, we’ll
+                need to actually write that function. The function needs to receive a Mover object and return a Vector2,
                 i.e.:
             </p>
-            <p>And what goes inside that function? All of that nice math we worked out for gravitational attraction!
+            <p>
+                And what goes inside that function? All of that nice math we worked out for gravitational attraction!
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
-    
-    public Vector3 attract(moverChapter2_6 mover) {
-        Vector3 difference = location - mover.location;
+            <pre class="prettyprint">
+
+
+    public Vector2 attract(moverChapter2_6 mover) {
+        Vector2 difference = location - mover.location;
          float dist = difference.magnitude;
-         Vector3 gravityDirection = difference.normalized;
+         Vector2 gravityDirection = difference.normalized;
          float gravity = 6.7f * (mass * mover.mass) / (dist * dist);
- 
-         Vector3 gravityVector = (gravityDirection * gravity);
- 
+
+         Vector2 gravityVector = (gravityDirection * gravity);
+
          return gravityVector;
      }
 
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>And we’re done. Sort of. Almost. There’s one small kink we need to work out. Let’s look at the above code
+
+            <p>
+                And we’re done. Sort of. Almost. There’s one small kink we need to work out. Let’s look at the above code
                 again. See that symbol for divide, the slash? Whenever we have one of these, we need to ask ourselves
                 the question: What would happen if the distance happened to be a really, really small number or (even
                 worse!) zero??! Well, we know we can’t divide a number by 0, and if we were to divide a number by
@@ -1722,112 +1726,131 @@ height: 100%;" alt="Figure 2.9">
                 Maybe, no matter where the Mover actually is, we should never consider it less than 5 pixels or more
                 than 25 pixels away from the attractor.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
+            <pre class="prettyprint">
+
     distance =  Mathf.Clamp (distance, 5, 25);
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>For the same reason that we need to constrain the minimum distance, it’s useful for us to do the same
+
+            <p>
+                For the same reason that we need to constrain the minimum distance, it’s useful for us to do the same
                 with the maximum. After all, if the mover were to be, say, 500 pixels from the attractor (not
                 unreasonable), we’d be dividing the force by 250,000. That force might end up being so weak that it’s
                 almost as if we’re not applying it at all.
             </p>
-            <p>Now, it’s really up to you to decide what behaviors you want. But in the case of, “I want
+            <p>
+                Now, it’s really up to you to decide what behaviors you want. But in the case of, “I want
                 reasonable-looking attraction that is never absurdly weak or strong,” then constraining the distance is
                 a good technique.
             </p>
-            <p>Our Mover class hasn’t changed at all, so let’s just look at the main program and the Attractor class as
+            <p>
+                Our Mover class hasn’t changed at all, so let’s just look at the main program and the Attractor class as
                 a whole, adding a variable G for the universal gravitational constant. (On the website, you’ll find that
                 this example also has code that allows you to move the Attractor object with the mouse.)
             </p>
             <p><span class="example">Example 2.6: Attraction</span></p>
-            <div style="--aspect-ratio: 16/9;">
-                <iframe src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure6/index.html" width="1600"
-                    height="900" frameborder="0" Id="2.6">
-                </iframe>
-            </div>
-            <p></p>
-            <button onclick="reload('2.6')">Reload Figure</button>
-            <p></p>
-            <p>And we could, of course, expand this example using an array to include many Mover objects, just as we did
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs6" id="tab11" checked />
+                    <label for="tab11"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel11"
+                           tabindex="0">Code</label>
+                    <div id="tab-content11"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example6" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs6" id="tab12" />
+                    <label for="tab12"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel12"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content12"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure6/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="2.6">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                And we could, of course, expand this example using an array to include many Mover objects, just as we did
                 with friction and drag:
             </p>
             <p><span class="example">Example 2.7: Attraction with many Movers</span></p>
-            <div style="--aspect-ratio: 16/9;">
-                <iframe src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure7/index.html" width="1600"
-                    height="900" frameborder="0" Id="2.7">
-                </iframe>
-            </div>
-            <p></p>
-            <button onclick="reload('2.7')">Reload Figure</button>
-            <p></p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
-    public class Chapter2Fig7 : MonoBehaviour
-    {
-        public List<GameObject> Movers = new List<GameObject>();
-        public GameObject Mover;
-        public int amountMovers;
-    
-        public GameObject a;
-        Vector3 force;
-    
-        private attractorChapter2_6 aC26;
-        private moverChapter2_6 mC26;
-    
-    
-        // Start is called before the first frame update
-        void Start()
-        {   
-            for (int i = 0; i < amountMovers; i++)
-            {
-                Mover = Instantiate(Mover);
-                Mover.transform.position = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
-                float scale = Random.Range(1f, 10f);
-                Mover.transform.localScale = new Vector3(scale, scale, scale);
-                Movers.Add(Mover);
-    
-            }    
-        }
-    
-        // Update is called once per frame
-        void FixedUpdate()
-        {  
-            foreach (GameObject m in Movers)
-            {    
-                Vector3 difference = this.transform.position - m.transform.position;
-                float dist = difference.magnitude;
-                Vector3 gravityDirection = difference.normalized;
-                float gravity = 6.7f * (this.transform.localScale.x * m.transform.localScale.x * 80) / (dist * dist);
-    
-                Vector3 gravityVector = (gravityDirection * gravity);
-                m.transform.GetComponent<Rigidbody>().AddForce(m.transform.forward*10f, ForceMode.Acceleration);
-                m.transform.GetComponent<Rigidbody>().AddForce(gravityVector, ForceMode.Acceleration);
-            }
-        }
-    }</pre>
-</code>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs7" id="tab13" checked />
+                    <label for="tab13"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel13"
+                           tabindex="0">Code</label>
+                    <div id="tab-content13"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example7" style="height: 500px"></div>
                     </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs7" id="tab14" />
+                    <label for="tab14"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel14"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content14"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure7/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="2.7">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
 
             <div class="note">
                 <h4 style="text-align:right;">
                     Exercise
                     2.8
                 </h4>
-                <p>In the example above, we have a system (i.e. array) of Mover objects and one Attractor object. Build
+                <p>
+                    In the example above, we have a system (i.e. array) of Mover objects and one Attractor object. Build
                     an example that has systems of both movers and attractors. What if you make the attractors
                     invisible? Can you create a pattern/design from the trails of objects moving around attractors? See
                     the Metropop Denim project by Clayton Cubitt and Tom Carden for an example.
@@ -1838,8 +1861,9 @@ height: 100%;" alt="Figure 2.9">
                     Exercise
                     2.9
                 </h4>
-                <p>It’s worth noting that gravitational attraction is a model we can follow to develop our own forces.
-                    This chapter isn’t suggesting that you should exclusively create sketches that use gravitational
+                <p>
+                    It’s worth noting that gravitational attraction is a model we can follow to develop our own forces.
+                    This chapter isn’t suggesting that you should exclusively create scenes that use gravitational
                     attraction. Rather, you should be thinking creatively about how to design your own rules to drive
                     the behavior of objects. For example, what happens if you design a force that is weaker the closer
                     it gets and stronger the farther it gets? Or what if you design your attractor to attract faraway
@@ -1847,113 +1871,156 @@ height: 100%;" alt="Figure 2.9">
                 </p>
             </div>
             <h2>2.10 Everything Attracts (or Repels) Everything</h2>
-            <p>Hopefully, you found it helpful that we started with a simple scenario—one object attracts another
+            <p>
+                Hopefully, you found it helpful that we started with a simple scenario—one object attracts another
                 object—and moved on to one object attracts many objects. However, it’s likely that you are going to find
                 yourself in a slightly more complex situation: many objects attract each other. In other words, every
                 object in a given system attracts every other object in that system (except for itself).
             </p>
-            <p>We’ve really done almost all of the work for this already. Let’s consider a Unity scene with an array of
+            <p>
+                We’ve really done almost all of the work for this already. Let’s consider a Unity scene with an array of
                 Mover objects:
             </p>
-            <p>The FixedUpdate() function is where we need to work some magic. Currently, we’re saying: “for every mover
+            <p>
+                The FixedUpdate() function is where we need to work some magic. Currently, we’re saying: “for every mover
                 i, update and display yourself.” Now what we need to say is: “for every mover i, be attracted to every
                 other mover j, and update and display yourself.”
 
-                To do this, we need to nest a second loop.</p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-<pre>
-    public class Chapter2Fig8 : MonoBehaviour
+                To do this, we need to nest a second loop.
+            </p>
+            <pre class="prettyprint">
+
+    private List<Mover2_8> Movers = new List<Mover2_8>();
+    public Transform moverSpawnTransform;
+
+    Vector3 force;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        public List<GameObject> Movers = new List<GameObject>();
-        public GameObject Mover;
-        public int amountMovers;
-    
-        Vector3 force;
-    
-        // Start is called before the first frame update
-        void Start()
-        { 
-            for (int i = 0; i < amountMovers; i++)
-            {
-                Mover = Instantiate(Mover);
-                Mover.transform.position = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
-                float scale = Random.Range(1f, 10f);
-                Mover.transform.localScale = new Vector3(scale, scale, scale);
-                Movers.Add(Mover);
-            }
-        }
-    
-        // Update is called once per frame
-        void FixedUpdate()
+
+        // Create copys of our mover and add them to our list
+
+        while (Movers.Count < 30)
         {
-            for (int i = 0; i < Movers.Count; i++)
+            // Instantiate them at random vectors from the left to the right wall and from our floor to ceiling.
+            moverSpawnTransform.position = new Vector2(UnityEngine.Random.Range(leftWallX, rightWallX), UnityEngine.Random.Range(floorY, ceilingY));
+
+            Movers.Add(new Mover2_8(
+                        moverSpawnTransform.position,
+                        leftWallX,
+                        rightWallX,
+                        ceilingY,
+                        floorY
+                    ));
+        }
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        // We want to create two groups of movers to iterate through.
+        // We do this so that an Mover[i] never tries to attract itself
+        // This is seen on line 51.
+        for (int i = 0; i < Movers.Count; i++)
+        {
+            for (int j = 0; j < Movers.Count; j++)
             {
-                i++;
-                for (int j = 0; j < Movers.Count; j++)
+                if (i != j)
                 {
-                    if (i != j)
-                    {
-                        Movers[i].GetComponent<moverChapter2_8>().attract(Movers[j]);
-                    }
+                    //Now that we are sure that our Mover will not attract itself, we need it to attract a different Mover
+                    //We do that by directing a Mover[j] to use their attract() meothd on a Movers[i] Rigidbody
+                    Vector2 attractedMover = Movers[j].attract(Movers[i].body);
+                    //We then apply that force the Movers[i] with the Rigidbody's Addforce method
+                    Movers[i].body.AddForce(attractedMover, ForceMode.Impulse);
                 }
             }
+            //Now we check the boundaries of our scene to make sure the movers don't fly off
+            //When we use gravity, the Movers will naturally fall out of the camera's view
+            // This stops that.
+            Movers[i].CheckBoundaries();
         }
     }
+
 </pre>
-</code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>In the previous example, we had an Attractor object with a function named attract(). Now, since we have
+
+            <p>
+                In the previous example, we had an Attractor object with a function named attract(). Now, since we have
                 movers attracting movers, all we need to do is copy the attract() function into the Mover class.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-            <pre>
-public void attract(GameObject m)
+            <pre class="prettyprint">
+
+    public Vector2 attract(Rigidbody m)
     {
-
-        Vector3 difference = m.transform.position - this.transform.position;
-        float dist = difference.magnitude;
-         Vector3 gravityDirection = difference.normalized;
-         float gravity = 6.7f * (m.transform.localScale.x * this.transform.localScale.x) / (dist * dist);
-        Vector3 gravityVector = (gravityDirection * gravity);
-        applyForce(gravityVector);
-
+        Vector2 difference = m.position - body.position;
+        float dist = Mathf.Clamp(difference.magnitude, 10f, 25f);
+        Vector3 gravityDirection = difference.normalized;
+        float gravity = -9.81f * (m.mass * body.mass) / (dist * dist);
+        Vector2 gravityVector = (gravityDirection * gravity);
+        return gravityVector;
     }
             </pre>
-            </code>
-                    </div>
-                    <div style="position:relative;clear:both;display:block;height:1px;width:100%;"></div>
-                </div>
-            </div>
-            <p>Of course, there’s one small problem. When we are looking at every mover i and every mover j, are we OK
+
+            <p>
+                Of course, there’s one small problem. When we are looking at every mover i and every mover j, are we OK
                 with the times that i equals j? For example, should mover #3 attract mover #3? The answer, of course, is
                 no. If there are five objects, we only want mover #3 to attract 0, 1, 2, and 4, skipping itself. And so,
                 we finish this example by adding a simple conditional statement to skip applying the force when i equals
                 j.
             </p>
             <p><span class="example">Example 2.8: Mutual Attraction</span></p>
-            <div style="--aspect-ratio: 16/9;">
-                <iframe src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure7/index.html" width="1600"
-                    height="900" frameborder="0" Id="2.8">
-                </iframe>
-            </div>
-            <p></p>
-            <button onclick="reload('2.8')">Reload Figure</button>
-            <p></p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs8" id="tab15" checked />
+                    <label for="tab15"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel15"
+                           tabindex="0">Code</label>
+                    <div id="tab-content15"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example8" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs8" id="tab16" />
+                    <label for="tab16"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel16"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content16"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter2/figure8/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="2.8">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             <div class="note">
                 <h4 style="text-align:right;">
                     Exercise
                     2.10
                 </h4>
-                <p>Change the attraction force in Example 2.8 to a repulsion force. Can you create an example in which
+                <p>
+                    Change the attraction force in Example 2.8 to a repulsion force. Can you create an example in which
                     all of the Mover objects are attracted to the mouse, but repel each other? Think about how you need
                     to balance the relative strength of the forces and how to most effectively use distance in your
                     force calculations.
@@ -1963,65 +2030,65 @@ public void attract(GameObject m)
                 <h4>
                     The Ecosystem Project
                 </h4>
-                <p>Step 2 Exercise:
+                <p>
+                    Step 2 Exercise:
                 </p>
-                <p>Incorporate the concept of forces into your ecosystem. Try introducing other elements into the
+                <p>
+                    Incorporate the concept of forces into your ecosystem. Try introducing other elements into the
                     environment (food, a predator) for the creature to interact with. Does the creature experience
                     attraction or repulsion to things in its world? Can you think more abstractly and design forces
                     based on the creature’s desires or goals?
                 </p>
             </div>
-            <footer>
-                <div class="footer" style="width: 33%;   float:left;
-                padding-left: 5px;">
-                    <h4>Licenses</h4>
-                    <p>
-                        <a class="license-badge" rel="license"
-                            href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
-                                style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
-                        <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
-                                alt="LGPL License" style="border-width:0"
-                                src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
-                    </p>
+            <div class="footer">
+                <div class="col">
 
-                    <p>
-                        The book's text and illustrations are licensed under a <a rel="license"
-                            href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
-                            Attribution-NonCommercial 3.0 Unported License</a>.
-                    </p>
+                <h4>Licenses</h4>
+                <p>
+                    <a class="license-badge" rel="license"
+                        href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
+                            style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
+                    <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
+                            alt="LGPL License" style="border-width:0"
+                            src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
+                </p>
 
-                    <p>
-                        All of the book's source code is licensed under the <a rel="license"
-                            href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public
-                            License</a>
-                        as published by the Free Software Foundation; either version 2.1 of the License, or (at your
-                        option) any later version.
-                    </p>
-                </div>
-                <div class="footer" style="width: 33%;   float:left; padding-left: 5px;">
-                    <h4>Remixer</h4>
-                    <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
-                            Arts and Media Program</a> at Columbia College Chicago.</p>
+                <p>
+                    The book's text and illustrations are licensed under a <a rel="license"
+                        href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
+                        Attribution-NonCommercial 3.0 Unported License</a>.
+                </p>
 
-                    <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+                <p>
+                    All of the book's source code is licensed under the <a rel="license"
+                        href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
+                    as published by the Free Software Foundation; either version 2.1 of the License, or (at your
+                    option) any later version.
+                </p>
+        </div>
+            <div class="col">
+                <h4>Remixer</h4>
+                <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
+                        Arts and Media Program</a> at Columbia College Chicago.</p>
 
-                    <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
-                            href="https://github.com/jadlerfisher">GitHub</a></p>
+                <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
 
-                </div>
-                <div class="footer" style="width: 33%;   float:left;
-                padding-left: 5px;">
-                    <h4>Author</h4>
-                    <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
-                            Telecommunications Program</a> at New York University.</p>
+                <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
+                        href="https://github.com/jadlerfisher">GitHub</a></p>
 
-                    <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
+            </div>
+            <div class="col">
+                <h4>Author</h4>
+                <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
+                        Telecommunications Program</a> at New York University.</p>
 
-                    <p><a href="https://twitter.com/shiffman">Twitter</a> <a
-                            href="http://github.com/shiffman">GitHub</a></p>
+                <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
 
-                </div>
-            </footer>
+                <p><a href="https://twitter.com/shiffman">Twitter</a> <a
+                        href="http://github.com/shiffman">GitHub</a></p>
+
+            </div>
+        </div>
         </section>
     </div>
 
@@ -2032,13 +2099,7 @@ public void attract(GameObject m)
 
 
 
-    <script>
-
-        function reload(iframeid) {
-            document.getElementById(iframeid).src = document.getElementById(iframeid).src
-        }
-
-        window.onscroll = function () { scrollFunction() };
+    <script>window.onscroll = function () { scrollFunction() };
 
         function scrollFunction() {
             if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
@@ -2055,8 +2116,134 @@ public void attract(GameObject m)
                 document.getElementById("titleHeader").style.float = "";
 
             }
-        }
-    </script>
+
+        }</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+    <script src="scripts/github-embed.min.js"></script>
+    <script>//////lazy loader
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var lazyloadImages;
+
+            if ("IntersectionObserver" in window) {
+                lazyloadImages = document.querySelectorAll(".lazy");
+                var imageObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            var iframe = entry.target;
+                            iframe.src = iframe.dataset.src;
+                            iframe.classList.remove("lazy");
+                            imageObserver.unobserve(iframe);
+                        }
+                    });
+                });
+
+                lazyloadImages.forEach(function (iframe) {
+                    imageObserver.observe(iframe);
+                });
+            } else {
+                var lazyloadThrottleTimeout;
+                lazyloadImages = document.querySelectorAll(".lazy");
+
+                function lazyload() {
+                    if (lazyloadThrottleTimeout) {
+                        clearTimeout(lazyloadThrottleTimeout);
+                    }
+
+                    lazyloadThrottleTimeout = setTimeout(function () {
+                        var scrollTop = window.pageYOffset;
+                        lazyloadImages.forEach(function (iframe) {
+                            if (iframe.offsetTop < (window.innerHeight + scrollTop)) {
+                                iframe.src = iframe.dataset.src;
+                                iframe.classList.remove('lazy');
+                            }
+                        });
+                        if (lazyloadImages.length == 0) {
+                            document.removeEventListener("scroll", lazyload);
+                            window.removeEventListener("resize", lazyload);
+                            window.removeEventListener("orientationChange", lazyload);
+                        }
+                    }, 20);
+                }
+
+                document.addEventListener("scroll", lazyload);
+                window.addEventListener("resize", lazyload);
+                window.addEventListener("orientationChange", lazyload);
+            }
+        })
+
+        githubEmbed('#example1', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%202/Example%202.1/Chapter2Fig1.cs"
+            }]
+        });
+
+        githubEmbed('#example2', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%202/Example%202.2/Chapter2Fig2.cs"
+            }]
+        });
+
+        githubEmbed('#example3', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%202/Example%202.3/Chapter2Fig3.cs"
+            }]
+        });
+
+        githubEmbed('#example4', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%202/Example%202.4/Chapter2Fig4.cs"
+            }]
+        });
+
+        githubEmbed('#example5', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%202/Example%202.5/Chapter2Fig5.cs"
+            }]
+        });
+
+        githubEmbed('#example6', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%202/Example%202.6/Chapter2Fig6.cs"
+            }]
+        });
+
+        githubEmbed('#example7', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%202/Example%202.7/Chapter2Fig7.cs"
+            }]
+        });
+
+        githubEmbed('#example8', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%202/Example%202.8)/Chapter2Fig8.cs"
+            }]
+        });</script>
 </body>
 
 </html>

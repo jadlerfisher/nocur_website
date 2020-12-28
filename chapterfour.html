@@ -1,18 +1,40 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <!-- Meta -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="description" content="The Nature of Code revised for use in Unity with C#.">
+    <meta name="author" content="Joshua A. Fisher, Ph.D.">
 
+    <base href="https://natureofcodeunity.com/" target="_self">
     <!--Google Font-->
 
     <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova|Nunito+Sans:700&display=swap" rel="stylesheet">
 
+
+
+
+
+	<meta property="og:title" content="The Nature of Code Unity Remix">
+	<meta property="og:description" content="The Nature of Code revised for use in Unity with C#.">
+	<meta property="og:url" content="https://natureofcodeunity.com/">
+	<meta property="og:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+
+
+	<meta name="twitter:title" content="The Nature of Code Unity Remix">
+	<meta name="twitter:description" content="The Nature of Code revised for use in Unity with C#.">
+	<meta name="twitter:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+	<meta name="twitter:card" content="summary_large_image">
+
     <!-- CSS Styles -->
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/code-html.css" />
+    <link rel="stylesheet" href="css/github-embed.css" />
+
+    <!--scripts-->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
 
     <!-- Title -->
     <title>The Nature of Code Unity Remix</title>
@@ -54,7 +76,7 @@
                     <a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
                 </li>
                 <li>
-                    <a href="chapterfive.html">5. PHYSICS LIBRARIES</a>
+                    <a href="chapterfive.html">5. PHYSICS COMPONENTS</a>
                 </li>
                 <li>
                     <a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
@@ -118,1419 +140,1143 @@
             </p>
 
             <h2>4.1 Why We Need Particle Systems</h2>
+            <p>
+                We’ve defined a particle system to be a collection of independent objects, often represented by a simple
+                shape or dot. Why does this matter? Certainly, the prospect of modeling some of the phenomena we listed
+                (explosions!) is attractive and potentially useful. But really, there’s an even better reason for us to
+                concern ourselves with particle systems. If we want to get anywhere in this nature of code life, we’re
+                going to need to work with systems of many things. We’re going to want to look at balls bouncing, birds
+                flocking, ecosystems evolving, all sorts of things in plural.
+            </p>
+            <p>
+                Just about every chapter after this one is going to need to deal with a list of objects. Yes, we’ve done
+                this with an array in some of our first vector and forces examples. But we need to go where no array has
+                gone before.
+            </p>
+            <p>
+                First, we’re going to want to deal with flexible quantities of elements. Sometimes we’ll have zero
+                things, sometimes one thing, sometimes ten things, and sometimes ten thousand things. Second, we’re
+                going to want to take a more sophisticated object-oriented approach. In previous chapters, we have
+                written classes to handle objects and their interactions. In Unity, specifically for particle systems,
+                we use an Interface approach that handles all of the modifications we want to make to our particle
+                systems. Critically, this means we cannot directly modify individual particles. Instead, we pass
+                information through the interface which then handles one to hundreds of thousands of particles.
+            </p>
+            <p>The goal here is to be able to write a main program that looks like the following:</p>
+            <pre class="prettyprint">
 
-            <p>
-                We’ve defined a particle system to be a collection of independent objects, often represented by a simple shape or dot. Why does this matter? Certainly, the prospect of modeling some of the phenomena we listed (explosions!) is attractive and potentially useful. But really, there’s an even better reason for us to concern ourselves with particle systems. If we want to get anywhere in this nature of code life, we’re going to need to work with systems of many things. We’re going to want to look at balls bouncing, birds flocking, ecosystems evolving, all sorts of things in plural.
-            </p>
-            <p>Just about every chapter after this one is going to need to deal with a list of objects. Yes, we’ve done this with an array in some of our first vector and forces examples. But we need to go where no array has gone before.
+        public class Chapter4Fig1 : MonoBehaviour
+        {
+            particleSystemFigure1 psf1;
+            Vector3 particleSystemLocation;
+            public Vector3 velocity;
+            public float lifeTime;
+            public float startSpeed;
 
-            <p>
-                First, we’re going to want to deal with flexible quantities of elements. Sometimes we’ll have zero things, sometimes one thing, sometimes ten things, and sometimes ten thousand things. Second, we’re going to want to take a more sophisticated object-oriented approach. Instead of simply writing a class to describe a single particle, we’re also going to want to write a class that describes the collection of particles—the particle system itself. The goal here is to be able to write a main program that looks like the following:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                No single particle is ever referenced in the above code, yet the result will be full of particles flying all over the screen. Getting used to writing Unity scenees with multiple classes, and classes that keep lists of instances of other classes, will prove very useful as we get to more advanced chapters in this book.
-            </p>
+            int maxParticles;
 
-            <p>
-                Finally, working with particle systems is also a good excuse for us to tackle two other advanced object-oriented programming techniques: inheritance and polymorphism. With the examples we’ve seen up until now, we’ve always had an array of a single type of object, like "movers" or “oscillators.” With inheritance (and polymorphism), we’ll learn a convenient way to store a single list that contains objects of different types. This way, a particle system need not only be a system of a single type of particle.
+            // Start is called before the first frame update
+            void Start()
+            {
+                //Let's just have one particle
+                maxParticles = 1;
+                psf1 = new particleSystemFigure1(particleSystemLocation, startSpeed, velocity, lifeTime, maxParticles);
+            }
+        }
+            </pre>
+            <p>a single particle flying
+                over the screen. Getting used to creating Unity scenes with multiple classes, classes that keep
+                lists of instances of other classes, and objects that use interfaces will prove very useful as we get to
+                more advanced chapters in this book.
             </p>
             <p>
-                Though it may seem obvious to you, I’d also like to point out that there are typical implementations of particle systems, and that’s where we will begin in this chapter. However, the fact that the particles in this chapter look or behave a certain way should not limit your imagination. Just because particle systems tend to look sparkly, fly forward, and fall with gravity doesn’t mean that those are the characteristics yours should have.
+                Though it may seem obvious to you, I’d also like to point out that there are typical implementations of
+                particle systems, and that’s where we will begin in this chapter. However, the fact that the particles
+                in this chapter look or behave a certain way should not limit your imagination. Just because particle
+                systems tend to look sparkly, fly forward, and fall with gravity doesn’t mean that those are the
+                characteristics yours should have.
             </p>
             <p>
-                The focus here is really just how to keep track of a system of many elements. What those elements do and how those elements look is up to you.
+                The focus here is really just how to keep track of a system of many elements. What those elements do and
+                how those elements look is up to you.
             </p>
-
             <h2>4.2 A Single Particle</h2>
+            <p>
+                Before we can get rolling on the system itself, we have to take a look at the ParticleSystem component
+                and interface built-in to Unity. The Particle System component has many properties, and for convenience,
+                the Inspector
+                organizes them into collapsible sections called “modules”. These modules are documented in separate
+                pages. See documentation on Particle System Modules to learn about each one. We will be accessing these
+                same modules programmatically in our scripts.
+            </p>
+                The first module we will be accessing is the Main module. We access it through the particle system
+                component. From there we can add and modify many of the common variables we’ve addressed in previous
+                chapters. Properties like velocity and location.
+            </p>
+            <p>
+                Typical particle systems involve something called an emitter. The emitter is the source of the particles
+                and controls the initial settings for the particles, location, velocity, etc. An emitter might emit a
+                single burst of particles, or a continuous stream of particles, or both. The point is that for a typical
+                implementation such as this, a particle is born at the emitter but does not live forever.
+            </p>
+            <p>
+                If you look at the above code, you’ll see that there are some new properties we are adding: a start
+                speed, lifetime, and max number of particles. Unlike in previous examples, we need to give our particles
+                a starting speed as a float. This start speed can be understood as an initial pop, an immediate addition
+                of velocity added to the particle as soon as it is instantiated. The max number of particles is
+                self-explanatory. As you might expect, the max number of particles you choose to have in the scene will
+                impact performance. Lastly, the Lifetime of a particle dictates how long, in milliseconds, it will be
+                rendered and exist in the scene. The longer the Lifetime, the more memory each particle will use.
+                Balancing particle lifetime and the max particles is necessary to achieve optimal performance.
+            </p>
+            <pre class="prettyprint">
+
+        public class particleSystemFigure1
+        {
+            //We need to create a GameObject to hold the ParticleSystem component
+            GameObject particleSystemGameObject;
+
+            //This is the ParticleSystem component but we'll need to access everything through the .main property
+            //This is because ParticleSystems in Unity are interfaces and not independent objects
+            ParticleSystem particleSystemComponent;
+
+            public particleSystemFigure1(Vector3 particleSystemLocation, float startSpeed, Vector3 velocity, float lifeTime, int maxParticles)
+            {
+                //Create the GameObject in the constructor
+                particleSystemGameObject = new GameObject();
+                //Move the GameObject to the right position
+                particleSystemGameObject.transform.position = particleSystemLocation;
+                //Add the particle system
+                particleSystemComponent = particleSystemGameObject.AddComponent<ParticleSystem>();
+
+            }
+
+                            </pre>
+            <p>
+                So, okay, we’ve accessed the Main module of our particle system. Now let’s look at the Velocity Over
+                Lifetime module. There will be plenty of time where you’ll want particles to speed up, accelerate, or
+                slow down. In previous chapters, we have added an acceleration Vector2 or 3 to a velocity Vector2 or 3
+                to increase the velocity of an object over time. In this instance, the Particle System interface will
+                handle acceleration for us.
+            </p>
+            <p>
+                Just like we accessed the Main module, we need to access our Velocity Over Lifetime module in the same
+                way. However, unlike Main we have to enable this one, and all of the others. The Main module is the only
+                one that does not need to be enabled. After that, we need to say how the particles will react to other
+                objects in the scene, whether or not they will be impacted by parent objects(local) or all objects in
+                world space. Let’s have them work locally since our particle system does not have a parent in the
+                hierarchy.
+            </p>
+            <pre class="prettyprint">
+
+        //Now we need to gather the interfaces of our ParticleSystem
+        //The main interface covers general properties
+        var main = particleSystemComponent.main;
+
+        //In the Main Interface we'll sat the initial start LifeTime (how long a single particle will live)
+        //And, of course, we'll set our Max Particles
+        main.startLifetime = lifeTime;
+        main.startSpeed = startSpeed;
+        main.maxParticles = maxParticles;
+            </pre>
+            <p>
+                Now, to create an organic look in particle systems the particles need to have a little randomness. To
+                achieve this, we can use Unity’s Animation Curves which allow us to set key frames. These key
+                frames mark either, when a change should occur over a particle’s lifetime; or what the extremes of a
+                range should be for randomness related to a property. To use these curves, the particle system component
+                has a property for a MinMaxCurve. We can also provide float values ot the numers that are constant.
+            </p>
+            <p>
+                Looking at the example below, we’ll set the curves for the velocity. The minimum, will be a negative
+                velocity multiplied by the velocity itself. The max, for our x-property will the velocity we pass into
+                our method; for our y-property, the velocity will be a negative version because we want our particles to
+                move downward. In future examples, we’ll use gravity to do this. Now that we’ve calculated these, we can
+                go ahead and set this MinMax curve for each of the floats in our Vector3. Unity requires us to assign a
+                value to the z-property even when we do not use it.
+            </p>
+            <pre class="prettyprint">
+
+        public void velocityModule(Vector3 velocity)
+        {
+            //The velocityOverLifetime inferface controls the velocity of individual particles
+            var velocityOverLifetime = particleSystemComponent.velocityOverLifetime;
+
+            //First we need to enable the Velocity Over Lifetime Interface;
+            velocityOverLifetime.enabled = true;
+            velocityOverLifetime.space = ParticleSystemSimulationSpace.Local;
+
+            //We then to create a MinMaxCurves which will manage the change in velocity a
+            ParticleSystem.MinMaxCurve minMaxCurveX = new ParticleSystem.MinMaxCurve(-velocity.x * velocity.x, velocity.x);
+            ParticleSystem.MinMaxCurve minMaxCurveY = new ParticleSystem.MinMaxCurve(-velocity.y * velocity.y, -velocity.y);
+
+            velocityOverLifetime.x = minMaxCurveX;
+            velocityOverLifetime.y = minMaxCurveY;
+            //Even though we are not using Z, Unity needs us to otherwise it will throw an error.
+            //This is a bug in 2019.
+            velocityOverLifetime.z = minMaxCurveY;
+        }
+            </pre>
+            <p>
+                To add color, we need to access and then enable the Color Over Lifetime module. We’ll put this in a
+                method, but it works the same way as the Velocity Over Time module. We’ve included a standard particle
+                material in Resources to use. However, you could use any number of methods for creating your own
+                material and modifying its color. Since we want to create a fadeout effect, wherein the particle becomes
+                more transparent as it dies, we need to use a gradient. While the syntax for these gradients is
+                different than Animation Curves, they’re similar.
+            </p>
+            <pre class="prettyprint">
+
+        public void colorModule()
+        {
+            //The colorOverLifetime interfaces manages the color of the objects over their lifetime.
+            var colorOverLifetime = particleSystemComponent.colorOverLifetime;
+
+            //While we are here, let's add a material to our particles
+            ParticleSystemRenderer r = particleSystemGameObject.GetComponent<ParticleSystemRenderer>();
+            //There a few different ways to do this, but we've created a material that is based on the default particle shader
+            r.material = Resources.Load<Material>("particleMaterial");
+        }
+            </pre>
+            <p>
+                First, we create a new gradient object. This gradient object holds an array of GradientColorKeys. These
+                GradientColorKeys specify two pieces of information: one, the color and two, when the change occurs.
+                These changes occur on a scale from 0 to 1. So, for example, we’ll set our first GradientColorKey to be
+                white at the 0 marker on the scale. Then red at the .5 marker on the scale. Lastly, blue at the 1
+                marker. This will cause the particle to be white at the beginning of its lifetime, red in the middle,
+                and blue at the end.
+            </p>
+            <pre class="prettyprint">
+
+        //To have the particle become transparent we need to access the colorOverLifetime Interface
+        colorOverLifetime.enabled = true;
+        Gradient grad = new Gradient();
+        //This gradient key lets us choose points on a gradient that represent different RGBA or Unity.Color values.
+        //These gradient values exist in an array
+        grad.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f) , new GradientColorKey(Color.red, 0.5f), new GradientColorKey(Color.blue, 1.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0f, 2.0f) });
+        //Set the color to the gradient we created above
+        colorOverLifetime.color = grad;
+            </pre>
 
             <p>
-                Before we can get rolling on the system itself, we have to write the class that will describe a single particle. The good news: we’ve done this already. Our Mover class from Chapter 2 serves as the perfect template. For us, a particle is an independent body that moves about the screen. It has location, velocity, and acceleration, a constructor to initialize those variables, and functions to display() itself and update() its location.
+                We can do the same thing the alpha value of our material as well. We refer to that as a GradientAlphaKey.
+                We set it in a similar way, but the first value is the opacity. A zero opacity means it is invisible; a
+                1 means it is opaque and non-transparent. The second value is the same.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
+            <p>
+                We’ll keep it basic for this first figure. We only want the color to be white and for its transparency to
+                increase as it reaches the end of its lifetime. Once we set up our GradientColorKey[] array, we assign
+                it to the material’s color value.
+            </p>
+            <p>
+            <span class="example">
+                    Example 4.1: A Single Particle
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+            <li>
+            <input type="radio" name="tabs0" id="tab0a" checked />
+
+
+
+
+
+
+
+            <label for="tab0a" role="tab" aria-selected="true" aria-controls="panel0" tabindex="2">Code</label>
+            <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description"
+                 aria-hidden="false">
+            <div id="example1" style="height: 500px"></div>
                     </div>
-                </div>
-            </div>
-            <p>
-                This is about as simple as a particle can get. From here, we could take our particle in several directions. We could add an applyForce() function to affect the particle’s behavior (we’ll do precisely this in a future example). We could add variables to describe color and shape, or reference a PImage to draw the particle. For now, however, let’s focus on adding just one additional detail: lifespan.
-            </p>
-            <p>
-                Typical particle systems involve something called an emitter. The emitter is the source of the particles and controls the initial settings for the particles, location, velocity, etc. An emitter might emit a single burst of particles, or a continuous stream of particles, or both. The point is that for a typical implementation such as this, a particle is born at the emitter but does not live forever. If it were to live forever, our Unity scene would eventually grind to a halt as the number of particles increases to an unwieldy number over time. As new particles are born, we need old particles to die. This creates the illusion of an infinite stream of particles, and the performance of our program does not suffer. There are many different ways to decide when a particle dies. For example, it could come into contact with another object, or it could simply leave the screen. For our first Particle class, however, we’re simply going to add a lifespan variable. The timer will start at 255 and count down to 0, when the particle will be considered “dead.” And so we expand the Particle class as follows:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
+                </li>
+
+            <li>
+            <input type="radio" name="tabs0" id="tab0b" />
+
+
+
+
+
+
+
+            <label for="tab0b" role="tab" aria-selected="false" aria-controls="panel1" tabindex="3">Demo</label>
+            <div id="tab-content2" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                 aria-hidden="true">
+            <div align="center">
+            <iframe class="lazy"
+                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter4/figure1/index.html"
+                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                    scrolling="no" Id="4.1">
+                            </iframe>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <p>
-                The reason we chose to start the lifespan at 255 and count down to 0 is for convenience. With those values, we can assign lifespan to act as the alpha transparency for the ellipse as well. When the particle is “dead” it will also have faded away onscreen.
-            </p>
-            <p>
-                With the addition of the lifespan variable, we’ll also need one additional function—a function that can be queried (for a true or false answer) as to whether the particle is alive or dead. This will come in handy when we are writing the ParticleSystem class, whose task will be to manage the list of particles themselves. Writing this function is pretty easy; we just need to check and see if the value of lifespan is less than 0. If it is we return true, if not we return false.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Before we get to the next step of making many particles, it’s worth taking a moment to make sure our particle works correctly and create a scene with one single Particle object. Here is the full code below, with two small additions. We add a convenience function called run() that simply calls both update() and display() for us. In addition, we give the particle a random initial velocity as well as a downward acceleration (to simulate gravity).
-            </p>
-            <div id="ImageContainer">
-                <a href="https://www.jafisherportfolio.com/nocur/figures/chapter4/Figure1/index.html"
-                   target="_blank">
-                    <img src="images/figureBtn.png" style="  height: 60%;
-                " alt="Figure 4.1 Demo">
-                </a>
-            </div>
+                </li>
+            </ul>
             <div class="note">
-                <h4>Example 4.1: A single particle</h4>
-            </div>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.1
                 </h4>
-                <p>
-                    Rewrite the example so that the particle can respond to force vectors via an applyForce() function.
-                </p>
+            <p>Rewrite the example so that 1000 particles are being emitted.</p>
             </div>
             <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.2
                 </h4>
-                <p>
-                    Add angular velocity (rotation) to the particle. Create your own non-circle particle design.
+            <p>
+                    Add three different colors, with different alpha values, to the particles based on their lifetime.
                 </p>
             </div>
+            <p>Now that we have a single particle system rocking and rolling. Let’s add some interactivity. </p>
+            <h2>4.3 System of Systems</h2>
             <p>
-                Now that we have a class to describe a single particle, we’re ready for the next big step. How do we keep track of many particles, when we can’t ensure exactly how many particles we might have at any given time?
+                Let’s review for a moment where we are. We know how to talk about an individual Particle object. We also
+                know how to talk about a system of Particle objects, and this we call a “particle system.” And we’ve
+                defined a particle system as a collection of independent objects. But isn’t a particle system itself an
+                object? If that’s the case (which it is), there’s no reason why we couldn’t also have a collection of
+                many particle systems, i.e. a system of systems.
             </p>
-            <h2>4.3 The ArrayList</h2>
+            <p>
+                This line of thinking could of course take us even further, and you might lock yourself in a basement for
+                days sketching out a diagram of a system of systems of systems of systems of systems of systems. Of
+                systems. After all, this is how the world works. An organ is a system of cells, a human body is a system
+                of organs, a neighborhood is a system of human bodies, a city is a system of neighborhoods, and so on
+                and so forth. While this is an interesting road to travel down, it’s a bit beyond where we need to be
+                right now. It is, however, quite useful to know how to write a Unity scene that keeps track of many
+                particle systems, each of which keep track of many particles. Let’s take the following scenario.
+            </p>
+            <ul>
+            <li>You start with a blank screen.</li>
+            <li>You click the mouse and generate a particle system at the mouse’s location.</li>
+            <li>Each time you click the mouse, a new particle system is created at the mouse’s location.</li>
+            <li>When you right-click, you'll create a child particle system to an existng parent.</li>
+            </ul>
+            <p>
+                Whenever the mouse is pressed, a new ParticleSystem object is created. We then have a choice. We can
+                child these particle systems to existing systems or we can have them be independent. If we child a
+                particle system to another in the hierarchy, the systems will influence one another.
+            </p>
+            <p>
+                In this example, if you left-click, the ParticleSystem object will not have a parent. If you right-click,
+                the ParticleSystem will be a child of the last ParticleSystem.
+            </p>
+            <pre class="prettyprint">
 
-            <p>
-                In truth, we could use a simple array to manage our Particle objects. Some particle systems might have a fixed number of particles, and arrays are magnificently efficient in those instances. Unity also offers expand(), contract(), subset(), splice(), and other methods for resizing arrays. However, for these examples, we’re going to take a more sophisticated approach and use the Java class ArrayList, found in the java.util package ArrayList Documentation.
-            </p>
-            <p>
-                Using an ArrayList follows the same idea as using a standard array, but with different syntax. The following two code examples (which assume the existence of a generic Particle class) produce the same result: first with an array, and second with an ArrayList.
-            </p>
-            <p>
-                The standard array way:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Have you ever seen this syntax before? This is a new feature in Java 1.6 (called "generics") that Unity now supports. It allows us to specify in advance what type of object we intend to put in the ArrayList.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                This last for loop looks pretty similar to our code that looped through a regular array by accessing each index. We initialize a variable called i to 0 and count up by 1, accessing each element of the ArrayList until we get to the end. However, this is a good time to mention the “enhanced for loop” available in Java (and Unity), which is a bit more concise. The enhanced loop works with both ArrayLists and regular arrays and looks like this:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Let’s translate that. Say “for each” instead of “for” and say “in” instead of “:”. Now you have:
-            </p><p>
-                “For each Particle p in particles, run that Particle p!”
-            </p><p>
-                I know. You cannot contain your excitement. I can’t. I know it’s not necessary, but I just have to type that again.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Simple, elegant, concise, lovely. Take a moment. Breathe. I have some bad news. Yes, we love that enhanced loop and we will get to use it. But not right now. Our particle system examples will require a feature that makes using that loop impossible. Let’s continue.
-            </p>
-            <p>
-                The code we’ve written above doesn’t take advantage of the ArrayList’s resizability, and it uses a fixed size of 10. We need to design an example that fits with our particle system scenario, where we emit a continuous stream of Particle objects, adding one new particle with each cycle through draw(). We’ll skip rehashing the Particle class code here, as it doesn’t need to change.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Run the above code for a few minutes and you’ll start to see the frame rate slow down further and further until the program grinds to a halt (my tests yielded horrific performance after fifteen minutes). The issue of course is that we are creating more and more particles without removing any.
-            </p>
-            <p>
-                Fortunately, the ArrayList class has a convenient remove() function that allows us to delete a particle (by referencing its index). This is why we cannot use the new enhanced for loop we just learned; the enhanced loop provides no means for deleting elements while iterating. Here, we want to call remove() when the particle’s isDead() function returns true.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Although the above code will run just fine (and the program will never grind to a halt), we have opened up a medium-sized can of worms. Whenever we manipulate the contents of a list while iterating through that very list, we can get ourselves into trouble. Take, for example, the following code.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                This is a somewhat extreme example (with flawed logic), but it proves the point. In the above case, for each particle in the list, we add a new particle to the list (manipulating the size() of the ArrayList). This will result in an infinite loop, as i can never increment past the size of the ArrayList.
-            </p>
-            <p>
-                While removing elements from the ArrayList during a loop doesn’t cause the program to crash (as it does with adding), the problem is almost more insidious in that it leaves no evidence. To discover the problem we must first establish an important fact. When an object is removed from the ArrayList, all elements are shifted one spot to the left. Note the diagram below where particle C (index 2) is removed. Particles A and B keep the same index, while particles D and E shift from 3 and 4 to 2 and 3, respectively.
-            </p>
-            <div id="ImageContainer">
-                <img src="https://natureofcode.com/book/imgs/chapter04/ch04_01.png" style="  width: 100%;
-                height: 100%;" alt="Figure 4.1">
-                <p>
-                    Figure 4.1
-                </p>
-            </div>
-            <p>
-                Let’s pretend we are i looping through the ArrayList.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Notice the problem? We never checked particle D! When C was deleted from slot #2, D moved into slot #2, but i has already moved on to slot # 3. This is not a disaster, since particle D will get checked the next time around. Still, the expectation is that we are writing code to iterate through every single element of the ArrayList. Skipping an element is unacceptable.
-            </p>
-            <p>
-                There are two solutions to this problem. The first solution is to simply iterate through the ArrayList backwards. If you are sliding elements from right to left as elements are removed, it’s impossible to skip an element by accident. Here’s how the code would look:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                This is a perfectly fine solution in ninety-nine cases out of a hundred. But sometimes, the order in which the elements are drawn could be important and you may not want to iterate backwards. Java provides a special class—Iterator—that takes care of all of the details of iteration for you. You get to say:
-            </p>
-            <p>
-                Hey, I’d like to iterate through this ArrayList. Could you continue to give me the next element in the list one at a time until we get to the end? And if I remove elements or move them around in the list while we’re iterating, will you make sure I don’t look at any elements twice or skip any by accident?
-            </p>
-            <p>
-                An ArrayList can produce an Iterator object for you.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Once you’ve got the iterator, the hasNext() function will tell us whether there is a Particle for us to run and the next() function will grab that Particle object itself.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                And if you call the remove() function on the Iterator object during the loop, it will delete the current Particle object (and not skip ahead past the next one, as we saw with counting forward through the ArrayList).
-            </p>
-            <div id="ImageContainer">
-                <a href="https://www.jafisherportfolio.com/nocur/figures/chapter4/Figure2/index.html"
-                   target="_blank">
-                    <img src="images/figureBtn.png" style="  height: 60%;
-                " alt="Figure 4.2 Demo">
-                </a>
-            </div>
-            <div class="note">
-                <h4>Example 4.2: ArrayList of particles with Iterator</h4>
-            </div>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Putting it all together, we have:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <h2>
-                4.4 The Particle System Class
-            </h2>
+        public class Chapter4Fig2 : MonoBehaviour
+        {
+            Vector3 origin;
+            particleSystemFigure2 psf2;
+            // Update is called once per frame
+            void Update()
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    createParticleSystem(origin);
+                } else if (Input.GetMouseButtonDown(1))
+                {
+                    origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    createParticleSystem(origin, psf2.particleSystemGameObject);
+                }
+            }
 
+            void createParticleSystem(Vector3 origin)
+            {
+                Vector3 particleSystemLocation = new Vector3(origin.x, origin.y, -10);
+                Vector3 velocity = new Vector3(1f, 3f, 0f);
+                float lifeTime = 5f;
+                float startSpeed = Random.Range(-3f, 0f);
+                int maxParticles = 1000;
+
+                psf2 = new particleSystemFigure2(particleSystemLocation, startSpeed, velocity, lifeTime, maxParticles);
+            }
+            //We create an overloaded method and pass along the parent GameObject
+            void createParticleSystem(Vector3 origin, GameObject parentParticleSystem)
+            {
+                Vector3 particleSystemLocation = new Vector3(origin.x, origin.y, -10);
+                Vector3 velocity = new Vector3(1f, 3f, 0f);
+                float lifeTime = 5f;
+                float startSpeed = Random.Range(-3f, 0f);
+                int maxParticles = 1000;
+                //Create the child particle system
+                particleSystemFigure2 child = new particleSystemFigure2(particleSystemLocation, startSpeed, velocity, lifeTime, maxParticles);
+                //Now let's go ahead and give the child a parent particle system
+                child.particleSystemGameObject.transform.SetParent(psf2.particleSystemGameObject.transform);
+
+                //Now let's turn on the inherit velocity module
+                child.inheritVelocityModule();
+            }
+        }
+            </pre>
+            <p>To make sure these particles systems interact with one anothwe need to turn on the Inherit Velocity Module.</p>
             <p>
-                OK. Now we’ve done two things. We’ve written a class to describe an individual Particle object. We’ve conquered the ArrayList and used it to manage a list of many Particle objects (with the ability to add and delete at will).
-            </p><p>
-                We could stop here. However, one additional step we can and should take is to write a class to describe the list of Particle objects itself—the ParticleSystem class. This will allow us to remove the bulky logic of looping through all particles from the main tab, as well as open up the possibility of having more than one particle system.
-            </p><p>
-                If you recall the goal we set at the beginning of this chapter, we wanted our main tab to look like this:
+            <pre class="prettyprint">
+
+        public void inheritVelocityModule()
+        {
+            var inheritVelocityModule = particleSystemComponent.inheritVelocity;
+            inheritVelocityModule.enabled = true;
+            //Let's change the color of the child material so it is easier to see
+            ParticleSystemRenderer r = particleSystemGameObject.GetComponent<ParticleSystemRenderer>();
+            r.material.color = Color.red;
+
+            //Now let's grab the current velocity from the parent particleSystem
+            inheritVelocityModule.mode = ParticleSystemInheritVelocityMode.Current;
+            //And add a multiplier so they move faster
+            //We can use a curve, like above in velocity, or just a general multiplier.
+            inheritVelocityModule.curveMultiplier = 100;
+        }
+                </pre>
+                <br></br>
+            <span class="example">
+                    Example 4.2: System of systems
+                </span>
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
+            <ul class="tabs" role="tablist">
+            <li>
+            <input type="radio" name="tabs2" id="tab3" checked />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab3" role="tab" aria-selected="true" aria-controls="panel3" tabindex="0">Code</label>
+            <div id="tab-content3" class="tab-content" role="tabpanel" aria-labelledby="description"
+                 aria-hidden="false">
+            <div id="example2" style="height: 500px"></div>
                     </div>
-                </div>
-            </div>
-            <p>
-                Let’s take the code from Example 4.2 and review a bit of object-oriented programming, looking at how each piece from the main tab can fit into the ParticleSystem class.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
+                </li>
+
+            <li>
+            <input type="radio" name="tabs2" id="tab4" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab4" role="tab" aria-selected="false" aria-controls="panel4" tabindex="0">Demo</label>
+            <div id="tab-content4" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                 aria-hidden="true">
+            <div align="center">
+            <iframe class="lazy"
+                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter4/figure2/index.html"
+                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                    scrolling="no" Id="4.2">
+                            </iframe>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <p>
-                We could also add some new features to the particle system itself. For example, it might be useful for the ParticleSystem class to keep track of an origin point where particles are made. This fits in with the idea of a particle system being an “emitter,” a place where particles are born and sent out into the world. The origin point should be initialized in the constructor.
-            </p>
-            <div id="ImageContainer">
-                <a href="https://www.jafisherportfolio.com/nocur/figures/chapter4/Figure3/index.html"
-                   target="_blank">
-                    <img src="images/figureBtn.png" style="  height: 60%;
-                " alt="Figure 4.3 Demo">
-                </a>
-            </div>
+                </li>
+            </ul>
             <div class="note">
-                <h4>Example 4.3: Simple Single Particle System</h4>
-            </div>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.3
                 </h4>
-                <p>
-                    Make the origin point move dynamically. Have the particles emit from the mouse location or use the concepts of velocity and acceleration to make the system move autonomously.
+            <p>
+                    Create a particle system that particles floating upward and another with particles floating downward.
+                    Can you get the particlesystms to inherit properties from one another?
                 </p>
             </div>
+            <h2>4.4 Particle Trails</h2>
+            <p>
+                So, particles are cool and all but what if we wanted to add trails like a comet or create waving grasses?
+                We call those trails. The Trail module has a number of fantastic options worth exploring. Trails can
+                exist as individual particles or as ribbons. Ribbons utilize a Line Renderer to draw lines between the
+                particles or an initial origin point.
+            </p>
+            <p>
+                First things first, we need to decide how many of the particles will get their own trails. Not every
+                particle is cool enough to have one. In the Trails Module this property is referred to as “ratio”.
+                Setting the ration to 1 means that 100% of the particles will have their own trail. Next, we need to
+                decide if a trail will die when its associated particle does. If, for example, you want to create
+                ribbons that looked like kelp, with particles that look like fish passing through, you would not have
+                the ribbons die with the particles. The Kelp would still be waving after the fish have moved on. We can
+                then set the number of ribbons.
+            </p>
+            <pre class="prettyprint">
+
+        public void trailModule()
+        {
+            //The Trails Modules interface manages the color of individual particle trails
+            var trailsModule = particleSystemComponent.trails;
+            trailsModule.enabled = true;
+            //This is how many particles will receive the trails. Setting it to 1 means they all will.
+            trailsModule.ratio = .5f;
+            //Next we want the trail to die when the particle dies
+            trailsModule.dieWithParticles = true;
+            //And we want these trails to act like a ribbon
+            trailsModule.mode = ParticleSystemTrailMode.Ribbon;
+            //We also want a few of these ribbons
+            trailsModule.ribbonCount = 10;
+
+            //Lastly, we want the trails to all connect to an origin point to create a many-legs effect
+            trailsModule.attachRibbonsToTransform = true;
+
+            //Let's add some color by having the trail shift between two different color values
+            Gradient grad = new Gradient();
+            //This gradient key lets us choose points on a gradient that represent different RGBA or Unity.Color values.
+            //These gradient values exist in an array
+            grad.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.green, 0.0f)}, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1f, 2.0f) });
+            //Set the color to the gradient we created above
+            trailsModule.colorOverLifetime = grad;
+
+            //While we are here, let's add a material to our particle trails
+            ParticleSystemRenderer r = particleSystemGameObject.GetComponent<ParticleSystemRenderer>();
+            //There a few different ways to do this, but we've created a material that is based on the default particle shader
+            r.trailMaterial = Resources.Load<Material>("particleMaterial");
+        }
+    </pre>
+            <p>
+                Next, we can go ahead and add color like we did before. Keep in mind that both the particles and the
+                ribbons need their own material.
+            </p>
+            <ul class="tabs" role="tablist">
+            <li>
+            <input type="radio" name="tabs3" id="tab5" checked />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab5" role="tab" aria-selected="true" aria-controls="panel5" tabindex="0">Code</label>
+            <div id="tab-content5" class="tab-content" role="tabpanel" aria-labelledby="description"
+                 aria-hidden="false">
+            <div id="example3" style="height: 500px"></div>
+                    </div>
+                </li>
+
+            <li>
+            <input type="radio" name="tabs3" id="tab6" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab6" role="tab" aria-selected="false" aria-controls="panel6" tabindex="0">Demo</label>
+            <div id="tab-content6" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                 aria-hidden="true">
+            <div align="center">
+            <iframe class="lazy"
+                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter4/figure3/index.html"
+                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                    scrolling="no" Id="4.3">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.4
                 </h4>
-                <p>
-                    Building off Chapter 3’s “Asteroids” example, use a particle system to emit particles from the ship’s “thrusters” whenever a thrust force is applied. The particles’ initial velocity should be related to the ship’s current direction.
-                </p>
-            </div>
-            <h2>4.5 A System of Systems</h2>
-
-            <p>
-                Let’s review for a moment where we are. We know how to talk about an individual Particle object. We also know how to talk about a system of Particle objects, and this we call a “particle system.” And we’ve defined a particle system as a collection of independent objects. But isn’t a particle system itself an object? If that’s the case (which it is), there’s no reason why we couldn’t also have a collection of many particle systems, i.e. a system of systems.
-            </p><p>
-                This line of thinking could of course take us even further, and you might lock yourself in a basement for days sceneing out a diagram of a system of systems of systems of systems of systems of systems. Of systems. After all, this is how the world works. An organ is a system of cells, a human body is a system of organs, a neighborhood is a system of human bodies, a city is a system of neighborhoods, and so on and so forth. While this is an interesting road to travel down, it’s a bit beyond where we need to be right now. It is, however, quite useful to know how to write a Unity scene that keeps track of many particle systems, each of which keep track of many particles. Let’s take the following scenario.
-            <p>
-                You start with a blank screen.
-            </p>
-            RESET PAUSE
-            <p>
-                You click the mouse and generate a particle system at the mouse’s location.
-            </p>
-            RESET PAUSE
-            <p>
-                Each time you click the mouse, a new particle system is created at the mouse’s location.
-            </p>
-            RESET PAUSE
-            <p>
-                In Example 4.3, we stored a single reference to a ParticleSystem object in the variable ps.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                For this new example, what we want to do instead is create an ArrayList to keep track of multiple instances of particle systems. When the program starts, i.e. in setup(), the ArrayList is empty.
-            </p>
-            <div id="ImageContainer">
-                <a href="https://www.jafisherportfolio.com/nocur/figures/chapter3/Figure1/index.html"
-                   target="_blank">
-                    <img src="images/figureBtn.png" style="  height: 60%;
-                " alt="Figure 3.1 Demo">
-                </a>
+            <p>Try to get the Ribbon Size to increase with its lifetime. </p>
             </div>
             <div class="note">
-                <h4>Example 4.4: System of systems</h4>
-            </div>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-
-            <p>Whenever the mouse is pressed, a new ParticleSystem object is created and placed into the ArrayList.</p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                And in draw(), instead of referencing a single ParticleSystem object, we now look through all the systems in the ArrayList and call run() on each of them.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.5
                 </h4>
-                <p>
-                    Rewrite Example 4.4 so that each particle system doesn’t live forever. When a particle system is empty (i.e. has no particles left in its ArrayList), remove it from the ArrayList systems.
-                </p>
+            <p>Create trails that change color over time.</p>
             </div>
             <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.6
                 </h4>
-                <p>
-                    Create a simulation of an object shattering into many pieces. How can you turn one large shape into many small particles? What if there are several large shapes on the screen and they shatter when you click on them?
-                </p>
+            <p>Create trails made of multiple particles that create tails like a dotted line.</p>
             </div>
-            <h2>4.6 Inheritance and Polymorphism: An Introduction</h2>
+            <h2>4.5 Noise in the System</h2>
             <p>
-                You may have encountered the terms inheritance and polymorphism in your programming life before this book. After all, they are two of the three fundamental principles behind the theory of object-oriented programming (the other being encapsulation). If you’ve read other Unity or Java programming books, chances are it’s been covered. My beginner text, Learning Unity, has close to an entire chapter (#22) dedicated to these two topics.
+                Remember how much fun we had with Perlin Noise in the Introduction and Chapter 1? Well, the
+                ParticleSystem Interface has its own Noise module! This greatly simplifies the process of implementing
+                Noise across an entire particle system. First, we choose how strong we want the turbulence of the noise
+                to be. The stronger the turbulence, the more extreme the randomness. Next, we need to transition between
+                these points and have the particles smoothly move into those new positions as the Noise changes. To do
+                this, we set the ParticleSystemNoiseQuality to high, medium, or low. High provides the best transition.
             </p>
-            <p>
-                Still, perhaps you’ve only learned about it in the abstract sense and never had a reason to really use inheritance and polymorphism. If this is true, you’ve come to the right place. Without these two topics, your ability to program a variety of particles and particle systems is extremely limited. (In the next chapter, we’ll also see how understanding these topics will help us to use physics libraries.)
-            </p>
-            <p>
-                Imagine the following. It’s a Saturday morning, you’ve just gone out for a lovely jog, had a delicious bowl of cereal, and are sitting quietly at your computer with a cup of warm chamomile tea. It’s your old friend So and So’s birthday and you’ve decided you’d like to make a greeting card in Unity. How about some confetti for a birthday? Purple confetti, pink confetti, star-shaped confetti, square confetti, fast confetti, fluttery confetti, etc. All of these pieces of confetti with different appearances and different behaviors explode onto the screen at once.
-            </p><p>
-                What we’ve got here is clearly a particle system—a collection of individual pieces of confetti (i.e. particles). We might be able to cleverly design our Particle class to have variables that store its color, shape, behavior, etc. And perhaps we initialize the values of these variables randomly. But what if your particles are drastically different? This could become very messy, having all sorts of code for different ways of being a particle in the same class. Well, you might consider doing the following:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                This is a nice solution: we have three different classes to describe the different kinds of pieces of confetti that could be part of our particle system. The ParticleSystem constructor could then have some code to pick randomly from the three classes when filling the ArrayList. Note that this probabilistic method is the same one we employed in our random walk examples in the Introduction.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                OK, we now need to pause for a moment. We’ve done nothing wrong. All we wanted to do was wish our friend a happy birthday and enjoy writing some code. But while the reasoning behind the above approach is quite sound, we’ve opened up two major problems.
-            </p>  <p>
-                Problem #1: Aren’t we going to be copying/pasting a lot of code between the different “confetti” classes?
-            </p> <p>
-                Yes. Even though our kinds of particles are different enough to merit our breaking them out into separate classes, there is still a ton of code that they will likely share. They’ll all have PVectors to keep track of location, velocity, and acceleration; an update() function that implements our motion algorithm; etc.
-            </p>    <p>
-                This is where inheritance comes in. Inheritance allows us to write a class that inherits variables and functions from another class, all the while implementing its own custom features.
-            </p>     <p>
-                Problem #2: How will the ArrayList know which objects are which type?
-            </p>     <p>
-                This is a pretty serious problem. Remember, we were using generics to tell the ArrayList what type of objects we’re going to put inside it. Are we suddenly going to need three different ArrayLists?
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                This seems awfully inconvenient, given that we really just want one list to keep track of all the stuff in the particle system. That can be made possible with polymorphism. Polymorphism will allow us to consider objects of different types as the same type and store them in a single ArrayList.
-            </p>
-            <p>
-                Now that we understand the problem, let’s look at these two concepts in a bit more detail and then create a particle system example that implements both inheritance and polymorphism.
-            </p>
-            <h2>4.7 Inheritance Basics</h2>
-            <p>
-                Let’s take a different example, the world of animals: dogs, cats, monkeys, pandas, wombats, and sea nettles. We’ll start by programming a Dog class. A Dog object will have an age variable (an integer), as well as eat(), sleep(), and bark() functions.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Now, let’s move on to cats.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                As we rewrite the same code for fish, horses, koalas, and lemurs, this process will become rather tedious. Instead, let’s develop a generic Animal class that can describe any type of animal. All animals eat and sleep, after all. We could then say:
-            </p><p>
-                A dog is an animal and has all the properties of animals and can do all the things animals do. Also, a dog can bark.
-            </p><p>
-                A cat is an animal and has all the properties of animals and can do all the things animals do. Also, a cat can meow.
-            </p><p>
+            <pre class="prettyprint">
 
-                Inheritance makes this all possible. With inheritance, classes can inherit properties (variables) and functionality (methods) from other classes. A Dog class is a child (subclass) of an Animal class. Children will automatically inherit all variables and functions from the parent (superclass), but can also include functions and variables not found in the parent. Like a phylogenetic "tree of life," inheritance follows a tree structure. Dogs inherit from canines, which inherit from mammals, which inherit from animals, etc.
-            </p>
-            <div id="ImageContainer">
-                <img src="https://natureofcode.com/book/imgs/chapter04/ch04_02.png" style="  width: 100%;
-                height: 100%;" alt="Figure 4.2">
-                <p>
-                    Figure 4.2
-                </p>
-            </div>
+        public void noiseModule()
+        {
+            //The Noise Module manages the distortion and randomness of the particles
+            var noiseModule = particleSystemComponent.noise;
+            //To have the particle become transparent we need to access the colorOverLifetime Interface
+            noiseModule.enabled = true;
+            //The strength of the turbulence
+            noiseModule.strength = 1.0f;
+            //High quality settings simulate smoother transitions
+            noiseModule.quality = ParticleSystemNoiseQuality.High;
+            //Next we can have the noise scroll which adds even more randomness. We can set it to a constant or curve.
+            noiseModule.scrollSpeed = 4;
+            //We can even add some noise to the scale of each particle
+            noiseModule.sizeAmount = 3;
+        }
+                </pre>
             <p>
-                Here is how the syntax works with inheritance.
+                Since our particles are moving, we can have them move against the noise. This increases randomness but
+                also results in a greater sense of the organic. We can then choose how fast this noise moves and how
+                much it should impact each particle.
             </p>
+            <p>
+            <span class="example">Example 4.4: Noise in the System</span>
+            </p>
+            <ul class="tabs" role="tablist">
+            <li>
+            <input type="radio" name="tabs4" id="tab7" checked />
 
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab7" role="tab" aria-selected="true" aria-controls="panel7" tabindex="0">Code</label>
+            <div id="tab-content7" class="tab-content" role="tabpanel" aria-labelledby="description"
+                 aria-hidden="false">
+            <div id="example4" style="height: 500px"></div>
                     </div>
-                </div>
-            </div>
-            <p>The Dog class is the child (or sub) class, indicated by the code "extends Animal".</p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
+                </li>
+
+            <li>
+            <input type="radio" name="tabs4" id="tab8" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab8" role="tab" aria-selected="false" aria-controls="panel8" tabindex="0">Demo</label>
+            <div id="tab-content8" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                 aria-hidden="true">
+            <div align="center">
+            <iframe class="lazy"
+                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter4/figure4/index.html"
+                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                    scrolling="no" Id="4.4">
+                            </iframe>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <p>
-                This brings up two new terms:
-            </p>
-            <p>
-                extends – This keyword is used to indicate a parent for the class being defined. Note that classes can only extend one class. However, classes can extend classes that extend other classes, i.e. Dog extends Animal, Terrier extends Dog. Everything is inherited all the way down the line.
-            </p><p>
-                super() – This calls the constructor in the parent class. In other words, whatever you do in the parent constructor, do so in the child constructor as well. Other code can be written into the constructor in addition to super(). super() can also receive arguments if there is a parent constructor defined with matching arguments.
-            </p><p>
-                A subclass can be expanded to include additional functions and properties beyond what is contained in the superclass. For example, let’s assume that a Dog object has a haircolor variable in addition to age, which is set randomly in the constructor. The class would now look like this:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Note how the parent constructor is called via super(), which sets the age to 0, but the haircolor is set inside the Dog constructor itself. If a Dog object eats differently than a generic Animal object, parent functions can be overridden by rewriting the function inside the subclass.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                But what if a dog eats the same way as a generic animal, just with some extra functionality? A subclass can both run the code from a parent class and incorporate custom code.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <h2>4.8 Particles with Inheritance</h2>
-            <p>
-                Now that we’ve had an introduction to the theory of inheritance and its syntax, we can develop a working example in Unity based on our Particle class.
-            </p><p>
-                Let’s review a simple Particle implementation, further simplified from Example 4.1:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Next, we create a subclass from Particle (let’s call it Confetti). It will inherit all the instance variables and methods from Particle. We write a new constructor with the name Confetti and execute the code from the parent class by calling super().
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                There is no code here because we inherit update() from parent.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Let’s make this a bit more sophisticated. Let’s say we want to have the Confetti particle rotate as it flies through the air. We could, of course, model angular velocity and acceleration as we did in Chapter 3. Instead, we’ll try a quick and dirty solution.
-            </p><p>
-                We know a particle has an x location somewhere between 0 and the width of the window. What if we said: when the particle’s x location is 0, its rotation should be 0; when its x location is equal to the width, its rotation should be equal to TWO_PI? Does this ring a bell? Whenever we have a value with one range that we want to map to another range, we can use the Unity version of Processing's map() function, which we learned about in the Introduction!
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                And just to give it a bit more spin, we can actually map the angle’s range from 0 to TWO_PI*2. Let’s look at how this code fits into the display() function.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
+                </li>
+            </ul>
             <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.7
                 </h4>
-                <p>
-                    Instead of using the Unity version of Processing's map() to calculate theta, how would you model angular velocity and acceleration?
-                </p><p>
-            </div>
-            Now that we have a Confetti class that extends our base Particle class, we need to figure out how our ParticleSystem class can manage particles of different types within the same system. To accomplish this goal, let’s return to the animal kingdom inheritance example and see how the concept extends into the world of polymorphism.
-            </p>
-            <h2> 4.9 Polymorphism Basics</h2>
-
             <p>
-                With the concept of inheritance under our belts, we can imagine how we would program a diverse animal kingdom using ArrayLists—an array of dogs, an array of cats, of turtles, of kiwis, etc. frolicking about.
+                    Change the scale of the noise by adding layers through the properties octaveCount, octaveMultiplier,
+                    and octaveScale.
+                </p>
+            </div>
+            <h2>4.6 Adding Gravity and Rotation</h2>
+            <p>
+                Adding gravity to our Particle System is quite simple. We set, the gravityModifer property to 1. Not very
+                exciting. Let’s add some rotation to the particles in this system too. There are two modules we are
+                going to enable: RotationBySpeed Module and RotationOverLifetime Module.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
+            <pre class="prettyprint">
+
+        rotationOverLifetime(rotationVelocity);
+        rotationBySpeed(rotationVelocity);
+                </pre>
+            <p>
+                We can have rotation occur along one axis or all three. For this example, let’s have RotationBySpeed
+                occur on the Y-axis. We’ll have RotationOverLifetime occur on the X-axis and Y-axis.
+            </p>
+            <pre class="prettyprint">
+
+        public void rotationOverLifetime(Vector3 rotationVelocity)
+        {
+            var rotationOverLifetime = particleSystemComponent.rotationOverLifetime;
+            rotationOverLifetime.enabled = true;
+            //we'll now go ahead and rotate 360-degrees on the x and y axes.
+            rotationOverLifetime.separateAxes = true;
+            //Now let's pass on the floats in our Vector3
+            rotationOverLifetime.x = rotationVelocity.x;
+            rotationOverLifetime.y = rotationVelocity.y;
+            rotationOverLifetime.z = rotationVelocity.z;
+        }
+                </pre>
+            <p>
+                Now, for a bit more fun, let’s have the gravityModifier randomly change every two seconds and have that
+                impact the rotations.
+            </p>
+            <p>
+            <pre class="prettyprint">
+
+        public void gravityModifier()
+        {
+            //The main interface covers general properties
+            var main = particleSystemComponent.main;
+            //We'll dramatically move gravity around to create a pulsing fountain effect
+            main.gravityModifierMultiplier = Random.Range(-6, 10);
+        }
                     </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>As the day begins, the animals are all pretty hungry and are looking to eat. So it’s off to looping time (enhanced looping time!)…</p>
+            <p>
+                Now, we'll turn to the other module, RotationBySpeed. This works in the same way as the RotationOverLifeTime module.
+                After we enable it though, we'll have the particles rotate on the Z-axis based on their speed. Since we added the gravity modifier, we should see these rotations shift.
+                Notice that the gravityModifierMultiplier impacts the entire particle system.
+            </p>
+            <pre class="prettyprint">
 
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
+        public void rotationBySpeed(Vector3 rotationVelocity)
+        {
+            var rotationBySpeed = particleSystemComponent.rotationBySpeed;
+            rotationBySpeed.enabled = true;
+            //we'll now go ahead and rotate 360-degrees on the x and y axes.
+            rotationBySpeed.separateAxes = true;
+            //Now let's pass on the floats in our Vector3
+            //This time let's pass the Y into the Z
+            rotationBySpeed.x = 0f;
+            rotationBySpeed.y = 0f;
+            rotationBySpeed.z = rotationVelocity.y;
+        }
+                        </pre>
+            <span class="example">Example 4.5: Gravity and Rotation</span>
+            </p>
+            <ul class="tabs" role="tablist">
+            <li>
+            <input type="radio" name="tabs5" id="tab9" checked />
 
-            <p>
-                This works well, but as our world expands to include many more animal species, we’re going to get stuck writing a lot of individual loops. Is this really necessary? After all, the creatures are all animals, and they all like to eat. Why not just have one ArrayList of Animal objects and fill it with all different kinds of animals?
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                The ability to treat a Dog object as either a member of the Dog class or the Animal class (its parent) is an example of polymorphism. Polymorphism (from the Greek polymorphos, meaning many forms) refers to the treatment of a single instance of an object in multiple forms. A dog is certainly a dog, but since Dog extends Animal, it can also be considered an animal. In code, we can refer to it both ways.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Although the second line of code might initially seem to violate syntax rules, both ways of declaring a Dog object are legal. Even though we declare spot as an Animal object, we’re really making a Dog object and storing it in the spot variable. And we can safely call all of the Animal class methods on spot because the rules of inheritance dictate that a dog can do anything an animal can.
 
-            </p><p>
-                What if the Dog class, however, overrides the eat() function in the Animal class? Even if spot is declared as an Animal, Java will determine that its true identity is that of a Dog and run the appropriate version of the eat() function.
-            </p><p>
-                This is particularly useful when we have an array or ArrayList.
-            </p>
-            <h2>4.10 Particle Systems with Polymorphism</h2>
 
-            <p>
-                Let’s pretend for a moment that polymorphism doesn’t exist and rewrite a ParticleSystem class to include many Particle objects and many Confetti objects.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab9" role="tab" aria-selected="true" aria-controls="panel9" tabindex="0">Code</label>
+            <div id="tab-content9" class="tab-content" role="tabpanel" aria-labelledby="description"
+                 aria-hidden="false">
+            <div id="example5" style="height: 500px"></div>
                     </div>
-                </div>
-            </div>
-            <p>
-                Notice how we have two separate lists, one for particles and one for confetti. Every action we want to perform we have to do twice! Polymorphism allows us to simplify the above by just making one ArrayList of particles that contains both standard Particle objects as well as Confetti objects. We don’t have to worry about which are which; this will all be taken care of for us! (Also, note that the code for the main program and the classes has not changed, so we aren’t including it here. See the website for the full example.)
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
+                </li>
+
+            <li>
+            <input type="radio" name="tabs5" id="tab10" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab10" role="tab" aria-selected="false" aria-controls="panel10"
+                   tabindex="0">Demo</label>
+            <div id="tab-content10" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                 aria-hidden="true">
+            <div align="center">
+            <iframe class="lazy"
+                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter4/figure5/index.html"
+                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                    scrolling="no" Id="4.5">
+                            </iframe>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
             <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.8
                 </h4>
-                <p>
-                    Create a particle system with different “kinds” of particles in the same system. Try varying more than just the look of the particles. How do you deal with different behaviors using inheritance?
-                </p>
+            <p>Modify gravity modifiers over time to change a different aspect of the Particle System behavior.</p>
             </div>
-            <h2>4.11 Particle Systems with Forces</h2>
+            <h2>4.7 Particle Collisions</h2>
+            <p>
+                Collision is another Module. Particle collisions can be really helpful for water running over rocks,
+                clouds parting around mountains, and smoke spreading across a ceiling. When used atmospherically,
+                collisions can add immersive depth to your environments.
+            </p>
+            <p>
+                Once we’ve enabled the Module, we can choose what kind of objects the particles will collide against. We
+                can choose planes or the World geometry. The latter is every 3D mesh in the Unity scene. Let’s go ahead
+                and add planes in this example.
+            </p>
+            <pre class="prettyprint">
 
+        //Add our collission planes so we can access them later
+        this.collisionPlane1 = collisionPlane1;
+        this.collisionPlane2 = collisionPlane2;
+        collisionModule(collisionPlane1, collisionPlane2);
+
+                </pre>
             <p>
-                So far in this chapter, we’ve been focusing on structuring our code in an object-oriented way to manage a collection of particles. Maybe you noticed, or maybe you didn’t, but during this process we unwittingly took a couple steps backward from where we were in previous chapters. Let’s examine the constructor of our simple Particle class.
+                We then have to choose a collision mode. We have the option between 2D and 3D, so let’s choose 3D for
+                greater effect. Next, we can use the SetPlane() method to add individual planes already in the scene or
+                we can create them on the fly.
             </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
+            <p>
+            <pre class="prettyprint">
+
+        public void collisionModule(GameObject plane1, GameObject plane2)
+        {
+            var collisionModule = particleSystemComponent.collision;
+            collisionModule.enabled = true;
+            //Now we can collide with items in world space or planes.
+            collisionModule.type = ParticleSystemCollisionType.Planes;
+            collisionModule.mode = ParticleSystemCollisionMode.Collision3D;
+            //Since we have no world, we'll add two planes for the particles to collide against
+            collisionModule.SetPlane(0, plane1.transform);
+            collisionModule.SetPlane(1, plane2.transform);
+            //The collision detection on the planes is quite large and can be reduced
+        }
+                </pre>
+            <span class="example">
+                    Example 4.6: Particle Collisions
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+            <li>
+            <input type="radio" name="tabs6" id="tab11" checked />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab11" role="tab" aria-selected="true" aria-controls="panel11" tabindex="0">Code</label>
+            <div id="tab-content11" class="tab-content" role="tabpanel" aria-labelledby="description"
+                 aria-hidden="false">
+            <div id="example6" style="height: 500px"></div>
                     </div>
-                </div>
-            </div>
-            <p>
-                Our Particle class is structured to have a constant acceleration, one that never changes. A much better framework would be to follow Newton’s second law (F = M* A) and incorporate the force accumulation algorithm we worked so hard on in Chapter 2.
-            </p><p>
-                Step 1 would be to add in the applyForce() function. (Remember, we need to make a copy of the PVector before we divide it by mass.)
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
+                </li>
+
+            <li>
+            <input type="radio" name="tabs6" id="tab12" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab12" role="tab" aria-selected="false" aria-controls="panel12"
+                   tabindex="0">Demo</label>
+            <div id="tab-content12" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                 aria-hidden="true">
+            <div align="center">
+            <iframe class="lazy"
+                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter4/figure6/index.html"
+                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                    scrolling="no" Id="3.6">
+                            </iframe>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <p>
-                Once we have this, we can add in one more line of code to clear the acceleration at the end of update().
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Now that the Particle class is completed, we have a very important question to ask. Where do we call the applyForce() function? Where in the code is it appropriate to apply a force to a particle? The truth of the matter is that there’s no right or wrong answer; it really depends on the exact functionality and goals of a particular Unity scene. Still, we can create a generic situation that would likely apply to most cases and craft a model for applying forces to individual particles in a system.
-            </p><p>
-                Let’s consider the following goal: Apply a force globally every time through draw() to all particles. We’ll pick an easy one for now: a force pointing down, like gravity.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                We said it should always be applied, i.e. in draw(), so let’s take a look at our draw() function as it stands.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Well, it seems that we have a small problem. applyForce() is a method written inside the Particle class, but we don’t have any reference to the individual particles themselves, only the ParticleSystem object: the variable ps.
-            </p><p>
-                Since we want all particles to receive the force, however, we can decide to apply the force to the particle system and let it manage applying the force to all the individual particles:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Of course, if we call a new function on the ParticleSystem object in draw(), well, we have to write that function in the ParticleSystem class. Let’s describe the job that function needs to perform: receive a force as a PVector and apply that force to all the particles.
-            </p><p>
-                Now in code:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                It almost seems silly to write this function. What we’re saying is “apply a force to a particle system so that the system can apply that force to all of the individual particles.” Nevertheless, it’s really quite reasonable. After all, the ParticleSystem object is in charge of managing the particles, so if we want to talk to the particles, we’ve got to talk to them through their manager. (Also, here’s a chance for the enhanced loop since we aren’t deleting particles!)
-            </p><p>
-                Here is the full example (assuming the existence of the Particle class written above; no need to include it again since nothing has changed):
-            </p>
-            <div id="ImageContainer">
-                <a href="https://www.jafisherportfolio.com/nocur/figures/chapter4/Figure6/index.html"
-                   target="_blank">
-                    <img src="images/figureBtn.png" style="  height: 60%;
-                " alt="Figure 4.6 Demo">
-                </a>
-            </div>
+                </li>
+            </ul>
             <div class="note">
-                <h4>Example 4.6: Particle system with forces</h4>
-            </div>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <h2>4.12 Particle Systems with Repellers</h2>
-            <p>
-                What if we wanted to take this example one step further and add a Repeller object—the inverse of the Attractor object we covered in Chapter 2 that pushes any particles away that get close? This requires a bit more sophistication because, unlike the gravity force, each force an attractor or repeller exerts on a particle must be calculated for each particle.
-            </p>
-            <div id="ImageContainer">
-                <img src="https://natureofcode.com/book/imgs/chapter04/ch04_03.png" style="  width: 100%;
-                height: 100%;" alt="Figure 4.3">
-                <p>
-                    Figure 4.3: Gravity force—vectors are all identical
-                </p>
-            </div>
-            <div><br /></div>
-            <div id="ImageContainer">
-                <img src="https://natureofcode.com/book/imgs/chapter04/ch04_04.png" style="  width: 80%;
-                height: 100%;" alt="Figure 4.4">
-                <p>
-                    Figure 4.4: Attractor force—vectors are all different
-                </p>
-            </div>
-            <p>
-                Let’s start solving this problem by examining how we would incorporate a new Repeller object into our simple particle system plus forces example. We’re going to need two major additions to our code:
-            </p><p>
-
-                A Repeller object (declared, initialized, and displayed).
-            </p><p>
-
-                A function that passes the Repeller object into the ParticleSystem so that it can apply a force to each particle object.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-
-                Making a Repeller object is quite easy; it’s a duplicate of the Attractor class from Chapter 2, Example 2.6 .
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                The more difficult question is, how do we write the applyRepeller() function? Instead of passing a PVector into a function like we do with applyForce(), we’re going to instead pass a Repeller object into applyRepeller() and ask that function to do the work of calculating the force between the repeller and all particles. Let’s look at both of these functions side by side.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                The functions are almost identical. There are only two differences. One we mentioned before—a Repeller object is the argument, not a PVector. The second difference is the important one. We must calculate a custom PVector force for each and every particle and apply that force. How is that force calculated? In a function called repel(), which is the inverse of the attract() function we wrote for the Attractor class.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Notice how throughout this entire process of adding a repeller to the environment, we’ve never once considered editing the Particle class itself. A particle doesn’t actually have to know anything about the details of its environment; it simply needs to manage its location, velocity, and acceleration, as well as have the ability to receive an external force and act on it.
-            </p><p>
-                So we can now look at this example in its entirety, again leaving out the Particle class, which hasn’t changed.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.9
                 </h4>
-                <p></p><p>
-                    Expand the above example to include many repellers (using an array or ArrayList).
-                </p>
+            <p>Create a world of object and instantiate a particle system that reacts to world space.</p>
             </div>
+            <h2>4.8 Repellers and Force Fields</h2>
+            <p>
+                In Chapter 2, we created attractor and repellor objects. We can do the same with ParticleSystems but it
+                is a bit more complicated. Remember, everything is done through an interface. We can’t just call
+                AddForce() on each particle’s Rigidbody. Instead, we have to use a different method straight from
+                science fiction—force fields.
+            </p>
+            <p>
+                Force Fields, rather a ParticleSystemForceField, is a component that exerts forces on particle systems.
+                One way to think of them is as an invisible shield around a ship. As space dust passes by the ship, the
+                force field pushes it the particles away from the ship as it moves. We see similar things in nature in
+                surf moving alongside a boat or when we turn on a high-powered blower to scatter leaves.
+            </p>
+            <p>To begin though, let’s create our repeller object. We’ll follow the same procedure in Chapter 2. </p>
+            <pre class="prettyprint">
+
+        public class repeller
+        {
+            public Rigidbody body;
+            private GameObject gameObject;
+            public ParticleSystemForceField repelField;
+            float repellerStrength = 10;
+
+            public repeller()
+            {
+                // Create the components required for the mover
+                gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                gameObject.transform.position = new Vector3(0, -6f, 0);
+                body = gameObject.AddComponent<Rigidbody>();
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                Object.Destroy(gameObject.GetComponent<SphereCollider>());
+
+                //We need to create a new material for WebGL
+                Renderer r = body.GetComponent<Renderer>();
+                r.material = new Material(Shader.Find("Diffuse"));
+                r.material.color = Color.red;
+
+                //Turn off gravity for this object
+                body.useGravity = false;
+
+                    </pre>
+            <p>This time, we’ll add our Forcefield as a component to the repeller object. </p>
+            <pre class="prettyprint">
+
+        //Now let's add our Particle System Force Field Component
+        repelField = gameObject.AddComponent<ParticleSystemForceField>();
+                        </pre>
+            <p>
+                Next, we can choose a shape for the Forcefield. While we can’t make it a mesh, we can use primitives such
+                as a sphere, hemisphere, cylinder and box.
+            </p>
+            <pre class="prettyprint">
+
+        repelField.shape = ParticleSystemForceFieldShape.Sphere;
+                            </pre>
+            <p>
+                Forcefield’s are natural attractors. They use gravity to attract objects to them. While this is all well
+                and good, we need a repeller object. So, we need to pass a negative force to the gravity property. This
+                will push the particles away from the repeller instead of drawing them to it. Lastly, we give a range to
+                the forcefield that achieves our intended behavior for the particles.
+            </p>
+            <pre class="prettyprint">
+
+        //To repel the object away. We make the strength negative because unity doesn't differentiate the direction of a gravitational force
+        //in the way we are doing it
+        repelField.gravity = -repellerStrength;
+        //We set a range for the field
+        repelField.endRange = 2 * repelField.transform.localScale.x;
+                                </pre>
+            <p>
+                Let’s go back to our particle system. We now need to let it know that it will be impacted by external
+                forces. We’ll do this with the ExternalForces module. We’ll follow the same procedure as the modules.
+                After that, it is as simple as calling the AddInfluence() method from the module.
+            </p>
+            <pre class="prettyprint">
+
+        public void externalForceModule()
+        {
+            //Now we need to turn on the External Forces Module
+            var externalForces = particleSystemComponent.externalForces;
+            externalForces.enabled = true;
+
+            //And now we just add the influential force of the repeller
+            externalForces.AddInfluence(repeller);
+        }
+                                    </pre>
+            <p>
+            <span class="example">
+                    Example 4.7: Repelling Particle Systems
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+            <li>
+            <input type="radio" name="tabs7" id="tab13" checked />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab13" role="tab" aria-selected="true" aria-controls="panel13" tabindex="0">Code</label>
+            <div id="tab-content13" class="tab-content" role="tabpanel" aria-labelledby="description"
+                 aria-hidden="false">
+            <div id="example7" style="height: 500px"></div>
+                    </div>
+                </li>
+
+            <li>
+            <input type="radio" name="tabs7" id="tab14" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <label for="tab14" role="tab" aria-selected="false" aria-controls="panel14"
+                   tabindex="0">Demo</label>
+            <div id="tab-content14" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                 aria-hidden="true">
+            <div align="center">
+            <iframe class="lazy"
+                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter4/figure7/index.html"
+                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                    scrolling="no" Id="4.7">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             <div class="note">
-                <h4 style="text-align:right;">
+            <h4 style="text-align:right;">
                     Exercise 4.10
                 </h4>
-                <p>
-                    Create a particle system in which each particle responds to every other particle. (Note that we’ll be going through this in detail in Chapter 6.)
-                </p>
+            <p>Create a particle system in is reacting two to separate force fields.</p>
             </div>
-            <h2>4.13 Image Textures and Additive Blending</h2>
-            <p>
-                Even though this book is really about behaviors and algorithms rather than computer graphics and design, I don’t think we would be able to live with ourselves if we went through a discussion of particle systems and never once looked at an example that involves texturing each particle with an image. The way you choose to draw a particle is a big part of the puzzle in terms of designing certain types of visual effects.
-            </p><p>
-                Let’s try to create a smoke simulation in Unity. Take a look at the following two images:
-            </p>
-            RESET PAUSE
-            <p>White circles</p>
-
-            RESET PAUSE
-            <p>Fuzzy images with transparency</p>
+            <div class="note">
+            <h4>The Ecosystem Project</h4>
+            <p>Step 4 Exercise:</p>
 
             <p>
-                Both of these images were generated from identical algorithms. The only difference is that a white circle is drawn in image A for each particle and a “fuzzy” blob is drawn for each in B.
-            </p>
-            <div id="ImageContainer">
-                <img src="https://natureofcode.com/book/imgs/chapter04/ch04_05.png" style="  width: 100%;
-                height: 100%;" alt="Figure 4.5">
-                <p>
-                    Figure 4.5
+                    Take your creature from Step 3 and build a system of creatures. How can they interact with each
+                    other? Can
+                    you use inheritance and polymorphism to create a variety of creatures, derived from the same code
+                    base?
+                    Develop a methodology for how they compete for resources (for example, food). Can you track a
+                    creature’s
+                    “health” much like we tracked a particle’s lifespan, removing creatures when appropriate? What rules
+                    can you
+                    incorporate to control how creatures are born?
+                </p>
+            <p>
+                    (Also, you might consider using a particle system itself in the design of a creature. What happens
+                    if your
+                    emitter is tied to the creature’s location?)
                 </p>
             </div>
 
-            <p>
-                The good news here is that you get a lot of bang for very little buck. Before you write any code, however, you’ve got to make your image texture! I recommend using PNG format, as Unity will retain the alpha channel (i.e. transparency) when drawing the image, which is needed for blending the texture as particles layer on top of each other. Once you’ve made your PNG and deposited it in your scene’s “data” folder, you are on your way with just a few lines of code.
-            </p><p>
-                First, we’ll need to declare a PImage object.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                            </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                And when it comes time to draw the particle, we’ll use the image reference instead of drawing an ellipse or rectangle.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Incidentally, this smoke example is a nice excuse to revisit the Gaussian number distributions from the Introduction. To make the smoke appear a bit more realistic, we don’t want to launch all the particles in a purely random direction. Instead, by creating initial velocity vectors mostly around a mean value (with a lower probability of outliers), we’ll get an effect that appears less fountain-like and more like smoke (or fire).
-            </p><p>
-                Assuming a Random object called “generator”, we could create initial velocities as follows:
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <p>
-                Finally, in this example, a wind force is applied to the smoke mapped from the mouse’s horizontal location.
-            </p>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-            <div class="note">
-                <h4 style="text-align:right;">
-                    Exercise 4.11
-                </h4>
+            <div class="footer">
+                <div class="col">
+
+                <h4>Licenses</h4>
                 <p>
-                    Try creating your own textures for different types of effects. Can you make it look like fire, instead of smoke?
+                    <a class="license-badge" rel="license"
+                        href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
+                            style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
+                    <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
+                            alt="LGPL License" style="border-width:0"
+                            src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
                 </p>
-            </div>
-            <div class="note">
-                <h4 style="text-align:right;">
-                    Exercise 4.12
-                </h4>
-                <p>
-                    Use an array of images and assign each Particle object a different image. Even though single images are drawn by multiple particles, make sure you don’t call loadImage() any more than you need to, i.e. once for each image file.
-                </p>
-            </div>
-            <p>
-                Finally, it’s worth noting that there are many different algorithms for blending colors in computer graphics. These are often referred to as “blend modes.” By default, when we draw something on top of something else in Unity, we only see the top layer—this is commonly referred to as a “normal” blend mode. When the pixels have alpha transparency (as they do in the smoke example), Unity uses an alpha compositing algorithm that combines a percentage of the background pixels with the new foreground pixels based on the alpha values.
-            </p><p>
-
-                However, it’s possible to draw using other blend modes, and a much loved blend mode for particle systems is “additive.” Additive blending in Unity was pioneered by Robert Hodgin in his famous particle system and forces exploration, Magnetosphere, which later became the iTunes visualizer. For more see: Magnetosphere.
-            </p><p>
-                Additive blending is in fact one of the simplest blend algorithms and involves adding the pixel values of one layer to another (capping all values at 255 of course). This results in a space-age glow effect due to the colors getting brighter and brighter with more layers.
-            </p>
-            <p>To achieve additive blending in Unity, you’ll need to use the Sprite Renderer, Shader Graph, or Material</p>
-
-            <div id="ImageContainer">
-                <img src="https://natureofcode.com/book/imgs/chapter04/ch04_ex09.png" style="  width: 100%;
-                height: 100%;" alt="Additive Blending">
-            </div>
-            <div id="ImageContainer">
-                <a href="https://www.jafisherportfolio.com/nocur/figures/chapter3/Figure1/index.html"
-                   target="_blank">
-                    <img src="images/figureBtn.png" style="  height: 60%;
-                " alt="Figure 3.1 Demo">
-                </a>
-            </div>
-            <div class="note">
-                <h4>Example 4.9: Additive blending</h4>
-            </div>
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-
-            <p>Then, before you go to draw anything, you set the blend mode using blendMode():</p>
-
-            <div class="source-code">
-                <div class="code-block">
-                    <div class="code-comment-pair no-comment">
-                        <code>
-                            <pre>
-                            ////////
-                    </pre>
-                        </code>
-                    </div>
-                </div>
-            </div>
-
-            <p>Note that the “glowing” effect of additive blending will not work with a white (or very bright) background.</p>
-
-            <p>All your other particle stuff would go here.</p>
-
-            <div class="note">
-                <h4 style="text-align:right;">
-                    Exercise 4.13
-                </h4>
-                <p>Use tint() in combination with additive blending to create a rainbow effect.</p>
-            </div>
-            <div class="note">
-                <h4 style="text-align:right;">
-                    Exercise 4.14
-                </h4>
-                <p>Try blending with other modes, such as SUBTRACT, LIGHTEST, DARKEST, DIFFERENCE, EXCLUSION,or MULTIPLY.</p>
-            </div>
-            <div class="note">
-                <h4>The Ecosystem Project</h4>
-                <p>Step 4 Exercise:</p>
 
                 <p>
-                    Take your creature from Step 3 and build a system of creatures. How can they interact with each other? Can you use inheritance and polymorphism to create a variety of creatures, derived from the same code base? Develop a methodology for how they compete for resources (for example, food). Can you track a creature’s “health” much like we tracked a particle’s lifespan, removing creatures when appropriate? What rules can you incorporate to control how creatures are born?
-                </p><p>
-                    (Also, you might consider using a particle system itself in the design of a creature. What happens if your emitter is tied to the creature’s location?)
+                    The book's text and illustrations are licensed under a <a rel="license"
+                        href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
+                        Attribution-NonCommercial 3.0 Unported License</a>.
                 </p>
+
+                <p>
+                    All of the book's source code is licensed under the <a rel="license"
+                        href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
+                    as published by the Free Software Foundation; either version 2.1 of the License, or (at your
+                    option) any later version.
+                </p>
+        </div>
+            <div class="col">
+                <h4>Remixer</h4>
+                <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
+                        Arts and Media Program</a> at Columbia College Chicago.</p>
+
+                <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+
+                <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
+                        href="https://github.com/jadlerfisher">GitHub</a></p>
+
             </div>
+            <div class="col">
+                <h4>Author</h4>
+                <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
+                        Telecommunications Program</a> at New York University.</p>
 
+                <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
 
+                <p><a href="https://twitter.com/shiffman">Twitter</a> <a
+                        href="http://github.com/shiffman">GitHub</a></p>
 
-
-
-
-
-
-
-
-            <footer>
-                <div class="footer" style="width: 33%;   float:left;
-                padding-left: 5px;">
-                    <h4>Licenses</h4>
-                    <p>
-                        <a class="license-badge" rel="license"
-                           href="http://creativecommons.org/licenses/by-nc/3.0/">
-                            <img alt="Creative Commons License"
-                                 style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" />
-                        </a>
-                        <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/">
-                            <img alt="LGPL License" style="border-width:0"
-                                 src="http://www.gnu.org/graphics/lgplv3-88x31.png" />
-                        </a>
-                    </p>
-
-                    <p>
-                        The book's text and illustrations are licensed under a <a rel="license"
-                                                                                  href="http://creativecommons.org/licenses/by-nc/3.0/">
-                            Creative Commons
-                            Attribution-NonCommercial 3.0 Unported License
-                        </a>.
-                    </p>
-
-                    <p>
-                        All of the book's source code is licensed under the <a rel="license"
-                                                                               href="http://creativecommons.org/licenses/LGPL/2.1/">
-                            GNU Lesser General Public
-                            License
-                        </a>
-                        as published by the Free Software Foundation; either version 2.1 of the License, or (at your
-                        option) any later version.
-                    </p>
-                </div>
-                <div class="footer" style="width: 33%;   float:left; padding-left: 5px;">
-                    <h4>Remixer</h4>
-                    <p>
-                        Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">
-                            Interactive
-                            Arts and Media Program
-                        </a> at Columbia College Chicago.
-                    </p>
-
-                    <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
-
-                    <p>
-                        <a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a href="https://github.com/jadlerfisher">GitHub</a>
-                    </p>
-
-                </div>
-                <div class="footer" style="width: 33%;   float:left;
-                padding-left: 5px;">
-                    <h4>Author</h4>
-                    <p>
-                        Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">
-                            Interactive
-                            Telecommunications Program
-                        </a> at New York University.
-                    </p>
-
-                    <p>He is the author of <a href="http://www.learningUnity.com/">Learning Unity</a>.</p>
-
-                    <p>
-                        <a href="https://twitter.com/shiffman">Twitter</a> <a href="http://github.com/shiffman">GitHub</a>
-                    </p>
-
-                </div>
-            </footer>
+            </div>
+        </div>
         </section>
     </div>
 
@@ -1551,7 +1297,181 @@
                 document.getElementById("titleHeader").style.float = "";
 
             }
+
         }</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+    <script src="scripts/github-embed.min.js"></script>
+    <script>//////lazy loader
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var lazyloadImages;
+
+            if ("IntersectionObserver" in window) {
+                lazyloadImages = document.querySelectorAll(".lazy");
+                var imageObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            var iframe = entry.target;
+                            iframe.src = iframe.dataset.src;
+                            iframe.classList.remove("lazy");
+                            imageObserver.unobserve(iframe);
+                        }
+                    });
+                });
+
+                lazyloadImages.forEach(function (iframe) {
+                    imageObserver.observe(iframe);
+                });
+            } else {
+                var lazyloadThrottleTimeout;
+                lazyloadImages = document.querySelectorAll(".lazy");
+
+                function lazyload() {
+                    if (lazyloadThrottleTimeout) {
+                        clearTimeout(lazyloadThrottleTimeout);
+                    }
+
+                    lazyloadThrottleTimeout = setTimeout(function () {
+                        var scrollTop = window.pageYOffset;
+                        lazyloadImages.forEach(function (iframe) {
+                            if (iframe.offsetTop < (window.innerHeight + scrollTop)) {
+                                iframe.src = iframe.dataset.src;
+                                iframe.classList.remove('lazy');
+                            }
+                        });
+                        if (lazyloadImages.length == 0) {
+                            document.removeEventListener("scroll", lazyload);
+                            window.removeEventListener("resize", lazyload);
+                            window.removeEventListener("orientationChange", lazyload);
+                        }
+                    }, 20);
+                }
+
+                document.addEventListener("scroll", lazyload);
+                window.addEventListener("resize", lazyload);
+                window.addEventListener("orientationChange", lazyload);
+            }
+        })
+
+        githubEmbed('#example1', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Example%204.1/Chapter4Fig1.cs"
+            }]
+        });
+
+        githubEmbed('#example2', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Example%204.2/Chapter4Fig2.cs"
+            }]
+        });
+
+        githubEmbed('#example3', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Example%204.3/Chapter4Fig3.cs"
+            }]
+        });
+
+        githubEmbed('#example4', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Example%204.4/Chapter4Fig4.cs"
+            }]
+        });
+
+        githubEmbed('#example5', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Example%204.5/Chapter4Fig5.cs"
+            }]
+        });
+
+        githubEmbed('#example6', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Example%204.6/Chapter4Fig6.cs"
+            }]
+        });
+
+        githubEmbed('#example7', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Example%204.7/Chapter4Fig7.cs"
+            }]
+        });
+
+        githubEmbed('#example8', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Example%204.8/Chapter4Fig8.cs"
+            }]
+        });
+
+        githubEmbed('#example8a', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Figures(Scripts)/Chapter4Fig8.cs"
+            }]
+        });
+
+        githubEmbed('#example9', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Figures(Scripts)/Chapter4Fig9.cs"
+            }]
+        });
+
+        githubEmbed('#example10', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Figures(Scripts)/Chapter4Fig10.cs"
+            }]
+        });
+
+        githubEmbed('#example11', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Figures(Scripts)/Chapter4Fig11.cs"
+            }]
+        })
+
+        githubEmbed('#example101', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%204/Figures(Scripts)/Chapter4Fig12.cs"
+            }]
+        });
+
+    </script>
 </body>
 
 </html>

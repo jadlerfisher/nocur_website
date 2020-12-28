@@ -5,13 +5,38 @@
     <!-- Meta -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="description" content="The Nature of Code revised for use in Unity with C#.">
+    <meta name="author" content="Joshua A. Fisher, Ph.D.">
 
+    <base href="https://natureofcodeunity.com/" target="_self">
     <!--Google Font-->
 
     <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova|Nunito+Sans:700&display=swap" rel="stylesheet">
 
+
+
+
+
+	<meta property="og:title" content="The Nature of Code Unity Remix">
+	<meta property="og:description" content="The Nature of Code revised for use in Unity with C#.">
+	<meta property="og:url" content="https://natureofcodeunity.com/">
+	<meta property="og:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+
+
+	<meta name="twitter:title" content="The Nature of Code Unity Remix">
+	<meta name="twitter:description" content="The Nature of Code revised for use in Unity with C#.">
+	<meta name="twitter:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+	<meta name="twitter:card" content="summary_large_image">
+
     <!-- CSS Styles -->
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/code-html.css" />
+    <link rel="stylesheet" href="css/github-embed.css" />
+
+
+    <!--scripts-->
+    <!--<script src="scripts/scripts.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
 
     <!-- Title -->
     <title>The Nature of Code Unity Remix</title>
@@ -45,7 +70,7 @@
                 </li>
                 <li><a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
                 </li>
-                <li><a href="chapterfive.html">5. PHYSICS LIBRARIES</a>
+                <li><a href="chapterfive.html">5. PHYSICS COMPONENTS</a>
                 </li>
                 <li><a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
                 </li>
@@ -85,66 +110,1668 @@
 
 
 
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_01.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.1">
+                <p>
+                    Figure 8.1
+                </p>
+            </div>
+
+
+            <p>For us nature coders, we have to ask the question: Can we describe our world with Euclidean geometry? The
+                LCD screen I’m staring at right now sure looks like a rectangle. And the plum I ate this morning is
+                circular. But what if I were to look further, and consider the trees that line the street, the leaves
+                that hang off those trees, the lightning from last night’s thunderstorm, the cauliflower I ate for
+                dinner, the blood vessels in my body, and the mountains and coastlines that cover land beyond New York
+                City? Most of the stuff you find in nature cannot be described by the idealized geometrical forms of
+                Euclidean geometry. So if we want to start building computational designs with patterns beyond the
+                simple shapes ellipse(), rect(), and line(), it’s time for us to learn about the concepts behind and
+                techniques for simulating the geometry of nature: fractals.
+            </p>
+            <h2>8.1 What Is a Fractal?</h2>
+
+
+            <p>The term fractal (from the Latin fractus, meaning “broken”) was coined by the mathematician Benoit
+                Mandelbrot in 1975. In his seminal work “The Fractal Geometry of Nature,” he defines a fractal as “a
+                rough or fragmented geometric shape that can be split into parts, each of which is (at least
+                approximately) a reduced-size copy of the whole.”
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_02.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.1">
+                <p>
+                    Figure 8.2: One of the most well-known and recognizable fractal patterns is named for Benoit
+                    Mandelbrot himself. Generating the Mandelbrot set involves testing the properties of complex numbers
+                    after they are passed through an iterative function. Do they tend to infinity? Do they stay bounded?
+                    While a fascinating mathematical discussion, this “escape-time” algorithm is a less practical method
+                    for generating fractals than the recursive techniques we’ll examine in this chapter. However, an
+                    example for generating the Mandelbrot set is included in the code examples.
+                </p>
+            </div>
+            <p>Let’s illustrate this definition with two simple examples. First, let’s think about a tree branching
+                structure (for which we’ll write the code later):
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_03.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.3">
+                <p>
+                    Figure 8.3
+                </p>
+            </div>
+            <p>Notice how the tree in Figure 8.3 has a single root with two branches connected at its end. Each one of
+                those branches has two branches at its end and those branches have two branches and so on and so forth.
+                What if we were to pluck one branch from the tree and examine it on its own?
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_04.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.4">
+                <p>
+                    Figure 8.4
+                </p>
+            </div>
+            <p>Looking closely at a given section of the tree, we find that the shape of this branch resembles the tree
+                itself. This is known as self-similarity; as Mandelbrot stated, each part is a “reduced-size copy of the
+                whole.”
+            </p>
+            <p>The above tree is perfectly symmetrical and the parts are, in fact, exact replicas of the whole. However,
+                fractals do not have to be perfectly self-similar. Let’s take a look at a graph of the stock market
+                (adapted from actual Apple stock data).
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_05.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.5">
+                <p>
+                    Figure 8.5: Graph A
+                </p>
+            </div>
+            <p>And one more.
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_06.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.6">
+                <p>
+                    Figure 8.6: Graph B
+                </p>
+            </div>
+
+            <p>In these graphs, the x-axis is time and the y-axis is the stock’s value. It’s not an accident that I
+                omitted the labels, however. Graphs of stock market data are examples of fractals because they look the
+                same at any scale. Are these graphs of the stock over one year? One day? One hour? There’s no way for
+                you to know without a label. (Incidentally, graph A shows six months’ worth of data and graph B zooms
+                into a tiny part of graph A, showing six hours.)
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_07.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.7">
+                <p>
+                    Figure 8.7
+                </p>
+            </div>
+            <p>This is an example of a stochastic fractal, meaning that it is built out of probabilities and randomness.
+                Unlike the deterministic tree-branching structure, it is statistically self-similar. As we go through
+                the examples in this chapter, we will look at both deterministic and stochastic techniques for
+                generating fractal patterns.
+            </p>
+            <p>While self-similarity is a key trait of fractals, it’s important to realize that self-similarity alone
+                does not make a fractal. After all, a line is self-similar. A line looks the same at any scale, and can
+                be thought of as comprising lots of little lines. But it’s not a fractal. Fractals are characterized by
+                having a fine structure at small scales (keep zooming into the stock market graph and you’ll continue to
+                find fluctuations) and cannot be described with Euclidean geometry. If you can say “It’s a line!” then
+                it’s not a fractal.
+            </p>
+            <p>Another fundamental component of fractal geometry is recursion. Fractals all have a recursive definition.
+                We’ll start with recursion before developing techniques and code examples for building fractal patterns
+                in Unity.
+            </p>
 
 
 
+            <h2>8.2 Recursion</h2>
 
-            <footer>
-                <div class="footer" style="width: 33%;   float:left;
-                padding-left: 5px;">
-                    <h4>Licenses</h4>
-                    <p>
-                        <a class="license-badge" rel="license"
-                            href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
-                                style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
-                        <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
-                                alt="LGPL License" style="border-width:0"
-                                src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
-                    </p>
+            <p>Let’s begin our discussion of recursion by examining the first appearance of fractals in modern
+                mathematics. In 1883, German mathematician George Cantor developed simple rules to generate an infinite
+                set:
+            </p>
 
-                    <p>
-                        The book's text and illustrations are licensed under a <a rel="license"
-                            href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
-                            Attribution-NonCommercial 3.0 Unported License</a>.
-                    </p>
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_08.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.8">
+                <p>
+                    Figure 8.8: The Cantor set
+                </p>
+            </div>
+            <p>There is a feedback loop at work here. Take a single line and break it into two. Then return to those two
+                lines and apply the same rule, breaking each line into two, and now we’re left with four. Then return to
+                those four lines and apply the rule. Now you’ve got eight. This process is known as recursion: the
+                repeated application of a rule to successive results. Cantor was interested in what happens when you
+                apply these rules an infinite number of times. We, however, are working in a finite pixel space and can
+                mostly ignore the questions and paradoxes that arise from infinite recursion. We will instead construct
+                our code in such a way that we do not apply the rules forever (which would cause our program to freeze).
+            </p>
+            <p>Before we implement the Cantor set, let’s take a look at what it means to have recursion in code. Here’s
+                something we’re used to doing all the time—calling a function inside another function.
+            </p>
+            <pre class="prettyprint">
 
-                    <p>
-                        All of the book's source code is licensed under the <a rel="license"
-                            href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public
-                            License</a>
-                        as published by the Free Software Foundation; either version 2.1 of the License, or (at your
-                        option) any later version.
-                    </p>
+    //Calling the function background() in the definition of someFunction()
+
+    void someFunction() {
+            background(0);
+        }
+</pre>
+            <p>What would happen if we called the function we are defining within the function itself? Can
+                someFunction() call someFunction()?
+            </p>
+            <pre class="prettyprint">
+
+    void someFunction() {
+        someFunction();
+        }
+
+</pre>
+            <p>In fact, this is not only allowed, but it’s quite common (and essential to how we will implement the
+                Cantor set). Functions that call themselves are recursive and good for solving certain problems. For
+                example, certain mathematical calculations are implemented recursively; the most common example is
+                factorial.
+            </p>
+            <p>The factorial of any number n, usually written as n!, is defined as:
+            </p>
+            <p>n! = n * n – 1 * . . . . * 3 * 2 * 10! = 1
+            </p>
+            <p>Here we’ll write a function in Unity that uses a for loop to calculate factorial:
+            </p>
+            <pre class="prettyprint">
+
+    int factorial(int n) {
+        int f = 1;
+        for (int i = 0; i < n; i++) {
+            f = f * (i+1);
+        }
+        return f;
+        }
+
+</pre>
+            <p>Upon close examination, you’ll notice something interesting about how factorial works. Let’s look at 4!
+                and 3!
+            </p>
+            <p>4! = 4 * 3 * 2 * 13! = 3 * 2 * 1
+            </p>
+            <p><b>therefore. . .</b>
+            </p>
+            <p>4! = 4 * 3!
+            </p>
+            <p>In more general terms, for any positive integer n:
+            </p>
+            <p>n! = n * (n-1)!1! = 1
+            </p>
+            <p>Written out:
+            </p>
+            <p>The factorial of n is defined as n times the factorial of n-1.
+            </p>
+            <p>The definition of <b>factorial</b> includes <b>factorial</b>?! It’s kind of like defining “tired" as “the feeling you
+                get when you are tired.” This concept of self-reference in functions is an example of recursion. And we
+                can use it to write a factorial function that calls itself.
+            </p>
+            <pre class="prettyprint">
+
+    int factorial(int n) {
+        if (n == 1) {
+            return 1;
+        } else {
+            return n * factorial(n-1);
+        }
+    }
+</pre>
+
+            <p>It may look crazy, but it works. Here are the steps that happen when factorial(4) is called.
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_09.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.7">
+                <p>
+                    Figure 8.9
+                </p>
+            </div>
+
+            <p>We can apply the same principle to graphics with interesting results, as we will see in many examples
+                throughout this chapter. Take a look at this recursive function.
+            </p>
+
+
+
+            <span class="example">
+                Example 8.1: Recursive Circles I
+            </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs0" id="tab0a" checked />
+                    <label for="tab0a" role="tab" aria-selected="true" aria-controls="panel0" tabindex="2">Code</label>
+                    <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description"
+                        aria-hidden="false">
+                        <div id="example1" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs0" id="tab0b" />
+                    <label for="tab0b" role="tab" aria-selected="false" aria-controls="panel1" tabindex="3">Demo</label>
+                    <div id="tab-content2" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                        aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter8/Figure1/index.html"
+                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                scrolling="no" Id="8.1">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>drawCircle() draws an ellipse based on a set of parameters that it receives as arguments. It then calls
+                itself with those same parameters, adjusting them slightly. The result is a series of circles, each of
+                which is drawn inside the previous circle.
+            </p>
+            <p>Notice that the above function only recursively calls itself if the radius is greater than 2. This is a
+                crucial point. As with iteration, all recursive functions must have an exit condition! You likely are
+                already aware that all for and while loops must include a boolean expression that eventually evaluates
+                to false, thus exiting the loop. Without one, the program would crash, caught inside of an infinite
+                loop. The same can be said about recursion. If a recursive function calls itself forever and ever,
+                you’ll be most likely be treated to a nice frozen screen.
+            </p>
+            <p>This circles example is rather trivial; it could easily be achieved through simple iteration. However,
+                for scenarios in which a function calls itself more than once, recursion becomes wonderfully elegant.
+            </p>
+            <p>Let’s make drawCircle() a bit more complex. For every circle displayed, draw a circle half its size to
+                the left and right of that circle.
+            </p>
+            <p>
+                <span class="example">
+                    Example 8.2: Recursion twice
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs2" id="tab3" checked />
+                    <label for="tab3" role="tab" aria-selected="true" aria-controls="panel3" tabindex="0">Code</label>
+                    <div id="tab-content3" class="tab-content" role="tabpanel" aria-labelledby="description"
+                        aria-hidden="false">
+                        <div id="example2" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs2" id="tab4" />
+                    <label for="tab4" role="tab" aria-selected="false" aria-controls="panel4" tabindex="0">Demo</label>
+                    <div id="tab-content4" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                        aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter8/Figure2/index.html"
+                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                scrolling="no" Id="8.2">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>With just a little more code, we could also add a circle above and below each circle.
+            </p>
+
+            <p>
+                <span class="example">
+                    Example 8.3: Recursion four times
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs3" id="tab5" checked />
+                    <label for="tab5" role="tab" aria-selected="true" aria-controls="panel5" tabindex="0">Code</label>
+                    <div id="tab-content5" class="tab-content" role="tabpanel" aria-labelledby="description"
+                        aria-hidden="false">
+                        <div id="example3" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs3" id="tab6" />
+                    <label for="tab6" role="tab" aria-selected="false" aria-controls="panel6" tabindex="0">Demo</label>
+                    <div id="tab-content6" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                        aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter8/Figure3/index.html"
+                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                scrolling="no" Id="8.3">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <p>Try reproducing this scene with iteration instead of recursion—I dare you!
+            </p>
+
+            <h2>8.3 The Cantor Set with a Recursive Function</h2>
+            <p>Now we’re ready to visualize the Cantor set in Unity using a recursive function. Where do we begin?
+                Well, we know that the Cantor set begins with a line. So let’s start there and write a function that
+                draws a line.
+            </p>
+            <pre class="prettyprint">
+
+    void cantor(float x, float y, float len)
+    {
+        line(x, y, x + len, y); // Create the first line
+    }
+
+</pre>
+            <p>The above cantor() function draws a line that starts at pixel coordinate (x,y) with a length of len. (The
+                line is drawn horizontally here, but this is an arbitrary decision.) So if we called that function,
+                saying:
+            </p>
+
+            <pre class="prettyprint">
+
+    cantor(minPos.x + 3, maxPos.y - 2, (maxPos.x - minPos.x) - 6);
+
+</pre>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_10.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.7">
+                <p>
+                    Figure 8.10
+                </p>
+            </div>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_11.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.7">
+                <p>
+                    Figure 8.11
+                </p>
+            </div>
+            <p>Now, the Cantor rule tells us to erase the middle third of that line, which leaves us with two lines, one
+                from the beginning of the line to the one-third mark, and one from the two-thirds mark to the end of the
+                line.
+            </p>
+            <p>We can now add two more lines of code to draw the second pair of lines, moving the y-location down a
+                bunch of pixels so that we can see the result below the original line.
+            </p>
+            <pre class="prettyprint">
+
+    void cantor(float x, float y, float len)
+    {
+        line(x, y, x + len, y); // Create the first line
+
+        if (len >= 0.01f) // Stop at 0.01 meters length!
+        {
+            y -= 2;
+
+            line(x, y, len / 3);
+            line(x + len * 2 / 3, y, len / 3);
+        }
+    }
+</pre>
+
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_12.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.12">
+                <p>
+                    Figure 8.12
+                </p>
+            </div>
+            <p>While this is a fine start, such a manual approach of calling line() for each line is not what we want.
+                It will get unwieldy very quickly, as we’d need four, then eight, then sixteen calls to line(). Yes, a
+                for loop is our usual way around such a problem, but give that a try and you’ll see that working out the
+                math for each iteration quickly proves inordinately complicated. Here is where recursion comes and
+                rescues us.
+            </p>
+            <p>Take a look at where we draw that first line from the start to the one-third mark.
+            </p>
+            <pre class="prettyprint">
+
+    line(x, y, x + len/3, y); // Create the first line
+</pre>
+            <p>Instead of calling the line() function directly, we can simply call the cantor() function itself. After
+                all, what does the cantor() function do? It draws a line at an (x,y) location with a given length! And
+                so:
+            </p>
+            <pre class="prettyprint">
+
+    line(x,y,x+len/3,y);         becomes ------->  cantor(x,y,len/3);
+
+</pre>
+            <p>And for the second line:
+            </p>
+            <pre class="prettyprint">
+
+    line(x+len*2/3,y,x+len,y);   becomes ------->  cantor(x+len*2/3,y,len/3);
+
+</pre>
+            <p>Leaving us with:
+            </p>
+            <pre class="prettyprint">
+
+
+    void cantor(float x, float y, float len)
+    {
+        line(x, y, x + len, y); // Create the first line
+
+        if (len >= 0.01f) // Stop at 0.01 meters length!
+        {
+            y -= 2;
+
+            cantor(x, y, len / 3); // Call the function recursively
+            cantor(x + len * 2 / 3, y, len / 3); // We need two lines for each line above it
+        }
+    }
+
+</pre>
+            <p>And since the cantor() function is called recursively, the same rule will be applied to the next lines
+                and to the next and to the next as cantor() calls itself again and again! Now, don’t go and run this
+                code yet. We’re missing that crucial element: an exit condition. We’ll want to make sure we stop at some
+                point—for example, if the length of the line ever is less than 1 pixel.
+            </p>
+
+
+            <p>
+                <span class="example">
+                    Example 8.4: Cantor set
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs4" id="tab7" checked />
+                    <label for="tab7" role="tab" aria-selected="true" aria-controls="panel7" tabindex="0">Code</label>
+                    <div id="tab-content7" class="tab-content" role="tabpanel" aria-labelledby="description"
+                        aria-hidden="false">
+                        <div id="example4" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs4" id="tab8" />
+                    <label for="tab8" role="tab" aria-selected="false" aria-controls="panel8" tabindex="0">Demo</label>
+                    <div id="tab-content8" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                        aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter8/Figure4/index.html"
+                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                scrolling="no" Id="8.4">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.1</h4>
+                Using drawCircle() and the Cantor set as models, generate your own pattern with recursion. Here is a
+                screenshot of one that uses lines.
+            </div>
+
+            <h2>8.4 The Koch Curve and the ArrayList Technique</h2>
+
+
+            <p>Writing a function that recursively calls itself is one technique for generating a fractal pattern on
+                screen. However, what if you wanted the lines in the above Cantor set to exist as individual objects
+                that could be moved independently? The recursive function is simple and elegant, but it does not allow
+                you to do much besides simply generating the pattern itself. However, there is another way we can apply
+                recursion in combination with an ArrayList that will allow us to not only generate a fractal pattern,
+                but keep track of all its individual parts as objects.
+            </p>
+            <p>To demonstrate this technique, let’s look at another famous fractal pattern, discovered in 1904 by
+                Swedish mathematician Helge von Koch. Here are the rules. (Note that it starts the same way as the
+                Cantor set, with a single line.)
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_13.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.7">
+                <p>
+                    Figure 8.13
+                </p>
+            </div>
+            The result looks like:
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_14.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.7">
+                <p>
+                    Figure 8.14
+                </p>
+            </div>
+            <div class="note">
+                <h4>
+           The “Monster” Curve
+                </h4>
+            <p>The Koch curve and other fractal patterns are often called “mathematical monsters.” This is due to an odd
+                paradox that emerges when you apply the recursive definition an infinite number of times. If the length
+                of the original starting line is one, the first iteration of the Koch curve will yield a line of length
+                four-thirds (each segment is one-third the length of the starting line). Do it again and you get a
+                length of sixteen-ninths. As you iterate towards infinity, the length of the Koch curve approaches
+                infinity. Yet it fits in the tiny finite space provided right here on this paper (or screen)!
+            </p>
+            <p>Since we are working in the Unity land of finite pixels, this theoretical paradox won’t be a factor
+                for us. We’ll have to limit the number of times we recursively apply the Koch rules so that our program
+                won’t run out of memory or crash.</p>
+            </div>
+            <p>We could proceed in the same manner as we did with the Cantor set, and write a recursive function that
+                iteratively applies the Koch rules over and over. Nevertheless, we are going to tackle this problem in a
+                different manner by treating each segment of the Koch curve as an individual object. This will open up
+                some design possibilities. For example, if each segment is an object, we could allow each segment to
+                move independently from its original location and participate in a physics simulation. In addition, we
+                could use a random color, line thickness, etc. to display each segment differently.
+            </p>
+            <p>In order to accomplish our goal of treating each segment as an individual object, we must first decide
+                what this object should be in the first place. What data should it store? What functions should it have?
+            </p>
+            <p>The Koch curve is a series of connected lines, and so we will think of each segment as a “KochLine.” Each
+                KochLine object has a start point (“a”) and an end point (“b”). These points are PVector objects, and
+                the line is drawn with Unity’s line() function.
+            </p>
+            <pre class="prettyprint">
+
+        void Start()
+        {
+            findWindowLimits();
+
+            points = new List<Vector2>(); // Our List of points that will make up our line
+
+            points.Add(new Vector2(minPos.x, minPos.y + 1f)); // Left side of window
+            points.Add(new Vector2(maxPos.x, minPos.y + 1f)); // Right side of window
+
+            for (int i = 0; i < 5; i++)
+            {
+                generate(); // We want to expand our points 5 times!
+            }
+
+            KochLine = line(points); // We then show the line by passing the points into a LineRenderer
+        }
+
+        void generate()
+        {
+            if (KochLine != null)  // We're going to replace the line!
+            {
+                Destroy(KochLine);
+            }
+
+            List<Vector2> newPoints = new List<Vector2>();
+
+            for (int i = 0; i < points.Count - 1; i++) // We're going to use 2 points each time to make a line
+            {
+                Vector2 v = points[i+1] - points[i]; // This gives up the length of the line in 2 dimentions
+                v = v / 3; // We only need 1/3rd of it since the line is split into thirds
+
+                // First we need to define each new point from the original points in the line
+
+                Vector2 a = points[i]; // This is the first point in the original line
+                Vector2 b = v + a;  // 1/3rd after point A is where point B lies
+                Vector2 c = Rotate(v, 60) + b; // Point C is 60 Degrees up from point B
+                Vector2 d = (v * 2f) + a; // 2/3rds after point A is where point D lies
+                Vector2 e = points[i+1]; // This is the last point in the original line
+
+                // Now we add those points, in order, to our newPoint list
+
+                newPoints.Add(a);
+                newPoints.Add(b);
+                newPoints.Add(c);
+                newPoints.Add(d);
+                newPoints.Add(e);
+            }
+
+            // After each line is added, we redefine the original points with the newPoints
+            points = newPoints;
+        }
+
+</pre>
+
+            <p>Now that we have our KochLine method in our Chapter8 Figure 5 class, we can get started on the main program. We’ll need a data structure
+                to keep track of what will eventually become many KochLine objects, and an ArrayList (see Chapter 4 for
+                a review of Lists) will do just fine.
+            </p>
+            <pre class="prettyprint">
+
+    List<Vector2> points;
+</pre>
+
+            <p>In start(), we’ll want to create the List and add the first line segment to it, a line that
+                stretches from 0 to the width of the scene.
+            </p>
+            <pre class="prettyprint">
+
+    points = new List<Vector2>(); // Our List of points that will make up our line
+
+    points.Add(new Vector2(minPos.x, minPos.y + 1f)); // Left side of window
+    points.Add(new Vector2(maxPos.x, minPos.y + 1f)); // Right side of window
+
+
+</pre>
+
+            <p>Then in line(), all the KochLine object will be created (just one right now).
+            </p>
+            <pre class="prettyprint">
+
+    void Start()
+    {
+        findWindowLimits();
+
+        points = new List<Vector2>(); // Our List of points that will make up our line
+
+        points.Add(new Vector2(minPos.x, minPos.y + 1f)); // Left side of window
+        points.Add(new Vector2(maxPos.x, minPos.y + 1f)); // Right side of window
+
+        for (int i = 0; i < 5; i++)
+        {
+            generate(); // We want to expand our points 5 times!
+        }
+
+        KochLine = line(points); // We then show the line by passing the points into a LineRenderer
+    }
+
+    private GameObject line(List<Vector2> linePoints)
+        {
+            // We first generate a new object and give it a LineRenderer like in 8.4
+            GameObject obj = new GameObject();
+            obj.name = "Line";
+            LineRenderer line = obj.AddComponent<LineRenderer>();
+
+            // We give it a material and a color so we can see it
+            line.material = new Material(Shader.Find("Sprites/Default"));
+            line.startColor = line.endColor = Color.black;
+
+            // Let's give it a small width so we can see the complexity of the curve
+            line.startWidth = line.endWidth = 0.1f;
+
+            // We have to tell the LineRenderer to expect as many points as we have before we assign them
+            line.positionCount = linePoints.Count;
+
+            // We then can loop through those empty points and give them values
+            int index = 0;
+            foreach (Vector2 point in linePoints) {
+                line.SetPosition(index, new Vector3(point.x, point.y, 0));
+                index++;
+            }
+
+            return obj;
+        }
+</pre>
+
+            <p>This is our foundation. Let’s review what we have so far:
+            </p>
+            <ul>
+                <li>KochLine GameObject: A GameObject to keep track of a line from point A to B.</li>>
+                <li>List: A list of all KochLine points.</li>
+            </ul>
+            <p>With the above elements, how and where do we apply Koch rules and principles of recursion?
+            </p>
+            <p>Remember the Game of Life cellular automata? In that simulation, we always kept track of two generations:
+                current and next. When we were finished computing the next generation, next became current and we moved
+                on to computing the new next generation. We are going to apply a similar technique here. We have an
+                ArrayList that keeps track of the current set of KochLine objects (at the start of the program, there is
+                only one). We will need a second ArrayList (let’s call it “next”) where we will place all the new
+                KochLine objects that are generated from applying the Koch rules. For every KochLine object in the
+                current ArrayList, four new KochLine objects are added to the next ArrayList. When we’re done, the next
+                ArrayList becomes the current one.
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_15.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.15">
+                <p>
+                    Figure 8.15
+                </p>
+            </div>
+            <p>Here’s how the code will look:
+            </p>
+            <pre class="prettyprint">
+
+    void generate()
+    {
+        if (KochLine != null)  // We're going to replace the line!
+        {
+            Destroy(KochLine);
+        }
+
+        List<Vector2> newPoints = new List<Vector2>();
+
+        for (int i = 0; i < points.Count - 1; i++) // We're going to use 2 points each time to make a line
+        {
+            newPoints.Add(?????);
+            newPoints.Add(?????);
+            newPoints.Add(?????);
+            newPoints.Add(?????);
+            newPoints.Add(?????);
+        }
+
+        // After each line is added, we redefine the original points with the newPoints
+        points = newPoints;
+    }
+
+</pre>
+            <p>By calling generate() over and over again (for example, each time the mouse is pressed), we recursively
+                apply the Koch curve rules to the existing set of KochLine objects. Of course, the above omits the real
+                “work” here, which is figuring out those rules. How do we break one line segment into four as described
+                by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our
+                KochLine object uses PVector, this is a nice opportunity for us to practice our vector math. Let’s
+                establish how many points we need to compute for each KochLine object.
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_16.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.16">
+                <p>
+                    Figure 8.16
+                </p>
+            </div>
+            <p>As you can see from the above figure, we need five points (a, b, c, d, and e) to generate the new
+                KochLine objects.
+            </p>
+            <pre class="prettyprint">
+
+    newPoints.Add(a);
+    newPoints.Add(b);
+    newPoints.Add(c);
+    newPoints.Add(d);
+    newPoints.Add(e);
+</pre>
+            <p>Where do we get these points? Since we have a KochLine object, why not ask the KochLine object to compute
+                all these points for us?
+            </p>
+            <pre class="prettyprint">
+
+    void generate()
+    {
+        if (KochLine != null)  // We're going to replace the line!
+        {
+            Destroy(KochLine);
+        }
+
+        List<Vector2> newPoints = new List<Vector2>();
+
+        for (int i = 0; i < points.Count - 1; i++) // We're going to use 2 points each time to make a line
+        {
+            Vector2 v = points[i+1] - points[i]; // This gives up the length of the line in 2 dimentions
+            v = v / 3; // We only need 1/3rd of it since the line is split into thirds
+
+            // First we need to define each new point from the original points in the line
+
+            Vector2 a = points[i]; // This is the first point in the original line
+            Vector2 b = v + a;  // 1/3rd after point A is where point B lies
+            Vector2 c = Rotate(v, 60) + b; // Point C is 60 Degrees up from point B
+            Vector2 d = (v * 2f) + a; // 2/3rds after point A is where point D lies
+            Vector2 e = points[i+1]; // This is the last point in the original line
+
+            // Now we add those points, in order, to our newPoint list
+
+            newPoints.Add(a);
+            newPoints.Add(b);
+            newPoints.Add(c);
+            newPoints.Add(d);
+            newPoints.Add(e);
+        }
+
+        // After each line is added, we redefine the original points with the newPoints
+        points = newPoints;
+    }
+
+</pre>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_17.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.17">
+                <p>
+                    Figure 8.17
+                </p>
+            </div>
+
+            <p>The last point, C, is the most difficult one to find. However, if you recall that the angles of an
+                equilateral triangle are all sixty degrees, this makes it a little bit easier. If we know how to find
+                point B with a PVector one-third the length of the line, what if we were to rotate that same PVector
+                sixty degrees and move along that vector from point B? We’d be at point C!
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_18.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.18">
+                <p>
+                    Figure 8.18
+                </p>
+            </div>
+                <span class="example">Example 8.5: Koch curve
+                    </h4>
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs5" id="tab9" checked />
+                    <label for="tab9" role="tab" aria-selected="true" aria-controls="panel9" tabindex="0">Code</label>
+                    <div id="tab-content9" class="tab-content" role="tabpanel" aria-labelledby="description"
+                        aria-hidden="false">
+                        <div id="example5" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs5" id="tab10" />
+                    <label for="tab10" role="tab" aria-selected="false" aria-controls="panel10"
+                        tabindex="0">Demo</label>
+                    <div id="tab-content10" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                        aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter8/Figure5/index.html"
+                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                scrolling="no" Id="8.5">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.2</h4>
+
+                Draw the Koch snowflake (or some other variation of the Koch curve).
+                <div id="ImageContainer">
+                    <img src="https://natureofcode.com/book/imgs/chapter08/ch08_exc02.png" style="  width: 100%;
+            height: 100%;" alt="Figure 8.19">
                 </div>
-                <div class="footer" style="width: 33%;   float:left; padding-left: 5px;">
-                    <h4>Remixer</h4>
-                    <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
-                            Arts and Media Program</a> at Columbia College Chicago.</p>
 
-                    <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+            </div>
 
-                    <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
-                            href="https://github.com/jadlerfisher">GitHub</a></p>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.3</h4>
+                Try animating the Koch curve. For example, can you draw it from left to right? Can you vary the visual
+                design of the line segments? Can you move the line segments using techniques from earlier chapters? What
+                if each line segment were made into a spring (toxiclibs) or joint (Box2D)?
+            </div>
 
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.4</h4>
+                Rewrite the Cantor set example using objects and an ArrayList.
+            </div>
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.5</h4>
+                Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion.
+                <div id="ImageContainer">
+                    <img src="https://natureofcode.com/book/imgs/chapter08/ch08_exc05.png" style="  width: 100%;
+            height: 100%;" alt="Figure 8.19">
                 </div>
-                <div class="footer" style="width: 33%;   float:left;
-                padding-left: 5px;">
-                    <h4>Author</h4>
-                    <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
-                            Telecommunications Program</a> at New York University.</p>
 
-                    <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
+            </div>
 
-                    <p><a href="https://twitter.com/shiffman">Twitter</a> <a
-                            href="http://github.com/shiffman">GitHub</a></p>
+            <h2>8.5 Trees</h2>
 
-                </div>
-            </footer>
+
+
+
+            <p>The fractals we have examined in this chapter so far are deterministic, meaning they have no randomness
+                and will always produce the identical outcome each time they are run. They are excellent demonstrations
+                of classic fractals and the programming techniques behind drawing them, but are too precise to feel
+                natural. In this next part of the chapter, I want to examine some techniques behind generating a
+                stochastic (or non-deterministic) fractal. The example we’ll use is a branching tree. Let’s first walk
+                through the steps to create a deterministic version. Here are our production rules:
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_19.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.19">
+                <p>
+                    Figure 8.19
+                </p>
+            </div>
+            <p>Again, we have a nice fractal with a recursive definition: A branch is a line with two branches connected
+                to it.
+            </p>
+
+
+
+            <p>The part that is a bit more difficult than our previous fractals lies in the use of the word rotate in
+                the fractal’s rules. Each new branch must rotate relative to the previous branch, which is rotated
+                relative to all its previous branches.
+            </p>
+            <p>Let’s begin by drawing a single branch, the trunk of the tree. This is as simple as setting a particular transform. In this instance, we'll take the transform of the script object. You've seen this object in every one of our scenes.
+            We'll also go ahead and give it a startLength!
+            </p>
+
+            <pre class="prettyprint">
+
+                void Start()
+                {
+                    // Start the recursive branch function.
+                    Branch(transform, startLength);
+                }
+
+                void Branch(Transform parentRoot, float length)
+                {
+
+                }
+</pre>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_20.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.20">
+                <p>
+                    Figure 8.20
+                </p>
+            </div>
+            <p>…followed by drawing a line upwards (Figure 8.20):
+            </p>
+            <pre class="prettyprint">
+
+    void Branch(Transform parentRoot, float length)
+    {
+        // Determine where this branch ends.
+        Vector2 end = parentRoot.position + parentRoot.up * length;
+
+        // Create the line renderer for this branch.
+        DrawLine(parentRoot.gameObject, parentRoot.position, end);
+    }
+
+</pre>
+
+            <p>Once we’ve finished the root, we just need to translate to the end and rotate in order to draw the next
+                branch. (Eventually, we’re going to need to package up what we’re doing right now into a recursive
+                function, but let’s sort out the steps first.)
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_21.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.21">
+                <p>
+                    Figure 8.21
+                </p>
+            </div>
+            <p>Remember, when we rotate in Unity, we are always rotating around the point of origin, so here the
+                point of origin must always be translated to the end of our current branch.
+            </p>
+            <pre class="prettyprint">
+
+            Transform leftRoot = new GameObject().transform;
+            leftRoot.parent = parentRoot;
+            // Set the position and rotation relative to the previous branch.
+            leftRoot.localPosition = Vector2.up * length;
+            //use eulerAngles to handle rotation
+            leftRoot.localEulerAngles = new Vector3(0, 0, childAngle);
+
+</pre>
+
+            <p>Now that we have a branch going to the right, we need one going to the left. Let’s look at all the code together.
+            </p>
+
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_22.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.22">
+                <p>
+                    Figure 8.22
+                </p>
+            </div>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_23.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.23">
+                <p>
+                    Figure 8.23
+                </p>
+            </div>
+
+            <pre class="prettyprint">
+
+    void Branch(Transform parentRoot, float length)
+    {
+        // Determine where this branch ends.
+        Vector2 end = parentRoot.position + parentRoot.up * length;
+
+        // Create the line renderer for this branch.
+        DrawLine(parentRoot.gameObject, parentRoot.position, end);
+
+        // Create left and right branches depending on this branch length.
+        if(length > minimumLength)
+        {
+            // Create a new child transform for this branch.
+            Transform leftRoot = new GameObject().transform;
+            leftRoot.parent = parentRoot;
+            // Set the position and rotation relative to the previous branch.
+            leftRoot.localPosition = Vector2.up * length;
+            leftRoot.localEulerAngles = new Vector3(0, 0, childAngle);
+            // Call this function again.
+            Branch(leftRoot, length * childScale);
+
+            // Repeat for the right branch, but with the opposite angle.
+            Transform rightRoot = new GameObject().transform;
+            rightRoot.parent = parentRoot;
+            rightRoot.localPosition = Vector2.up * length;
+            rightRoot.localEulerAngles = new Vector3(0, 0, -childAngle);
+            Branch(rightRoot, length * childScale);
+        }
+    }
+</pre>
+
+            <p>If you think of each call to the function line() as a “branch,” you can see from the code above that we
+                have implemented our definition of branching as a line that has two lines connected to its end. We could
+                keep adding more and more calls to line() for more and more branches, but just as with the Cantor set
+                and Koch curve, our code would become incredibly complicated and unwieldy. Instead, we can use the above
+                logic as our foundation for writing a recursive function, replacing the direct calls to line() with our
+                own function called branch(). Let’s take a look.
+            </p>
+
+            <p>
+                <span class="example">
+                    Example 8.6: Recursive tree
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs6" id="tab11" checked />
+                    <label for="tab11" role="tab" aria-selected="true" aria-controls="panel11" tabindex="0">Code</label>
+                    <div id="tab-content11" class="tab-content" role="tabpanel" aria-labelledby="description"
+                        aria-hidden="false">
+                        <div id="example6" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs6" id="tab12" />
+                    <label for="tab12" role="tab" aria-selected="false" aria-controls="panel12"
+                        tabindex="0">Demo</label>
+                    <div id="tab-content12" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                        aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter8/Figure6/index.html"
+                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                scrolling="no" Id="6.6">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <p>Notice how in the above code we use pushMatrix() and popMatrix() around each subsequent call to branch().
+                This is one of those elegant code solutions that feels almost like magic. Each call to branch() takes a
+                moment to remember the location of that particular branch. If you turn yourself into Unity for a
+                moment and try to follow the recursive function with pencil and paper, you’ll notice that it draws all
+                of the branches to the right first. When it gets to the end, popMatrix() will pop us back along all of
+                the branches we’ve drawn and start sending branches out to the left.
+            </p>
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.6 </h4>
+
+                Emulate the Unity code in Example 8.6 and number the branches in the above diagram in the order
+                that Unity would actually draw each one.            </div>
+                <p>
+                You may have noticed that the recursive function we just wrote would not actually draw the above tree.
+                After all, it has no exit condition and would get stuck in infinite recursive calls to itself. You’ll
+                also probably notice that the branches of the tree get shorter at each level. Let’s look at how we can
+                shrink the length of the lines as the tree is drawn, and stop branching once the lines have become too
+                short.</p>
+
+
+            <pre class="prettyprint">
+
+    void Branch(Transform parentRoot, float length)
+    {
+        // Determine where this branch ends.
+        Vector2 end = parentRoot.position + parentRoot.up * length;
+
+        // Create the line renderer for this branch.
+        DrawLine(parentRoot.gameObject, parentRoot.position, end);
+
+        // Create left and right branches depending on this branch length.
+        if (length > minimumLength)
+        {
+            int childBranchCount = Random.Range(minBranches, maxBranches + 1);
+
+            for(int i = 0; i < childBranchCount; i++)
+            {
+                // Create a new child transform for this branch.
+                Transform newBranch = new GameObject().transform;
+                newBranch.parent = parentRoot;
+                // Set the position and rotation relative to the previous branch.
+                newBranch.localPosition = Vector2.up * length;
+                newBranch.localEulerAngles = new Vector3(0, 0, Random.Range(minChildAngle, maxChildAngle));
+                // Call this function again.
+                Branch(newBranch, length * childScale);
+            }
+        }
+    }
+
+</pre>
+            <p>
+                <span class="example">
+                    Example 8.7: Recursive tree
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs7" id="tab13" checked />
+                    <label for="tab13" role="tab" aria-selected="true" aria-controls="panel13" tabindex="0">Code</label>
+                    <div id="tab-content13" class="tab-content" role="tabpanel" aria-labelledby="description"
+                        aria-hidden="false">
+                        <div id="example7" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs7" id="tab14" />
+                    <label for="tab14" role="tab" aria-selected="false" aria-controls="panel14"
+                        tabindex="0">Demo</label>
+                    <div id="tab-content14" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                        aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter8/Figure7/index.html"
+                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                scrolling="no" Id="8.7">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.7</h4>
+                Vary the strokeWeight() for each branch. Make the root thick and each subsequent branch thinner.
+            </div>
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.8</h4>
+                The tree structure can also be generated using the ArrayList technique demonstrated with the Koch curve.
+                Recreate the tree using a Branch object and an ArrayList to keep track of the branches. Hint: you’ll
+                want to keep track of the branch directions and lengths using vector math instead of Unity
+                transformations.
+            </div>
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.9 </h4>
+                Once you have the tree built with an ArrayList of Branch objects, animate the tree’s growth. Can you
+                draw leaves at the end of the branches?
+                The recursive tree fractal is a nice example of a scenario in which adding a little bit of randomness
+                can make the tree look more natural. Take a look outside and you’ll notice that branch lengths and
+                angles vary from branch to branch, not to mention the fact that branches don’t all have exactly the same
+                number of smaller branches. First, let’s see what happens when we simply vary the angle and length. This
+                is a pretty easy one, given that we can just ask Unity for a random number each time we draw the
+                tree.
+            </div>
+            <pre class="prettyprint">
+
+</pre>
+
+            <p>In the above function, we always call branch() twice. But why not pick a random number of branches and
+                call branch() that number of times?
+            </p>
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.10</h4>
+                Set the angles of the branches of the tree according to Perlin noise values. Adjust the noise values
+                over time to animate the tree. See if you can get it to appear as if it is blowing in the wind.
+            </div>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.11</h4>
+                Use toxiclibs to simulate tree physics. Each branch of the tree should be two particles connected with a
+                spring. How can you get the tree to stand up and not fall down?
+            </div>
+            <h2>8.6 L-systems
+            </h2>
+            <p>In 1968, Hungarian botanist Aristid Lindenmayer developed a grammar-based system to model the growth
+                patterns of plants. L-systems (short for Lindenmayer systems) can be used to generate all of the
+                recursive fractal patterns we’ve seen so far in this chapter. We don’t need L-systems to do the kind of
+                work we’re doing here; however, they are incredibly useful because they provide a mechanism for keeping
+                track of fractal structures that require complex and multi-faceted production rules.
+            </p>
+            <p>In order to create an example that implements L-systems in Unity, we are going to have to be
+                comfortable with working with (a) recursion, (b) transformation matrices, and (c) strings. So far we’ve
+                worked with recursion and transformations, but strings are new here. We will assume the basics, but if
+                that is not comfortable for you, I would suggest taking a look at the Unity tutorial Strings and
+                Drawing Text.
+            </p>
+            <p>An L-system involves three main components:
+            </p>
+            <ul>
+                <li><b><i>Alphabet</i></b>. An L-system’s alphabet is comprised of the valid characters that can be included. For
+                    example, we could say the alphabet is “ABC,” meaning that any valid “sentence” (a string of
+                    characters) in an L-system can only include these three characters.
+                </li>
+                <li><b><i>Axiom</i></b>. The axiom is a sentence (made up with characters from the alphabet) that describes the
+                    initial state of the system. For example, with the alphabet “ABC,” some example axioms are “AAA” or
+                    “B” or “ACBAB.”
+                </li>
+                <li><b><i>Rules</i></b>. The rules of an L-system are applied to the axiom and then applied recursively, generating
+                    new sentences over and over again. An L-system rule includes two sentences, a “predecessor” and a
+                    “successor.” For example, with the Rule “A —> AB”, whenever an “A” is found in a string, it is
+                    replaced with “AB.”
+                </li>
+            </ul>
+            <p>Let’s begin with a very simple L-system. (This is, in fact, Lindenmayer’s original L-system for modeling
+                the growth of algae.)
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_24.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.7">
+                <p>
+                    Figure 8.24: And so on and so forth...
+                </p>
+            </div>
+            <p>Alphabet: A BAxiom: ARules: (A → AB) (B → A)
+            </p>
+            <p>As with our recursive fractal shapes, we can consider each successive application of the L-system rules
+                to be a generation. Generation 0 is, by definition, the axiom.
+            </p>
+            <p>Let’s look at how we might create these generations with code. We’ll start by using a String object to
+                store the axiom.
+            </p>
+            <pre class="prettyprint">
+
+    // Start with "A"
+    private string current = "A";
+</pre>
+            <p>And once again, just as we did with the Game of Life and the Koch curve ArrayList examples, we will need
+                an entirely separate string to keep track of the “next” generation.
+            </p>
+
+            <pre class="prettyprint">
+
+    // A new StringBuilder for the next generation
+    System.Text.StringBuilder next = new StringBuilder();
+
+</pre>
+            <p>Now it’s time to apply the rules to the current generation and place the results in the next.
+            </p>
+
+            <pre class="prettyprint">
+
+    // A new StringBuilder for the next generation
+    System.Text.StringBuilder next = new StringBuilder();
+    char[] currentCharString = current.ToCharArray();
+
+    // Look through the current string to replace according
+    // to L-System rules
+    foreach (char c in currentCharString)
+    {
+        if (c == 'A')
+        {
+            // If we find A replace with AB
+            next.Append("AB");
+        }
+        else if (c == 'B')
+        {
+            // If we find B replace with A
+            next.Append("A");
+        }
+    }
+
+    // The current String is now the next one
+    current = next.ToString();
+    count++;
+
+</pre>
+            <p>And when we’re done, current can become next.
+            </p>
+            <pre class="prettyprint">
+
+    // Print to console
+    print("Generation " + count + ": " + current);
+
+</pre>
+            <p>To be sure this is working, let’s package it into a function and and call it every time the mouse is
+                pressed.
+            </p>
+
+
+            <div id="ImageContainer">
+                <img src="https://www.jafisherportfolio.com/nocur/images/Chapter8Fig9.png" style="  width: 100%;
+        height: 100%;" alt="Example 8.9">
+            </div>
+
+            <p>
+                <span class="example">
+                    Example 8.9: Simple L-system sentence generation </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs9" id="tab17" checked />
+                    <label for="tab17" role="tab" aria-selected="true" aria-controls="panel17" tabindex="0">Code</label>
+                    <div id="tab-content17" class="tab-content" role="tabpanel" aria-labelledby="description"
+                        aria-hidden="false">
+                        <div id="example9" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs9" id="tab18" />
+                    <label for="tab18" role="tab" aria-selected="false" aria-controls="panel18"
+                        tabindex="0">Demo</label>
+                    <div id="tab-content18" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                        aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter8/Figure9/index.html"
+                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                scrolling="no" Id="8.9">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>Since the rules are applied recursively to each generation, the length of the string grows exponentially.
+                By generation #11, the sentence is 233 characters long; by generation #22, it is over 46,000 characters
+                long. The C# String class, while convenient to use, is a grossly inefficient data structure for
+                concatenating large strings. A String object is “immutable,” which means once the object is created it
+                can never be changed. Whenever you add on to the end of a String object, C# has to make a brand new
+                String object (even if you are using the same variable name).
+            </p>
+            <pre class="prettyprint">
+
+    String s = "blah";
+    s += "add some more stuff";
+
+</pre>
+            <p>In most cases, this is fine, but why duplicate a 46,000-character string if you don’t have to? For better
+                efficiency in our L-system examples, we’ll use the StringBuffer class, which is optimized for this type
+                of task and can easily be converted into a string after concatenation is complete.
+            </p>
+
+
+            <pre class="prettyprint">
+
+    StringBuffer str = new StringBuffer();
+    for (int i = 0; i < current.length(); i++) {
+        char c = current.charAt(i);
+        if (c == 'A') {
+          next.append("AB");
+        } else if (c == 'B') {
+          next.append("A");
+        }
+      }
+      current = next.toString();
+
+</pre>
+            <p>You may find yourself wondering right about now: what exactly is the point of all this? After all, isn’t
+                this a chapter about drawing fractal patterns? Yes, the recursive nature of the L-system sentence
+                structure seems relevant to the discussion, but how exactly does this model plant growth in a visual
+                way?
+            </p>
+            <p>What we’ve left unsaid until now is that embedded into these L-system sentences are instructions for
+                drawing. Let’s see how this works with another example.
+            </p>
+            <p>Alphabet: A BAxiom: ARules: (A → ABA) (B → BBB)
+            </p>
+            <p>To read a sentence, we’ll translate it in the following way:
+            </p>
+            <p>A: Draw a line forward.B: Move forward without drawing.
+            </p>
+            <p>Let’s look at the sentence of each generation and its visual output.
+            </p>
+            <p>Generation 0: AGeneration 1: ABAGeneration 2: ABABBBABAGeneration 3: ABABBBABABBBBBBBBBABABBBABA
+            </p>
+            <p>Look familiar? This is the Cantor set generated with an L-system.
+            </p>
+
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter08/ch08_25.png" style="  width: 100%;
+        height: 100%;" alt="Figure 8.25">
+                <p>
+                    Figure 8.25
+                </p>
+            </div>
+            <p>The following alphabet is often used with L-systems: “FG+-[]”, meaning:
+            </p>
+            <p>F: Draw a line and move forwardG: Move forward (without drawing a line)+: Turn right-: Turn left[: Save
+                current location]: Restore previous location
+            </p>
+            <p>This type of drawing framework is often referred to as “Turtle graphics” (from the old days of LOGO
+                programming). Imagine a turtle sitting on your computer screen to which you could issue a small set of
+                commands: turn left, turn right, draw a line, etc. Unity isn’t set up to operate this way by
+                default, but by using translate(), rotate(), and line(), we can emulate a Turtle graphics engine fairly
+                easily.
+            </p>
+            <p>Here’s how we would translate the above L-system alphabet into Unity code.
+            </p>
+            <ul>
+                <li>
+                    F: line(0,0,0,len);
+                </li>
+                <li>
+                    G: translate(0,len);
+
+                </li>
+                <li>
+                    +: rotate(angle);
+
+                </li>
+                <li>
+                    -: rotate(-angle);
+
+                </li>
+                <li>
+                    [: push();
+
+                </li>
+                <li>
+                    ]: pop();
+
+
+                </li>
+            </ul>
+
+            <p>Assuming we have a sentence generated from the L-system, we can walk through the sentence character by
+                character and call the appropriate function as outlined above.
+            </p>
+            <pre class="prettyprint">
+
+    string sentence = lSys.Sentence;
+    for(int i = 0; i < sentence.Length; i++)
+    {
+        char c = sentence[i];
+        if (c == 'F' || c == 'G')
+        {
+            line();
+        }
+        else if (c == '+')
+        {
+            state.Angle += theta;
+        }
+        else if (c == '-')
+        {
+            state.Angle -= theta;
+        }
+        else if (c == '[')
+        {
+            savedStates.Push(state.Clone());
+        }
+        else if (c == ']')
+        {
+            state = savedStates.Pop();
+        }
+</pre>
+            <p>The next example will draw a more elaborate structure with the following L-system.
+            </p>
+            <p>Alphabet: FG+-[]Axiom: FRules: F -→ FF+[+F-F-F]-[-F+F+F]
+            </p>
+            <p>The example available for download on the book’s website takes all of the L-system code provided in this
+                section and organizes it into three classes:
+            </p>
+            <ul>
+                <li>
+                    Rule: A class that stores the predecessor and successor strings for an L-system rule.
+                </li>
+                <li>
+                    LSystem: A class to iterate a new L-system generation (as demonstrated with the StringBuffer
+                    technique).
+                </li>
+                <li>
+                    Turtle: A class to manage reading the L-system sentence and following its instructions to draw on
+                    the screen.
+                </li>
+            </ul>
+            <p>We won’t write out these classes here since they simply duplicate the code we’ve already worked out in
+                this chapter. However, let’s see how they are put together in the main tab.
+            </p>
+
+
+
+            <p>
+                <span class="example">
+                    Example 8.10: LSystem
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs10" id="tab19" checked />
+                    <label for="tab19" role="tab" aria-selected="true" aria-controls="panel19" tabindex="0">Code</label>
+                    <div id="tab-content19" class="tab-content" role="tabpanel" aria-labelledby="description"
+                        aria-hidden="false">
+                        <div id="example10" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs10" id="tab20" />
+                    <label for="tab20" role="tab" aria-selected="false" aria-controls="panel20"
+                        tabindex="0">Demo</label>
+                    <div id="tab-content20" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                        aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter8/Figure10/index.html"
+                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                scrolling="no" Id="8.10">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.12</h4>
+                Use an L-system as a set of instructions for creating objects stored in an ArrayList. Use trigonometry
+                and vector math to perform the rotations instead of matrix transformations (much like we did in the Koch
+                curve example).
+            </div>
+
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.13</h4>
+                The seminal work in L-systems and plant structures, The Algorithmic Beauty of Plants by Przemysław
+                Prusinkiewicz and Aristid Lindenmayer, was published in 1990. It is available for free in its entirety
+                online. Chapter 1 describes many sophisticated L-systems with additional drawing rules and available
+                alphabet characters. In addition, it describes several methods for generating stochastic L-systems.
+                Expand the L-system example to include one or more additional features described by Prusinkiewicz and
+                Lindenmayer.
+            </div>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 8.14</h4>
+                In this chapter, we emphasized using fractal algorithms for generating visual patterns. However,
+                fractals can be found in other creative mediums. For example, fractal patterns are evident in Johann
+                Sebastian Bach’s Cello Suite no. 3. The structure of David Foster Wallace’s novel Infinite Jest was
+                inspired by fractals. Consider using the examples in this chapter to generate audio or text.
+            </div>
+            <div class="note">
+                <h4>
+
+                    The Ecosystem Project
+                </h4>
+                <p>
+                    Step 8 Exercise:</p>
+                <p>Incorporate fractals into your ecosystem. Some possibilities:</p>
+                <ul>
+                    <li>Add plant-like creatures to the ecosystem environment.</li>
+                    <li>Let’s say one of your plants is similar to a tree. Can you add leaves or flowers to the end of
+                        the branches? What if the leaves can fall off the tree (depending on a wind force)? What if you
+                        add fruit that can be picked and eaten by the creatures?</li>
+                    <li>Design a creature with a fractal pattern.</li>
+                    <li>Use an L-system to generate instructions for how a creature should move or behave.</li>
+                </ul>
+
+
+            </div>
+
+
+
+            <div class="footer">
+                <div class="col">
+
+                <h4>Licenses</h4>
+                <p>
+                    <a class="license-badge" rel="license"
+                        href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
+                            style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
+                    <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
+                            alt="LGPL License" style="border-width:0"
+                            src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
+                </p>
+
+                <p>
+                    The book's text and illustrations are licensed under a <a rel="license"
+                        href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
+                        Attribution-NonCommercial 3.0 Unported License</a>.
+                </p>
+
+                <p>
+                    All of the book's source code is licensed under the <a rel="license"
+                        href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
+                    as published by the Free Software Foundation; either version 2.1 of the License, or (at your
+                    option) any later version.
+                </p>
+        </div>
+            <div class="col">
+                <h4>Remixer</h4>
+                <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
+                        Arts and Media Program</a> at Columbia College Chicago.</p>
+
+                <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+
+                <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
+                        href="https://github.com/jadlerfisher">GitHub</a></p>
+
+            </div>
+            <div class="col">
+                <h4>Author</h4>
+                <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
+                        Telecommunications Program</a> at New York University.</p>
+
+                <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
+
+                <p><a href="https://twitter.com/shiffman">Twitter</a> <a
+                        href="http://github.com/shiffman">GitHub</a></p>
+
+            </div>
+        </div>
         </section>
     </div>
 
     <script>
-
         window.onscroll = function () { scrollFunction() };
 
         function scrollFunction() {
@@ -162,7 +1789,145 @@
                 document.getElementById("titleHeader").style.float = "";
 
             }
-        }
+
+        }</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+    <script src="scripts/github-embed.min.js"></script>
+    <script>
+
+        //////lazy loader
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var lazyloadImages;
+
+            if ("IntersectionObserver" in window) {
+                lazyloadImages = document.querySelectorAll(".lazy");
+                var imageObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            var iframe = entry.target;
+                            iframe.src = iframe.dataset.src;
+                            iframe.classList.remove("lazy");
+                            imageObserver.unobserve(iframe);
+                        }
+                    });
+                });
+
+                lazyloadImages.forEach(function (iframe) {
+                    imageObserver.observe(iframe);
+                });
+            } else {
+                var lazyloadThrottleTimeout;
+                lazyloadImages = document.querySelectorAll(".lazy");
+
+                function lazyload() {
+                    if (lazyloadThrottleTimeout) {
+                        clearTimeout(lazyloadThrottleTimeout);
+                    }
+
+                    lazyloadThrottleTimeout = setTimeout(function () {
+                        var scrollTop = window.pageYOffset;
+                        lazyloadImages.forEach(function (iframe) {
+                            if (iframe.offsetTop < (window.innerHeight + scrollTop)) {
+                                iframe.src = iframe.dataset.src;
+                                iframe.classList.remove('lazy');
+                            }
+                        });
+                        if (lazyloadImages.length == 0) {
+                            document.removeEventListener("scroll", lazyload);
+                            window.removeEventListener("resize", lazyload);
+                            window.removeEventListener("orientationChange", lazyload);
+                        }
+                    }, 20);
+                }
+
+                document.addEventListener("scroll", lazyload);
+                window.addEventListener("resize", lazyload);
+                window.addEventListener("orientationChange", lazyload);
+            }
+        })
+
+        githubEmbed('#example1', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%208/Example%208.1/Chapter8Fig1.cs"
+            }]
+        });
+
+        githubEmbed('#example2', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%208/Example%208.2/Chapter8Fig2.cs"
+            }]
+        });
+
+        githubEmbed('#example3', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%208/Example%208.3/Chapter8Fig3.cs"
+            }]
+        });
+
+        githubEmbed('#example4', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%208/Example%208.4/Chapter8Fig4.cs"
+            }]
+        });
+
+        githubEmbed('#example5', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%208/Example%208.5/Chapter8Fig5.cs"
+            }]
+        });
+
+        githubEmbed('#example6', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%208/Example%208.6/Example8_6.cs"
+            }]
+        });
+
+        githubEmbed('#example7', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%208/Example%208.7/Example8_7.cs"
+            }]
+        });
+
+        githubEmbed('#example9', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%208/Example%208.9/Ch8Fig9.cs"
+            }]
+        });
+
+        githubEmbed('#example10', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%208/Example%208.10/Chapter8Fig10.cs"
+            }]
+        });
     </script>
 </body>
 

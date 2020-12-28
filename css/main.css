@@ -25,9 +25,33 @@ nav {
 
 }
 
-section {
-  width: 60%;
-  margin-right: 10px;
+@media (max-width:1300px){
+
+  nav {
+    margin-top:140px;
+    width:100%;
+    display: flex;
+    align-items: center;
+  }
+
+  ul.nav {
+    text-align:left;
+    list-style-type: none;
+    overflow: hidden;
+    padding: 0px 0px;
+    font-size: small;
+    display: inline;
+
+  }
+
+  li .nav {
+    display: inline;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
 }
 
 
@@ -47,15 +71,27 @@ body {
   font-family: 'Ibarra Real Nova', serif;
   text-align: left;
   margin: 0;
-  
+  font-size:x-large;
+
 }
 
 
 section {
+  width: 60%;
   margin-top:100px;
   margin-bottom: 10px;
   border-radius: 3px;
   text-align:left;
+}
+
+@media (max-width:1300px){
+  section{
+    margin-top:0px;
+
+    width: 100%;
+    margin-right: 10px;
+  }
+
 }
 
 header {
@@ -95,7 +131,7 @@ h3 {
   font-family: 'Nunito Sans', sans-serif;
   font-size: 18px;
   padding-bottom: 2px;
-  
+
   }
 
   h4 {
@@ -110,7 +146,7 @@ nav, section {
 
 a:link{
   font-family:'Nunito Sans', sans-serif;
-  align-content: left;
+  align-content: flex-start;
   color: #000;
   text-decoration:none;
 
@@ -122,10 +158,18 @@ a:hover {
   color: #2196f3;;
 }
 a:active {
-  color: #2196f3;;
+  color: #2196f3;
 }
 
-
+.content-box {
+  columns: 2 auto;
+display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.content-box-text {
+  columns: 2 auto;
+}
 
 ul.nav{
   text-align:left;
@@ -139,6 +183,25 @@ ul {
 
  }
 
+ @media (max-width:1300px){
+
+  ul.nav {
+    text-align:left;
+    list-style-type: none;
+    overflow: hidden;
+    padding: 0px 0px;
+    font-size: small;
+    text-align: center;
+
+  }
+
+
+}
+
+    ul.tabs {
+        padding-inline-start: 0px;
+    }
+
  li{
 
   padding-top: 5px;
@@ -146,21 +209,49 @@ ul {
 
  }
 
+ @media (max-width:1300px){
+  nav ul li {
+    display:inline-flex;
+    padding-right: 5px;
+    padding-left: 5px;
 
- footer {
+  }
+
+}
+
+
+ .footer {
 
   width: 100%;
   background: #d3d3d3;
   display: inline-block;
   overflow: hidden;
+  position: relative;
+  height: auto;
 
  }
 
- .footer div {
-  width:33%;
-  float:left;
-  padding-left: 5px;
+
+ .footer .col {
+  width: 33%;
+  height: auto;
+  float: left;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding: 0px 20px 20px 20px;
 }
+
+
+@media (max-width:1300px){
+
+  .footer .col {
+    width: 100%;
+    float:left;
+    padding-left: 5px;
+  }
+}
+
 
 #ImageContainer p
 {
@@ -189,8 +280,9 @@ span.example{
 }
 
 
+
 table{
-  font-size: 8pt;
+  font-size: 18pt;
   font-family: 'Ibarra Real Nova', serif;
   color: #606060;
   border-collapse: collapse;
@@ -215,7 +307,7 @@ tr {
 th {
 
   color: #404040;
-    font-size: 9pt;
+    font-size: 18pt;
     border: 1px solid #D1D1D1;
     background-color: rgb(92%,92%,92%);
     font-family:'Nunito Sans', sans-serif;
@@ -227,4 +319,121 @@ tbody {
   vertical-align: middle;
   border-color: inherit;
 }
+
+.prettyprint {
+    white-space: pre-wrap;
+}
+
+iframe{
+width: 100%;
+}
+
+iframe:focus {
+    outline: none;
+    border: none;
+    overflow: hidden;
+}
+
+iframe[seamless] {
+    display: block;
+    border: none;
+    overflow: hidden;
+}
+
+
+/**************************************
+Code Menu Tabs
+**************************************/
+
+
+.tabs {
+    width: 100%;
+    height: 560px;
+    float: none;
+    list-style: none;
+    position: relative;
+    margin: 0;
+    text-align: left;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+    .tabs li {
+        float: left;
+        display: block;
+    }
+
+    .tabs input[type="radio"] {
+        position: absolute;
+        top: 0;
+        left: -9999px;
+    }
+
+    .tabs label {
+        display: block;
+        padding: 14px 21px;
+        border-radius: 2px 2px 0 0;
+        font-size: 20px;
+        font-weight: normal;
+        text-transform: uppercase;
+        background-color: #CACCCB;
+        cursor: pointer;
+        position: relative;
+        top: 4px;
+        -moz-transition: all 0.2s ease-in-out;
+        -o-transition: all 0.2s ease-in-out;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+
+    }
+
+        .tabs label:hover {
+            background: #144DDB;
+        }
+
+    .tabs .tab-content {
+        z-index: 2;
+        display: none;
+        overflow: hidden;
+        width: 100%;
+        font-size: 17px;
+        line-height: 25px;
+        position: absolute;
+        top: 60px;
+        left: 0;
+    }
+
+    .tabs [id^="tab"]:checked + label {
+        top: 0;
+        background: #2196f3;
+    }
+
+    .tabs [id^="tab"]:checked ~ [id^="tab-content"] {
+        display: block;
+        background-color: #CACCCB;
+    }
+
+p.link {
+    clear: both;
+    margin: 380px 0 0 15px;
+}
+
+    p.link a {
+        text-transform: uppercase;
+        text-decoration: none;
+        display: inline-block;
+        color: #fff;
+        padding: 5px 10px;
+        margin: 0 5px;
+        background-color: #2196f3;
+        -moz-transition: all 0.2s ease-in;
+        -o-transition: all 0.2s ease-in;
+        -webkit-transition: all 0.2s ease-in;
+        transition: all 0.2s ease-in;
+    }
+
+        p.link a:hover {
+            background-color: #2196f3;
+        }
+
+
 

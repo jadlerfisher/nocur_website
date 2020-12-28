@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="description" content="The Nature of Code revised for use in Unity with C#.">
+<meta name="author" content="Joshua A. Fisher, Ph.D.">
+
+<base href="https://natureofcodeunity.com/" target="_self">
+<!--Google Font-->
+
+<link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova|Nunito+Sans:700&display=swap" rel="stylesheet">
+
+
+
+
+
+<meta property="og:title" content="The Nature of Code Unity Remix">
+<meta property="og:description" content="The Nature of Code revised for use in Unity with C#.">
+<meta property="og:url" content="https://natureofcodeunity.com/">
+<meta property="og:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+
+
+<meta name="twitter:title" content="The Nature of Code Unity Remix">
+<meta name="twitter:description" content="The Nature of Code revised for use in Unity with C#.">
+<meta name="twitter:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+<meta name="twitter:card" content="summary_large_image">
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="css/main.css" />
+
+    <!--scripts-->
+    <script src="scripts/scripts.js"></script>
+
+    <!-- Title -->
+    <title>The Nature of Code Unity Remix</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="header" style="overflow: hidden;">
+            <header>
+                <div id="titleHeader">
+                The Nature of Code Remixed for Unity
+                </div>
+                <div id="authorHeader">
+                Originally Written by Daniel Shiffman // Remixed by Joshua A. Fisher
+                </div>
+            </header>
+        </div>
+        <nav>
+            <ul class ="nav">
+                <li><a href="index.html">WELCOME</a>
+                </li>
+                <li><a href="acknowledgements.html">ACKNOWLEDGMENTS</a>
+                </li>
+                <li><a href="introduction.html">INTRODUCTION</a>
+                </li>
+                <li><a href="chapterone.html">1. VECTORS</a>
+                </li>
+                <li><a href="chaptertwo.html">2. FORCES</a>
+                </li>
+                <li><a href="chapterthree.html">3. OSCILLATION</a>
+                </li>
+                <li><a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
+                </li>
+                <li><a href="chapterfive.html">5. PHYSICS COMPONENTS</a>
+                </li>
+                <li><a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
+                </li>
+                <li><a href="chapterseven.html">7. CELLULAR AUTOMATA</a>
+                </li>
+                <li><a href="chaptereight.html">8. FRACTALS</a>
+                </li>
+                <li><a href="chapternine.html">9. THE EVOLUTION OF CODE</a>
+                </li>
+                <li><a href="chapterten.html">10. NEURAL NETWORKS</a>
+                </li>
+            </ul>
+        </nav>
+        <section>
+            <h2>
+                Acknowledgements
+            </h2>
+            <h3>
+                "We are like dwarfs sitting on the shoulders of giants. We see more, and things that are more distant, than they did, not because our sight is superior or because we are taller than they, but because they raise us up, and by their great stature add to ours." <p></p> – John of Salisbury, 1159
+            </h3>
+            <p>
+                Where to even begin with these acknowledgements. Firstly, I want to thank Daniel Shiffman and his team who developed <a href="www.processing.org">Processing</a> and the original <a href="www.natureofcode.com">Nature of Code book and website</a>. This website would not exist without their implicit generosity in making both the book and source code open source. When I first discovered the material, I was enamored. I yearned to connect it to <a href="https://www.jafisherportfolio.com">my work in immersive media</a>. The algorithms, the explanations, and the math were a godsend to someone like me—an artist and scholar first, programmer second, or to be honest, third. With the help of Shiffman’s explanations of natural phenomena I was able to envision a translation of the material into C# for use in Unity.
+            <p></p>
+            This turned out to be a much larger undertaking than I expected. The project began in December 2019 when the world seemed to be spinning appropriately on its axis. Now, as December 2020 approaches, the world is a very different place. Yet, even as the pandemic raged alongside wildfires, civil, and political strife—the project persisted. This was due entirely to the enthusiasm of a few of my programming students at Columbia College Chicago. They are all named on the front page, but I would be remiss if I did not thank Jethro Schoppenhurst, Owen Ravelo, Thomas Rohn, and Christopher Grych for their incredible work. From the onset of the novel coronavirus pandemic, these students worked and collaborated with one another to check and double-check code, revise logic, and discuss implementations. In many ways, they were my teachers and we all can benefit from their great work. If I may be a proud professor, if you are an employer and see their names come across your desk—hire them.
+            </p><p>
+            This site is still a work in progress, and it is my expectation that it will be a living document. As the project rolls out, I will be making edits, soliciting suggestions, and cleaning up the site. As of writing, I am still waiting for the SSL-certificate to register. It is probably best not to count one’s chickens before they hatch, but I am a big believer in iteration, revision, and collaboration. The code, which can be found on Github, is freely available for all to use. It will continually be updated and I am always open to suggestions. Edits that are made on the Github repo will automatically appear on this website. You can expect to always see the latest updates along with WebGL demos.
+            </p><p>
+                    <a href="https://github.com/jadlerfisher/The-Nature-of-Code---Unity-Remix"> Please report any issues with the book or code on GitHub.</a>
+            </p><p>
+            Again, I am beyond indebted to the original author, Daniel Shiffman and his team. Without their work, none of this would be possible. It is my hope that you, reader, will take the code we have attempted to translate and implement it in compelling projects in Unity. Best of luck to you in this endeavor.
+            </p>
+            <div class="footer">
+                <div class="col">
+
+                <h4>Licenses</h4>
+                <p>
+                    <a class="license-badge" rel="license"
+                        href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
+                            style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
+                    <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
+                            alt="LGPL License" style="border-width:0"
+                            src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
+                </p>
+
+                <p>
+                    The book's text and illustrations are licensed under a <a rel="license"
+                        href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
+                        Attribution-NonCommercial 3.0 Unported License</a>.
+                </p>
+
+                <p>
+                    All of the book's source code is licensed under the <a rel="license"
+                        href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
+                    as published by the Free Software Foundation; either version 2.1 of the License, or (at your
+                    option) any later version.
+                </p>
+        </div>
+            <div class="col">
+                <h4>Remixer</h4>
+                <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
+                        Arts and Media Program</a> at Columbia College Chicago.</p>
+
+                <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+
+                <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
+                        href="https://github.com/jadlerfisher">GitHub</a></p>
+
+            </div>
+            <div class="col">
+                <h4>Author</h4>
+                <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
+                        Telecommunications Program</a> at New York University.</p>
+
+                <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
+
+                <p><a href="https://twitter.com/shiffman">Twitter</a> <a
+                        href="http://github.com/shiffman">GitHub</a></p>
+
+            </div>
+        </div>
+        </section>
+    </div>
+
+    <script>
+
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+          if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            document.getElementById("header").style.fontSize = "16px";
+            document.getElementById("header").style.padding = "10px 30px 10px 30px"; /* Some padding */
+            document.getElementById("authorHeader").style.float ="right";
+            document.getElementById("titleHeader").style.float ="left";
+
+
+          } else {
+            document.getElementById("header").style.fontSize = "20px";
+            document.getElementById("header").style.padding = "10px 10px"; /* Some padding */
+            document.getElementById("authorHeader").style.float ="";
+            document.getElementById("titleHeader").style.float ="";
+
+          }
+        }
+        </script>
+</body>
+
+</html>

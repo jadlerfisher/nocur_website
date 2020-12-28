@@ -1,24 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+    <head>
     <!-- Meta -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="description" content="The Nature of Code revised for use in Unity with C#.">
+    <meta name="author" content="Joshua A. Fisher, Ph.D.">
 
+    <base href="https://natureofcodeunity.com/" target="_self">
     <!--Google Font-->
 
     <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova|Nunito+Sans:700&display=swap" rel="stylesheet">
 
-    <!-- CSS Styles -->
-    <link rel="stylesheet" href="css/main.css" />
 
-    <!-- Title -->
-    <title>The Nature of Code Unity Remix</title>
-</head>
+
+
+
+	<meta property="og:title" content="The Nature of Code Unity Remix">
+	<meta property="og:description" content="The Nature of Code revised for use in Unity with C#.">
+	<meta property="og:url" content="https://natureofcodeunity.com/">
+	<meta property="og:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+
+
+	<meta name="twitter:title" content="The Nature of Code Unity Remix">
+	<meta name="twitter:description" content="The Nature of Code revised for use in Unity with C#.">
+	<meta name="twitter:image" content="https://natureofcodeunity.com/images/intro_exc10.png">
+	<meta name="twitter:card" content="summary_large_image">
+
+        <!-- CSS Styles -->
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/code-html.css" />
+        <link rel="stylesheet" href="css/github-embed.css" />
+
+
+        <!--scripts-->
+        <!--<script src="scripts/scripts.js"></script>-->
+        <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+        <!-- Title -->
+        <title>The Nature of Code Unity Remix</title>
+    </head>
 
 <body>
-    <div class="wrapper">
+    <p class="wrapper">
         <div id="header" style="overflow: hidden;">
             <header>
                 <div id="titleHeader">
@@ -31,31 +56,44 @@
         </div>
         <nav>
             <ul class="nav">
-                <li><a href="index.html">WELCOME</a>
+                <li>
+                    <a href="index.html">WELCOME</a>
                 </li>
-                <li><a href="acknowledgements.html">ACKNOWLEDGMENTS</a>
+                <li>
+                    <a href="acknowledgements.html">ACKNOWLEDGMENTS</a>
                 </li>
-                <li><a href="introduction.html">INTRODUCTION</a>
+                <li>
+                    <a href="introduction.html">INTRODUCTION</a>
                 </li>
-                <li><a href="chapterone.html">1. VECTORS</a>
+                <li>
+                    <a href="chapterone.html">1. VECTORS</a>
                 </li>
-                <li><a href="chaptertwo.html">2. FORCES</a>
+                <li>
+                    <a href="chaptertwo.html">2. FORCES</a>
                 </li>
-                <li><a href="chapterthree.html">3. OSCILLATION</a>
+                <li>
+                    <a href="chapterthree.html">3. OSCILLATION</a>
                 </li>
-                <li><a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
+                <li>
+                    <a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
                 </li>
-                <li><a href="chapterfive.html">5. PHYSICS LIBRARIES</a>
+                <li>
+                    <a href="chapterfive.html">5. PHYSICS COMPONENTS</a>
                 </li>
-                <li><a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
+                <li>
+                    <a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
                 </li>
-                <li><a href="chapterseven.html">7. CELLULAR AUTOMATA</a>
+                <li>
+                    <a href="chapterseven.html">7. CELLULAR AUTOMATA</a>
                 </li>
-                <li><a href="chaptereight.html">8. FRACTALS</a>
+                <li>
+                    <a href="chaptereight.html">8. FRACTALS</a>
                 </li>
-                <li><a href="chapternine.html">9. THE EVOLUTION OF CODE</a>
+                <li>
+                    <a href="chapternine.html">9. THE EVOLUTION OF CODE</a>
                 </li>
-                <li><a href="chapterten.html">10. NEURAL NETWORKS</a>
+                <li>
+                    <a href="chapterten.html">10. NEURAL NETWORKS</a>
                 </li>
             </ul>
         </nav>
@@ -69,19 +107,1983 @@
 
 
                 <p></p>
-                — Victor Hugo
-            </h3>
-            <p>Before we move on to anything else, let’s revisit some of the things we’ve done in the first four
-                chapters. We have:
-            </p>
-            <ul>
-                <li>
-                    Learned about concepts from the world of physics — What is a vector? What is a force? What is a
-                    wave? etc. </li>
-                <li>Understood the math and algorithms behind such concepts.</li>
-                <li>Implemented the algorithms in Processing with an object-oriented approach.
-                </li>
-            </ul>
+                — Victor Hugo</h3>
+                <p><i>(If you are interested in writing examples with Havok Physics for Unity, please get in touch!)</i>
+                </p>
+
+                <p>Dan Shiffman’s original Nature of Code has a Chapter 5 that opens with a fantastic explanation on why
+                    one should understand the underlying algorithms of a Physics engine and not rely on open source
+                    libraries. As a teacher, I agree and his original text is included below. But, before we get there,
+                    let’s talk about why this is quite a departure from what Unity offers. Unlike Processing, which
+                    relies on Shiffman’s ingenuity and a set of libraries for Physics, Unity offers a wealth of
+                    components that rely on its rich Physics engine. For developers, these physics components provide
+                    opportunities for user interactions, realistic material properties, effective joints, and more. In
+                    fact, much of what we’ve discussed in this book can be designed with the components instead of our
+                    custom code. That’s not very fun though! And, this is why I agree with Shiffman that understanding
+                    what is happening on a foundatonal level is so important. Enough with the preamble though, let’s see
+                    what Shiffman has to say.</p>
+
+                <p><i>Before we move on to anything else, let’s revisit some of the things we’ve done in the first four
+                        chapters. We have:</p>
+                <ul>
+                    <li>
+                        Learned about concepts from the world of physics — What is a vector? What is a force? What is
+                        a wave? etc.</li>
+                    <li>
+                        Understood the math and algorithms behind such concepts.</li>
+                    <li>
+                        Implemented the algorithms in Unity [sic] with an object-oriented approach.</li>
+                </ul>
+                <p>
+                    These activities have yielded a set of motion simulation examples, allowing us to creatively define
+                    the physics of the worlds we build (whether realistic or fantastical). Of course, we aren’t the
+                    first to try this. The world of computer graphics and programming is full of source code dedicated
+                    to simulation. Just try Googling “open-source physics engine” and you could spend the rest of your
+                    day pouring over rich and complex code. And so we must ask the question: If a code library will take
+                    care of physics simulation, why should we bother learning how to write any of the algorithms
+                    ourselves?</p>
+                <p>
+
+                    Here is where the philosophy behind this book comes into play. While many of the libraries out there
+                    give us physics (and super awesome advanced physics at that) for free, there are significant reasons
+                    for learning the fundamentals from scratch before diving into libraries. First, without an
+                    understanding of vectors, forces, and trigonometry, we’d be completely lost just reading the
+                    documentation of a library. Second, even though a library may take care of the math for us, it won’t
+                    necessarily simplify our code. As we’ll see in a moment, there can be a great deal of overhead in
+                    simply understanding how a library works and what it expects from you code-wise. Finally, as
+                    wonderful as a physics engine might be, if you look deep down into your hearts, it’s likely that you
+                    seek to create worlds and visualizations that stretch the limits of imagination. A library is great,
+                    but it provides a limited set of features. It’s important to know both when to live within
+                    limitations in the pursuit of a Unity [sic] project and when those limits prove to be confining.</i>
+                </p>
+
+                <p>This chapter is dedicated to examining seven physics components—general physics, Raycasts,
+                Sphere/Box/Capsule casts, Cloth physics, Particle physics with collisions, Wind physics, Fixed joints,
+                Spring joints, Hinge joints, and Material physics.</p>
+
+                <h2>5.1 General Physics - Gravity</h2>
+
+                <p>Unity’s physics engine is built in. This means we can easily access a few different global physics
+                variables without too much trouble. The easiest of these variables to change is the universal gravity in
+                the scene. With one line of code, we can change the gravity for every GameObject that has a Rigidbody
+                Component.</p>
+
+                <pre class="prettyprint">
+
+    Physics.gravity = new Vector2(0, -1f);
+
+                    </pre>
+
+               <p>< See, it’s as easy as dropping buttered toast. Let’s apply this to some of our GameObjects. Remember our
+                Mover from Chaptere 2 that used different forces to move about the scene? Let’s take a look at that code
+                really fast.</p>
+
+                <pre class="prettyprint">
+
+    public class Mover2_1
+    {
+        public Rigidbody body;
+        private GameObject gameObject;
+        private float radius;
+
+        private float xMin;
+        private float xMax;
+        private float yMin;
+
+        public Mover2_1(Vector3 position, float xMin, float xMax, float yMin)
+        {
+            this.xMin = xMin;
+            this.xMax = xMax;
+            this.yMin = yMin;
+
+            // Create the components required for the mover
+            gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            body = gameObject.AddComponent<Rigidbody>();
+            // Remove functionality that come with the primitive that we don't want
+            gameObject.GetComponent<SphereCollider>().enabled = false;
+            Object.Destroy(gameObject.GetComponent<SphereCollider>());
+
+            // Generate a radius of 1f for this mover
+            radius = 1f;
+
+            // Place our mover at the specified spawn position relative
+            // to the bottom of the sphere
+            gameObject.transform.position = position + Vector3.up * radius;
+
+            // The default diameter of the sphere is one unit
+            // This means we have to multiple the radius by two when scaling it up
+            gameObject.transform.localScale = 2 * radius * Vector3.one;
+
+            // We need to calculate the mass of the sphere.
+            // Assuming the sphere is of even density throughout,
+            // the mass will be proportional to the volume.
+            body.mass = (4f / 3f) * Mathf.PI * radius * radius * radius;
+        }
+
+        // Checks to ensure the body stays within the boundaries
+        public void CheckBoundaries()
+        {
+            Vector3 restrainedVelocity = body.velocity;
+            if (body.position.y - radius < yMin)
+            {
+                // Using the absolute value here is an important safe
+                // guard for the scenario that it takes multiple ticks
+                // of FixedUpdate for the mover to return to its boundaries.
+                // The intuitive solution of flipping the velocity may result
+                // in the mover not returning to the boundaries and flipping
+                // direction on every tick.
+                restrainedVelocity.y = Mathf.Abs(restrainedVelocity.y);
+            }
+            if (body.position.x - radius < xMin)
+            {
+                restrainedVelocity.x = Mathf.Abs(restrainedVelocity.x);
+            }
+            else if (body.position.x + radius > xMax)
+            {
+                restrainedVelocity.x = -Mathf.Abs(restrainedVelocity.x);
+            }
+            body.velocity = restrainedVelocity;
+        }
+    }
+                    </pre>
+
+                <p>This Mover has a Rigidbody Component on it that we are adding force too. Gravity, as we know, is also
+                    a force. Let’s see if we can implement it with a bit of creativity though. In our first figure,
+                    we’ll go ahead and inverse the gravity as soon as one of our Movers falls below a minimum position
+                    or above a maximum position on our Y-axis. Looking back at out previous code, we can use our
+                    FindWindowLimits() method to find those variables.</p>
+
+                <pre class="prettyprint">
+
+
+    private void findWindowLimits()
+    {
+        Camera.main.orthographic = true;
+        Camera.main.orthographicSize = 4;
+        minimumPos = Camera.main.ScreenToWorldPoint(Vector2.zero);
+        maximumPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+    }
+
+                    </pre>
+
+                <p>Next, we go ahead and create our method for inverting gravity based on the position of the Mover.</p>
+
+                <pre class="prettyprint">
+
+    //If any of the objects passes either the max or negative position, change gravity
+    public void CheckEdgesChangeGravity()
+    {
+        if (transform.position.y > maximumPos.y)
+        {
+            Physics.gravity = new Vector2(0f, Random.Range(-1f, -.1f));
+        }
+        else if (transform.position.y < minimumPos.y)
+        {
+            Physics.gravity = new Vector2(0f, Random.Range(.1f, 1f));
+        }
+    }
+
+                    </pre>
+
+                <p>We’ll go ahead and have it be slightly random so we have a more interesting method </p>
+
+                <p>Now, since we have a Rigidbody component on each of these Movers, we’ll want to keep them from
+                    bouncing off one another. To do that, we can constraint the position of the Movers along any of the
+                    axes. In this instance, since we only want the mover to go up and down, we can constrain the
+                    position of the mover along the x-axis</p>
+
+                <pre class="prettyprint">
+
+    //We are also going to constrain the movement of the gravityMovers
+    //so they only go up and down
+    body.constraints = RigidbodyConstraints.FreezePositionX;
+
+                </pre>
+
+                <p>Lastly, we need to add some drag to our Movers in the scene. Even air has a density and it can cause
+                    objects to slow down when there is a lot of wind resistance. So, we have a nifty formula for
+                    figuring out drag: <b>D = Cd * .5 * rho * V^2 * A</b> </p>
+
+                <div id="ImageContainer">
+                    <img src="https://www.grc.nasa.gov/WWW/K-12/rocket/Images/drageq.gif" style="  width: 100%;
+                                    height: 100%;" alt="Figure 5.1">
+                    <p>
+                        Figure 5.1
+                    </p>
+                </div>
+
+
+                <ul>
+
+                    <li>
+                        Where D is equal to the drag
+                    </li>
+                    <li>
+                        Rho is the air density
+                    </li>
+                    <li>
+                        V is the velocity squared
+                    </li>
+                    <li>
+                        A is a reference area
+                    </li>
+                    <li>
+                        Cd is the drag coefficient
+                    </li>
+                </ul>
+
+                <p>Since we are using spheres, we can use Reynold’s number for the drag coefficient. That number is .47.
+                </p>
+                <p>Further, if we assume our sphere has an equally distributed mass, we can use that as the reference
+                    area of our sphere. This might not work for all objects though! For example, for a cube, the
+                    reference area will only be equal to the volume of the side facing the resistance. </p>
+
+                <pre class="prettyprint">
+
+    body.drag = .47f * .5f * 1.225f * (body.velocity.y * body.velocity.y) * body.mass;
+
+                </pre>
+
+                <p>Now, let’s put all of the code together to see how it looks when we instantiate a number of Movers,
+                    each checking to see if they are below or above a particular point, before swapping the gravity for
+                    all of the movers in the scene.</p>
+
+                <p>
+                    <span class="example">
+                        Example 5.1: Inverting Gravity Based on a Mover’s Position
+                    </span>
+                </p>
+                <ul class="tabs" role="tablist">
+                    <li>
+                        <input type="radio" name="tabs0" id="tab0a" checked />
+                        <label for="tab0a" role="tab" aria-selected="true" aria-controls="panel0"
+                            tabindex="2">Code</label>
+                        <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description"
+                            aria-hidden="false">
+                            <div id="example1" style="height: 500px"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="tabs0" id="tab0b" />
+                        <label for="tab0b" role="tab" aria-selected="false" aria-controls="panel1"
+                            tabindex="3">Demo</label>
+                        <div id="tab-content2" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                            aria-hidden="true">
+                            <div align="center">
+                                <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter5/Figure1/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="5.1">
+                                </iframe>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.1</h4>
+                    <p>Can you use a different variable to modify the scene’s gravity?
+                    </p>
+                </div>
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.2</h4>
+                    <p>
+                        Implement a behavior wherein if one object gets too close to another, the gravity shifts and
+                        pushes that object down and away.
+                    </p>
+                </div>
+
+                <h2>6.2 Using Raycasts to See</h2>
+
+                <p>Raycasts in Unity are commonly used for interacting with objects in a scene. The user clicks their
+                    mouse and this shoots a Ray, a single point passed along a line, from where they clicked into the
+                    scene. Here is some common code for having a Raycast sent from a user’s Camera out into the world
+                    when they click their mouse.</p>
+
+                <pre class="prettyprint">
+
+    public class ExampleScript : MonoBehaviour {
+        public Camera camera;
+
+        void Start(){
+            RaycastHit hit;
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit)) {
+                Transform objectHit = hit.transform;
+
+                // Do something with the object that was hit by the raycast.
+            }
+        }
+    }
+                </pre>
+
+                <p>Pretty nifty, right? But, what if we want to use Raycasts to allow our Movers to see other objects in
+                    the scene? Imagine a frog sitting on a lily pad. He’s hungry and just waiting for an unlucky fly to
+                    drift nearby. As soon as that fly comes into the frog’s line of sight, he flicks out his tongue
+                    and—wham! Dinner is served. We can recreate this behavior with a few different modifications to our
+                    mover</p>
+
+                <p>Let’s create a Ray Mover class that is going to use a Raycast to see its prey. We’ll need methods
+                    help it look for food, see the food, and then attack it. </p>
+
+                <p>We’ll be modifying our previous mover class and simply be adding those methods. One change we’ll make
+                    though, is we’ll keep our Mover from looking in the wrong directions and constrain its Rigidbody’s
+                    position and rotation to the X and Y-axes. We’ll also give it a line renderer so we can visualize
+                    where our Ray Mover is looking.</p>
+
+                <pre class="prettyprint">
+
+    body.constraints = RigidbodyConstraints.FreezePositionZ |
+
+    RigidbodyConstraints.FreezeRotationZ;
+
+    // Add the Unity Component "LineRenderer" to the GameObject this script is attached to
+    lineRender = rayMover.AddComponent<LineRenderer>();
+    //We need to create a new material for WebGL
+    lineRender.material = new Material(Shader.Find("Diffuse"));
+    //We all need to make the lineRenderer as narrow as our Raycast
+    //Which is quite small
+    lineRender.widthMultiplier = .01f;
+
+                </pre>
+
+                <p>Great! Now we need to help our Ray Mover look around. For this example, let’s just have the Ray Mover
+                    literally do that and rotate at a particular acceleration to look for food.</p>
+
+                <pre class="prettyprint">
+
+    public void lookForFood()
+    {
+        aVelocity += aAcceleration;
+        rayMover.transform.Rotate(aVelocity, Space.World);
+        seePrey();
+    }
+
+                </pre>
+                <p>Now that our Ray Mover is looking around, we need to tell it what to do when it sees its prey. That
+                    poor fly, oh no! Let’s look a little deeper at our Ray Mover’s seePrey() method. That’s where we’ll
+                    implement our Raycast.</p>
+
+                <pre class="prettyprint">
+
+    public void seePrey()
+        {
+
+            RaycastHit food;
+            // Does the ray intersect any objects excluding the player layer
+            if (Physics.Raycast(rayMover.transform.position, rayMover.transform.up, out food, Mathf.Infinity))
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+                </pre>
+
+                <p>First thing first, we have a new class called RaycastHit. This nifty class provides a host of
+                    information on where, you guessed it, the Raycast intersected with an object. Let’s call our
+                    RaycastHit food because in this instance, that’s what our Raycast Mover is looking for.</p>
+                <p>We need to give our Raycast an origin and that we’ll be our Raycast Mover’s position. Next, we need
+                    to say in which direction this Ray should be cast. We can use <b>transform.up</b> to imply that our
+                    Ray Mover has eyes on the top of its head that are looking upward. That way, as it rotates, it is
+                    looking in the direction its eyes are positioned. Next, we need to return the data from our
+                    RaycastHit, in this instance food, so that we have what we need to attack and eat the food. Latly,
+                    we need to say how far the Raycast should go. We can limit this depending on how near or far-sighted
+                    our Raycast Mover might be. In this instance, our Raycast Mover has been gifted with infinite sight.
+                </p>
+
+                <p>Now our Raycast Mover can see! Let there be sight! We need two add some logic here to control the
+                    attack of our Raycast mover. </p>
+
+                <p>Let’s begin by visualizing the line of sight. We can do this by adding our Line Renderer component
+                </p>
+
+                <pre class="prettyprint">
+
+    if (Physics.Raycast(rayMover.transform.position, rayMover.transform.up, out food, Mathf.Infinity))
+    {
+        lineRender.material.color = Color.white;
+        lineRender.SetPosition(0, rayMover.transform.position);
+        lineRender.SetPosition(1, food.transform.position);
+    }
+    else
+    {
+        lineRender.SetPosition(0, rayMover.transform.position);
+        lineRender.SetPosition(1, rayMover.transform.up * 1000);
+    }
+                </pre>
+
+                <p>We can see where the Raycast Mover is looking. This helps from a user feedback and debug perspective.
+                    Let’s turn to an attack method now. It is a slightly modified method from our Attract method from
+                    Chapter 2.</p>
+
+                <pre class="prettyprint">
+
+    //This is a modification of our Attract method from Chapter 2
+    public Vector2 attack(Rigidbody m)
+    {
+        Vector2 force = body.position - m.position;
+        float distance = force.magnitude;
+
+        // Remember we need to constrain the distance so that our circle doesn't spin out of control
+        distance = Mathf.Clamp(distance, 5f, 25f);
+
+        force.Normalize();
+        float strength = (-9.81f * body.mass * m.mass) / (distance * distance);
+        force *= strength;
+        return force;
+    }
+                </pre>
+
+                <p>Now, let’s finish off our seePrey() method so that the Raycast Mover can attack and eat the food.
+                    Once the Raycast Mover sees the prey, it will use the attack vector as a force that is added to its
+                    Rigidbody as an Impulse. </p>
+
+                <pre class="prettyprint">
+
+    Vector2 attackVector = attack(hit.transform.gameObject.GetComponent<Rigidbody>());
+    body.AddForce(attackVector, ForceMode.Impulse);
+
+                </pre>
+
+                <p>Putting it all together </p>
+
+                <pre class="prettyprint">
+
+    public void seePrey()
+    {
+
+        RaycastHit food;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(rayMover.transform.position, rayMover.transform.up, out food, Mathf.Infinity))
+        {
+            lineRender.material.color = Color.white;
+            lineRender.SetPosition(0, rayMover.transform.position);
+            lineRender.SetPosition(1, food.transform.position);
+
+            Vector2 attackVector = attack(hit.transform.gameObject.GetComponent<Rigidbody>());
+            body.AddForce(attackVector, ForceMode.Impulse);
+        }
+        else
+        {
+            lineRender.SetPosition(0, rayMover.transform.position);
+            lineRender.SetPosition(1, rayMover.transform.up * 1000);
+        }
+    }
+
+                </pre>
+
+                <p>
+                    <span class="example">
+                        Example 5.2: Raycast Sighted Mover
+                    </span>
+                </p>
+                <ul class="tabs" role="tablist">
+                    <li>
+                        <input type="radio" name="tabs2" id="tab3" checked />
+                        <label for="tab3" role="tab" aria-selected="true" aria-controls="panel3"
+                            tabindex="0">Code</label>
+                        <div id="tab-content3" class="tab-content" role="tabpanel" aria-labelledby="description"
+                            aria-hidden="false">
+                            <div id="example2" style="height: 500px"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="tabs2" id="tab4" />
+                        <label for="tab4" role="tab" aria-selected="false" aria-controls="panel4"
+                            tabindex="0">Demo</label>
+                        <div id="tab-content4" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                            aria-hidden="true">
+                            <div align="center">
+                                <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter5/Figure2/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="5.2">
+                                </iframe>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.3</h4>
+                    <p>Can you create a predator that uses two different raycasts to see? Chameleons, for example, can
+                        look in two different directions at once!
+                    </p>
+                </div>
+
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.4</h4>
+                    <p>Can you create prey that uses a Raycast to look out for and avoid predators?
+                    </p>
+                </div>
+
+
+                <h2>5.3 Ray, Sphere, Cube, and Capsule Casts! Oh My!</h2>
+
+                <p>Sometimes, a Raycast isn’t enough. It is only a single point cast from a particular Vector2 out into
+                    space. What if you needed a hit to be recorded against more than one object? And, what if it
+                    mattered if the shape of that object mattered? For example, a projectile passing through a stone
+                    barrier does not hit at a singular point, but at the full surface area of the projectile’s head.
+                    Yes, admittedly, some miniscule point will hit before the rest—but for the sake of this example
+                    let’s put such observations to the side. </p>
+
+                <p>Unity provides a number of different casts for this and other reasons. Although frequently used for
+                    debugging, we can use these casts to add force to multiple objects within a particular shape area
+                    all at one time.</p>
+
+                <p>We’ll look at</p>
+                <ul>
+                    <li>BoxCast</li>
+                    <li>CapsuleCast</li>
+                    <li>SphereCast</li>
+                </ul>
+
+                <p>The Boxcast casts a box along a ray and returns detailed information on what was hit. It requires a
+                    little bit more information than our Raycast though. And, a key difference between our Raycast and
+                    these other casts is that we need to instantiate GameObjects that contain the colliding information.
+                </p>
+
+                <p>To handle the creation of those GameObjects, and their data, let’s create a Projectile method that
+                    returns the required GameObject. </p>
+
+                <p>This example is going to have four different kinds of casts: Raycast, BoxCast, CapsuleCast, and
+                    SphereCast. For this reason, we’ll let the user Input a letter to chance the kind of cast they are
+                    using. We’ll call this a projectile and use R, for Raycast; B, for BoxCast; C, for CapsuleCast; and
+                    S, for SphereCast.</p>
+
+                <p>Let’s look at the logic of the method.</p>
+
+                <pre class="prettyprint">
+
+    GameObject projectile(string projectileCode)
+    {
+        if (projectileCode == "r")
+        {
+            return null;
+        }
+        else if (projectileCode == "b")
+        {
+            GameObject boxObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            Renderer renderer = boxObject.GetComponent<Renderer>();
+            renderer.enabled = false;
+
+            boxObject.transform.localScale = new Vector3(3f, 3f, 3f);
+            return boxObject;
+        }
+        else if (projectileCode == "c")
+        {
+            GameObject capsuleObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+
+            Renderer renderer = capsuleObject.GetComponent<Renderer>();
+            renderer.enabled = false;
+
+            capsuleObject.transform.localScale = new Vector3(6f, 3f, 3f);
+            m_Collider = capsuleObject.GetComponent<Collider>();
+
+            return capsuleObject;
+        }
+        else if (projectileCode == "s")
+        {
+            GameObject sphereObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+
+            Renderer renderer = sphereObject.GetComponent<Renderer>();
+            renderer.enabled = false;
+
+            sphereObject.transform.localScale = new Vector3(3f, 3f, 3f);
+            m_Collider = sphereObject.GetComponent<Collider>();
+
+            return sphereObject;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+                </pre>
+
+                <p>For each kind of cast we are creating a PrimitiveType that aligns with the kind of Cast we are
+                    creating. We are then turning the Renderer off because we do not need to see the projectile being
+                    sent along the cast. We are then giving dimensions to the GameObject’s mesh and accessing its
+                    collider. From here, it is a matter of then passing this information to the appropriate cast.</p>
+
+                <p>For the BoxCast, we need to pass along the scale of the Box in addition to the usual information</p>
+
+                <pre class="prettyprint">
+
+    m_HitDetect = Physics.BoxCast(ray.origin, boxObject.transform.localScale, ray.direction, out m_Hit, boxObject.transform.rotation, m_MaxDistance);
+
+                </pre>
+
+                <p>For the CapsuleCast, we need more information. We need to establish the top and bottom of the capsule
+                    as well as the width of its collider.</p>
+
+                <pre class="prettyprint">
+
+    Vector3 p1 = ray.origin + m_Collider.bounds.center + Vector3.up * -m_Collider.bounds.extents.y * 0.5F;
+
+    Vector3 p2 = p1 + Vector3.up * m_Collider.bounds.extents.y;
+
+    m_HitDetect = Physics.CapsuleCast(p1, p2, m_Collider.bounds.extents.x, ray.direction, out m_Hit, m_MaxDistance);
+
+                </pre>
+
+                <p>Similar to the BoxCast, we need to pass along a scale for the SphereCast. We can do that by grabbing
+                    any of its transform.localScale variables. We are taking X here. </p>
+
+
+                <pre class="prettyprint">
+
+    m_HitDetect = Physics.SphereCast(ray, sphereObject.transform.localScale.x, out m_Hit, m_MaxDistance);
+
+                </pre>
+
+                <p>Putting all of these different Raycasts into a cannon class, we have the following cannon object.</p>
+
+                <pre class="prettyprint">
+
+    public class Cannons
+    {
+        float m_MaxDistance = 100f;
+        bool m_HitDetect;
+        float m_Force = -200f;
+        float m_ExplosiveRadius;
+
+        Collider m_Collider;
+
+            RaycastHit m_Hit;
+            Ray ray;
+
+        public Cannons()
+        {
+
+        }
+
+        public void cannonFire(string rayChoice)
+        {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (rayChoice == "ray")
+            {
+                if (Physics.Raycast(ray, out m_Hit, 100))
+                {
+                    Rigidbody hitBody = m_Hit.transform.gameObject.GetComponent<Rigidbody>();
+                    m_ExplosiveRadius = 100f;
+                    hitBody.AddExplosionForce(m_Force, m_Hit.transform.position, m_ExplosiveRadius);
+                }
+            }
+            else if (rayChoice == "box")
+            {
+            GameObject boxObject = projectile("b");
+            m_HitDetect = Physics.BoxCast(ray.origin, boxObject.transform.localScale, ray.direction, out m_Hit, boxObject.transform.rotation, m_MaxDistance);
+            if (m_HitDetect)
+                {
+                    Rigidbody hitBody = m_Hit.transform.gameObject.GetComponent<Rigidbody>();
+                    m_ExplosiveRadius = 100f;
+                    hitBody.AddExplosionForce(m_Force, m_Hit.transform.position, m_ExplosiveRadius);
+                }
+            }
+            else if (rayChoice == "capsule")
+            {
+                projectile("c");
+
+                Vector3 p1 = ray.origin + m_Collider.bounds.center + Vector3.up * -m_Collider.bounds.extents.y * 0.5F;
+                Vector3 p2 = p1 + Vector3.up * m_Collider.bounds.extents.y;
+
+            m_HitDetect = Physics.CapsuleCast(p1, p2, m_Collider.bounds.extents.x, ray.direction, out m_Hit, m_MaxDistance);
+                if (m_HitDetect)
+                {
+                    Rigidbody hitBody = m_Hit.transform.gameObject.GetComponent<Rigidbody>();
+                    m_ExplosiveRadius = 100f;
+                    hitBody.AddExplosionForce(m_Force, m_Hit.transform.position, m_ExplosiveRadius);
+                }
+            }
+            else if (rayChoice == "sphere")
+            {
+                GameObject sphereObject = projectile("s");
+
+            m_HitDetect = Physics.SphereCast(ray, sphereObject.transform.localScale.x, out m_Hit, m_MaxDistance);
+            if (m_HitDetect)
+                {
+                    Rigidbody hitBody = m_Hit.transform.gameObject.GetComponent<Rigidbody>();
+                    m_ExplosiveRadius = 100f;
+                    hitBody.AddExplosionForce(m_Force, m_Hit.transform.position, m_ExplosiveRadius);
+                }
+            }
+        }
+
+        GameObject projectile(string projectileCode)
+        {
+            if (projectileCode == "r")
+            {
+                return null;
+            }
+            else if (projectileCode == "b")
+            {
+                GameObject boxObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+                Renderer renderer = boxObject.GetComponent<Renderer>();
+                renderer.enabled = false;
+
+                boxObject.transform.localScale = new Vector3(3f, 3f, 3f);
+                return boxObject;
+            }
+            else if (projectileCode == "c")
+            {
+                GameObject capsuleObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+
+                Renderer renderer = capsuleObject.GetComponent<Renderer>();
+                renderer.enabled = false;
+
+                capsuleObject.transform.localScale = new Vector3(6f, 3f, 3f);
+                m_Collider = capsuleObject.GetComponent<Collider>();
+
+                return capsuleObject;
+            }
+            else if (projectileCode == "s")
+            {
+                GameObject sphereObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+
+                Renderer renderer = sphereObject.GetComponent<Renderer>();
+                renderer.enabled = false;
+
+                sphereObject.transform.localScale = new Vector3(3f, 3f, 3f);
+                m_Collider = sphereObject.GetComponent<Collider>();
+
+                return sphereObject;
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+
+
+                </pre>
+
+                <p>Now, we need a wall of objects to send our projectiles into. Let’s create an Object Wall for this
+                    purpose </p>
+
+                <pre class="prettyprint">
+
+    public class ObjectWall
+    {
+        // How many columns and how many rows in the grid?
+        private int columns, rows;
+
+        // Resolution of grid relative to window width and height in pixels
+        private int resolution;
+
+        public ObjectWall()
+        {
+            resolution = 50;
+            columns = Screen.width / resolution; // Total columns equals width divided by resolution
+            rows = Screen.height / resolution; // Total rows equals height divided by resolution
+            initializeObjectWall();
+        }
+
+        void initializeObjectWall()
+        {
+            float xOff = 0;
+            for (int i = -20; i < columns; i++) // Using a nested loop to hit every column and every row of the wall
+            {
+                float yOff = 0;
+                for (int j = -20; j < rows; j++)
+                {
+                    GameObject wallObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    wallObject.transform.position = new Vector3(i, j, -5f);
+
+                    Renderer renderer = wallObject.GetComponent<Renderer>();
+                    renderer.material = new Material(Shader.Find("Diffuse"));
+
+                    Rigidbody body = wallObject.AddComponent<Rigidbody>();
+                    body.useGravity = false;
+
+                    yOff += 0.1f;
+                }
+                xOff += 0.1f;
+            }
+        }
+    }
+                </pre>
+
+                <p>Lastly, we need a way for the user to switch the kind of Raycast by pressing a letter as part of the
+                    FixedUpdate() method</p>
+
+                <pre class="prettyprint">
+
+    void FixedUpdate()
+    {
+        if (Input.GetKey("r"))
+        {
+            cannon.cannonFire("ray");
+        }
+        else if (Input.GetKey("b"))
+        {
+            cannon.cannonFire("box");
+        }
+        else if (Input.GetKey("c"))
+        {
+            cannon.cannonFire("capsule");
+        }
+        else if (Input.GetKey("s"))
+        {
+            cannon.cannonFire("sphere");
+        }
+    }
+
+                </pre>
+
+                <p>When we put it all together, the user will not be able to move their mouse throughout the screen and
+                    by pressing R, for ray; B, for box; C, for capsule; and S, for sphere change the kind of projectile
+                    that is shot at the wall. </p>
+
+                <p>
+                    <span class="example">
+                        Example 5.3: Different Cannons – From Ray to Sphere Projectiles
+                    </span>
+                </p>
+                <ul class="tabs" role="tablist">
+                    <li>
+                        <input type="radio" name="tabs3" id="tab5" checked />
+                        <label for="tab5" role="tab" aria-selected="true" aria-controls="panel5"
+                            tabindex="0">Code</label>
+                        <div id="tab-content5" class="tab-content" role="tabpanel" aria-labelledby="description"
+                            aria-hidden="false">
+                            <div id="example3" style="height: 500px"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="tabs3" id="tab6" />
+                        <label for="tab6" role="tab" aria-selected="false" aria-controls="panel6"
+                            tabindex="0">Demo</label>
+                        <div id="tab-content6" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                            aria-hidden="true">
+                            <div align="center">
+                                <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter5/Figure3/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="5.3">
+                                </iframe>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.5</h4>
+                    <p>Try using a Box, Sphere, or CapsuleCast to help a Mover navigate to a space that fits their
+                        shape. Think of it like the children’s toy shown below.
+                    </p>
+                    <div id="ImageContainer">
+                        <img src="https://www.staples-3p.com/s7/is/image/Staples/s0695649_sc7?wid=512&hei=512" style="  width: 100%;
+                                    height: 100%;" alt="Figure 5.2: Melissa & Doug Shape Sorting Cube from Staples">
+                        <p>
+                            Figure 5.2
+                        </p>
+                    </div>
+
+                </div>
+
+                <h2>5.4 Complicated Cloth</h2>
+
+                <p>Cloth physics in Unity is complicated. In many ways, it is not meant to be created or used
+                    programmatically. It is much more effective to be used on a pre-exiting GameObject and modified in
+                    the Visual Editor. For an in-depth example of how to do that, watch <a
+                        href=”https://www.youtube.com/watch?v=Nc_ZMgEFj-A”>Unity’s Getting Started With Cloth
+                        Physics</a>. </p>
+
+                <p>However, let’s say we do need to create cloth programmatically! It could happen! Imagine, for
+                    example, you wanted to pull the headlines from the News and have them rendered on paper-like game
+                    objects that behave in similarly to paper to external forces. In that instance, you would need to
+                    instantiate an object and add a cloth component with paper-appropriate values. </p>
+
+                <p>For this example, we are gong to instantiate a cloth that falls from the sky and drops on to some
+                    stones. Yes, it is simple but it will give you some some idea of how the cloth component works. We
+                    are going to need two things for this example: first, a cloth object; and second, colliders for the
+                    cloth to hit. </p>
+
+                <p>Let’s begin with our cloth object. We’ll be passing along colliders into the constructor.
+                    Additionally, we’ll add Unity’s cloth component after we’ve created a GameObject that has a plane
+                    mesh. Yes, other kinds of meshes can also have cloth components.</p>
+
+                <pre class="prettyprint">
+
+    public class clothObject
+    {
+        Cloth clothComponent;
+        public GameObject clothGO;
+        SkinnedMeshRenderer clothRenderer;
+        public clothObject(CapsuleCollider[] clothColliders)
+        {
+            //Create a GameObject for the Cloth Component
+            clothGO = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            //Now, let's add our cloth component
+            clothComponent = clothGO.AddComponent<Cloth>();
+
+                </pre>
+
+                <p>After that, we’ll go ahead and give our Cloth GameObject some dimensions and color. </p>
+
+                <pre class="prettyprint">
+
+    //Let's make a big cloth
+    clothGO.transform.localScale = new Vector3(4f, 4f, 4f);
+    //And put it above the capsules
+    clothGO.transform.localPosition = new Vector3(0f, 10f, 10f);
+    //Make it red
+    clothRenderer = clothGO.GetComponent<SkinnedMeshRenderer>();
+    clothRenderer.material = new Material(Shader.Find("StandardDoubleSide"));
+    clothRenderer.material.color = Color.red;
+
+                </pre>
+
+                <p>Now, the cloth component has a number of properties we can access. We will only be looking at six of
+                    the watch <a href=”https://docs.unity3d.com/Manual/class-Cloth.html”>17 provided.</a></p>
+                <ul>
+                    <li>
+                        How Gravity Affects the Cloth:
+                    </li>
+                    <li>
+                        The World Velocity Scale: How much world-space movement of the character will affect cloth
+                        vertices. In other words, how the acceleration of the GameObject or Character will impact the
+                        cloth.
+                    </li>
+                    <li>
+                        The World Acceleration Scale: How much world-space acceleration of the character will affect
+                        cloth vertices. In other words, how the acceleration of the GameObject or Character will impact
+                        the cloth.
+                    </li>
+                    <li>
+                        The Cloth’s Bending Stiffness: Bending stiffness of the cloth.
+                    </li>
+                    <li>
+                        The Cloth’s Damping: A motion damping coefficient that, for the purposes of this example, make
+                        it easier to see what is happening.
+                    </li>
+                    <li>
+                        The Cloth’s Friction Against Objects: The friction applied to the cloth as it collides with
+                        other GameObjects.
+                    </li>
+                    <li>
+                        The Cloth’s Colliders: What the cloth collides against.
+                    </li>
+                </ul>
+                <p>Our cloth class then looks like this. </p>
+
+                <pre class="prettyprint">
+
+    public class clothObject
+    {
+        Cloth clothComponent;
+        public GameObject clothGO;
+        SkinnedMeshRenderer clothRenderer;
+        public clothObject(CapsuleCollider[] clothColliders)
+        {
+            //Create a GameObject for the Cloth Component
+            clothGO = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            //Now, let's add our cloth component
+            clothComponent = clothGO.AddComponent<Cloth>();
+            //Let's make a big cloth
+            clothGO.transform.localScale = new Vector3(4f, 4f, 4f);
+            //And put it above the capsules
+            clothGO.transform.localPosition = new Vector3(0f, 10f, 10f);
+            //Make it red
+            clothRenderer = clothGO.GetComponent<SkinnedMeshRenderer>();
+            clothRenderer.material = new Material(Shader.Find("StandardDoubleSide"));
+            clothRenderer.material.color = Color.red;
+
+            //Turn on gravity
+            clothComponent.useGravity = true;
+
+            //We'll slow down the world acceleration and velocity
+            clothComponent.worldVelocityScale = 1f;
+            clothComponent.worldAccelerationScale = .3f;
+
+            //We'll make our cloh stiff so it doesn't flutter too much
+            clothComponent.bendingStiffness = .5f;
+            clothComponent.damping = .3f;
+
+            //Increase the friction of the cloth as well
+            clothComponent.friction = 1f;
+
+            //Add our colliders
+            clothComponent.capsuleColliders = clothColliders;
+        }
+    }
+                </pre>
+
+                <p>Our collider class isn’t anything special. We simply instantiate a number of capsules at different
+                    scales and positions in the scene. The only difference is that we set their colliders so that they
+                    are truer to the localScale of the objects. We can get this info from the Renderer component on our
+                    GameObjects.</p>
+
+                <pre class="prettyprint">
+
+    public class clothColliders
+    {
+        //Basic capsule properties
+        GameObject capsule;
+        public CapsuleCollider capsuleCollider;
+        Rigidbody body;
+        Transform transform;
+
+        public clothColliders()
+        {
+            capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            transform = capsule.transform;
+            //Now let's place them at random places in the scene
+            transform.position = new Vector3(Random.Range(-10f, 10f), Random.Range(-6f, 6f), Random.Range(0f, 20f));
+            //Let's make asure all of the capsules are a different size
+            transform.localScale = new Vector3(Random.Range(1f, 4f), 1f, Random.Range(1f,4f));
+
+            Renderer renderer = capsule.GetComponent<Renderer>();
+            renderer.material = new Material(Shader.Find("Diffuse"));
+            renderer.material.color = Color.white;
+
+            //For the cloth to hit these capsules we need to access a collider
+            capsuleCollider = capsule.GetComponent<CapsuleCollider>();
+            //We have to create Bounds first
+            Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
+            //Then we have to situate these bounds over the object
+            //Our renderer helpfully provides some for us
+            capsuleCollider.bounds.Encapsulate(renderer.bounds);
+            capsuleCollider.center = renderer.bounds.center - transform.position;
+            capsuleCollider.radius = 1f;
+        }
+    }
+                </pre>
+
+                <p>To put everything together, we then need to instantiate the Capsules and pass their colliders to the
+                    Cloth Object we’ll be creating. While we are at it, we’ll reduce gravity so that we can visualize
+                    the Cloth physics more clearly.</p>
+
+                <pre class="prettyprint">
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        int i = 0;
+        while (i < clothColliderCount)
+        {
+            i++;
+
+            cC = new clothColliders();
+            clothCapsuleColliders.Add(cC.capsuleCollider);
+
+            if (i >= clothColliderCount)
+            {
+                //Once we have all of the capsules in the scene
+                //We'll convert them to an array
+                clothColliders = clothCapsuleColliders.ToArray();
+                //Then instantiate our cloth object and pass along our colliders
+                cloth = new clothObject(clothColliders);
+            }
+        }
+
+        //Let's also change the gravity that impacts cloth in the scene
+        //That’s right! Cloth has its own gravity modifiers in the general Physics class.
+        Physics.clothGravity = new Vector3(0f, .01f, 0f);
+        Physics.gravity = new Vector3(0f, .1f, 0f);
+    }
+
+                </pre>
+
+                <p>
+                    <span class="example">
+                        Example 5.4: Falling Fabric Over Scattered Stones
+                    </span>
+                </p>
+                <ul class="tabs" role="tablist">
+                    <li>
+                        <input type="radio" name="tabs4" id="tab7" checked />
+                        <label for="tab7" role="tab" aria-selected="true" aria-controls="panel7"
+                            tabindex="0">Code</label>
+                        <div id="tab-content7" class="tab-content" role="tabpanel" aria-labelledby="description"
+                            aria-hidden="false">
+                            <div id="example4" style="height: 500px"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="tabs4" id="tab8" />
+                        <label for="tab8" role="tab" aria-selected="false" aria-controls="panel8"
+                            tabindex="0">Demo</label>
+                        <div id="tab-content8" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                            aria-hidden="true">
+
+                            <div id="ImageContainer" style="align-content: center;">
+
+                               <center> <img src="images/gifs/chapter5figure4.gif" style="  width: 50%;
+                height: 50%;" alt="Cloth Simulation">
+</center>
+
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.6</h4>
+                    <p>Create a cloth object that changes colors when it collides with another GameObject.
+                    </p>
+                </div>
+
+                <h2>5.5 FixedJoints and Collisions </h2>
+
+                <p>Using collisions in Unity is a common way to detect whether two objects have hit one another. There
+                    are number of ways to use collision detection. But first, it is important to note and you may have
+                    already noticed this, that every time we have created a new primitive for a GameObject a collider
+                    has automatically been altered. Second, you probably noticed that these colliders all matched the
+                    shape being created: box for cube, sphere for sphere, capsule for capsule, et al. Terrain and wheel
+                    components also have their own colliders.</p>
+
+                <p>All shape colliders have the similar properties. </p>
+                <ul>
+                    <li>
+                        <ul>
+                            <p>Box Colliders</p>
+                            <li>
+                                Is Trigger: If enabled, this Collider is used for triggering events, and is ignored by
+                                the physics engine.
+                            </li>
+                            <li>
+                                Material: Reference to the Physics Material that determines how this Collider interacts
+                                with others. We’ll discuss Physics Materials in the last section.
+                            </li>
+                            <li>
+                                Center: The position of the Collider in the object’s local space. That is, whether or
+                                not the collider’s center is also the center of the GameObject or is positioned
+                                differently.
+                            </li>
+                            <li>
+                                Size: The size of the Collider in the X, Y, Z directions.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <p>SphereColliders replace the size property with radius</p>
+                            <li>
+                                Radius: The size of the collider
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <p>CapsuleColliders use radius, but also height and direction properties.</p>
+                            <li>
+                                Height: The total height of the collider.
+                            </li>
+                            <li>
+                                Direction: The axis of the capsule’s lengthwise orientation in the object’s local space.
+                                In other words, whether or not the length of the capsule is in the direction of the X,
+                                Y, or Z-axis.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>The way collisions can be detected is when a collider enters another collider, stays within another
+                    collider, and exists another collider. Below are some code snippets demonstrating that. All of these
+                    examples assume the script is on the GameObject doing the colliding.</p>
+                <pre class="prettyprint">
+
+
+    void OnCollisionEnter(Collision collision)
+        {
+        print(“Hit!”);
+        }
+
+
+    void OnCollisionStay(Collision collisionInfo)
+        {
+            // Debug-draw all contact points and normals
+            foreach (ContactPoint contact in collisionInfo.contacts)
+            {
+                Debug.DrawRay(contact.point, contact.normal * 10, Color.white);
+            }
+
+        void OnCollisionExit(Collision collisionInfo)
+        {
+            print("No longer in contact with " + collisionInfo.transform.name);
+        }
+
+                </pre>
+
+                <p>For this example, we’ll look at how to use the Collision Module on a Particle System to knock objects
+                    out of place. The Collision Module is slightly more complex than what we have above so we’ll beak it
+                    down. Next, to keep these objects in place we’ll use something called a “FixedJoint”. A FixedJoint
+                    is a special kind of Physics component that groups together two rigidbodies, making them stick
+                    together in their bound position; or, it can take one rigidbody and keep it o a bound position
+                    within the world. We’ll be focusing on the latter. For now, let’s create an avalanche!</p>
+
+                <div id="ImageContainer">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Avalanche_Zinal.jpg" style="  width: 100%;
+                                    height: 100%;" alt="Figure 5.3">
+                    <p>
+                        Figure 5.3
+                    </p>
+                </div>
+
+                <p>Avalanches are made up for snow, countless particles, that together create a violent force when they
+                    hit objects. Let’s begin by creating a Particle System like we did in Chapter 4. </p>
+
+                <pre class="prettyprint">
+
+
+    //This is a modification of Chapter4 Figure 6's particlesytem
+    public class avalanche{
+
+        //We need to create a GameObject to hold the ParticleSystem component
+        public GameObject particleSystemGameObject;
+
+        //This is the ParticleSystem component but we'll need to access everything through the .main property
+        //This is because ParticleSystems in Unity are interfaces and not independent objects
+        ParticleSystem particleSystemComponent;
+
+        ParticleSystemRenderer r;
+
+
+        public avalanche(Vector3 particleSystemLocation, float startSpeed, float lifeTime, int maxParticles, float collisionForce)
+        {
+            //Create the GameObject in the constructor
+            particleSystemGameObject = new GameObject();
+            //Move the GameObject to the right position
+            particleSystemGameObject.transform.position = particleSystemLocation;
+            //Add the particle system
+            particleSystemComponent = particleSystemGameObject.AddComponent<ParticleSystem>();
+
+            //Now we need to gather the interfaces of our ParticleSystem
+            //The main interface covers general properties
+            var main = particleSystemComponent.main;
+
+            //In the Main Interface we'll sat the initial start LifeTime (how long a single particle will live)
+            //And, of course, we'll set our Max Particles
+            main.startLifetime = lifeTime;
+            main.startSpeed = startSpeed;
+            main.maxParticles = maxParticles;
+
+            //Now we can simply turn gravity on
+            //Physics.gravity is already set to 9.8 but you can modify
+            //this at anytime
+            main.gravityModifier = 1f;
+            collisionModule(collisionForce);
+
+            colorModule();
+        }
+
+                </pre>
+                <p>You probably noticed the addition of a collisionModule passing along a force. There are a number of
+                    properties that can be modified to customize how these collisions occur. For this example, we’ll
+                    make sure that these collisions occur against rigidbodies in the world, happen in 3D, and get passed
+                    a particular float value for the force each particle will add to the objects it collides with. </p>
+
+                <pre class="prettyprint">
+
+    public void collisionModule(float collisionForce)
+    {
+        var collisionModule = particleSystemComponent.collision;
+        collisionModule.enabled = true;
+        //Now we can collide with items in world
+        collisionModule.type = ParticleSystemCollisionType.World;
+        collisionModule.mode = ParticleSystemCollisionMode.Collision3D;
+        //Now we add a collision force
+        collisionModule.colliderForce = collisionForce;
+    }
+
+                </pre>
+
+                <p>Our snow needs to hit something for the avalanche to occur. Let’s create some boulders. We could have
+                    these boudlers naturally staked on top of one another, but then we couldn’t use FixedJoints! Let’s
+                    go ahead and create a Boulder that appests to “hang in the air” but is actually fixed there by a
+                    joint. </p>
+
+                <pre class="prettyprint">
+
+    public class boulders{
+
+        public GameObject boulder;
+
+        public boulders(Vector3 location, int boulderCount, float breakForce, float breakTorque)
+        {
+                    boulder = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    boulder.transform.position = location;
+                    float scale = Random.Range(0f, 4f);
+                    boulder.transform.localScale = new Vector3(scale, scale, scale);
+                    //We need to create a new material for WebGL
+                    Renderer r = boulder.GetComponent<Renderer>();
+                    r.material = new Material(Shader.Find("Diffuse"));
+
+                FixedJoint boulderJoint = boulder.AddComponent<FixedJoint>();
+
+                </pre>
+
+                <p>We have a few options now that the FixedJoint component has been added. What we need to focus on is
+                    how much force needs to be added to the joint, either directly or rotationally, that will break it
+                    from its fixed point. Also, we need to enable collisions! In our constructor, we’ll pass along some
+                    floats that will set the amount of Force and Torque needed to dislodge our boulders.</p>
+
+                <pre class="prettyprint">
+
+    FixedJoint boulderJoint = boulder.AddComponent<FixedJoint>();
+    boulderJoint.enableCollision = true;
+    boulderJoint.breakForce = breakForce;
+    boulderJoint.breakTorque = breakTorque;
+
+                </pre>
+
+                <p>Lastly, we’ll want to turn gravity on the boulders’ rigidbodies off. This way, we know it is only the
+                    avalanche particles that are dislodging the boulders. Our entire boulder class looks like this. </p>
+
+                <pre class="prettyprint">
+
+    public class boulders{
+
+        public GameObject boulder;
+
+        public boulders(Vector3 location, int boulderCount, float breakForce, float breakTorque)
+        {
+                    boulder = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    boulder.transform.position = location;
+                    float scale = Random.Range(0f, 4f);
+                    boulder.transform.localScale = new Vector3(scale, scale, scale);
+                    //We need to create a new material for WebGL
+                    Renderer r = boulder.GetComponent<Renderer>();
+                    r.material = new Material(Shader.Find("Diffuse"));
+
+                FixedJoint boulderJoint = boulder.AddComponent<FixedJoint>();
+                boulderJoint.enableCollision = true;
+                boulderJoint.enablePreprocessing = true;
+                boulderJoint.breakForce = breakForce;
+                boulderJoint.breakTorque = breakTorque;
+
+                Rigidbody body = boulder.GetComponent<Rigidbody>();
+                body.useGravity = false;
+        }
+    }
+                </pre>
+
+                <p>
+                    <span class="example">Example 5.5: Particle Avalanche Against Fixed Joints</h4>
+                    </span>
+                </p>
+                <ul class="tabs" role="tablist">
+                    <li>
+                        <input type="radio" name="tabs5" id="tab9" checked />
+                        <label for="tab9" role="tab" aria-selected="true" aria-controls="panel9"
+                            tabindex="0">Code</label>
+                        <div id="tab-content9" class="tab-content" role="tabpanel" aria-labelledby="description"
+                            aria-hidden="false">
+                            <div id="example5" style="height: 500px"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="tabs5" id="tab10" />
+                        <label for="tab10" role="tab" aria-selected="false" aria-controls="panel10"
+                            tabindex="0">Demo</label>
+                        <div id="tab-content10" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                            aria-hidden="true">
+                            <div align="center">
+                                <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter5/Figure5/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="5.5">
+                                </iframe>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.7</h4>
+                    <p>Create an avalanche where the force exerted against the GameObjects increases based on the number
+                        of particles and GameObjects the avalanche has collided with.
+                    </p>
+                </div>
+                <h2>5.6 Particle Systems and Wind Physics</h2>
+
+                <p>Before moving on to the other kinds of phyics-based joints in unity, let’s take a look at another
+                    Physics component—wind.</p>
+
+                <p>The wind component in Unity can most readily be used for terrain and particles. It procedurally
+                    generates external forces that act upon both kinds of GameObjects. These external forces vary
+                    minutely from one another causing a “wind-like” behavior to occur in what is called a “WindZone”.
+                    WindZones can be either spherical, such as when a gust of wind causes fallen leaves to rotate around
+                    one another; or direction, such as when a gust of wind blows laundry off a line. </p>
+
+                <p>For this example, we’ll create a WindZone that pushes wind against a particle system. The script is
+                    simple but we’ll go step-by-step. First, we’ll declare the ParticleSystem and the force the wind
+                    will exert upon the particles.</p>
+
+                <pre class="prettyprint">
+
+    private ParticleSystem windParticles;
+    public float windForce = 10.0f;
+
+                </pre>
+
+                <p>In the Start() method, we’ll instantiate a WindZone object and make it the parent of the
+                    ParticleSystem windParticles. Then we will set its localPosition.</p>
+
+                <pre class="prettyprint">
+
+    void Start()
+    {
+        windParticles = GetComponent<ParticleSystem>();
+
+        GameObject wind = new GameObject("Wind", typeof(WindZone));
+        wind.transform.parent = windParticles.transform;
+        wind.transform.localPosition = new Vector3(-5.0f, 0f, 0.0f);
+        wind.GetComponent<WindZone>().mode = WindZoneMode.Spherical;
+    }
+
+                </pre>
+
+                <p>The WindZoneMode for this WindZone will be spherical so that we can see the particles be whipped
+                    around. </p>
+
+                <p>In the Updated() method, we’ll access the ExternalForces module of the particles (like we did in
+                    Chapter 4) and pass along the windForce we declared above. We’ll also call a Coroutine to change the
+                    windForce every five seconds.</p>
+
+                <pre class="prettyprint">
+
+    void Update()
+    {
+        var externalForces = windParticles.externalForces;
+        externalForces.enabled = true;
+        //While we cannot give the wind a force, we can assign an external force to the Wind from
+        //the particle system
+        externalForces.multiplier = windForce;
+        //Now let's change how blustery it is
+        StartCoroutine(changeWindForce());
+
+    }
+
+    IEnumerator changeWindForce()
+    {
+        //Print the time of when the function is first called.
+        windForce = Random.Range(1f, 25f);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(5);
+
+        windForce = Random.Range(25f, 100f);
+    }
+                </pre>
+
+                <p>
+                    <span class="example">
+                        Example 5.6: Wind Blowing Cold Snow
+                    </span>
+                </p>
+                <ul class="tabs" role="tablist">
+                    <li>
+                        <input type="radio" name="tabs6" id="tab11" checked />
+                        <label for="tab11" role="tab" aria-selected="true" aria-controls="panel11"
+                            tabindex="0">Code</label>
+                        <div id="tab-content11" class="tab-content" role="tabpanel" aria-labelledby="description"
+                            aria-hidden="false">
+                            <div id="example6" style="height: 500px"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="tabs6" id="tab12" />
+                        <label for="tab12" role="tab" aria-selected="false" aria-controls="panel12"
+                            tabindex="0">Demo</label>
+                        <div id="tab-content12" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                            aria-hidden="true">
+                            <div align="center">
+                                <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter5/Figure6/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="5.6">
+                                </iframe>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.7</h4>
+                    <p>Create wind that moves particles in a system. Have the particle colors change depending on a
+                        wind-related variable of your choice.
+                    </p>
+                </div>
+
+                <h2>5.7 SpringJoints for Snakes, Caterpillars, and other Slithering Species </h2>
+                <p>Getting back to the joints, we can move onto SpringJoints which act, as you might expect, like
+                    springs! From Unity:</p>
+                <p>The spring joint ties together 2 rigid bodies, spring forces will be automatically applied to keep
+                    the object at the given distance.</p>
+                <p>
+                    The Spring attempts to maintain the distance it has when it starts out. So if your joint's start at
+                    a rest position where the two rigidbodies are far apart, then the joint will attempt to maintain
+                    that distance. The minDistance and maxDistance properties add on top of this implicit distance.
+                </p>
+                <p>Bringing this into the world of Nature, we can use SpringJoints as if they were vertebrae in a snake
+                    or other creepy crawly thing (No offense to snake lovers). Notice how in the below illustration the
+                    caterpillar’s back arches but each of the sections maintain both a minmum and maximum stretch? We
+                    can accomplish this same behavior with SpringJoints. </p>
+                <div id="ImageContainer">
+                    <img src=" https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/pd21batch71-02-rob-6a_3.jpg?w=600&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=bc0ece85d2d575ed19b8fbe9a83e5936
+                " style="  width: 100%;
+                                    height: 100%;" alt="Figure 5.4">
+                    <p>
+                        Figure 5.4
+                    </p>
+                </div>
+
+                <p>Let’s begin by getting all of the properties of our caterpillar class together. We’ll need a head and
+                    some number of segments that will make up the tail. Each of these segments is going to need a
+                    RigidBody if our SpringJoint is going to work.</p>
+
+                <pre class="prettyprint">
+
+    public class caterpillarJoint
+    {
+        GameObject head;
+        List<Rigidbody> tailRbs = new List<Rigidbody>();
+        public Rigidbody headRb;
+
+    public caterpillarJoint(Vector3 position, int tailSegments){
+
+    }
+
+                </pre>
+
+                <p>Creating the head should look familiar. We’ll make the head heavy so that the rest of the tail
+                    segments get dragged along by the caterpillar’s movement.</p>
+                <pre class="prettyprint">
+
+    head = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    head.transform.localPosition = position;
+
+    head.transform.localScale = new Vector3(2f, 2f, 2f);
+    //We need to create a new material for WebGL
+    Renderer r = head.GetComponent<Renderer>();
+    r.material = new Material(Shader.Find("Diffuse"));
+    r.material.color = Color.blue;
+
+    headRb = head.AddComponent<Rigidbody>();
+    headRb.mass = 100f;
+                </pre>
+                <p>The tail is more complicated. We need to create tail segments at a certain distance from one another.
+                    We also need out first tail segment anchored to the head and the rest of them anchored to one
+                    another. Let’s do the first part. </p>
+
+                <pre class="prettyprint">
+
+    for (int i = 0; i < tailSegments; i++)
+    {
+        GameObject tail = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        tail.transform.localScale = new Vector3(1f, 1f, 1f);
+        tail.transform.localPosition = new Vector3(position.x - head.transform.localScale.x, 0f, position.z);
+
+        //We need to create a new material for WebGL
+        Renderer t = tail.GetComponent<Renderer>();
+        t.material = new Material(Shader.Find("Diffuse"));
+        t.material.color = Color.red;
+
+        Rigidbody tailRb = tail.AddComponent<Rigidbody>();
+        SpringJoint tailSpringJoint = tail.AddComponent<SpringJoint>();
+        tailRbs.Add(tailRb);
+        tailSpringJoint.autoConfigureConnectedAnchor = false;
+                </pre>
+                <p>We want autoConfigureConnectedAnchor to be false because it will attempt to anchor to the center of
+                    the connected RigidBody. Instead, we want to connect from the edge of one RigidBody to the edge of
+                    the connected RigidyBody. </p>
+                <pre class="prettyprint">
+
+    tailSpringJoint.anchor = new Vector3(.5f, 0f, 0f);
+    tailSpringJoint.connectedAnchor = new Vector3(-.5f, 0f, 0f);
+                </pre>
+                <p>Next, we don’t want our caterpillar to be very stretchy. The SpringJoints between the Rigidbodies can
+                    only stretch so far before, well, our Caterpillar would snap. So sad. We can set a minimum and
+                    maximum distance so this doesn’t happen.</p>
+                <pre class="prettyprint">
+
+    tailSpringJoint.minDistance = .001f;
+    tailSpringJoint.maxDistance = .001f;
+                </pre>
+                <p>We have to hook the segments to the head and one another now. We can do this by cecking to see which
+                    tailSegment is being added in the loop. </p>
+                <pre class="prettyprint">
+
+    //Connect to the head if it is the last tail segment, otherwise add to the previous rb
+    if (i == 0)
+    {
+        tailSpringJoint.connectedBody = headRb;
+    }
+    else if (i < tailSegments)
+    {
+        tailSpringJoint.connectedBody = tailRbs[i - 1];
+    }
+                </pre>
+                <p> Putting it all together. </p>
+
+                <pre class="prettyprint">
+    public caterpillarJoint(Vector3 position, int tailSegments)
+    {
+        head = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        head.transform.localPosition = position;
+
+        head.transform.localScale = new Vector3(2f, 2f, 2f);
+
+        //We need to create a new material for WebGL
+        Renderer r = head.GetComponent<Renderer>();
+        r.material = new Material(Shader.Find("Diffuse"));
+        r.material.color = Color.blue;
+
+        headRb = head.AddComponent<Rigidbody>();
+        headRb.mass = 100f;
+
+        for (int i = 0; i < tailSegments; i++)
+        {
+
+            GameObject tail = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tail.transform.localScale = new Vector3(1f, 1f, 1f);
+            tail.transform.localPosition = new Vector3(position.x - head.transform.localScale.x, 0f, position.z);
+
+            //We need to create a new material for WebGL
+            Renderer t = tail.GetComponent<Renderer>();
+            t.material = new Material(Shader.Find("Diffuse"));
+            t.material.color = Color.red;
+
+            Rigidbody tailRb = tail.AddComponent<Rigidbody>();
+            SpringJoint tailSpringJoint = tail.AddComponent<SpringJoint>();
+            tailRbs.Add(tailRb);
+
+            tailSpringJoint.autoConfigureConnectedAnchor = false;
+
+            tailSpringJoint.anchor = new Vector3(.5f, 0f, 0f);
+            tailSpringJoint.connectedAnchor = new Vector3(-.5f, 0f, 0f);
+
+            tailSpringJoint.minDistance = .001f;
+            tailSpringJoint.maxDistance = .001f;
+
+            //Connect to the head if it is the last tail segment, otherwise add to the previous rb
+            if (i == 0)
+            {
+                tailSpringJoint.connectedBody = headRb;
+            }
+            else if (i < tailSegments)
+            {
+                tailSpringJoint.connectedBody = tailRbs[i - 1];
+            }
+        }
+    }
+                </pre>
+                <p>To direct our caterpillar’s movement, we’ll use Perlin Noise like in the Introduction. </p>
+                <pre class="prettyprint">
+
+    public void step()
+    {
+        widthScale += .01f;
+        heightScale += .01f;
+
+        float height = heightScale * Mathf.PerlinNoise(Time.time * .5f, 0.0f);
+        float width = widthScale * Mathf.PerlinNoise(Time.time * 1, 0.0f);
+        Vector3 pos = head.transform.position;
+        pos.z = height;
+        pos.x = width;
+        head.transform.position = pos;
+    }
+                </pre>
+                <p> We can now expect that our Caterpillar’s head will move in relation to the Perlin Noise being
+                    generated. The tail segments will use SpringJoints to stay connected to the head and move in a life
+                    like matter. </p>
+
+                <p>
+                    <span class="example">
+                        Example 5.7: SpringJoint Caterpillar</span>
+                </p>
+                <ul class="tabs" role="tablist">
+                    <li>
+                        <input type="radio" name="tabs7" id="tab13" checked />
+                        <label for="tab13" role="tab" aria-selected="true" aria-controls="panel13"
+                            tabindex="0">Code</label>
+                        <div id="tab-content13" class="tab-content" role="tabpanel" aria-labelledby="description"
+                            aria-hidden="false">
+                            <div id="example7" style="height: 500px"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="tabs7" id="tab14" />
+                        <label for="tab14" role="tab" aria-selected="false" aria-controls="panel14"
+                            tabindex="0">Demo</label>
+                        <div id="tab-content14" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                            aria-hidden="true">
+                            <div align="center">
+                                <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter5/Figure7/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="5.7">
+                                </iframe>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.8</h4>
+                    <p>Can you create a creature that cannot stretch too far beyond its tail? Use SpringJoints and
+                        anchors to keep the animal together.
+                    </p>
+                </div>
+
+                <h2>5.8 HingeJoint Ropes</h2>
+                <p>HingeJoints are nifty Physics components that connect two RigidBodies and keep them connected ling a
+                    hinge. As the good folks at Unity put it:</p>
+                <p><i>The HingeJoint groups together 2 rigid bodies, constraining them to move like connected by a
+                        hinge.</p>
+                <p>
+                    This joint is great for, well, doors, but can also be used to model chains, etc...</p>
+
+                <p>The HingeJoint has a motor which can be used to make the hinge spin around the joints axis. A spring
+                    which attempts to reach for a target angle by spinning around the joints axis. And a limit which
+                    constrains the joint angle.</i></p>
+                <p>YouTube user Ryan Zehm does a fantastic job of explaining the HingeJoint and its various properties.
+                    This example riffs off of his work.</p>
+
+                <iframe width="100%" height="600px" src="https://www.youtube.com/embed/Fltt-j655MI" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+
+                <p>
+                    <span class="example">Example 5.8: Draggable HingeJoint Rope </span>
+                </p>
+
+                <ul class="tabs" role="tablist">
+                    <li>
+                        <input type="radio" name="tabs8" id="tab15" checked />
+                        <label for="tab15" role="tab" aria-selected="true" aria-controls="panel15"
+                            tabindex="0">Code</label>
+                        <div id="tab-content15" class="tab-content" role="tabpanel" aria-labelledby="description"
+                            aria-hidden="false">
+                            <div id="example8" style="height: 500px"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="tabs8" id="tab16" />
+                        <label for="tab16" role="tab" aria-selected="false" aria-controls="panel16"
+                            tabindex="0">Demo</label>
+                        <div id="tab-content16" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                            aria-hidden="true">
+                            <div align="center">
+                                <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter5/Figure8/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="5.8">
+                                </iframe>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.9</h4>
+                    <p>
+                        Create a series of vines, using HingeJoints, that shake when a Creature moves through them. Can
+                        you add any other behaviors?
+                    </p>
+                </div>
+
+                <h2>5.9 Physics Materials</h2>
+                <p>At this point, you should be familiar with Materials and how Renderers use them to display the
+                    graphical qualities of GameObjects in relation to their meshes. One kind of material we have not
+                    touched on is are Physics Materials. Physics materials define how to handle colliding objects in
+                    relation to their friction and bounciness.</p>
+                <p>A bouncy house, for example, would have a high bounciness (0 to 1) factor. One, being the most
+                    bouncy. Whereas a granite countertop would have very little bounciness, maybe a 0.1. A bouncy ball
+                    made of rubber would have a high bounciness factor—ice would not. So on and so forth.</p>
+                <p>Physics Materials have only a few properties</p>
+                <ul>
+                    <li>
+                        <p>bounceCombine : Determines how the bounciness is combined.</p>
+                        <p>
+                            Traditionally bounciness properties are dependent on the combination of the two materials in
+                            contact. This is however impractical in a game. Instead you can use the combine mode to tune
+                            how the bounciness values of two materials are combined. </p>
+                        <p> The options are Average, averages the bounce of the two colliding materials; Minimum, uses
+                            the smaller bounce of the two colliding materials; Multiply, multiplies the bounce of the
+                            two colliding materials; and Maximum, uses the larger bounce of the two colliding materials.
+                        </p>
+
+                    </li>
+                    <li>
+                        bounciness : How bouncy is the surface? A value of 0 will not bounce. A value of 1 will bounce
+                        without any loss of energy.
+
+                    </li>
+                    <li>
+                        dynamicFriction : The friction used when already moving. This value is usually between 0 and 1.
+                        A value of 0 feels like ice, 1 feels like rubber breaking on asphalt.
+
+                    </li>
+                    <li>
+                        <p>frictionCombine : Determines how the friction is combined.</p>
+                        <p>
+                            Traditionally friction properties are dependent on the combination of the two materials in
+                            contact. This is however impractical in a game. Instead you can use the combine mode to tune
+                            how the friction values of two materials are combined.
+                        </p>
+                        <p> The options are Average, averages the friction of the two colliding materials; Minimum, uses
+                            the smaller friction of the two colliding materials; Multiply, multiplies the friction of
+                            the two colliding materials; and Maximum, uses the larger friction of the two colliding
+                            materials.</p>
+
+                    </li>
+                    <li>
+                        <p>
+                            staticFriction : The friction coefficient used when an object is lying on a surface.</p>
+                        <p>
+                            Must be greater than or equal to zero. Natural materials will usually have a friction
+                            coefficient between 0 (no friction at all, like slippy ice) and 1 (full friction, like
+                            rubber). Values larger then 1 are possible, and may be realistic for sticky materials.</p>
+                    </li>
+                </ul>
+
+                <p>For this example, we’ll create a slippery Physics Material and then when the user clicks their mouse,
+                    we’ll change its properties and add more friction </p>
+                <pre class="prettyprint">
+
+    void Start()
+        {
+            PhysicMaterial pMaterial = new PhysicMaterial();
+            //Create a bouncy material first
+            pMaterial.bounciness = 1f;
+            pMaterial.bounceCombine = PhysicMaterialCombine.Multiply;
+            pMaterial.staticFriction = 0f;
+            pMaterial.frictionCombine = PhysicMaterialCombine.Average;
+            slope.material = pMaterial;
+    }
+                </pre>
+
+                <p>Then we’ll create a method to create a new Phsyics Material and swap it with the one on the slope.
+                    Notice the change in the staticFriction. </p>
+
+                <pre class="prettyprint">
+
+    public void changeSlopeMaterial()
+    {
+        PhysicMaterial pMaterial = new PhysicMaterial();
+        //Create a bouncy material first
+        pMaterial.bounciness = 0f;
+        pMaterial.bounceCombine = PhysicMaterialCombine.Multiply;
+        pMaterial.staticFriction = 100f;
+        pMaterial.frictionCombine = PhysicMaterialCombine.Multiply;
+        slope.material = pMaterial;
+    }
+                </pre>
+                <p>Lastly, we’ll need some rocks to fall down this slope so that they can respond to the new Physics
+                    Materials. Our simple Rock class is below. </p>
+                <pre class="prettyprint">
+
+    public class fallingRocks
+    {
+
+        public GameObject rock;
+
+        public fallingRocks(Vector3 location)
+        {
+            rock = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            rock.transform.position = location;
+            //We need to create a new material for WebGL
+            Renderer r = rock.GetComponent<Renderer>();
+            r.material = new Material(Shader.Find("Diffuse"));
+
+            Rigidbody body = rock.AddComponent<Rigidbody>();
+
+            // Generate random properties for this mover
+            float radius = Random.Range(0.1f, 0.4f);
+
+            // The default diameter of the sphere is one unit
+            // This means we have to multiple the radius by two when scaling it up
+            rock.transform.localScale = 2 * radius * Vector3.one;
+
+            // We need to calculate the mass of the sphere.
+            // Assuming the sphere is of even density throughout,
+            // the mass will be proportional to the volume.
+            body.mass = (4f / 3f) * Mathf.PI * radius * radius * radius;
+
+
+        }
+    }
+                </pre>
+                <p>
+                    <span class="example">
+                        Example 6.9: Falling Rocks and Slipper Slopes with Physics Materials </span>
+                </p>
+                <ul class="tabs" role="tablist">
+                    <li>
+                        <input type="radio" name="tabs9" id="tab17" checked />
+                        <label for="tab17" role="tab" aria-selected="true" aria-controls="panel17"
+                            tabindex="0">Code</label>
+                        <div id="tab-content17" class="tab-content" role="tabpanel" aria-labelledby="description"
+                            aria-hidden="false">
+                            <div id="example9" style="height: 500px"></div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <input type="radio" name="tabs9" id="tab18" />
+                        <label for="tab18" role="tab" aria-selected="false" aria-controls="panel18"
+                            tabindex="0">Demo</label>
+                        <div id="tab-content18" class="tab-content" role="tabpanel" aria-labelledby="specification"
+                            aria-hidden="true">
+                            <div align="center">
+                                <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter5/Figure9/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="5.9">
+                                </iframe>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="note">
+                    <h4 style="text-align:right;">
+                        Exercise 5.10</h4>
+                    <p>
+                        Create a series of Physics Materials that have different behaviors related to bounciness and
+                        friction. Dynamically add these materials to the rocks and slope from Example 6.9
+                    </p>
+                </div>
+                <div class="note">
+                    <h4>
+                        The Ecosystem Project</h4>
+                    <p>Step 5 Exercise:</p>
+
+                    <p>Use the Physics Components in this chapter to add some creatures and natural elements that use
+                        SpringJoints and FixedJoints. </p>
+                    <p>Add eyes to some of your creatures using Raycasts.
+                    </p>
+                </div>
 
 
 
@@ -89,9 +2091,10 @@
 
 
 
-            <footer>
-                <div class="footer" style="width: 33%;   float:left;
-                padding-left: 5px;">
+
+                <div class="footer">
+                    <div class="col">
+
                     <h4>Licenses</h4>
                     <p>
                         <a class="license-badge" rel="license"
@@ -110,13 +2113,12 @@
 
                     <p>
                         All of the book's source code is licensed under the <a rel="license"
-                            href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public
-                            License</a>
+                            href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
                         as published by the Free Software Foundation; either version 2.1 of the License, or (at your
                         option) any later version.
                     </p>
-                </div>
-                <div class="footer" style="width: 33%;   float:left; padding-left: 5px;">
+            </div>
+                <div class="col">
                     <h4>Remixer</h4>
                     <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
                             Arts and Media Program</a> at Columbia College Chicago.</p>
@@ -127,8 +2129,7 @@
                             href="https://github.com/jadlerfisher">GitHub</a></p>
 
                 </div>
-                <div class="footer" style="width: 33%;   float:left;
-                padding-left: 5px;">
+                <div class="col">
                     <h4>Author</h4>
                     <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
                             Telecommunications Program</a> at New York University.</p>
@@ -139,12 +2140,10 @@
                             href="http://github.com/shiffman">GitHub</a></p>
 
                 </div>
-            </footer>
+            </div>
         </section>
     </div>
-
     <script>
-
         window.onscroll = function () { scrollFunction() };
 
         function scrollFunction() {
@@ -162,7 +2161,146 @@
                 document.getElementById("titleHeader").style.float = "";
 
             }
-        }
+
+        }</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+    <script src="scripts/github-embed.min.js"></script>
+    <script>
+
+        //////lazy loader
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var lazyloadImages;
+
+            if ("IntersectionObserver" in window) {
+                lazyloadImages = document.querySelectorAll(".lazy");
+                var imageObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            var iframe = entry.target;
+                            iframe.src = iframe.dataset.src;
+                            iframe.classList.remove("lazy");
+                            imageObserver.unobserve(iframe);
+                        }
+                    });
+                });
+
+                lazyloadImages.forEach(function (iframe) {
+                    imageObserver.observe(iframe);
+                });
+            } else {
+                var lazyloadThrottleTimeout;
+                lazyloadImages = document.querySelectorAll(".lazy");
+
+                function lazyload() {
+                    if (lazyloadThrottleTimeout) {
+                        clearTimeout(lazyloadThrottleTimeout);
+                    }
+
+                    lazyloadThrottleTimeout = setTimeout(function () {
+                        var scrollTop = window.pageYOffset;
+                        lazyloadImages.forEach(function (iframe) {
+                            if (iframe.offsetTop < (window.innerHeight + scrollTop)) {
+                                iframe.src = iframe.dataset.src;
+                                iframe.classList.remove('lazy');
+                            }
+                        });
+                        if (lazyloadImages.length == 0) {
+                            document.removeEventListener("scroll", lazyload);
+                            window.removeEventListener("resize", lazyload);
+                            window.removeEventListener("orientationChange", lazyload);
+                        }
+                    }, 20);
+                }
+
+                document.addEventListener("scroll", lazyload);
+                window.addEventListener("resize", lazyload);
+                window.addEventListener("orientationChange", lazyload);
+            }
+        })
+
+        githubEmbed('#example1', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%205/Example%205.1/Chapter5Fig1.cs"
+            }]
+        });
+
+        githubEmbed('#example2', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%205/Example%205.2/Chapter5Fig2.cs"
+            }]
+        });
+
+        githubEmbed('#example3', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%205/Example%205.3/Chapter5Fig3.cs"
+            }]
+        });
+
+        githubEmbed('#example4', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%205/Example%205.4/Chapter5Fig4.cs"
+            }]
+        });
+
+        githubEmbed('#example5', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%205/Example%205.5/Chapter5Fig5.cs"
+            }]
+        });
+
+        githubEmbed('#example6', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%205/Example%205.6/Chapter5Fig6.cs"
+            }]
+        });
+
+        githubEmbed('#example7', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%205/Example%205.7/Chapter5Fig7a.cs"
+            }]
+        });
+
+        githubEmbed('#example8', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%205/Example%205.8/Chapter5Fig8.cs"
+            }]
+        });
+
+        githubEmbed('#example9', {
+            "owner": "jadlerfisher",
+            "repo": "The-Nature-of-Code---Unity-Remix",
+            "ref": "master",
+            "embed": [{
+                "path": "/Assets/Chapter%205/Example%205.9/Chapter5Fig9.cs"
+            }]
+        });
+
     </script>
 </body>
 
