@@ -240,6 +240,12 @@ ul {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   padding: 0px 20px 20px 20px;
+  font-size: small;
+}
+
+.footer .p{
+
+  font-size: small;
 }
 
 
