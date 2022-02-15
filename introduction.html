@@ -117,6 +117,13 @@
                 computational thinking before we approach some of the more difficult and complex material.
             </p>
             <p>
+                When working with Unity, it is important to note that all the scripts we will be using inherit from the
+                built in Unity MonoBehaviour class. More advanced tutorials can describe in detail the importance of this
+                distinction but for our purposes the important thing to remember is that MonoBehaviour scripts must be
+                attached to a game object. If you plan on following along with these examples, you must attach your
+                script to an empty game object within your project hierarchy.
+            </p>
+            <p>
                 In Chapter 1, we’re going to talk about the concept of a vector and how it will serve as the building
                 block for simulating motion throughout this book. But before we take that step, let’s think about what
                 it means for something to simply move around the screen. Let’s begin with one of the best-known and
@@ -225,7 +232,7 @@
             <p>
                 Let’s review a bit of object-oriented programming (OOP) first by building a Mover object. This will be
                 only a cursory review. If you have never worked with OOP before, you may want something more
-                comprehensive; I’d suggest stopping here and reviewing the basics of the <a href="https://www.youtube.com/watch?v=XDAYS-qYe6Y">Unity</a>
+                comprehensive; I’d suggest stopping here and reviewing the basics of <a href="https://www.youtube.com/watch?v=XDAYS-qYe6Y">Unity</a>
             </p>
             <p>
                 An object in Unity is an entity that has both data and functionality. We are looking to design a Mover
@@ -241,12 +248,15 @@
             </p>
             <p>
                 Let’s begin by defining the Mover class—what it means to be a Mover object. The mover only needs two
-                pieces of data—a number for its x-location and one for its y-location.
+                pieces of data—a number for its x-location and one for its y-location.  In this example we will use a
+                Vector3, a struct that represents the x, y and z location of an object. Vectors will be covered next
+                chapter, for now just know that we can pull the x location and y location from our Vector3 using
+                standard OOP dot notation.
 
             </p>
             <pre class="prettyprint">
 
-    public class introMover
+    public class IntroMover
     {
         // The basic properties of a mover class
         private float x-location;
@@ -254,10 +264,10 @@
         private Vector3 location;
 
         // Gives the class a GameObject to draw on the screen
-        public GameObject mover = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        private GameObject mover = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
         // The window limits
-        private Vector2 minimumPos, maximumPos;
+        private Vector2 maximumPos;
     }
         </pre>
 
@@ -268,12 +278,14 @@
             </p>
             <pre class="prettyprint">
 
-    public introMover()
+    public IntroMover()
     {
-        findWindowLimits();
+        FindWindowLimits();
         x-location = 0f;
         y-location = 0f;
-        //We need to create a new material for WebGL
+        // Set location to Vector2.zero, shorthand for (0, 0)
+        location = Vector2.zero;
+        // We need to create a new material for WebGL
         Renderer r = mover.GetComponent<Renderer>();
         r.material = new Material(Shader.Find("Diffuse"));
     }
@@ -285,7 +297,7 @@
                 interesting. Remember that floor on which we were taking random steps? Well, now we can use a Unity
                 window in that same capacity. There are four possible steps. A step to the right can be simulated by
                 incrementing x (x++); to the left by decrementing x (x--); forward by going down a pixel (y++); and
-                backward by going up a pixel (y--). How do we pick from these four choices? Earlier we stated that we
+                backward by going up a pixel (y++). How do we pick from these four choices? Earlier we stated that we
                 could flip two coins. In Unity, however, when we want to randomly choose from a list of options, we
                 can pick a random number using Random.Range(value1, value2). Next, we take the appropriate step
                 (left, right, up, or down) depending on which random number was picked.
@@ -296,8 +308,8 @@
     public void step()
     {
         location = mover.transform.position;
-        //Each frame choose a new Random number 0,1,2,3,
-        //If the number is equal to one of those values, take a step
+        // Each frame choose a new Random number 0,1,2,3,
+        // If the number is equal to one of those values, take a step
         int choice = Random.Range(0, 4);
         if (choice == 0)
         {
@@ -308,11 +320,11 @@
         {
             location.x--;
         }
-        else if (choice == 3)
+        else if (choice == 2)
         {
             location.y++;
         }
-        else
+        else if (choice == 3)
         {
             location.y--;
         }
@@ -328,33 +340,29 @@
     public void CheckEdges()
     {
         location = mover.transform.position;
-
-        if (location.x > maximumPos.x)
+        // Reset location to zero upon reaching maximum or(||) negative maximum(minimum)
+        if (location.x > maximumPos.x || location.x < -maximumPos.x)
         {
             location = Vector2.zero;
         }
-        else if (location.x < minimumPos.x)
+        if (location.y > maximumPos.y || location.y < -maximumPos.y)
         {
             location = Vector2.zero;
         }
-        if (location.y > maximumPos.y)
-        {
-            location = Vector2.zero;
-        }
-        else if (location.y < minimumPos.y)
-        {
-            location = Vector2.zero;
-        }
+        // Set the position of the mover to location
         mover.transform.position = location;
     }
 
-    private void findWindowLimits()
+    private void FindWindowLimits()
     {
         // We want to start by setting the camera's projection to Orthographic mode
         Camera.main.orthographic = true;
-        // Next we grab the minimum and maximum position for the screen
-        minimumPos = Camera.main.ScreenToWorldPoint(Vector2.zero);
+        // Ensure the camera is positioned in the center of the scene
+        Camera.main.transform.position = Vector2.zero;
+        // Next we grab the maximum position for the screen
         maximumPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        // The maximum position can be attributed to the minimum bounds by setting it negative
+        // maximumPos and -maximumPos equate to maximum and minimum screen bounds
     }
 </pre>
 
@@ -366,21 +374,32 @@
             </p>
             <pre class="prettyprint">
 
-using UnityEngine;
+    using UnityEngine;
 
-public class IntroductionFig1 : MonoBehaviour
-{
-    //We need to create a walker
-    introMover walker;
-
-    // Start is called before the first frame update
-    void Start()
+    public class IntroductionFig1 : MonoBehaviour
     {
-        walker = new introMover();
-    }
+        // We need to create a mover instance
+        IntroMover mover;
 
-}
+        // Start is called before the first frame update
+        void Start()
+        {
+            mover = new IntroMover();
+        }
+
+    }
                             </pre>
+            <p>Finally, during each cycle through FixedUpdate(), we ask the Mover to take a step and check edges.</p>
+            <pre class="prettyprint">
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        // Have the walker choose a direction
+        mover.Step();
+        mover.CheckEdges();
+    }
+                </pre>
 
             <p><span class="example">Example I.1: Traditional Random Mover</span></p>
             <ul class="tabs" role="tablist">
@@ -436,31 +455,29 @@ public class IntroductionFig1 : MonoBehaviour
                     example available on GitHub.
                 </i>
             </p>
-            <p>Finally, during each cycle through FixedUpdate(), we ask the Mover to take a step and draw a sphere.</p>
-            <pre class="prettyprint">
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        //Have the walker choose a direction
-        walker.step();
-        walker.CheckEdges();
-    }
-                </pre>
 
             <p>
-                Each time through FixedUpdate(), we see the trail of the random walk in our Unity Game window.
+                Each time through FixedUpdate(), we could see the trail of the random walk in our Unity Game window using
+                this method, you will see this method in action later.
             </p>
             <pre class="prettyprint">
 
-    //Now let's draw the path of the Mover by creating spheres in its position in the most recent frame.
-   public void draw()
+    // Now let's draw the path of the Mover by creating spheres in its position in the most recent frame.
+    public void Draw()
     {
-        //This creates a sphere GameObject
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //This sets our ink "sphere game objects" at the position of the Walker GameObject (walker) at the current frame
-        //to draw the path
-        sphere.transform.position = new Vector3(walker.mover.transform.position.x, walker.moveer.transform.position.y, 0F);
+        // Limit drawn spheres to 200 for performance
+        if (drawnSpheres.Count < 200)
+        {
+            // This creates a sphere GameObject
+            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            // We need to create a new material for WebGL
+            Renderer r = sphere.GetComponent<Renderer>();
+            r.material = new Material(Shader.Find("Diffuse"));
+            // This sets our sphere game objects at the position of the mover GameObject (moverGO) at the current frame to draw the path.
+            sphere.transform.position = new Vector3(moverGO.transform.position.x, moverGO.transform.position.y, 0F);
+            drawnSpheres.Add(sphere);
+        }
     }
                 </pre>
 
@@ -489,10 +506,11 @@ height: 100%;" alt="Figure I.1: ">
             </p>
             <pre class="prettyprint">
 
-    public void step()
+    public void Step()
     {
-        int stepx = Random.Range(0, 4) - 1;
-        int stepy = Random.Range(0, 4) - 1;
+        // Random.Range() is max exclusive while using integer values, the result of this range can be -1, 0, or 1
+        int stepx = Random.Range(-1, 2);
+        int stepy = Random.Range(-1, 2);
 
         x += stepx;
         y += stepy;
@@ -505,11 +523,11 @@ height: 100%;" alt="Figure I.1: ">
             </p>
             <pre class="prettyprint">
 
-    public void step()
+    public void Step()
     {
-
-        float stepx = Random.Range(-1, 1);
-        float stepy = Random.Range(-1, 1);
+        // Make sure you specify the number as a floating point number using f
+        float stepx = Random.Range(-1f, 1f);
+        float stepy = Random.Range(-1f, 1f);
 
         x += stepx;
         y += stepy;
@@ -529,6 +547,7 @@ height: 100%;" alt="Figure I.1: ">
                 numbers. We can test this distribution with a Unity function that counts each time a random number is
                 picked and graphs it as the height of a rectangle.
             </p>
+            <p><span class="example">Example I.2: Random number distribution</span></p>
             <ul class="tabs" role="tablist">
                 <li>
                     <input type="radio" name="tabs2" id="tab3" checked />
@@ -576,10 +595,10 @@ height: 100%;" alt="Figure I.1: ">
                     </div>
                 </li>
             </ul>
-            <p><span class="example">Example I.2: Random number distribution</span></p>
+
 
             <p>
-                The above screenshot shows the result of the sketch running for a few minutes. Notice how each bar of the
+                The above example shows the result of the sketch running for a few seconds. Notice how each bar of the
                 graph differs in height. Our sample size (i.e. the number of random numbers we’ve picked) is rather
                 small and there are some occasional discrepancies, where certain numbers are picked more often. Over
                 time, with a good random number generator, this would even out.
@@ -665,9 +684,9 @@ height: 100%;" alt="Figure I.1: ">
             </p>
             <pre class="prettyprint">
 
-    int[] numbers = new[] { 1, 1, 2, 3, 3 };
-    int randomInt = Random.Range(0, (numbers.Length - 1));
-    Debug.Log(randomInt);
+        int[] numbers = new[] { 1, 1, 2, 3, 3 };
+        int randomInt = Random.Range(0, numbers.Length);
+        Debug.Log(numbers[randomInt]);
                 </pre>
 
             <p>
@@ -706,15 +725,15 @@ height: 100%;" alt="Figure I.1: ">
 
     float num = Random.Range(0f, 1f);
 
-    if (num < 0.6F)
+    if (num < 0.6f)
     {
         Debug.Log("Outcome A!");
     }
-    else if (num > 0.6F && num < 0.7F)
+    else if (num > 0.6f && num < 0.7f)
     {
         Debug.Log("Outcome B!");
     }
-    else if (num > 0.1F && num < 1F) {
+    else if (num > 0.7f && num < 1f) {
         Debug.Log("Outcome C!");
     }
                 </pre>
@@ -729,6 +748,7 @@ height: 100%;" alt="Figure I.1: ">
                 <li>chance of moving left: 20%</li>
                 <li>chance of moving right: 40%</li>
             </ul>
+            <p><span class="example">Example I.3: Mover that tends to move to the right</span></p>
             <ul class="tabs" role="tablist">
                 <li>
                     <input type="radio" name="tabs3" id="tab5" checked />
@@ -776,7 +796,7 @@ height: 100%;" alt="Figure I.1: ">
                     </div>
                 </li>
             </ul>
-            <p><span class="example">Example I.3: Mover that tends to move to the right</span></p>
+
             <div class="note">
                 <h4 style="text-align:right;">
                     Exercise
@@ -804,7 +824,7 @@ height: 100%;" alt="Figure I.1: ">
             </p>
             <pre class="prettyprint">
 
-    float h = Random.Range(20f,30f);
+    float h = Random.Range(2f,3f);
     </pre>
 
             <p>
@@ -957,12 +977,12 @@ height: 100%; float:left;" alt="Figure I.2: ">
 
             <p>
                 If we want to produce a random number with a normal (or Gaussian) distribution each time we run through
-                update(), it’s as easy as calling the function nextGaussian().
+                update(), it’s as easy as using Random.Range() within Random.Range().
             </p>
             <pre class="prettyprint">
 
-    //To create a Gaussian distribution in Unity we can actually use Random.Range() on two separate Random.Ranges
-    float num = Random.Range(Random.Range(-10, 10), Random.Range(-10, 10));
+    // To create a Gaussian distribution in Unity we can actually use Random.Range() within two separate Random.Ranges
+    float num = Random.Range(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
     </pre>
 
             <p>
@@ -977,6 +997,7 @@ height: 100%; float:left;" alt="Figure I.2: ">
                 horizontal pixel in a window of width 640) and a standard deviation of 60 pixels. We can adjust the
                 value to our parameters by multiplying it by the standard deviation and adding the mean.
             </p>
+            <p><span class="example">Example I.4: Gaussian distribution</span></p>
             <ul class="tabs" role="tablist">
                 <li>
                     <input type="radio" name="tabs4" id="tab7" checked />
@@ -1024,7 +1045,7 @@ height: 100%; float:left;" alt="Figure I.2: ">
                     </div>
                 </li>
             </ul>
-            <p><span class="example">Example I.4: Gaussian distribution</span></p>
+
 
             <p>
                 By drawing the ellipses on top of each other with some transparency, we can actually see the
@@ -1074,7 +1095,7 @@ height: 100%; float:left;" alt="Figure I.2: ">
                 taking a large step.
             </p>
             <pre class="prettyprint">
-        //Random.value Returns a random number between 0.0 [inclusive] and 1.0 [inclusive]
+        // Random.value Returns a random number between 0.0 [inclusive] and 1.0 [inclusive]
         float r = Random.value
         if (r < 0.01) {
             xstep = Random.Range(-100f,100f);
@@ -1134,7 +1155,7 @@ height: 100%;" alt="Figure I.4: ">
             </p>
             <pre class="prettyprint">
 
-    float montecarlo()
+    float MonteCarlo()
     {
         while (true)
         {
@@ -1146,7 +1167,6 @@ height: 100%;" alt="Figure I.4: ">
             {
                 return r1;
             }
-
         }
     }
     </pre>
@@ -1209,7 +1229,7 @@ height: 100%; float:left;" alt="Figure I.2: ">
             <p>
                 Unity (?) has a built-in implementation of the Perlin noise algorithm: the static function Mathf.PerlinNoise
                 (x float, y float). The Mathf.PerlinNoise(x,y)
-                 two arguments as noise is computed two dimensions in Unity.
+                two arguments as noise is computed two dimensions in Unity.
                 Let’s start by looking at one-dimensional noise.
             </p>
             <p>
@@ -1307,15 +1327,17 @@ height: 100%; float:left;" alt="Figure I.2: ">
     }
 
     </pre>
-    <p>Note, that in this instance, heightScale and widthScale are referring to the distance covered per second. Our Time.time property handles the time between the frames.</p>
-<br></br>
+            <p>Note, that in this instance, heightScale and widthScale are referring to the distance covered per second. Our Time.time property handles the time between the frames.</p>
+            <br></br>
             <div id="ImageContainer">
 
                 <img src="https://natureofcode.com/book/imgs/intro/intro_07.png" style="  width: 100%;
 height: 100%;" alt="Figure I.7: ">
 
-                <p>Figure I.7: Try running the code several times, incrementing  (listed as T in the figure) by 0.01, 0.02, 0.05, 0.1, 0.0001, and you will see
-                    different results. </p>
+                <p>
+                    Figure I.7: Try running the code several times, incrementing  (listed as T in the figure) by 0.01, 0.02, 0.05, 0.1, 0.0001, and you will see
+                    different results.
+                </p>
 
             </div>
             <br></br>
@@ -1679,55 +1701,74 @@ height: 100%;" alt="flowfield">
                 I think we’re ready to begin.
 
             </p>
+            <p>
+                <a href="chapterone.html">1. VECTORS</a>
+
+            </p>
             <div class="footer">
                 <div class="col">
 
-                <h4>Licenses</h4>
-                <p>
-                    <a class="license-badge" rel="license"
-                        href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
-                            style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
-                    <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
-                            alt="LGPL License" style="border-width:0"
-                            src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
-                </p>
+                    <h4>Licenses</h4>
+                    <p>
+                        <a class="license-badge" rel="license"
+                           href="http://creativecommons.org/licenses/by-nc/3.0/">
+                            <img alt="Creative Commons License"
+                                 style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" />
+                        </a>
+                        <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/">
+                            <img alt="LGPL License" style="border-width:0"
+                                 src="http://www.gnu.org/graphics/lgplv3-88x31.png" />
+                        </a>
+                    </p>
 
-                <p>
-                    The book's text and illustrations are licensed under a <a rel="license"
-                        href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
-                        Attribution-NonCommercial 3.0 Unported License</a>.
-                </p>
+                    <p>
+                        The book's text and illustrations are licensed under a <a rel="license"
+                                                                                  href="http://creativecommons.org/licenses/by-nc/3.0/">
+                            Creative Commons
+                            Attribution-NonCommercial 3.0 Unported License
+                        </a>.
+                    </p>
 
-                <p>
-                    All of the book's source code is licensed under the <a rel="license"
-                        href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
-                    as published by the Free Software Foundation; either version 2.1 of the License, or (at your
-                    option) any later version.
-                </p>
-        </div>
-            <div class="col">
-                <h4>Remixer</h4>
-                <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
-                        Arts and Media Program</a> at Columbia College Chicago.</p>
+                    <p>
+                        All of the book's source code is licensed under the <a rel="license"
+                                                                               href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
+                        as published by the Free Software Foundation; either version 2.1 of the License, or (at your
+                        option) any later version.
+                    </p>
+                </div>
+                <div class="col">
+                    <h4>Remixer</h4>
+                    <p>
+                        Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">
+                            Interactive
+                            Arts and Media Program
+                        </a> at Columbia College Chicago.
+                    </p>
 
-                <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+                    <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
 
-                <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
-                        href="https://github.com/jadlerfisher">GitHub</a></p>
+                    <p>
+                        <a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a href="https://github.com/jadlerfisher">GitHub</a>
+                    </p>
 
+                </div>
+                <div class="col">
+                    <h4>Author</h4>
+                    <p>
+                        Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">
+                            Interactive
+                            Telecommunications Program
+                        </a> at New York University.
+                    </p>
+
+                    <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
+
+                    <p>
+                        <a href="https://twitter.com/shiffman">Twitter</a> <a href="http://github.com/shiffman">GitHub</a>
+                    </p>
+
+                </div>
             </div>
-            <div class="col">
-                <h4>Author</h4>
-                <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
-                        Telecommunications Program</a> at New York University.</p>
-
-                <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
-
-                <p><a href="https://twitter.com/shiffman">Twitter</a> <a
-                        href="http://github.com/shiffman">GitHub</a></p>
-
-            </div>
-        </div>
         </section>
     </div>
 
