@@ -181,6 +181,7 @@
 .github-embed-nav-link-shown {
 
     font-weight: bold;
+    display: none;
 }
 
 .github-embed-nav-on-github {
