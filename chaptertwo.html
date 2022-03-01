@@ -342,7 +342,6 @@ height: 100%;" alt="Figure 2.2: T">
 
     // ForceMode.Impulse takes mass into account
     mover.body.AddForce(wind, ForceMode.Impulse);
-
             </pre>
             <p>or:</p>
             <pre class="prettyprint">
@@ -355,18 +354,17 @@ height: 100%;" alt="Figure 2.2: T">
             </p>
             <pre class="prettyprint">
 
-    //body is the Rigidbody component. We apply forces to that Ridigbody.
+    // body is the Rigidbody component. We apply forces to that Ridigbody.
     someGameObject.body.AddForce(force, ForceMode.Impulse)
 
-    //The application of Vector2 force in this instance can be understood as
+    // The application of Vector2 force in this instance can be understood as
     acceleration = force
 
-    //Which we can handle through the Rigidbody component
-    //Use Acceleration as the force on the Rigidbody
-    //As both are Vector2s
+    // Which we can handle through the Rigidbody component
+    // Use Acceleration as the force on the Rigidbody
+    // As both are Vector2s
 
     someGameObject.body.AddForce(m_NewForce, ForceMode.Acceleration);
-
                 </pre>
             <p>A Rigidbody gives us control of an object's position through physics simulation. Adding a Rigidbody component to an object will put its motion under the control of Unity's physics engine. Even without adding any code, a Rigidbody object will be pulled downward by gravity.</p>
             <p>The Rigidbody also has a scripting API that lets you apply forces to the object and control it in a physically realistic way. For example, a car's behaviour can be specified in terms of the forces applied by the wheels. Given this information, the physics engine can handle most other aspects of the car's motion, so it will accelerate realistically and respond correctly to collisions.
@@ -384,7 +382,8 @@ height: 100%;" alt="Figure 2.2: T">
             <pre class="prettyprint">
 
     mover.body.AddForce(wind, ForceMode.Impulse);
-    //Unity give us a few options for how we apply force. Impulse does it as a burst. This makes it great for wind. ForceMode.Force, allows us to add a continuous force like gravity.
+    // Unity give us a few options for how we apply force. Impulse does it as a burst. This makes it great for wind. 
+    // ForceMode.Force, allows us to add a continuous force like gravity.
     mover.body.AddForce(gravity, ForceMode.Force);
             </pre>
             <p>
@@ -409,7 +408,8 @@ height: 100%;" alt="Figure 2.2: T">
             </p>
             <pre class="prettyprint">
 
-    if (Input.GetMouseButtonDown(0)){
+    if (Input.GetMouseButtonDown(0))
+    {
         Vector2 wind = new Vector2(0,1,0);
         mover.body.AddForce(wind, ForceMode.Impulse);
     }
@@ -443,12 +443,13 @@ height: 100%;" alt="Figure 2.2: T">
     {
         // The basic properties of a mover class
         public Vector2 location, velocity, acceleration;
-        //Addin the Rigidbody to apply forces, give this object mass, and more physics galore.
+
+        // Add the Rigidbody to apply forces, give this object mass, and more physics galore.
         public Rigidbody body;
 
         // We need to calculate the mass of the sphere.
         // Assuming the sphere is of even density throughout,
-        // the mass will be proportional to the volume.
+        // The mass will be proportional to the volume.
         body.mass = (4f / 3f) * Mathf.PI * radius * radius * radius;
     }
                 </pre>
@@ -486,13 +487,13 @@ height: 100%;" alt="Figure 2.2: T">
         public Vector2 location = Vector2.zero;
         public Vector2 velocity =  Vector2.zero;
         public Vector2 acceleration = Vector2.zero;
-        //Addin the Rigidbody to apply forces, give this object mass, and more physics galore.
+
+        // Add the Rigidbody to apply forces, give this object mass, and more physics galore.
         public Rigidbody body;
 
         // We would usually  calculate the mass of the sphere.
         // Assuming the sphere is of even density throughout,
-        // the mass will be proportional to the volume. This time,
-        // we are just making it 10.
+        // The mass will be proportional to the volume. This time, we are just making it 10.
         body.mass = 10f;
     }
             </pre>
@@ -500,7 +501,7 @@ height: 100%;" alt="Figure 2.2: T">
             <p>
                 This isn’t so great since things only become interesting once we have objects with varying mass, but
                 it’ll get us started. Where does mass come in? We use it while applying Newton’s second law to our
-                object. In fact, this is exactly what ForceMode handles. ForceMode allows you to choose from four different ways to affect the GameObject using this Force: Acceleration, Force, Impulse, and VelocityChange.
+                object. In fact, this is exactly what ForceMode handles. ForceMode allows you to choose four different ways to affect the GameObject using this Force: Acceleration, Force, Impulse, and VelocityChange.
                 We already discussed Accelertion mode, which allows us to use the object's acceleration as its force. Another is Impulse mode, which involves using the Rigidbody’s mass to apply an instant impulse force.  ForceMode.Force,
                 uses a continuous force on the Rigidbody considering its mass. VelocityChange ignores mass and so we will be ignoring it. Gravity would be continuous and so use ForceMode.Force where as wind would be an impulse and use ForceMode.Impulse.
 
@@ -513,9 +514,9 @@ height: 100%;" alt="Figure 2.2: T">
     //An impulse, burst force that takes mass into account
     body.AddForce(wind, ForceMode.Impulse);
 
-</pre>
+            </pre>
             <h2>
-                2.4 Creating Forces
+                2.5 Creating Forces
             </h2>
             <p>
                 Let’s take a moment to remind ourselves where we are. We know what a force is (a vector), and we know how
@@ -539,14 +540,13 @@ height: 100%;" alt="Figure 2.2: T">
             </ul>
             <p>
                 The easiest way to make up a force is to just pick a number. Let’s start with the idea of simulating
-                wind. How about a wind force that points to the right and is fairly weak? Assuming a Mover object m, our
+                wind. How about a wind force that points to the right and is fairly weak? Assuming a Mover object mover, our
                 code would look like:
             </p>
             <pre class="prettyprint">
 
     Vector2 wind = new Vector2(0,1);
     mover.body.AddForce(wind, ForceMode.Impulse);
-
     </pre>
 
             <p>
@@ -603,7 +603,7 @@ height: 100%;" alt="Figure 2.2: T">
             </ul>
             <p>
                 Now we have two forces, pointing in different directions with different magnitudes, both applied to
-                object m. We’re beginning to get somewhere. We’ve now built a world for our objects in the Unity Remix, an
+                object mover. We’re beginning to get somewhere. We’ve now built a world for our objects in the Unity Remix, an
                 environment to which they can actually respond.
             </p>
             <p>
@@ -616,75 +616,81 @@ height: 100%;" alt="Figure 2.2: T">
             </p>
             <p>
                 This is where we are with the Mover class as a whole. Notice how it is identical to the Mover class
-                created in Chapter 1, with additions--the Rigidbody component and the ability to use its AddForce().
+                created in Chapter 1, with additions--the Rigidbody component and its ability to use AddForce().
             </p>
             <pre class="prettyprint">
 
-   public class Mover2_1
+public class Mover2_1
+{
+    public Rigidbody body;
+    private GameObject gameObject;
+    private float radius;
+
+    private float xMin;
+    private float xMax;
+    private float yMin;
+
+    public Mover2_1(Vector3 position, float xMin, float xMax, float yMin)
     {
-        public Rigidbody body;
-        private GameObject gameObject;
-        private float radius;
+        this.xMin = xMin;
+        this.xMax = xMax;
+        this.yMin = yMin;
 
-        private float xMin;
-        private float xMax;
-        private float yMin;
+        // Initialize the components required for the mover
+        gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        body = gameObject.AddComponent<Rigidbody>();
 
-        public Mover2_1(Vector3 position, float xMin, float xMax, float yMin)
-        {
-            this.xMin = xMin;
-            this.xMax = xMax;
-            this.yMin = yMin;
+        // Remove functionality that come with the primitive that we don't want
+        // Destroy() is a built in Unity function that removes a GameObject
+        gameObject.GetComponent<SphereCollider>().enabled = false;
+        Object.Destroy(gameObject.GetComponent<SphereCollider>());
 
-            // Create the components required for the mover
-            gameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            body = gameObject.AddComponent<Rigidbody>();
-            // Remove functionality that come with the primitive that we don't want
-            gameObject.GetComponent<SphereCollider>().enabled = false;
-            Object.Destroy(gameObject.GetComponent<SphereCollider>());
+        // Generate a radius of 1f for this mover
+        radius = 1f;
 
-            // Generate a radius of 1f for this mover
-            radius = 1f;
+        // Place our mover at the specified spawn position relative
+        // to the bottom of the sphere
+        gameObject.transform.position = position + Vector3.up * radius;
 
-            // Place our mover at the specified spawn position relative
-            // to the bottom of the sphere
-            gameObject.transform.position = position + Vector3.up * radius;
+        // The default diameter of the sphere is one unit
+        // This means we have to multiple the radius by two when scaling it up
+        gameObject.transform.localScale = 2 * radius * Vector3.one;
 
-            // The default diameter of the sphere is one unit
-            // This means we have to multiple the radius by two when scaling it up
-            gameObject.transform.localScale = 2 * radius * Vector3.one;
-
-            // We need to calculate the mass of the sphere.
-            // Assuming the sphere is of even density throughout,
-            // the mass will be proportional to the volume.
-            body.mass = (4f / 3f) * Mathf.PI * radius * radius * radius;
-        }
-
-        // Checks to ensure the body stays within the boundaries
-        public void CheckBoundaries()
-        {
-            Vector3 restrainedVelocity = body.velocity;
-            if (body.position.y - radius < yMin)
-            {
-                // Using the absolute value here is an important safe
-                // guard for the scenario that it takes multiple ticks
-                // of FixedUpdate for the mover to return to its boundaries.
-                // The intuitive solution of flipping the velocity may result
-                // in the mover not returning to the boundaries and flipping
-                // direction on every tick.
-                restrainedVelocity.y = Mathf.Abs(restrainedVelocity.y);
-            }
-            if (body.position.x - radius < xMin)
-            {
-                restrainedVelocity.x = Mathf.Abs(restrainedVelocity.x);
-            }
-            else if (body.position.x + radius > xMax)
-            {
-                restrainedVelocity.x = -Mathf.Abs(restrainedVelocity.x);
-            }
-            body.velocity = restrainedVelocity;
-        }
+        // We need to calculate the mass of the sphere.
+        // Assuming the sphere is of even density throughout,
+        // the mass will be proportional to the volume.
+        body.mass = (4f / 3f) * Mathf.PI * (radius * radius * radius);
     }
+
+    // Checks to ensure the body stays within the boundaries
+    public void CheckEdges()
+    {
+        Vector3 restrainedVelocity = body.velocity;
+        if (body.position.y - radius < yMin)
+        {
+            // Using the absolute value here is an important safe
+            // guard for the scenario that it takes multiple ticks
+            // of FixedUpdate for the mover to return to its boundaries.
+            // The intuitive solution of flipping the velocity may result
+            // in the mover not returning to the boundaries and flipping
+            // direction on every tick.
+
+            restrainedVelocity.y = Mathf.Abs(restrainedVelocity.y);
+            body.position = new Vector3(body.position.x, yMin, body.position.z) + Vector3.up * radius;
+        }
+        if (body.position.x - radius < xMin)
+        {
+            restrainedVelocity.x = Mathf.Abs(restrainedVelocity.x);
+            body.position = new Vector3(xMin, body.position.y, body.position.z) + Vector3.right * radius;
+        }
+        else if (body.position.x + radius > xMax)
+        {
+            restrainedVelocity.x = -Mathf.Abs(restrainedVelocity.x);
+            body.position = new Vector3(xMax, body.position.y, body.position.z) + Vector3.left * radius;
+        }
+        body.velocity = restrainedVelocity;
+    }
+}
     </pre>
 
             <p>
@@ -692,19 +698,17 @@ height: 100%;" alt="Figure 2.2: T">
             </p>
             <pre class="prettyprint">
 
-    private List<Mover2_1> Movers = new List<Mover2_1>();
+    // Create a list of movers
+    private List<Mover2_2> movers = new List<Mover2_2>();
 
+    // Start is called before the first frame update
     void Start()
     {
-    // Create copys of our mover and add them to our list
-        while (Movers.Count < 30)
+        // Create copys of our mover and add them to our list
+        while (movers.Count < 30)
         {
-            Movers.Add(new Mover2_2(
-                        moverSpawnTransform.position,
-                        leftWallX,
-                        rightWallX,
-                        floorY
-                    ));
+            // Instantiate the mover and add it to our list. Pass in the spawn location, x bounds of the walls and the y location of the floor
+            movers.Add(new Mover2_2(moverSpawnTransform.position,leftWallX,rightWallX,floorY));
         }
     }
     </pre>
@@ -719,23 +723,45 @@ height: 100%;" alt="Figure 2.2: T">
             </p>
             <pre class="prettyprint">
 
-    // Generate random radius for this mover which impacts its mass
-    radius = Random.Range(0.1f, 0.4f);
+        // Generate random properties for this mover
+        radius = Random.Range(0.1f, 0.4f);
 
-    // The default diameter of the sphere is one unit
-    // This means we have to multiple the radius by two when scaling it up
-    gameObject.transform.localScale = 2 * radius * Vector3.one;
+        // Generate a random x value within the bundaries
+        xSpawn = Random.Range(xMin, xMax);
 
-    // We need to calculate the mass of the sphere.
-    // Assuming the sphere is of even density throughout,
-    // the mass will be proportional to the volume.
-    body.mass = (4f / 3f) * Mathf.PI * radius * radius * radius;
+        // Place our mover at a randomized spawn position relative
+        // to the bottom of the sphere
+        gameObject.transform.position = new Vector3(xSpawn, position.y, position.z) + Vector3.up * radius;
 
+        // The default diameter of the sphere is one unit
+        // This means we have to multiple the radius by two when scaling it up
+        gameObject.transform.localScale = 2 * radius * Vector3.one;
+
+        // We need to calculate the mass of the sphere.
+        // Assuming the sphere is of even density throughout,
+        // the mass will be proportional to the volume.
+        body.mass = (4f / 3f) * Mathf.PI * (radius * radius * radius);
             </pre>
             <p>
                 Once the list of objects is declared, created, and initialized, the rest of the code is simple. We run
                 through every object, hand them each the forces in the environment, and enjoy the show.
             </p>
+            <pre class="prettyprint">
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        // Apply the forces to each of the Movers
+        foreach (Mover2_2 mover in movers)
+        {
+            // ForceMode.Impulse and Forcemode.Force take mass into account
+            mover.body.AddForce(wind, ForceMode.Impulse);
+            mover.body.AddForce(gravity, ForceMode.Force);
+
+            mover.CheckEdges();
+        }
+    }
+    </pre>
             <p><span class="example">Example 2.2: Forces Acting on Many Objects</span></p>
             <ul class="tabs" role="tablist">
                 <li>
@@ -817,7 +843,8 @@ height: 100%;" alt="Figure 2.2: T">
                 The force of gravity is calculated relative to an object’s mass. The bigger the object, the stronger the force.
                 So if the force is scaled according to mass, it is canceled out when acceleration is divided by mass.
                 We can implement this in our scene rather easily by using the Rigidbody's gravity, which can be modified in Unity's settings,
-                or by creating our own gravity Vector2 force and using body.AddForce(gravity, ForceMode.Force);
+                or by creating our own gravity Vector2 force and using body.AddForce(gravity, ForceMode.Force); In this example, we
+                use the built in Unity gravity.
             </p>
             <p><span class="example">Example 2.3: Gravity scaled by mass</span></p>
             <ul class="tabs" role="tablist">
@@ -866,7 +893,7 @@ height: 100%;" alt="Figure 2.2: T">
                 </li>
             </ul>
             <p>
-                While the objects now fall at the same rate, because the strength of the wind force is independent of
+                While the objects now fall at the same rate, because the strength of the wind force is dependent upon
                 mass, the smaller objects still accelerate to the right more quickly.
             </p>
             <p>
@@ -926,10 +953,10 @@ height: 100%;" alt="Figure 2.2: T">
             <div id="ImageContainer">
 
                 <img src="https://natureofcode.com/book/imgs/chapter02/ch02_03.png" style="  width: 100%;
-height: 100%;" alt="The formular for friction.
+height: 100%;" alt="The formula for friction.
         ">
                 <p>
-                    Figure 2.3: The forumula for friction.
+                    Figure 2.3: The formula for friction.
                 </p>
             </div>
             <p>
@@ -940,18 +967,23 @@ height: 100%;" alt="The formular for friction.
             </p>
             <pre class="prettyprint">
 
-    //Friction
+    // Define an arbitrary friction strength
     private float frictionStrength = 0.5f;
 
-    // Apply a friction force that directly opposes the current motion
-    Vector3 friction = mover.body.velocity;
-    friction.Normalize();
-    friction *= -frictionStrength;
-    //We use ForceMode.Force because we need to use the Vector2 of the above line as  Force
-    mover.body.AddForce(friction, ForceMode.Force);
-
-
-</pre>
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        // Apply the forces to each of the Movers
+        foreach (Mover2_4 mover in movers)
+        {
+            // Apply a friction force that directly opposes the current motion
+            Vector3 friction = -mover.body.velocity;
+            friction.Normalize();
+            friction *= frictionStrength;
+            mover.body.AddForce(friction, ForceMode.Force);
+        }
+    }
+    </pre>
 
             <p>
                 Notice two additional steps here. First, it’s important to make a copy of the velocity vector, as we
@@ -970,7 +1002,7 @@ height: 100%;" alt="The formular for friction.
             </p>
             <pre class="prettyprint">
 
-    //Friction
+    // Define an arbitrary friction strength
     private float frictionStrength = 0.5f;
 
 
@@ -1009,9 +1041,9 @@ height: 100%;" alt="The formular for friction.
     mover.body.AddForce(wind, ForceMode.Impulse);
 
     // Apply a friction force that directly opposes the current motion
-    Vector3 friction = mover.body.velocity;
+    Vector3 friction = -mover.body.velocity;
     friction.Normalize();
-    friction *= -frictionStrength;
+    friction *= frictionStrength;
     mover.body.AddForce(friction, ForceMode.Force);
 
 
@@ -1131,50 +1163,42 @@ height: 100%;" alt="The formular for friction.
 
             <pre class="prettyprint">
 
-    private List<Mover2_5> Movers = new List<Mover2_5>();
-    private List<Fluid2_5> Fluids = new List<Fluid2_5>();
+    // Create our lists
+    private List<Mover2_5> movers = new List<Mover2_5>();
+    private List<Fluid2_5> fluids = new List<Fluid2_5>();
 
     // Start is called before the first frame update
     void Start()
     {
         // Create copys of our mover and add them to our list
-        while (Movers.Count < 30)
+        while (movers.Count < 30)
         {
-            Vector3 moverSpawnPosition = moverSpawnTransform.position + Vector3.right * Random.Range(-7,7);
-            Movers.Add(new Mover2_5(
-                moverSpawnPosition,
-                floorY
-            ));
+            movers.Add(new Mover2_5(moverSpawnTransform.position,leftWallX,rightWallX,floorY));
         }
+
         // Add the fluid to our scene
-        Fluids.Add(new Fluid2_5(
-            fluidCornerA.position,
-            fluidCornerB.position,
-            fluidDrag,
-            waterMaterial
-        ));
+        fluids.Add(new Fluid2_5(fluidCornerA.position,fluidCornerB.position,fluidDrag,waterMaterial));
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         // Apply the forces to each of the Movers
-        foreach (Mover2_5 mover in Movers)
+        foreach (Mover2_5 mover in movers)
         {
             // Check for interaction with any of our fluids
-            foreach(Fluid2_5 fluid in Fluids)
+            foreach(Fluid2_5 fluid in fluids)
             {
                 if(mover.IsInside(fluid))
                 {
                     // Apply a friction force that directly opposes the current motion
-                    Vector3 friction = mover.body.velocity;
+                    Vector3 friction = -mover.body.velocity;
                     friction.Normalize();
-                    friction *= -fluid.dragCoefficient;
+                    friction *= fluid.dragCoefficient;
                     mover.body.AddForce(friction, ForceMode.Force);
                 }
             }
-
-            mover.CheckBoundaries();
+            mover.CheckEdges();
         }
     }
             </pre>
@@ -1194,9 +1218,9 @@ height: 100%;" alt="The formular for friction.
     if(mover.IsInside(fluid))
     {
         // Apply a friction force that directly opposes the current motion
-        Vector3 friction = mover.body.velocity;
+        Vector3 friction = -mover.body.velocity;
         friction.Normalize();
-        friction *= -fluid.dragCoefficient;
+        friction *= fluid.dragCoefficient;
         mover.body.AddForce(friction, ForceMode.Force);
     }
             </pre>
@@ -1209,45 +1233,69 @@ height: 100%;" alt="The formular for friction.
             </p>
             <pre class="prettyprint">
 
-    public class Fluid2_5
+public class Fluid2_5
+{
+    public Vector3 minBoundary;
+    public Vector3 maxBoundary;
+    public float dragCoefficient;
+
+    public Fluid2_5(Vector3 corner1, Vector3 corner2, float dragCoefficient, Material material)
     {
-        public Vector3 minBoundary;
-        public Vector3 maxBoundary;
-        public float dragCoefficient;
+        // Get the minimum and maximum corners of the rectangular prism
+        // This code allows the designer to place the volume corners at
+        // any of the eight possible diagonals of a rectangular prism.
+        minBoundary = new Vector3(
+            Mathf.Min(corner1.x, corner2.x),
+            Mathf.Min(corner1.y, corner2.y),
+            Mathf.Min(corner1.z, corner2.z)
+        );
+        maxBoundary = new Vector3(
+            Mathf.Max(corner1.x, corner2.x),
+            Mathf.Max(corner1.y, corner2.y),
+            Mathf.Max(corner1.z, corner2.z)
+        );
+        this.dragCoefficient = dragCoefficient;
 
-        public Fluid2_5(Vector3 corner1, Vector3 corner2, float dragCoefficient, Material material)
+        // Create the presence of the object in 3D space
+        GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        obj.GetComponent<Renderer>().material = material;
+
+        // Remove undesired components that come with the primitive
+        obj.GetComponent<BoxCollider>().enabled = false;
+        Object.Destroy(obj.GetComponent<BoxCollider>());
+
+        // Position and scale the new cube to match the boundaries.
+        obj.transform.position = (corner1 + corner2) / 2;
+        obj.transform.localScale = new Vector3(
+            Mathf.Abs(corner2.x - corner1.x),
+            Mathf.Abs(corner2.y - corner1.y),
+            Mathf.Abs(corner2.z - corner1.z)
+        );
+    }
+}
+            </pre>
+            <p>
+                Finally, we have to implement our method to check if the mover is inside the fluid.
+            </p>
+            <pre class="prettyprint">
+    public bool IsInside(Fluid2_5 fluid)
+    {
+        // Check to see if the mover is inside the range on each axis.
+        if (body.position.x > fluid.minBoundary.x &&
+            body.position.x < fluid.maxBoundary.x &&
+            body.position.y > fluid.minBoundary.y &&
+            body.position.y < fluid.maxBoundary.y &&
+            body.position.z > fluid.minBoundary.z &&
+            body.position.z < fluid.maxBoundary.z)
         {
-            // Get the minimum and maximum corners of the rectangular prism
-            // This code allows the designer to place the volume corners at
-            // any of the eight possible diagonals of a rectangular prism.
-            minBoundary = new Vector3(
-                Mathf.Min(corner1.x, corner2.x),
-                Mathf.Min(corner1.y, corner2.y),
-                Mathf.Min(corner1.z, corner2.z)
-            );
-            maxBoundary = new Vector3(
-                Mathf.Max(corner1.x, corner2.x),
-                Mathf.Max(corner1.y, corner2.y),
-                Mathf.Max(corner1.z, corner2.z)
-            );
-            this.dragCoefficient = dragCoefficient;
-
-            // Create the presence of the object in 3D space
-            GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            obj.GetComponent<Renderer>().material = material;
-            // Remove undesired components that come with the primitive
-            obj.GetComponent<BoxCollider>().enabled = false;
-            Object.Destroy(obj.GetComponent<BoxCollider>());
-            // Position and scale the new cube to match the boundaries.
-            obj.transform.position = (corner1 + corner2) / 2;
-            obj.transform.localScale = new Vector3(
-                Mathf.Abs(corner2.x - corner1.x),
-                Mathf.Abs(corner2.y - corner1.y),
-                Mathf.Abs(corner2.z - corner1.z)
-            );
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
-            </pre>
+</pre>
             <p>
                 And with these two properties added to the Mover class, we’re ready to put it all together in the main
                 tab:
@@ -1428,32 +1476,16 @@ height: 100%;" alt="Figure 2.7">
 
             <pre class="prettyprint">
 
-
- Vector2 dir = Input.mousePosition - location;
-
-
-</pre>
-
-            <p>
-                In our case, the direction of the attraction force that object 1 exerts on object 2 is equal to:
-            </p>
-
-            <pre class="prettyprint">
-
- Vector2 dir = Input.mousePosition - location;
-
-
-</pre>
+    Vector2 dir = Input.mousePosition - location;
+        </pre>
 
             <p>
                 In our case, the direction of the attraction force that object 1 exerts on object 2 is equal to:
             </p>
             <pre class="prettyprint">
 
-
-         Vector2 dir = location1 - location2;
-         dir.normalized;
-
+    Vector2 dir = location1 - location2;
+    dir.Normalize();
         </pre>
 
             <p>
@@ -1466,11 +1498,9 @@ height: 100%;" alt="Figure 2.7">
             </p>
             <pre class="prettyprint">
 
-
     float m = (G * mass1 * mass2) / (distance * distance);
     dir *= m;
-
-</pre>
+        </pre>
 
             <p>
                 The only problem is that we don’t know the distance. G, mass1, and mass2 were all givens, but we’ll need
@@ -1494,7 +1524,7 @@ height: 100%;" alt="Figure 2.8">
 
     Vector2 force = location1 - location2;
     float distance = force.magnitude;
-
+    force.Normalize();
     float m = (G * mass1 * mass2) / (distance * distance);
     force *= m;
 
@@ -1535,34 +1565,57 @@ height: 100%;" alt="Figure 2.9">
                 We can start by making the new Attractor class very simple—giving it a location and a mass, along with a
                 function to display itself (tying mass to size).
             </p>
-            <            <pre class="prettyprint">
+            <pre class="prettyprint">
 
-    public class attractorChapter2_6 : MonoBehaviour
+public class Attractor
 {
+    // The properties of an attractor
+    private float mass;
+    private float G;
 
-    float G = 657f;
-    float mass;
-    Vector2 location;
+    private Vector3 location;
+    
+    private Rigidbody body;
+    private GameObject attractor;
 
-    void Start() {
-        mass = 10000f;
-        location = this.gameObject.transform.position;
+    public Attractor()
+    {
+        // Create the primitive object
+        attractor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        attractor.GetComponent<SphereCollider>().enabled = false;
+
+        // Add a rigidbody to the primitive and set body to reference the component
+        attractor.AddComponent<Rigidbody>();
+        body = attractor.GetComponent<Rigidbody>();
+        body.useGravity = false;
+
+        // Add a material to the object
+        Renderer renderer = attractor.GetComponent<Renderer>();
+        renderer.material = new Material(Shader.Find("Diffuse"));
+        renderer.material.color = Color.red;
+
+        // Set mass and G
+        body.mass = 20f;
+        G = 9.8f;
     }
 
-    void FixedUpdate() {
+    public Vector3 Attract(Rigidbody m)
+    {
+        Vector3 force = body.position - m.position;
+        float distance = force.magnitude;
 
+        // Remember we need to constrain the distance so that our circle doesn't spin out of control
+        distance = Mathf.Clamp(distance, 5f, 25f);
+
+        force.Normalize();
+        float strength = G * (body.mass * m.mass) / (distance * distance);
+        force *= strength;
+        return force;
     }
 
-
-    public Vector2 attract(moverChapter2_6 mover) {
-       Vector2 difference = location - mover.location;
-        float dist = difference.magnitude;
-        Vector2 gravityDirection = difference.normalized;
-        float gravity = 6.7f * (mass * mover.mass) / (dist * dist);
-
-        Vector2 gravityVector = (gravityDirection * gravity);
-
-        return gravityVector;
+    public void CalculatePosition()
+    {
+        attractor.transform.position = location;
     }
 }
 
@@ -1573,34 +1626,29 @@ height: 100%;" alt="Figure 2.9">
             </p>
             <pre class="prettyprint">
 
+public class Chapter2Fig6 : MonoBehaviour
+{
+    // A Mover and an Attractor
+    Mover2_6 m; 
+    Attractor a;
 
-    public class Chapter2Fig6 : MonoBehaviour
+    // Start is called before the first frame update
+    void Start()
     {
-        public GameObject a;
-        public GameObject m;
-        Vector2 force;
-
-        private attractorChapter2_6 aC26;
-        private moverChapter2_6 mC26;
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            a = Instantiate(a);
-            m = Instantiate(m, new Vector2(4f, 0f, 0f), Quaternion.identity);
-
-            aC26 = a.GetComponent<attractorChapter2_6>();
-            mC26 = m.GetComponent<moverChapter2_6>();
-        }
-
-        // Update is called once per frame
-        void FixedUpdate()
-        {
-            force = aC26.attract(mC26);
-            mC26.AddForce( new Vector2 (1f, 0f, 0f));
-            mC26.AddForce(force);
-        }
+        m = new Mover2_6();
+        a = new Attractor();
     }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        // Apply the attraction from the Attractor on the Mover
+        Vector2 force = a.Attract(m.body); 
+        m.ApplyForce(force);
+        m.CalculatePosition();
+        a.CalculatePosition();
+    }
+}
 </pre>
 
             <p>
@@ -1661,22 +1709,18 @@ height: 100%;" alt="Figure 2.9">
             </p>
             <pre class="prettyprint">
 
-
-    Vector2 f =  new Vector2 (0, 0.1f, 0);
-    m.AddForce(f);
-</pre>
+    Vector2 force =  new Vector2 (0, 0.1f, 0);
+    m.ApplyForce(force);
+    </pre>
 
             <p>
                 We now have:
             </p>
             <pre class="prettyprint">
 
-
-                Vector2 f =  new Vector2 (0, 0.1f, 0);
-                force = aC26.attract(mC26);
-                mC26.AddForce(force);
-
-            </pre>
+    Vector2 force = a.Attract(m.body); 
+    m.ApplyForce(force);
+    </pre>
 
             <p>
                 And so our Update() function can now be written as:
@@ -1684,16 +1728,15 @@ height: 100%;" alt="Figure 2.9">
             </p>
             <pre class="prettyprint">
 
-
     void FixedUpdate()
     {
-        force = aC26.attract(mC26);
-        mC26.AddForce( new Vector2 (1f, 0f, 0f));
-        mC26.AddForce(force);
-
+        // Apply the attraction from the Attractor on the Mover
+        Vector2 force = a.Attract(m.body); 
+        m.ApplyForce(force);
+        m.CalculatePosition();
+        a.CalculatePosition();
     }
-
-         </pre>
+    </pre>
 
             <p>
                 We’re almost there. Since we decided to put the attract() function inside of the Attractor class, we’ll
@@ -1705,19 +1748,18 @@ height: 100%;" alt="Figure 2.9">
             </p>
             <pre class="prettyprint">
 
+    public Vector3 Attract(Rigidbody m)
+    {
+        Vector3 force = body.position - m.position;
+        float distance = force.magnitude;
+        force.Normalize();
 
-    public Vector2 attract(moverChapter2_6 mover) {
-        Vector2 difference = location - mover.location;
-         float dist = difference.magnitude;
-         Vector2 gravityDirection = difference.normalized;
-         float gravity = 6.7f * (mass * mover.mass) / (dist * dist);
+        float strength = G * (body.mass * m.mass) / (distance * distance);
+        force *= strength;
 
-         Vector2 gravityVector = (gravityDirection * gravity);
-
-         return gravityVector;
-     }
-
-</pre>
+        return force;
+    }
+    </pre>
 
             <p>
                 And we’re done. Sort of. Almost. There’s one small kink we need to work out. Let’s look at the above code
@@ -1734,8 +1776,8 @@ height: 100%;" alt="Figure 2.9">
             </p>
             <pre class="prettyprint">
 
-    distance =  Mathf.Clamp (distance, 5, 25);
-</pre>
+    distance = Mathf.Clamp(distance, 5f, 25f);
+    </pre>
 
             <p>
                 For the same reason that we need to constrain the minimum distance, it’s useful for us to do the same
@@ -1800,7 +1842,7 @@ height: 100%;" alt="Figure 2.9">
                 </li>
             </ul>
             <p>
-                And we could, of course, expand this example using an array to include many Mover objects, just as we did
+                And we could, of course, expand this example using a list to include many Mover objects, just as we did
                 with friction and drag:
             </p>
             <p><span class="example">Example 2.7: Attraction with many Movers</span></p>
@@ -1896,74 +1938,50 @@ height: 100%;" alt="Figure 2.9">
             </p>
             <pre class="prettyprint">
 
-    private List<Mover2_8> Movers = new List<Mover2_8>();
-    public Transform moverSpawnTransform;
-
-    Vector3 force;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-        // Create copys of our mover and add them to our list
-
-        while (Movers.Count < 30)
-        {
-            // Instantiate them at random vectors from the left to the right wall and from our floor to ceiling.
-            moverSpawnTransform.position = new Vector2(UnityEngine.Random.Range(leftWallX, rightWallX), UnityEngine.Random.Range(floorY, ceilingY));
-
-            Movers.Add(new Mover2_8(
-                        moverSpawnTransform.position,
-                        leftWallX,
-                        rightWallX,
-                        ceilingY,
-                        floorY
-                    ));
-        }
-    }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
         // We want to create two groups of movers to iterate through.
-        // We do this so that an Mover[i] never tries to attract itself
-        // This is seen on line 51.
-        for (int i = 0; i < Movers.Count; i++)
+        // We do this so that a mover never tries to attract itself
+        for (int i = 0; i < movers.Count; i++)
         {
-            for (int j = 0; j < Movers.Count; j++)
+            for (int j = 0; j < movers.Count; j++)
             {
                 if (i != j)
                 {
                     //Now that we are sure that our Mover will not attract itself, we need it to attract a different Mover
-                    //We do that by directing a Mover[j] to use their attract() meothd on a Movers[i] Rigidbody
-                    Vector2 attractedMover = Movers[j].attract(Movers[i].body);
-                    //We then apply that force the Movers[i] with the Rigidbody's Addforce method
-                    Movers[i].body.AddForce(attractedMover, ForceMode.Impulse);
+                    //We do that by directing a mover to use their Attract() method on another mover Rigidbody
+                    Vector2 attractedMover = movers[j].Attract(movers[i].body);
+
+                    //We then apply that force the mover with the Rigidbody's Addforce() method
+                    movers[i].body.AddForce(attractedMover, ForceMode.Impulse);
                 }
             }
             //Now we check the boundaries of our scene to make sure the movers don't fly off
             //When we use gravity, the Movers will naturally fall out of the camera's view
             // This stops that.
-            Movers[i].CheckBoundaries();
+            movers[i].CheckEdges();
         }
     }
-
-</pre>
+    </pre>
 
             <p>
-                In the previous example, we had an Attractor object with a function named attract(). Now, since we have
-                movers attracting movers, all we need to do is copy the attract() function into the Mover class.
+                In the previous example, we had an Attractor object with a function named Attract(). Now, since we have
+                movers attracting movers, all we need to do is copy the Attract() function into the Mover class.
             </p>
             <pre class="prettyprint">
 
-    public Vector2 attract(Rigidbody m)
+    public Vector2 Attract(Rigidbody m)
     {
-        Vector2 difference = m.position - body.position;
-        float dist = Mathf.Clamp(difference.magnitude, 10f, 25f);
-        Vector3 gravityDirection = difference.normalized;
-        float gravity = -9.81f * (m.mass * body.mass) / (dist * dist);
-        Vector2 gravityVector = (gravityDirection * gravity);
-        return gravityVector;
+        Vector2 force = body.position - m.position;
+        float distance = force.magnitude;
+
+        // Remember we need to constrain the distance so that our circle doesn't spin out of control
+        distance = Mathf.Clamp(distance, 5f, 25f);
+
+        force.Normalize();
+        float strength = (9.81f * body.mass * m.mass) / (distance * distance);
+        force *= strength;
+        return force;
     }
             </pre>
 
@@ -1974,6 +1992,17 @@ height: 100%;" alt="Figure 2.9">
                 we finish this example by adding a simple conditional statement to skip applying the force when i equals
                 j.
             </p>
+            <pre class="prettyprint">
+    if (i != j)
+    {
+        //Now that we are sure that our Mover will not attract itself, we need it to attract a different Mover
+        //We do that by directing a mover to use their Attract() method on another mover Rigidbody
+        Vector2 attractedMover = movers[j].Attract(movers[i].body);
+
+        //We then apply that force the mover with the Rigidbody's Addforce() method
+        movers[i].body.AddForce(attractedMover, ForceMode.Impulse);
+    }
+    </pre>
             <p><span class="example">Example 2.8: Mutual Attraction</span></p>
             <ul class="tabs" role="tablist">
                 <li>
