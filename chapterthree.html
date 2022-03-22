@@ -107,81 +107,81 @@
             <h2>Chapter 3. Oscillation</h2>
             <h3>
                 “Trigonometry is a sine of the times.”
-    <p></p>
-    — Anonymous
-    </h3>
-    <p>
-        In Chapters 1 and 2, we carefully worked out an object-oriented structure to make something move on the
-        screen, using the concept of a vector to represent location, velocity, and acceleration driven by forces
-        in the environment. We could move straight from here into topics such as particle systems, steering
-        forces, group behaviors, etc. If we did that, however, we’d skip an important area of mathematics that
-        we’re going to need: trigonometry, or the mathematics of triangles, specifically right triangles.
-    </p>
-    <p>
-        Trigonometry is going to give us a lot of tools. We’ll get to think about angles and angular velocity and
-        acceleration. Trig will teach us about the sine and cosine functions, which when used properly can yield
-        an nice ease-in, ease-out wave pattern. It’s going to allow us to calculate more complex forces in an
-        environment that involves angles, such as a pendulum swinging or a box sliding down an incline.
-    </p>
-    <p>
-        So this chapter is a bit of a mishmash. We’ll start with the basics of angles in Unity and cover
-        many trigonometric topics, tying it all into forces at the end. And by taking this break now, we’ll also
-        pave the way for more advanced examples that require trig later in this book.
-    </p>
-    <h2>3.1 Angles</h2>
-    <p>
-        OK. Before we can do any of this stuff, we need to make sure we understand what it means to be an angle
-        in Unity. If you have experience with Unity, you’ve undoubtedly encountered this issue while
-        using the transform.rotation to rotate and spin objects.
-    </p>
+                <p></p>
+                — Anonymous
+            </h3>
+            <p>
+                In Chapters 1 and 2, we carefully worked out an object-oriented structure to make something move on the
+                screen, using the concept of a vector to represent location, velocity, and acceleration driven by forces
+                in the environment. We could move straight from here into topics such as particle systems, steering
+                forces, group behaviors, etc. If we did that, however, we’d skip an important area of mathematics that
+                we’re going to need: trigonometry, or the mathematics of triangles, specifically right triangles.
+            </p>
+            <p>
+                Trigonometry is going to give us a lot of tools. We’ll get to think about angles and angular velocity and
+                acceleration. Trig will teach us about the sine and cosine functions, which when used properly can yield
+                a nice ease-in, ease-out wave pattern. It’s going to allow us to calculate more complex forces in an
+                environment that involves angles, such as a pendulum swinging or a box sliding down an incline.
+            </p>
+            <p>
+                So this chapter is a bit of a mishmash. We’ll start with the basics of angles in Unity and cover
+                many trigonometric topics, tying it all into forces at the end. And by taking this break now, we’ll also
+                pave the way for more advanced examples that require trig later in this book.
+            </p>
+            <h2>3.1 Angles</h2>
+            <p>
+                OK. Before we can do any of this stuff, we need to make sure we understand what it means to be an angle
+                in Unity. If you have experience with Unity, you’ve undoubtedly encountered this issue while
+                using the transform.rotation to rotate and spin objects.
+            </p>
 
-    <p>
-        The first order of business is to cover radians and degrees. You’re probably familiar with the concept of
-        an angle in degrees. A full rotation goes from 0 to 360 degrees. 90 degrees (a right angle) is 1/4th of
-        360, shown below as two perpendicular lines.
-    </p>
-    <div id="ImageContainer">
-        <img src="https://natureofcode.com/book/imgs/chapter03/ch03_01.png" style="  width: 100%;
+            <p>
+                The first order of business is to cover radians and degrees. You’re probably familiar with the concept of
+                an angle in degrees. A full rotation goes from 0 to 360 degrees. 90 degrees (a right angle) is 1/4th of
+                360, shown below as two perpendicular lines.
+            </p>
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter03/ch03_01.png" style="  width: 100%;
                 height: 100%;" alt="Figure 3.1">
-        <p>
-            Figure 3.1
-        </p>
-    </div>
-    <p>
-        It’s fairly intuitive for us to think of angles in terms of degrees. For example, the square in Figure
-        3.2 is rotated 45 degrees around its center.
-    </p>
-    <div id="ImageContainer">
-        <img src="https://natureofcode.com/book/imgs/chapter03/ch03_02.png" style="  width: 100%;
+                <p>
+                    Figure 3.1
+                </p>
+            </div>
+            <p>
+                It’s fairly intuitive for us to think of angles in terms of degrees. For example, the square in Figure
+                3.2 is rotated 45 degrees around its center.
+            </p>
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter03/ch03_02.png" style="  width: 100%;
                 height: 100%;" alt="Figure 3.2">
-        <p>
-            Figure 3.2
-        </p>
-    </div>
-    <p>
-        Unity, however, requires angles to be specified in Euler Angles made up of radian. A radian is a unit of
-        measurement for
-        angles defined by the ratio of the length of the arc of a circle to the radius of that circle. One
-        radian is the angle at which that ratio equals one (see Figure 3.1). 180 degrees = PI radians, 360
-        degrees = 2*PI radians, 90 degrees = PI/2 radians, etc.
-    </p>
-    <div id="ImageContainer">
-        <img src="https://natureofcode.com/book/imgs/chapter03/ch03_03.png" style="  width: 100%;
+                <p>
+                    Figure 3.2
+                </p>
+            </div>
+            <p>
+                Unity, however, requires angles to be specified in Euler Angles made up of radian. A radian is a unit of
+                measurement for
+                angles defined by the ratio of the length of the arc of a circle to the radius of that circle. One
+                radian is the angle at which that ratio equals one (see Figure 3.1). 180 degrees = PI radians, 360
+                degrees = 2*PI radians, 90 degrees = PI/2 radians, etc.
+            </p>
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter03/ch03_03.png" style="  width: 100%;
                 height: 100%;" alt="Figure 3.3">
-        <p>
-            Figure 3.3
-        </p>
-    </div>
+                <p>
+                    Figure 3.3
+                </p>
+            </div>
 
-    <p>The formula to convert from degrees to radians is:</p>
-    <p>radians = 2 * PI * (degrees / 360)</p>
+            <p>The formula to convert from degrees to radians is:</p>
+            <p>radians = 2 * PI * (degrees / 360)</p>
 
-    <p>
-        Thankfully, if we prefer to think in degrees but code with radians, Unity makes this easy. The
-        Mathf.Deg2Rad() function will automatically convert values from degrees to radians, and the constant Mathf.PI.
-        The following code, for example, will rotate shapes by 60 degrees.
-    </p>
-    <pre class="prettyprint">
+            <p>
+                Thankfully, if we prefer to think in degrees but code with radians, Unity makes this easy. The
+                Mathf.Deg2Rad() function will automatically convert values from degrees to radians, and the constant Mathf.PI.
+                The following code, for example, will rotate shapes by 60 degrees.
+            </p>
+            <pre class="prettyprint">
 
 
 public class Chapter3Fig1_basic : MonoBehaviour
@@ -194,13 +194,13 @@ public class Chapter3Fig1_basic : MonoBehaviour
 
     float zAngleRadian;
 
-void Start()
+    void Start()
     {
         float zAngleRadian = zAngleDegree * Mathf.Deg2Ead;
 
     }
 
-void Update()
+    void Update()
     {
         Baton.transform.Rotate(xAngle, yAngle, zAngleRadian, Space.World);
 
@@ -208,50 +208,50 @@ void Update()
 }
                                 </pre>
 
-    <p>
-        If you are not familiar with how rotation is implemented in Unity, I would suggest this tutorial:
-        <a href="https://www.youtube.com/watch?v=8J3tFepPHVA">Unity - Rotation</a>
-    </p>
-    <div class="note">
-        <p>What is PI?</p>
-        <p>
-            The mathematical constant pi (or π) is a real number defined as the ratio of a circle’s circumference
-            (the distance around the perimeter) to its diameter (a straight line that passes through the
-            circle’s
-            center). It is equal to approximately 3.14159 and can be accessed in Unity with the built-in
-            object Mathf.PI.
-        </p>
-    </div>
-    <div class="note">
-        <h4 style="text-align:right;">
-            Exercise 3.1
-        </h4>
-        <p>Rotate a baton-like object (see below) around its center using += and transform.Rotate.</p>
-        <center>
-            <img style="padding: 10px; height: 460px" src="images/gifs/3.1gif.gif" alt="Using Regular transform.Rotate" /></img>
-        </center>
-    </div>
-    <h2>3.2 Angular Motion</h2>
-    <p>Remember all this stuff?</p>
-    <p><b>location = location + velocity</b></p>
-    <p><b>velocity = velocity + acceleration</b></p>
-    <p>
-        The stuff we dedicated almost all of Chapters 1 and 2 to? Well, we can apply exactly the same logic to a
-        rotating object.
-    </p>
-    <p><b>angle = angle + angular velocity</b></p>
-    <p><b>angular velocity = angular velocity + angular acceleration</b></p>
+            <p>
+                If you are not familiar with how rotation is implemented in Unity, I would suggest this tutorial:
+                <a href="https://www.youtube.com/watch?v=8J3tFepPHVA">Unity - Rotation</a>
+            </p>
+            <div class="note">
+                <p>What is PI?</p>
+                <p>
+                    The mathematical constant pi (or π) is a real number defined as the ratio of a circle’s circumference
+                    (the distance around the perimeter) to its diameter (a straight line that passes through the
+                    circle’s
+                    center). It is equal to approximately 3.14159 and can be accessed in Unity with the built-in
+                    object Mathf.PI.
+                </p>
+            </div>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 3.1
+                </h4>
+                <p>Rotate a baton-like object (see below) around its center using += and transform.Rotate.</p>
+                <center>
+                    <img style="padding: 10px; height: 460px" src="images/gifs/3.1gif.gif" alt="Using Regular transform.Rotate" /></img>
+                </center>
+            </div>
+            <h2>3.2 Angular Motion</h2>
+            <p>Remember all this stuff?</p>
+            <p><b>location = location + velocity</b></p>
+            <p><b>velocity = velocity + acceleration</b></p>
+            <p>
+                The stuff we dedicated almost all of Chapters 1 and 2 to? Well, we can apply exactly the same logic to a
+                rotating object.
+            </p>
+            <p><b>angle = angle + angular velocity</b></p>
+            <p><b>angular velocity = angular velocity + angular acceleration</b></p>
 
-    <p>
-        In fact, the above is actually simpler than what we started with because an angle is a scalar quantity—a
-        single number, not a vector!
-    </p>
-    <p>
-        Using the answer from Exercise 3.1 above, let’s say we wanted to rotate a baton in Unity by some
-        angle. We would have code like:
-    </p>
+            <p>
+                In fact, the above is actually simpler than what we started with because an angle is a scalar quantity—a
+                single number, not a vector!
+            </p>
+            <p>
+                Using the answer from Exercise 3.1 above, let’s say we wanted to rotate a baton in Unity by some
+                angle. We would have code like:
+            </p>
 
-    <pre class="prettyprint">
+            <pre class="prettyprint">
 
 public class Chapter3Fig1 : MonoBehaviour
 {
@@ -260,7 +260,7 @@ public class Chapter3Fig1 : MonoBehaviour
     Vector3 aVelocity = new Vector3(0f, 0f, 0f);
     Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
 
-   // Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
         aVelocity += aAcceleration;
@@ -269,66 +269,66 @@ public class Chapter3Fig1 : MonoBehaviour
 }
                                 </pre>
 
-    <p>Adding in our principles of motion brings us to the following example.</p>
-    <p>
-        <span class="example">
-            Example 3.1: Angular motion using transform.Rotate
-        </span>
-    </p>
-    <ul class="tabs" role="tablist">
-        <li>
-            <input type="radio" name="tabs0" id="tab0a" checked />
-            <label for="tab0a"
-                   role="tab"
-                   aria-selected="true"
-                   aria-controls="panel0"
-                   tabindex="2">Code</label>
-            <div id="tab-content1"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="description"
-                 aria-hidden="false">
-                <div id="example1" style="height: 500px"></div>
-            </div>
-        </li>
+            <p>Adding in our principles of motion brings us to the following example.</p>
+            <p>
+                <span class="example">
+                    Example 3.1: Angular motion using transform.Rotate
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs0" id="tab0a" checked />
+                    <label for="tab0a"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel0"
+                           tabindex="2">Code</label>
+                    <div id="tab-content1"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example1" style="height: 500px"></div>
+                    </div>
+                </li>
 
-        <li>
-            <input type="radio" name="tabs0" id="tab0b" />
-            <label for="tab0b"
-                   role="tab"
-                   aria-selected="false"
-                   aria-controls="panel1"
-                   tabindex="3">Demo</label>
-            <div id="tab-content2"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="specification"
-                 aria-hidden="true">
-                <div align="center">
-                    <iframe class="lazy"
-                            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure1/index.html"
-                            src=""
-                            width="900"
-                            height="500"
-                            frameborder="0"
-                            overflow="hidden"
-                            seamless
-                            scrolling="no"
-                            Id="3.1">
-                    </iframe>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <p>
-        The baton starts onscreen with no rotation and then spins faster and faster as the angle of rotation
-        accelerates.
-    </p>
-    <p>
-        This idea can be incorporated into our Mover object. For example, we can add the variables related to
-        angular motion to our Mover.
-    </p>
-    <pre class="prettyprint">
+                <li>
+                    <input type="radio" name="tabs0" id="tab0b" />
+                    <label for="tab0b"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel1"
+                           tabindex="3">Demo</label>
+                    <div id="tab-content2"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure1/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="3.1">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                The baton starts onscreen with no rotation and then spins faster and faster as the angle of rotation
+                accelerates.
+            </p>
+            <p>
+                This idea can be incorporated into our Mover object. For example, we can add the variables related to
+                angular motion to our Mover.
+            </p>
+            <pre class="prettyprint">
 
 
 public class moverChapter3_2 : MonoBehaviour
@@ -340,14 +340,14 @@ public class moverChapter3_2 : MonoBehaviour
     public Vector3 aVelocity = new Vector3(0f, 0f, 0f);
     public Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
     public Vector3 angle = new Vector3(0f, 0f, 0f);
-
+}
                                 </pre>
 
-    <p>And then in update(), we update both location and angle according to the same algorithm!</p>
-    <pre class="prettyprint">
+            <p>And then in update(), we update both location and angle according to the same algorithm!</p>
+            <pre class="prettyprint">
 
 
-void FixedUpdate()
+void Update()
 {
     //add the value of acceleration each frame to the mover's velocity
     velocity += new Vector3(acceleration.x, acceleration.y, acceleration.z);
@@ -355,263 +355,271 @@ void FixedUpdate()
     location += new Vector3(velocity.x, velocity.y, velocity.z);
     //reduce acceleration
     acceleration *= 0f;
-
+}
                             </pre>
 
-    <p>Of course, for any of this to matter, we also would need to rotate the object when displaying it.</p>
-    <pre class="prettyprint">
+            <p>Of course, for any of this to matter, we also would need to rotate the object when displaying it.</p>
+            <pre class="prettyprint">
 
 angle += aVelocity;
 mover.transform.Rotate(angle, Space.World);
-
                             </pre>
 
-    <p>
-        Now, if we were to actually go ahead and run the above code, we wouldn’t see anything new. This is
-        because the angular acceleration (float aAcceleration = 0;) is initialized to zero. For the object to
-        rotate, we need to give it an acceleration! Certainly, we could hard-code in a different number.
-    </p>
-    <pre class="prettyprint">
-
+            <p>
+                Now, if we were to actually go ahead and run the above code, we wouldn’t see anything new. This is
+                because the angular acceleration (float aAcceleration = 0;) is initialized to zero. For the object to
+                rotate, we need to give it an acceleration! Certainly, we could hard-code in a different number.
+            </p>
+            <pre class="prettyprint">
 
 Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
-
                             </pre>
 
-    <p>
-        However, we can produce a more interesting result by dynamically assigning an angular acceleration
-        according to forces in the environment. Now, we could head far down this road, trying to model the
-        physics of angular acceleration using the concepts of torque and moment of inertia. Nevertheless, this
-        level of simulation is beyond the scope of this book.
-    </p>
-    <p>
-        For now, a quick and dirty solution will do. We can produce reasonable results by simply calculating
-        angular acceleration as a function of the object’s acceleration vector. Here’s one such example:
-    </p>
-    <pre class="prettyprint">
+            <p>
+                However, we can produce a more interesting result by dynamically assigning an angular acceleration
+                according to forces in the environment. Now, we could head far down this road, trying to model the
+                physics of angular acceleration using the concepts of torque and moment of inertia. Nevertheless, this
+                level of simulation is beyond the scope of this book.
+            </p>
+            <p>
+                For now, a quick and dirty solution will do. We can produce reasonable results by simply calculating
+                angular acceleration as a function of the object’s acceleration vector. Here’s one such example:
+            </p>
+            <pre class="prettyprint">
+
+void Update()
+{
+    aAcceleration.x = acceleration.x / 10f;
+    aAcceleration.y = acceleration.y / 10f;
+    aAcceleration.z = acceleration.z / 10f;
+    angle += aVelocity;
+    aVelocity += aAcceleration;
+    mover.transform.Rotate(angle, Space.World);
+}
+                            </pre>
+            <p>
+                Yes, this is completely arbitrary. But it does do something. If the object is accelerating to the right,
+                its angular rotation accelerates in a clockwise direction; acceleration to the left results in a
+                counterclockwise rotation. Of course, it’s important to think about scale in this case. The x component
+                of the acceleration vector might be a quantity that’s too large, causing the object to spin in a way
+                that looks ridiculous or unrealistic. So dividing the x component by some value, or perhaps constraining
+                the angular velocity to a reasonable range, could really help. Here’s the entire Update() function with
+                these tweaks added.
+            </p>
+            <pre class="prettyprint">
 
 
 aAcceleration.x = acceleration.x / 10f;
 
                             </pre>
+            <p>
+                <span class="example">
+                    Example 3.2: Forces with (arbitrary) angular motion
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs2" id="tab3" checked />
+                    <label for="tab3"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel3"
+                           tabindex="0">Code</label>
+                    <div id="tab-content3"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example2" style="height: 500px"></div>
+                    </div>
+                </li>
 
-    <p>
-        Yes, this is completely arbitrary. But it does do something. If the object is accelerating to the right,
-        its angular rotation accelerates in a clockwise direction; acceleration to the left results in a
-        counterclockwise rotation. Of course, it’s important to think about scale in this case. The x component
-        of the acceleration vector might be a quantity that’s too large, causing the object to spin in a way
-        that looks ridiculous or unrealistic. So dividing the x component by some value, or perhaps constraining
-        the angular velocity to a reasonable range, could really help. Here’s the entire update() function with
-        these tweaks added.
-    </p>
-    <p>
-        <span class="example">
-            Example 3.2: Forces with (arbitrary) angular motion
-        </span>
-    </p>
-    <ul class="tabs" role="tablist">
-        <li>
-            <input type="radio" name="tabs2" id="tab3" checked />
-            <label for="tab3"
-                   role="tab"
-                   aria-selected="true"
-                   aria-controls="panel3"
-                   tabindex="0">Code</label>
-            <div id="tab-content3"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="description"
-                 aria-hidden="false">
-                <div id="example2" style="height: 500px"></div>
+                <li>
+                    <input type="radio" name="tabs2" id="tab4" />
+                    <label for="tab4"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel4"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content4"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure2/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="3.2">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 3.2
+                </h4>
+                <p>
+                    Step 1: Create a simulation where objects are shot out of a cannon. Each object should experience a
+                    sudden force when shot (just once) as well as gravity (always present).
+                </p>
+                <p>
+                    Step 2: Add rotation to the object to model its spin as it is shot from the cannon. How realistic can
+                    you make it look?
+                </p>
             </div>
-        </li>
-
-        <li>
-            <input type="radio" name="tabs2" id="tab4" />
-            <label for="tab4"
-                   role="tab"
-                   aria-selected="false"
-                   aria-controls="panel4"
-                   tabindex="0">Demo</label>
-            <div id="tab-content4"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="specification"
-                 aria-hidden="true">
-                <div align="center">
-                    <iframe class="lazy"
-                            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure2/index.html"
-                            src=""
-                            width="900"
-                            height="500"
-                            frameborder="0"
-                            overflow="hidden"
-                            seamless
-                            scrolling="no"
-                            Id="3.2">
-                    </iframe>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <div class="note">
-        <h4 style="text-align:right;">
-            Exercise 3.2
-        </h4>
-        <p>
-            Step 1: Create a simulation where objects are shot out of a cannon. Each object should experience a
-            sudden force when shot (just once) as well as gravity (always present).
-        </p>
-        <p>
-            Step 2: Add rotation to the object to model its spin as it is shot from the cannon. How realistic can
-            you make it look?
-        </p>
-    </div>
-    <h2>3.3 Trigonometry</h2>
-    <p>
-        I think it may be time. We’ve looked at angles, we’ve spun an object. It’s time for: sohcahtoa. Yes,
-        sohcahtoa. This seemingly nonsensical word is actually the foundation for a lot of computer graphics
-        work. A basic understanding of trigonometry is essential if you want to calculate an angle, figure
-        out the distance between points, work with circles, arcs, or lines. And sohcahtoa is a mnemonic
-        device (albeit a somewhat absurd one) for what the trigonometric functions sine, cosine, and tangent
-        mean.
-    </p>
-    <div id="ImageContainer">
-        <img src="https://natureofcode.com/book/imgs/chapter03/ch03_04.png" style="  width: 100%;
+            <h2>3.3 Trigonometry</h2>
+            <p>
+                I think it may be time. We’ve looked at angles, we’ve spun an object. It’s time for: sohcahtoa. Yes,
+                sohcahtoa. This seemingly nonsensical word is actually the foundation for a lot of computer graphics
+                work. A basic understanding of trigonometry is essential if you want to calculate an angle, figure
+                out the distance between points, work with circles, arcs, or lines. And sohcahtoa is a mnemonic
+                device (albeit a somewhat absurd one) for what the trigonometric functions sine, cosine, and tangent
+                mean.
+            </p>
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter03/ch03_04.png" style="  width: 100%;
                 height: 100%;" alt="Figure 3.4">
-        <p>
-            Figure 3.4
-        </p>
-    </div><ul>
-        <li>soh: sine = opposite / hypotenuse</li>
+                <p>
+                    Figure 3.4
+                </p>
+            </div><ul>
+                <li>soh: sine = opposite / hypotenuse</li>
 
-        <li>cah: cosine = adjacent / hypotenuse</li>
+                <li>cah: cosine = adjacent / hypotenuse</li>
 
-        <li>toa: tangent = opposite / adjacent</li>
-    </ul>
-    <div id="ImageContainer">
-        <img src="https://natureofcode.com/book/imgs/chapter03/ch03_05.png" style="  width: 100%;
+                <li>toa: tangent = opposite / adjacent</li>
+            </ul>
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter03/ch03_05.png" style="  width: 100%;
             height: 100%;" alt="Figure 3.5">
-        <p>
-            Figure 3.5
-        </p>
-    </div>
-    <p>
-        Take a look at Figure 3.4 again. There’s no need to memorize it, but make sure you feel comfortable
-        with it. Draw it again yourself. Now let’s draw it a slightly different way (Figure 3.5).
-    </p>
-
-    <p>
-        See how we create a right triangle out of a vector? The vector arrow itself is the hypotenuse and the
-        components of the vector (x and y) are the sides of the triangle. The angle is an additional means
-        for specifying the vector’s direction (or “heading”).
-    </p>
-    <p>
-        Because the trigonometric functions allow us to establish a relationship between the components of a
-        vector and its direction + magnitude, they will prove very useful throughout this book. We’ll begin
-        by looking at an example that requires the tangent function.
-    </p>
-    <h2>3.4 Pointing in the Direction of Movement</h2>
-    <p>
-        Let’s go all the way back to Example 1.10, which features a Mover object accelerating towards the
-        mouse.
-    </p>
-    <ul class="tabs" role="tablist">
-        <li>
-            <input type="radio" name="tabs101" id="tab191" checked />
-            <label for="tab191"
-                   role="tab"
-                   aria-selected="true"
-                   aria-controls="panel191"
-                   tabindex="0">Code</label>
-            <div id="tab-content191"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="description"
-                 aria-hidden="false">
-                <div id="example101" style="height: 500px"></div>
+                <p>
+                    Figure 3.5
+                </p>
             </div>
-        </li>
+            <p>
+                Take a look at Figure 3.4 again. There’s no need to memorize it, but make sure you feel comfortable
+                with it. Draw it again yourself. Now let’s draw it a slightly different way (Figure 3.5).
+            </p>
 
-        <li>
-            <input type="radio" name="tabs101" id="tab201" />
-            <label for="tab201"
-                   role="tab"
-                   aria-selected="false"
-                   aria-controls="panel201"
-                   tabindex="0">Demo</label>
-            <div id="tab-content201"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="specification"
-                 aria-hidden="true">
-                <div align="center">
-                    <iframe class="lazy"
-                            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter1/figure10/index.html"
-                            src=""
-                            width="900"
-                            height="500"
-                            frameborder="0"
-                            overflow="hidden"
-                            seamless
-                            scrolling="no"
-                            Id="1.10">
-                    </iframe>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <p>
-        You might notice that almost all of the shapes we’ve been drawing so far are circles. This is
-        convenient for a number of reasons, one of which is that we don’t have to consider the question of
-        rotation. Rotate a circle and, well, it looks exactly the same. However, there comes a time in all
-        motion programmers’ lives when they want to draw something on the screen that points in the
-        direction of movement. Perhaps you are drawing an ant, or a car, or a spaceship. And when we say
-        "point in the direction of movement," what we are really saying is “rotate according to the velocity
-        vector.” Velocity is a vector, with an x and a y component, but to rotate in Unity we need a Euler
-        Angle. Let’s draw our trigonometry diagram one more time, with an object’s velocity
-        vector (Figure 3.6).
-    </p>
-    <div id="ImageContainer">
-        <img src="https://natureofcode.com/book/imgs/chapter03/ch03_06.png" style="  width: 100%;
+            <p>
+                See how we create a right triangle out of a vector? The vector arrow itself is the hypotenuse and the
+                components of the vector (x and y) are the sides of the triangle. The angle is an additional means
+                for specifying the vector’s direction (or “heading”).
+            </p>
+            <p>
+                Because the trigonometric functions allow us to establish a relationship between the components of a
+                vector and its direction + magnitude, they will prove very useful throughout this book. We’ll begin
+                by looking at an example that requires the tangent function.
+            </p>
+            <h2>3.4 Pointing in the Direction of Movement</h2>
+            <p>
+                Let’s go all the way back to Example 1.10, which features a Mover object accelerating towards the
+                mouse.
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs101" id="tab191" checked />
+                    <label for="tab191"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel191"
+                           tabindex="0">Code</label>
+                    <div id="tab-content191"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example101" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs101" id="tab201" />
+                    <label for="tab201"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel201"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content201"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter1/figure10/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="1.10">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                You might notice that almost all of the shapes we’ve been drawing so far are circles. This is
+                convenient for a number of reasons, one of which is that we don’t have to consider the question of
+                rotation. Rotate a circle and, well, it looks exactly the same. However, there comes a time in all
+                motion programmers’ lives when they want to draw something on the screen that points in the
+                direction of movement. Perhaps you are drawing an ant, or a car, or a spaceship. And when we say
+                "point in the direction of movement," what we are really saying is “rotate according to the velocity
+                vector.” Velocity is a vector, with an x and a y component, but to rotate in Unity we need a Euler
+                Angle. Let’s draw our trigonometry diagram one more time, with an object’s velocity
+                vector (Figure 3.6).
+            </p>
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter03/ch03_06.png" style="  width: 100%;
                 height: 100%;" alt="Figure 3.6">
-        <p>
-            Figure 3.6:
-        </p>
-    </div>
+                <p>
+                    Figure 3.6:
+                </p>
+            </div>
 
 
-    <p>OK. We know that the definition of tangent is:</p>
-    tangent(angle)=velocityy / velocityx
-    <p>
-        The problem with the above is that we know velocity, but we don’t know the angle. We have to
-        solve for the angle. This is where a special function known as inverse tangent comes in,
-        sometimes referred to as arctangent or tan-1. (There is also an inverse sine and an inverse
-        cosine.)
-    </p>
-    <p>
-        If the tangent of some value a equals some value b, then the inverse tangent of b equals a.
-        For example:
-    </p>
-    if
-    tangent(a) = b
+            <p>OK. We know that the definition of tangent is:</p>
+            tangent(angle)=velocityy / velocityx
+            <p>
+                The problem with the above is that we know velocity, but we don’t know the angle. We have to
+                solve for the angle. This is where a special function known as inverse tangent comes in,
+                sometimes referred to as arctangent or tan-1. (There is also an inverse sine and an inverse
+                cosine.)
+            </p>
+            <p>
+                If the tangent of some value a equals some value b, then the inverse tangent of b equals a.
+                For example:
+            </p>
+            if
+            tangent(a) = b
 
-    then
-    a = arctangent(b)
+            then
+            a = arctangent(b)
 
-    <p>See how that is the inverse? The above now allows us to solve for the angle:</p>
-    <p>if</p>
-    <p>tangent(angle) = velocityy / velocityx</p>
+            <p>See how that is the inverse? The above now allows us to solve for the angle:</p>
+            <p>if</p>
+            <p>tangent(angle) = velocityy / velocityx</p>
 
-    <p>then</p>
-    <p>angle = arctangent(velocityy / velocityx)</p>
+            <p>then</p>
+            <p>angle = arctangent(velocityy / velocityx)</p>
 
 
-    <p>
-        Now that we have the formula, let’s see where it should go in our mover’s FixedUpdate()
-        function. Notice that in Unity, the function for arctangent is called Mathf.Atan().
-    </p>
-    <pre class="prettyprint">
+            <p>
+                Now that we have the formula, let’s see where it should go in our mover’s FixedUpdate()
+                function. Notice that in Unity, the function for arctangent is called Mathf.Atan().
+            </p>
+            <pre class="prettyprint">
 
 void FixedUpdate()
 {
@@ -622,333 +630,331 @@ void FixedUpdate()
     angleFloat += Time.deltaTime * 100;
     mover.transform.rotation = Quaternion.Euler(0, 0, angleFloat);
 }
-
                             </pre>
 
-    <p>
-        Now the above code is pretty darn close, and almost works. We still have a big problem,
-        though. Let’s consider the two velocity vectors depicted below.
-    </p>
-    <div id="ImageContainer">
-        <img src="https://natureofcode.com/book/imgs/chapter03/ch03_07.png" style="  width: 100%;
+            <p>
+                Now the above code is pretty darn close, and almost works. We still have a big problem,
+                though. Let’s consider the two velocity vectors depicted below.
+            </p>
+            <div id="ImageContainer">
+                <img src="https://raw.githubusercontent.com/jadlerfisher/nocur_website/master/images/ch03_07.png" style="  width: 100%;
                 height: 100%;" alt="Figure 3.7">
-        <p>
-            Figure 3.7
-        </p>
-    </div>
-
-    <p>
-        Though superficially similar, the two vectors point in quite different
-        directions—opposite directions, in fact! However, if we were to apply our formula to
-        solve for the angle to each vector…
-    </p>
-    <ul>
-        <li>
-            V1 ⇒ angle = atan(-4/3) = atan(-1.25) = -0.9272952 radians = -53 degrees
-        </li>
-        <li>
-            V2 ⇒ angle = atan(4/-3) = atan(-1.25) = -0.9272952 radians = -53 degrees
-        </li>
-    </ul>
-    <p>
-        …we get the same angle for each vector. This can’t be right for both; the vectors point
-        in opposite directions! The thing is, this is a pretty common problem in computer
-        graphics. Rather than simply using atan() along with a bunch of conditional statements
-        to account for positive/negative scenarios, Unity (along with pretty much all
-        programming environments) has a nice function called Mathf.Atan2() that does it for you.
-    </p>
-    <p>
-        <span class="example">
-            Example 3.3: Pointing in the direction of motion
-        </span>
-    </p>
-    <ul class="tabs" role="tablist">
-        <li>
-            <input type="radio" name="tabs3" id="tab5" checked />
-            <label for="tab5"
-                   role="tab"
-                   aria-selected="true"
-                   aria-controls="panel5"
-                   tabindex="0">Code</label>
-            <div id="tab-content5"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="description"
-                 aria-hidden="false">
-                <div id="example3" style="height: 500px"></div>
+                <p>
+                    Figure 3.7
+                </p>
             </div>
-        </li>
 
-        <li>
-            <input type="radio" name="tabs3" id="tab6" />
-            <label for="tab6"
-                   role="tab"
-                   aria-selected="false"
-                   aria-controls="panel6"
-                   tabindex="0">Demo</label>
-            <div id="tab-content6"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="specification"
-                 aria-hidden="true">
-                <div align="center">
-                    <iframe class="lazy"
-                            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure3/index.html"
-                            src=""
-                            width="900"
-                            height="500"
-                            frameborder="0"
-                            overflow="hidden"
-                            seamless
-                            scrolling="no"
-                            Id="3.3">
-                    </iframe>
-                </div>
+            <p>
+                Though superficially similar, the two vectors point in quite different
+                directions—opposite directions, in fact! However, if we were to apply our formula to
+                solve for the angle to each vector…
+            </p>
+            <ul>
+                <li>
+                    V1 ⇒ angle = atan(-4/-3) = atan(1.25) = 0.9272952 radians = 53 degrees
+                </li>
+                <li>
+                    V2 ⇒ angle = atan(4/3) = atan(1.25) = 0.9272952 radians = 53 degrees
+                </li>
+            </ul>
+            <p>
+                …we get the same angle for each vector. This can’t be right for both; the vectors point
+                in opposite directions! The thing is, this is a pretty common problem in computer
+                graphics. Rather than simply using atan() along with a bunch of conditional statements
+                to account for positive/negative scenarios, Unity (along with pretty much all
+                programming environments) has a nice function called Mathf.Atan2() that does it for you.
+            </p>
+            <p>
+                <span class="example">
+                    Example 3.3: Pointing in the direction of motion
+                </span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs3" id="tab5" checked />
+                    <label for="tab5"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel5"
+                           tabindex="0">Code</label>
+                    <div id="tab-content5"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example3" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs3" id="tab6" />
+                    <label for="tab6"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel6"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content6"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure3/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="3.3">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 3.3
+                </h4>
+                <p>
+                    Create a simulation of a vehicle that you can drive around the screen using the arrow
+                    keys: left arrow accelerates the car to the left, right to the right. The car should
+                    point in the direction in which it is currently moving.
+                </p>
             </div>
-        </li>
-    </ul>
-    <div class="note">
-        <h4 style="text-align:right;">
-            Exercise 3.3
-        </h4>
-        <p>
-            Create a simulation of a vehicle that you can drive around the screen using the arrow
-            keys: left arrow accelerates the car to the left, right to the right. The car should
-            point in the direction in which it is currently moving.
-        </p>
-    </div>
-    <h2>3.5 Polar vs. Cartesian Coordinates</h2>
-    <p>
-        Any time we display a shape in Unity, we have to specify a pixel location, a set of
-        x and y coordinates. These coordinates are known as Cartesian coordinates, named for
-        René Descartes, the French mathematician who developed the ideas behind Cartesian space.
-    </p>
-    <p>
-        Another useful coordinate system known as polar coordinates describes a point in space as
-        an angle of rotation around the origin and a radius from the origin. Thinking about this
-        in terms of a vector:
-    </p>
-    Cartesian coordinate—the x,y components of a vector
-    Polar coordinate—the magnitude (length) and direction (angle) of a vector
+            <h2>3.5 Polar vs. Cartesian Coordinates</h2>
+            <p>
+                Any time we display a shape in Unity, we have to specify a pixel location, a set of
+                x and y coordinates. These coordinates are known as Cartesian coordinates, named for
+                René Descartes, the French mathematician who developed the ideas behind Cartesian space.
+            </p>
+            <p>
+                Another useful coordinate system known as polar coordinates describes a point in space as
+                an angle of rotation around the origin and a radius from the origin. Thinking about this
+                in terms of a vector:
+            </p>
+            Cartesian coordinate—the x,y components of a vector
+            Polar coordinate—the magnitude (length) and direction (angle) of a vector
 
-    <p>
-        Unity's transform functions, however, don’t understand polar coordinates. Whenever we
-        want to display something in Unity, we have to specify locations as (x,y,z) Cartesian
-        coordinates. However, sometimes it is a great deal more convenient for us to think in
-        polar coordinates when designing. Happily for us, with trigonometry we can convert back
-        and forth between polar and Cartesian, which allows us to design with whatever
-        coordinate system we have in mind but always draw with Cartesian coordinates.
-    </p>
-    <div id="ImageContainer">
-        <img src="https://natureofcode.com/book/imgs/chapter03/ch03_08.png" style="  width: 100%;
+            <p>
+                Unity's transform functions, however, don’t understand polar coordinates. Whenever we
+                want to display something in Unity, we have to specify locations as (x,y,z) Cartesian
+                coordinates. However, sometimes it is a great deal more convenient for us to think in
+                polar coordinates when designing. Happily for us, with trigonometry we can convert back
+                and forth between polar and Cartesian, which allows us to design with whatever
+                coordinate system we have in mind but always draw with Cartesian coordinates.
+            </p>
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter03/ch03_08.png" style="  width: 100%;
                     height: 100%;" alt="Figure 3.8:">
-        <p>
-            Figure 3.8: The Greek letter θ (theta) is often used to denote an angle. Since a polar
-            coordinate is conventionally referred to as (r, θ), we’ll use theta as a variable name when
-            referring to an angle.
-        </p>
-    </div>
-    <div>&nbsp;</div>
-    <ul>
-        <li>sine(theta) = y/r → y = r * sine(theta)</li>
-        <li>cosine(theta) = x/r → x = r * cosine(theta)</li>
-    </ul>
-    <p>
-        For example, if r is 7.5 and theta is 45 degrees (or PI/4 radians), we can calculate x and y
-        as below. The functions for sine and cosine in Unity are Mathf.Sin() and cos(), respectively.
-        They each take one argument, an angle measured in radians.
-    </p>
-    <pre class="prettyprint">
+                <p>
+                    Figure 3.8: The Greek letter θ (theta) is often used to denote an angle. Since a polar
+                    coordinate is conventionally referred to as (r, θ), we’ll use theta as a variable name when
+                    referring to an angle.
+                </p>
+            </div>
+            <div>&nbsp;</div>
+            <ul>
 
+                <li>sine(theta) = y/r → y = r * sine(theta)</li>
+                <li>cosine(theta) = x/r → x = r * cosine(theta)</li>
+            </ul>
+            <p>
+                For example, if r is 7.5 and theta is 45 degrees (or PI/4 radians), we can calculate x and y
+                as below. The functions for sine and cosine in Unity are Mathf.Sin() and cos(), respectively.
+                They each take one argument, an angle measured in radians.
+            </p>
+            <pre class="prettyprint">
 
     float r = 7.5f;
     float theta = 45;
 
     float x = r * Mathf.Cos(theta);
     float y = r * Mathf.Sin(theta);
-
                                 </pre>
 
-    <p>
-        This type of conversion can be useful in certain applications. For example, to move a shape
-        along a circular path using Cartesian coordinates is not so easy. With polar coordinates, on
-        the other hand, it’s simple: increment the angle!
-    </p>
-    <p>Here’s how it is done with global variables r and theta.</p>
-    <p>
-        <span class="example">Example 3.4: Polar to Cartesian</span>
-    </p>
-    <ul class="tabs" role="tablist">
-        <li>
-            <input type="radio" name="tabs4" id="tab7" checked />
-            <label for="tab7"
-                   role="tab"
-                   aria-selected="true"
-                   aria-controls="panel7"
-                   tabindex="0">Code</label>
-            <div id="tab-content7"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="description"
-                 aria-hidden="false">
-                <div id="example4" style="height: 500px"></div>
-            </div>
-        </li>
+            <p>
+                This type of conversion can be useful in certain applications. For example, to move a shape
+                along a circular path using Cartesian coordinates is not so easy. With polar coordinates, on
+                the other hand, it’s simple: increment the angle!
+            </p>
+            <p>Here’s how it is done with global variables r and theta.</p>
+            <p>
+                <span class="example">Example 3.4: Polar to Cartesian</span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs4" id="tab7" checked />
+                    <label for="tab7"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel7"
+                           tabindex="0">Code</label>
+                    <div id="tab-content7"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example4" style="height: 500px"></div>
+                    </div>
+                </li>
 
-        <li>
-            <input type="radio" name="tabs4" id="tab8" />
-            <label for="tab8"
-                   role="tab"
-                   aria-selected="false"
-                   aria-controls="panel8"
-                   tabindex="0">Demo</label>
-            <div id="tab-content8"
-                 class="tab-content"
-                 role="tabpanel"
-                 aria-labelledby="specification"
-                 aria-hidden="true">
-                <div align="center">
-                    <iframe class="lazy"
-                            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure4/index.html"
-                            src=""
-                            width="900"
-                            height="500"
-                            frameborder="0"
-                            overflow="hidden"
-                            seamless
-                            scrolling="no"
-                            Id="3.4">
-                    </iframe>
-                </div>
+                <li>
+                    <input type="radio" name="tabs4" id="tab8" />
+                    <label for="tab8"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel8"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content8"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure4/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="3.4">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 3.4
+                </h4>
+                <p>
+                    Using Example 3.4 as a basis, draw a spiral path. Start in the center and move outwards. Note
+                    that this can be done by only changing one line of code and adding one line of code!
+                </p>
             </div>
-        </li>
-    </ul>
-    <div class="note">
-        <h4 style="text-align:right;">
-            Exercise 3.4
-        </h4>
-        <p>
-            Using Example 3.4 as a basis, draw a spiral path. Start in the center and move outwards. Note
-            that this can be done by only changing one line of code and adding one line of code!
-        </p>
-    </div>
-    <div class="note">
-        <h4 style="text-align:right;">
-            Exercise 3.5
-        </h4>
-        <p>
-            Simulate the spaceship in the game Asteroids. In case you aren’t familiar with Asteroids,
-            here is a brief description: A spaceship (represented as a triangle) floats in two
-            dimensional space. The left arrow key turns the spaceship counterclockwise, the right arrow
-            key, clockwise. The z key applies a “thrust” force in the direction the spaceship is
-            pointing.
-        </p>
-    </div>
-    <h2>3.6 Oscillation Amplitude and Period</h2>
-    <p>
-        Are you amazed yet? We’ve seen some pretty great uses of tangent (for finding the angle of a
-        vector) and sine and cosine (for converting from polar to Cartesian coordinates). We could
-        stop right here and be satisfied. But we’re not going to. This is only the beginning. What
-        sine and cosine can do for you goes beyond mathematical formulas and right triangles.
-    </p>
-    <p>Let’s take a look at a graph of the sine function, where y = sine(x).</p>
-    <div id="ImageContainer">
-        <img src="https://natureofcode.com/book/imgs/chapter03/ch03_09.png" style="  width: 100%;
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 3.5
+                </h4>
+                <p>
+                    Simulate the spaceship in the game Asteroids. In case you aren’t familiar with Asteroids,
+                    here is a brief description: A spaceship (represented as a triangle) floats in two
+                    dimensional space. The left arrow key turns the spaceship counterclockwise, the right arrow
+                    key, clockwise. The z key applies a “thrust” force in the direction the spaceship is
+                    pointing.
+                </p>
+            </div>
+            <h2>3.6 Oscillation Amplitude and Period</h2>
+            <p>
+                Are you amazed yet? We’ve seen some pretty great uses of tangent (for finding the angle of a
+                vector) and sine and cosine (for converting from polar to Cartesian coordinates). We could
+                stop right here and be satisfied. But we’re not going to. This is only the beginning. What
+                sine and cosine can do for you goes beyond mathematical formulas and right triangles.
+            </p>
+            <p>Let’s take a look at a graph of the sine function, where y = sine(x).</p>
+            <div id="ImageContainer">
+                <img src="https://natureofcode.com/book/imgs/chapter03/ch03_09.png" style="  width: 100%;
                 height: 100%;" alt="Figure 3.9">
-        <p>
-            Figure 3.9: y = Mathf.Sin(x)
-        </p>
-    </div>
-    <p>
-        You’ll notice that the output of the sine function is a smooth curve alternating between –1
-        and 1. This type of a behavior is known as oscillation, a periodic movement between two
-        points. Plucking a guitar string, swinging a pendulum, bouncing on a pogo stick—these are
-        all examples of oscillating motion.
-    </p>
-    <p>
-        And so we happily discover that we can simulate oscillation in a Unity scene by
-        assigning the output of the sine function to an object’s location. Note that this will
-        follow the same methodology we applied to Perlin noise in the Introduction.
-    </p>
-    <p>
-        Let’s begin with a really basic scenario. We want a circle to oscillate from the left side to
-        the right side of a Unity scene.
-    </p>
-    <p>
-        This is what is known as simple harmonic motion (or, to be fancier, “the periodic sinusoidal
-        oscillation of an object”). It’s going to be a simple program to write, but before we get
-        into the code, let’s familiarize ourselves with some of the terminology of oscillation (and
-        waves).
-    </p>
-    <p>
-        Simple harmonic motion can be expressed as any location (in our case, the x location) as a
-        function of time, with the following two elements:
-    </p>
-    <p>Amplitude: The distance from the center of motion to either extreme</p>
-    <p>Period: The amount of time it takes for one complete cycle of motion</p>
-    <p>
-        Looking at the graph of sine (Figure 3.9), we can see that the amplitude is 1 and the period
-        is TWO_PI (The constant: 6.2831855f); the output of sine never rises above 1 or below -1; and every TWO_PI (The constant: 6.2831855f) radians (or
-        360 degrees) the wave pattern repeats.
-    </p>
-    <p>
-        Now, in the Unity world we live in, what is amplitude and what is period? Amplitude can
-        be measured rather easily in meters. In the case of a window 200 meters wide, we would
-        oscillate from the center 100 pixels to the right and 100 meters to the left. Therefore:
-    </p>
+                <p>
+                    Figure 3.9: y = Mathf.Sin(x)
+                </p>
+            </div>
+            <p>
+                You’ll notice that the output of the sine function is a smooth curve alternating between –1
+                and 1. This type of a behavior is known as oscillation, a periodic movement between two
+                points. Plucking a guitar string, swinging a pendulum, bouncing on a pogo stick—these are
+                all examples of oscillating motion.
+            </p>
+            <p>
+                And so we happily discover that we can simulate oscillation in a Unity scene by
+                assigning the output of the sine function to an object’s location. Note that this will
+                follow the same methodology we applied to Perlin noise in the Introduction.
+            </p>
+            <p>
+                Let’s begin with a really basic scenario. We want a circle to oscillate from the left side to
+                the right side of a Unity scene.
+            </p>
+            <p>
+                This is what is known as simple harmonic motion (or, to be fancier, “the periodic sinusoidal
+                oscillation of an object”). It’s going to be a simple program to write, but before we get
+                into the code, let’s familiarize ourselves with some of the terminology of oscillation (and
+                waves).
+            </p>
+            <p>
+                Simple harmonic motion can be expressed as any location (in our case, the x location) as a
+                function of time, with the following two elements:
+            </p>
+            <p>Amplitude: The distance from the center of motion to either extreme</p>
+            <p>Period: The amount of time it takes for one complete cycle of motion</p>
+            <p>
+                Looking at the graph of sine (Figure 3.9), we can see that the amplitude is 1 and the period
+                is TWO_PI (The constant: 6.2831855f); the output of sine never rises above 1 or below -1; and every TWO_PI (The constant: 6.2831855f) radians (or
+                360 degrees) the wave pattern repeats.
+            </p>
+            <p>
+                Now, in the Unity world we live in, what is amplitude and what is period? Amplitude can
+                be measured rather easily in pixels. In the case of a window 200 pixels wide, we would
+                oscillate from the center 100 pixels to the right and 100 pixels to the left. Therefore:
+            </p>
 
-    <pre class="prettyprint">
+            <pre class="prettyprint">
 
 
     float amplitude = 100f;
 
                                 </pre>
 
-    <p>
-        Period is the amount of time it takes for one cycle, but what is time in our Unity
-        world? I mean, certainly we could say we want the circle to oscillate every three seconds.
-        And we could track the milliseconds—using System.Diagnostics.Stopwatch.ElapsedMilliseconds —in Unity and come up with an
-        elaborate algorithm for oscillating an object according to real-world time. But for us,
-        real-world time doesn’t really matter. The real measure of time in Unity is in frames.
-        The oscillating motion should repeat every 30 frames, or 50 frames, or 1000 frames, etc.
-    </p>
+            <p>
+                Period is the amount of time it takes for one cycle, but what is time in our Unity
+                world? I mean, certainly we could say we want the circle to oscillate every three seconds.
+                And we could track the milliseconds—using System.Diagnostics.Stopwatch.ElapsedMilliseconds —in Unity and come up with an
+                elaborate algorithm for oscillating an object according to real-world time. But for us,
+                real-world time doesn’t really matter. The real measure of time in Unity is in frames.
+                The oscillating motion should repeat every 30 frames, or 50 frames, or 1000 frames, etc.
+            </p>
 
-    <pre class="prettyprint">
+            <pre class="prettyprint">
 
 
     float period = 120f;
 
                                 </pre>
 
-    <p>
-        Our period is measured in frames (our unit of time for animation).
-    </p>
-    float period = 120;
-    <p>
-        Once we have the amplitude and period, it’s time to write a formula to calculate x as a
-        function of time, which we now know is the current frame count.
-    </p>
+            <p>
+                Our period is measured in frames (our unit of time for animation).
+            </p>
+            float period = 120;
+            <p>
+                Once we have the amplitude and period, it’s time to write a formula to calculate x as a
+                function of time, which we now know is the current frame count.
+            </p>
 
-    <pre class="prettyprint">
+            <pre class="prettyprint">
 
 
     float x = amplitude * Mathf.Cos((2*Mathf.PI)* Time.time/period);
 
                                 </pre>
 
-    <p>
-        Let’s dissect the formula a bit more and try to understand each component. The first is
-        probably the easiest. Whatever comes out of the cosine function we multiply by amplitude. We
-        know that cosine will oscillate between -1 and 1. If we take that value and multiply it by
-        amplitude then we’ll get the desired result: a value oscillating between -amplitude and
-        amplitude. (Note: this is also a place where we could use a Unity version of Processing’s map() function
-        to map the output of cosine to a custom range.)
-    </p>
+            <p>
+                Let’s dissect the formula a bit more and try to understand each component. The first is
+                probably the easiest. Whatever comes out of the cosine function we multiply by amplitude. We
+                know that cosine will oscillate between -1 and 1. If we take that value and multiply it by
+                amplitude then we’ll get the desired result: a value oscillating between -amplitude and
+                amplitude. (Note: this is also a place where we could use a Unity version of Processing’s map() function
+                to map the output of cosine to a custom range.)
+            </p>
 
-    <pre class="prettyprint">
+            <pre class="prettyprint">
 
-    //Processing's map()
-	//syntax:
+    //Processing's map()	
+    //syntax:
     map(value, start1, stop1, start2, stop2)
     //example:
     float value = 110;
@@ -962,125 +968,127 @@ void FixedUpdate()
     float m = Mathf.Lerp (0f, 100f, Mathf.InverseLerp (-10f, -20f, 110f));
 
     </pre>
-    <p>
-        Now, let’s look at what is inside the cosine function:
+            <p>
+                Now, let’s look at what is inside the cosine function:
 
 
+            </p>
+            <p><b>TWO_PI (or 6.2831855f) * frameCount / period</b></p>
+
+            <p>
+                What’s going on here? Let’s start with what we know. We know that cosine will repeat every
+                2*PI radians—i.e. it will start at 0 and repeat at 2*PI, 4*PI, 6*PI, etc. If the period is
+                120, then we want the oscillating motion to repeat when the frameCount is at 120 frames, 240
+                frames, 360 frames, etc. frameCount is really the only variable; it starts at 0 and counts
+                upward. Let’s take a look at what the formula yields with those values.
+            </p>
+            frameCount frameCount / period (6.2831855f) * frameCount / period
+            0
+
+            0
+
+            0
+
+            60
+
+            0.5
+
+            PI
+
+            120
+
+            1
+
+            6.2831855f
+
+            240
+
+            2
+
+            2 * 6.2831855f (or 4* PI)
+
+            etc.
+
+            <p>
+                frameCount divided by period tells us how many cycles we’ve completed—are we halfway through
+                the first cycle? Have we completed two cycles? By multiplying that number by TWO_PI (The constant: 6.2831855f), we get
+                the result we want, since TWO_PI ((The constant: 6.2831855f)) is the number of radians required for one cosine (or sine)
+                to complete one cycle.
+            </p>
+            <p>
+                Wrapping this all up, here’s the Unity example that oscillates the x location of a
+                circle with an amplitude of 100 pixels and a period of 120 frames.
+            </p>
+            <p>
+                <span class="example">Example 3.5: Simple Harmonic Motion</span>
+            </p>
+            <ul class="tabs" role="tablist">
+                <li>
+                    <input type="radio" name="tabs5" id="tab9" checked />
+
+                    <label for="tab9"
+                           role="tab"
+                           aria-selected="true"
+                           aria-controls="panel9"
+                           tabindex="0">Code</label>
+                    <div id="tab-content9"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="description"
+                         aria-hidden="false">
+                        <div id="example5" style="height: 500px"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <input type="radio" name="tabs5" id="tab10" />
+
+                    <label for="tab10"
+                           role="tab"
+                           aria-selected="false"
+                           aria-controls="panel10"
+                           tabindex="0">Demo</label>
+                    <div id="tab-content10"
+                         class="tab-content"
+                         role="tabpanel"
+                         aria-labelledby="specification"
+                         aria-hidden="true">
+                        <div align="center">
+                            <iframe class="lazy"
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure5/index.html"
+                                    src=""
+                                    width="900"
+                                    height="500"
+                                    frameborder="0"
+                                    overflow="hidden"
+                                    seamless
+                                    scrolling="no"
+                                    Id="3.5">
+                            </iframe>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <p>
+                It’s also worth mentioning the term frequency: the number of cycles per time unit. Frequency
+                is equal to 1 divided by period. If the period is 120 frames, then only 1/120th of a cycle
+                is completed in one frame, and so frequency = 1/120. In the above example, we simply chose
+                to define the rate of oscillation in terms of period and therefore did not need a variable
+                for frequency.
+            </p>
+            <div class="note">
+                <h4 style="text-align:right;">
+                    Exercise 3.6
+                </h4>
+                <p>
+                    Using the sine function, create a simulation of a weight (sometimes referred to as a “bob”)
+                    that hangs from a spring from the top of the window. Use the Unity version of the map() function
+                <p>
+                    <b>  var result = Mathf.Lerp (start 1, stop1, Mathf.InverseLerp (start2, stop2, value));</b>
+                </p> to calculate the
+                vertical location of the bob. Later in this chapter, we’ll see how to recreate this same
+                simulation by modeling the forces of a spring according to Hooke’s law.
     </p>
-    <p><b>TWO_PI (or 6.2831855f) * frameCount / period</b></p>
-
-    <p>
-        What’s going on here? Let’s start with what we know. We know that cosine will repeat every
-        2*PI radians—i.e. it will start at 0 and repeat at 2*PI, 4*PI, 6*PI, etc. If the period is
-        120, then we want the oscillating motion to repeat when the frameCount is at 120 frames, 240
-        frames, 360 frames, etc. frameCount is really the only variable; it starts at 0 and counts
-        upward. Let’s take a look at what the formula yields with those values.
-    </p>
-    frameCount frameCount / period (6.2831855f) * frameCount / period
-    0
-
-    0
-
-    0
-
-    60
-
-    0.5
-
-    PI
-
-    120
-
-    1
-
-    6.2831855f
-
-    240
-
-    2
-
-    2 * 6.2831855f (or 4* PI)
-
-    etc.
-
-    <p>
-        frameCount divided by period tells us how many cycles we’ve completed—are we halfway through
-        the first cycle? Have we completed two cycles? By multiplying that number by TWO_PI (The constant: 6.2831855f), we get
-        the result we want, since TWO_PI ((The constant: 6.2831855f)) is the number of radians required for one cosine (or sine)
-        to complete one cycle.
-    </p>
-    <p>
-        Wrapping this all up, here’s the Unity example that oscillates the x location of a
-        circle with an amplitude of 100 pixels and a period of 120 frames.
-    </p>
-    <p>
-    <span class="example">Example 3.5: Simple Harmonic Motion</span>
-    </p>
-    <ul class="tabs" role="tablist">
-    <li>
-    <input type="radio" name="tabs5" id="tab9" checked />
-
-    <label for="tab9"
-           role="tab"
-           aria-selected="true"
-           aria-controls="panel9"
-           tabindex="0">Code</label>
-    <div id="tab-content9"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="description"
-         aria-hidden="false">
-    <div id="example5" style="height: 500px"></div>
-            </div>
-        </li>
-
-    <li>
-    <input type="radio" name="tabs5" id="tab10" />
-
-    <label for="tab10"
-           role="tab"
-           aria-selected="false"
-           aria-controls="panel10"
-           tabindex="0">Demo</label>
-    <div id="tab-content10"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="specification"
-         aria-hidden="true">
-    <div align="center">
-    <iframe class="lazy"
-            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure5/index.html"
-            src=""
-            width="900"
-            height="500"
-            frameborder="0"
-            overflow="hidden"
-            seamless
-            scrolling="no"
-            Id="3.5">
-                    </iframe>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <p>
-        It’s also worth mentioning the term frequency: the number of cycles per time unit. Frequency
-        is equal to 1 divided by period. If the period is 120 frames, then only 1/120th of a cycle
-        is completed in one frame, and so frequency = 1/120. In the above example, we simply chose
-        to define the rate of oscillation in terms of period and therefore did not need a variable
-        for frequency.
-    </p>
-    <div class="note">
-    <h4 style="text-align:right;">
-            Exercise 3.6
-        </h4>
-    <p>
-            Using the sine function, create a simulation of a weight (sometimes referred to as a “bob”)
-            that hangs from a spring from the top of the window. Use the Unity version of the map() function <p>
-                                                                                                                 <b>  var result = Mathf.Lerp (start 1, stop1, Mathf.InverseLerp (start2, stop2, value));</b></p> to calculate the
-            vertical location of the bob. Later in this chapter, we’ll see how to recreate this same
-            simulation by modeling the forces of a spring according to Hooke’s law.
-        </p>
     </div>
     <h2>3.7 Oscillation with Angular Velocity</h2>
     <p>
@@ -1109,55 +1117,55 @@ void FixedUpdate()
         If we care about precisely defining the period of oscillation in terms of frames of
         animation, we might need the formula the way we first wrote it, but we can just as easily
         rewrite our example using the concept of angular velocity (and acceleration) from section
-        3.2. Assuming:
+        3.2.
     </p>
     <p>
-    <span class="example">
+        <span class="example">
             Example 3.6: Simple Harmonic Motion II
         </span>
     </p>
     <ul class="tabs" role="tablist">
-    <li>
-    <input type="radio" name="tabs6" id="tab11" checked />
+        <li>
+            <input type="radio" name="tabs6" id="tab11" checked />
 
-    <label for="tab11"
-           role="tab"
-           aria-selected="true"
-           aria-controls="panel11"
-           tabindex="0">Code</label>
-    <div id="tab-content11"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="description"
-         aria-hidden="false">
-    <div id="example6" style="height: 500px"></div>
+            <label for="tab11"
+                   role="tab"
+                   aria-selected="true"
+                   aria-controls="panel11"
+                   tabindex="0">Code</label>
+            <div id="tab-content11"
+                 class="tab-content"
+                 role="tabpanel"
+                 aria-labelledby="description"
+                 aria-hidden="false">
+                <div id="example6" style="height: 500px"></div>
             </div>
         </li>
 
-    <li>
-    <input type="radio" name="tabs6" id="tab12" />
+        <li>
+            <input type="radio" name="tabs6" id="tab12" />
 
-    <label for="tab12"
-           role="tab"
-           aria-selected="false"
-           aria-controls="panel12"
-           tabindex="0">Demo</label>
-    <div id="tab-content12"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="specification"
-         aria-hidden="true">
-    <div align="center">
-    <iframe class="lazy"
-            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure6/index.html"
-            src=""
-            width="900"
-            height="500"
-            frameborder="0"
-            overflow="hidden"
-            seamless
-            scrolling="no"
-            Id="3.6">
+            <label for="tab12"
+                   role="tab"
+                   aria-selected="false"
+                   aria-controls="panel12"
+                   tabindex="0">Demo</label>
+            <div id="tab-content12"
+                 class="tab-content"
+                 role="tabpanel"
+                 aria-labelledby="specification"
+                 aria-hidden="true">
+                <div align="center">
+                    <iframe class="lazy"
+                            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure6/index.html"
+                            src=""
+                            width="900"
+                            height="500"
+                            frameborder="0"
+                            overflow="hidden"
+                            seamless
+                            scrolling="no"
+                            Id="3.6">
                     </iframe>
                 </div>
             </div>
@@ -1179,72 +1187,72 @@ void FixedUpdate()
         perfect opportunity for Vector3s!
     </p>
     <p>
-    <span class="example">
+        <span class="example">
             Example 3.7: Oscillator objects
         </span>
     </p>
     <ul class="tabs" role="tablist">
-    <li>
-    <input type="radio" name="tabs7" id="tab13" checked />
+        <li>
+            <input type="radio" name="tabs7" id="tab13" checked />
 
-    <label for="tab13"
-           role="tab"
-           aria-selected="true"
-           aria-controls="panel13"
-           tabindex="0">Code</label>
-    <div id="tab-content13"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="description"
-         aria-hidden="false">
-    <div id="example7" style="height: 500px"></div>
+            <label for="tab13"
+                   role="tab"
+                   aria-selected="true"
+                   aria-controls="panel13"
+                   tabindex="0">Code</label>
+            <div id="tab-content13"
+                 class="tab-content"
+                 role="tabpanel"
+                 aria-labelledby="description"
+                 aria-hidden="false">
+                <div id="example7" style="height: 500px"></div>
             </div>
         </li>
 
-    <li>
-    <input type="radio" name="tabs7" id="tab14" />
+        <li>
+            <input type="radio" name="tabs7" id="tab14" />
 
-    <label for="tab14"
-           role="tab"
-           aria-selected="false"
-           aria-controls="panel14"
-           tabindex="0">Demo</label>
-    <div id="tab-content14"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="specification"
-         aria-hidden="true">
-    <div align="center">
-    <iframe class="lazy"
-            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure7/index.html"
-            src=""
-            width="900"
-            height="500"
-            frameborder="0"
-            overflow="hidden"
-            seamless
-            scrolling="no"
-            Id="3.7">
+            <label for="tab14"
+                   role="tab"
+                   aria-selected="false"
+                   aria-controls="panel14"
+                   tabindex="0">Demo</label>
+            <div id="tab-content14"
+                 class="tab-content"
+                 role="tabpanel"
+                 aria-labelledby="specification"
+                 aria-hidden="true">
+                <div align="center">
+                    <iframe class="lazy"
+                            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure7/index.html"
+                            src=""
+                            width="900"
+                            height="500"
+                            frameborder="0"
+                            overflow="hidden"
+                            seamless
+                            scrolling="no"
+                            Id="3.7">
                     </iframe>
                 </div>
             </div>
         </li>
     </ul>
     <div class="note">
-    <h4 style="text-align:right;">
+        <h4 style="text-align:right;">
             Exercise 3.7
         </h4>
-    <p>
+        <p>
             Try initializing each Oscillator object with velocities and amplitudes that are not random to
             create some sort of regular pattern. Can you make the oscillators appear to be the legs of a
             insect-like creature? Hint, you'll want to child the oscillator objects to a GameObject that has a Mover script on it.
         </p>
     </div>
     <div class="note">
-    <h4 style="text-align:right;">
+        <h4 style="text-align:right;">
             Exercise 3.8
         </h4>
-    <p>
+        <p>
             Incorporate angular acceleration into the Oscillator object.
         </p>
     </div>
@@ -1257,697 +1265,637 @@ void FixedUpdate()
         panache and a for loop, we can place a whole bunch of these oscillating circles next to each
         other.
     </p>
-    <ul class="tabs" role="tablist">
-    <li>
-    <input type="radio" name="tabs7a" id="tab13a" checked />
-
-    <label for="tab13a"
-           role="tab"
-           aria-selected="true"
-           aria-controls="panel13a"
-           tabindex="0">Code</label>
-    <div id="tab-content13a"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="description"
-         aria-hidden="false">
-    <div id="example8" style="height: 500px"></div>
-            </div>
-        </li>
-
-    <li>
-    <input type="radio" name="tabs7a" id="tab14a" />
-
-    <label for="tab14a"
-           role="tab"
-           aria-selected="false"
-           aria-controls="panel14a"
-           tabindex="0">Demo</label>
-    <div id="tab-content14a"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="specification"
-         aria-hidden="true">
-    <div align="center">
-    <iframe class="lazy"
-            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure8/index.html"
-            src=""
-            width="900"
-            height="500"
-            frameborder="0"
-            overflow="hidden"
-            seamless
-            scrolling="no"
-            Id="3.8">
-                    </iframe>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <p>
-        This wavy pattern could be used in the design of the body or appendages of a creature, as
-        well as to simulate a soft surface (such as water).
-    </p>
-    <p>
-        Here, we’re going to encounter the same questions of amplitude (height of pattern) and
-        period. Instead of period referring to time, however, since we’re looking at the full wave,
-        we can talk about period as the width (in pixels) of a full wave cycle. And just as with
-        simple oscillation, we have the option of computing the wave pattern according to a precise
-        period or simply following the model of angular velocity.
-    </p>
-    <p>
-        Let’s go with the simpler case, angular velocity. We know we need to start with an angle, an
-        angular velocity, and an amplitude:
-    </p>
-    <pre class="prettyprint">
-
+    <div id="ImageContainer">
+        <img src="https://raw.githubusercontent.com/jadlerfisher/nocur_website/master/images/StaticWaveDrawnAsContinuousLine.png" style="  width: 100%;
+                height: 100%;" alt="Static Wave Drawn as a Continuous Line">
+        <p>
+            This wavy pattern could be used in the design of the body or appendages of a creature, as
+            well as to simulate a soft surface (such as water).
+        </p>
+        <p>
+            Here, we’re going to encounter the same questions of amplitude (height of pattern) and
+            period. Instead of period referring to time, however, since we’re looking at the full wave,
+            we can talk about period as the width (in pixels) of a full wave cycle. And just as with
+            simple oscillation, we have the option of computing the wave pattern according to a precise
+            period or simply following the model of angular velocity.
+        </p>
+        <p>
+            Let’s go with the simpler case, angular velocity. We know we need to start with an angle, an
+            angular velocity, and an amplitude:
+        </p>
+        <pre class="prettyprint">
 
     float angle = 0f;
     float angleVel = 0.2f;
     float amplitude = 100f;
                                 </pre>
 
-    <p>
-        Then we’re going to loop through all of the x values where we want to draw a point of the
-        wave. Let’s say every 24 pixels for now. In that loop, we’re going to want to do three
-        things:
-    </p>
-    <p>
-        Calculate the y location according to amplitude and sine of the angle.
-    </p>
-    <p>
-        Draw a circle at the (x,y) location.
-    </p>
-    <p>
-        Increment the angle according to angular velocity.
-    </p>
-    <pre class="prettyprint">
+        <p>
+            Then we’re going to loop through all of the x values where we want to draw a point of the
+            wave. Let’s say every 24 pixels for now. In that loop, we’re going to want to do three
+            things:
+        </p>
+        <p>
+            Calculate the y location according to amplitude and sine of the angle.
+        </p>
+        <p>
+            Draw a circle at the (x,y) location.
+        </p>
+        <p>
+            Increment the angle according to angular velocity.
+        </p>
+        <pre class="prettyprint">
 
+for (int x = 0; x <= 90; x++)
+{
 
-    for (int x = 0; x <= 90; x++)
-    {
+    float y = map(Mathf.Sin(angle), -1f, 1f, 0f, 100f);
+    TheWave[x].transform.position = new Vector3(x, y, 0f);
 
-        float y = map(Mathf.Sin(angle), -1f, 1f, 0f, 100f);
-        TheWave[x].transform.position = new Vector3(x, y, 0f);
+    angle += angleVel;
 
-        angle += angleVel;
-
-    }
+}
                                 </pre>
 
-    <p>
-        Try to achieveresults with different values for Period.
+        <p>
+            Try to achieveresults with different values for Period.
 
-    <div class="content-box-three">
-    <center>
-    <img style="padding: 4px; height: 250px" src="images/gifs/5-period.gif" alt="5" /><p>Period of 5</p></img>
-    <img style="padding: 4px; height: 250px" src="images/gifs/30-period.gif" alt="30 Period" /><p>Period of 30</p></img>
-    <img style="padding: 4px; height: 250px" src="images/gifs/120-period.gif" alt="120 Period" /><p>Period of 120</p></img>
+            <div class="content-box-three">
+                <center>
+                    <img style="padding: 4px; height: 250px" src="images/gifs/5-period.gif" alt="5" /><p>Period of 5</p></img>
+                    <img style="padding: 4px; height: 250px" src="images/gifs/30-period.gif" alt="30 Period" /><p>Period of 30</p></img>
+                    <img style="padding: 4px; height: 250px" src="images/gifs/120-period.gif" alt="120 Period" /><p>Period of 120</p></img>
 
+                </center>
+            </div>
+            <div>
+                &nbsp;
+            </div>
+
+
+            Notice how, although
+            we’re not precisely computing the period of the wave, the higher the angular velocity, the
+            shorter the period. It’s also worth noting that as the period becomes shorter, it becomes
+            more and more difficult to make out the wave itself as the distance between the individual
+            points increases.
+        </p>
+
+
+        <p>
+            <span class="example">
+                Example 3.8: Static wave Drawn as a Continuous Line
+            </span>
+        </p>
+
+        <ul class="tabs" role="tablist">
+            <li>
+                <input type="radio" name="tabs8" id="tab15" checked />
+
+                <label for="tab15"
+                       role="tab"
+                       aria-selected="true"
+                       aria-controls="panel15"
+                       tabindex="0">Code</label>
+                <div id="tab-content15"
+                     class="tab-content"
+                     role="tabpanel"
+                     aria-labelledby="description"
+                     aria-hidden="false">
+                    <div id="example8a" style="height: 500px"></div>
+                </div>
+            </li>
+
+            <li>
+                <input type="radio" name="tabs8" id="tab16" />
+
+                <label for="tab16"
+                       role="tab"
+                       aria-selected="false"
+                       aria-controls="panel16"
+                       tabindex="0">Demo</label>
+                <div id="tab-content16"
+                     class="tab-content"
+                     role="tabpanel"
+                     aria-labelledby="specification"
+                     aria-hidden="true">
+                    <div align="center">
+                        <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure8/index.html"
+                                src=""
+                                width="900"
+                                height="500"
+                                frameborder="0"
+                                overflow="hidden"
+                                seamless
+                                scrolling="no"
+                                Id="3.8">
+                        </iframe>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <p>
+            You may have noticed that the above example is static. The wave never changes, never undulates.
+            This additional step is a bit tricky. Your first instinct might be to say: “Hey, no problem,
+            we’ll just let theta be a global variable and let it increment from one cycle through draw() to
+            another.”
+        </p>
+        <p>
+            While it’s a nice thought, it doesn’t work. If you look at the wave, the righthand edge doesn’t
+            match the lefthand; where it ends in one cycle of Update() can’t be where it starts in the next.
+            Instead, what we need to do is have a variable dedicated entirely to tracking what value of
+            angle the wave should start with. This angle (which we’ll call startAngle) increments with its
+            own angular velocity.
+        </p>
+        <p>
+            <span class="example">
+                Example 3.9: The Wave
+            </span>
+        </p>
+        <ul class="tabs" role="tablist">
+            <li>
+                <input type="radio" name="tabs9" id="tab17" checked />
+
+                <label for="tab17"
+                       role="tab"
+                       aria-selected="true"
+                       aria-controls="panel17"
+                       tabindex="0">Code</label>
+                <div id="tab-content17"
+                     class="tab-content"
+                     role="tabpanel"
+                     aria-labelledby="description"
+                     aria-hidden="false">
+                    <div id="example9" style="height: 500px"></div>
+                </div>
+            </li>
+
+            <li>
+                <input type="radio" name="tabs9" id="tab18" />
+
+                <label for="tab18"
+                       role="tab"
+                       aria-selected="false"
+                       aria-controls="panel18"
+                       tabindex="0">Demo</label>
+                <div id="tab-content18"
+                     class="tab-content"
+                     role="tabpanel"
+                     aria-labelledby="specification"
+                     aria-hidden="true">
+                    <div align="center">
+                        <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure9/index.html"
+                                src=""
+                                width="900"
+                                height="500"
+                                frameborder="0"
+                                overflow="hidden"
+                                seamless
+                                scrolling="no"
+                                Id="3.9">
+                        </iframe>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="note">
+            <h4 style="text-align:right;">Exercise 3.9</h4>
+            <p>
+                Try using the Perlin noise function instead of sine or cosine with the above example.
+            </p>
+        </div>
+        <div class="note">
+            <h4 style="text-align:right;">
+                Exercise 3.10
+            </h4>
+            <p>
+                Encapsulate the above examples into a Wave class and create a sketch that displays two waves
+                (with different amplitudes/periods) as in the screenshot below. Move beyond plain circles and
+                lines and try visualizing the wave in a more creative way.
+            </p>
+
+            <center>
+                <img style="padding: 10px; height: 460px" src="images/gifs/3.10 exercise gif.gif" alt="Two wavers of different amplitudes and periods" /></img>
             </center>
         </div>
-    <div>
-            &nbsp;
+        <div class="note">
+            <h4 style="text-align:right;">
+                Exercise 3.11
+            </h4>
+            <p>
+                More complex waves can be produced by the values of multiple waves together. Create a sketch that
+                implements this, as in the screenshot below.
+            </p>
         </div>
-
-
-        Notice how, although
-        we’re not precisely computing the period of the wave, the higher the angular velocity, the
-        shorter the period. It’s also worth noting that as the period becomes shorter, it becomes
-        more and more difficult to make out the wave itself as the distance between the individual
-        points increases.
-    </p>
-
-
-    <p>
-    <span class="example">
-            Example 3.8: Static wave drawn as a continuous line
-        </span>
-    </p>
-
-    <ul class="tabs" role="tablist">
-    <li>
-    <input type="radio" name="tabs8" id="tab15" checked />
-
-    <label for="tab15"
-           role="tab"
-           aria-selected="true"
-           aria-controls="panel15"
-           tabindex="0">Code</label>
-    <div id="tab-content15"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="description"
-         aria-hidden="false">
-    <div id="example8a" style="height: 500px"></div>
-            </div>
-        </li>
-
-    <li>
-    <input type="radio" name="tabs8" id="tab16" />
-
-    <label for="tab16"
-           role="tab"
-           aria-selected="false"
-           aria-controls="panel16"
-           tabindex="0">Demo</label>
-    <div id="tab-content16"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="specification"
-         aria-hidden="true">
-    <div align="center">
-    <iframe class="lazy"
-            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure8/index.html"
-            src=""
-            width="900"
-            height="500"
-            frameborder="0"
-            overflow="hidden"
-            seamless
-            scrolling="no"
-            Id="3.8">
-                    </iframe>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <p>
-        You may have noticed that the above example is static. The wave never changes, never undulates.
-        This additional step is a bit tricky. Your first instinct might be to say: “Hey, no problem,
-        we’ll just let theta be a global variable and let it increment from one cycle through draw() to
-        another.”
-    </p>
-    <p>
-        While it’s a nice thought, it doesn’t work. If you look at the wave, the righthand edge doesn’t
-        match the lefthand; where it ends in one cycle of Update() can’t be where it starts in the next.
-        Instead, what we need to do is have a variable dedicated entirely to tracking what value of
-        angle the wave should start with. This angle (which we’ll call startAngle) increments with its
-        own angular velocity.
-    </p>
-    <p>
-    <span class="example">
-            Example 3.9: The Wave
-        </span>
-    </p>
-    <ul class="tabs" role="tablist">
-    <li>
-    <input type="radio" name="tabs9" id="tab17" checked />
-
-    <label for="tab17"
-           role="tab"
-           aria-selected="true"
-           aria-controls="panel17"
-           tabindex="0">Code</label>
-    <div id="tab-content17"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="description"
-         aria-hidden="false">
-    <div id="example9" style="height: 500px"></div>
-            </div>
-        </li>
-
-    <li>
-    <input type="radio" name="tabs9" id="tab18" />
-
-    <label for="tab18"
-           role="tab"
-           aria-selected="false"
-           aria-controls="panel18"
-           tabindex="0">Demo</label>
-    <div id="tab-content18"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="specification"
-         aria-hidden="true">
-    <div align="center">
-    <iframe class="lazy"
-            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure9/index.html"
-            src=""
-            width="900"
-            height="500"
-            frameborder="0"
-            overflow="hidden"
-            seamless
-            scrolling="no"
-            Id="3.9">
-                    </iframe>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <div class="note">
-    <h4 style="text-align:right;">Exercise 3.9</h4>
-    <p>
-            Try using the Perlin noise function instead of sine or cosine with the above example.
+        <h2>3.9 Trigonometry and Forces: The Pendulum</h2>
+        <p>
+            Do you miss Newton’s laws of motion? I know I sure do. Well, lucky for you, it’s time to bring it
+            all back home. After all, it’s been nice learning about triangles and tangents and waves, but
+            really, the core of this book is about simulating the physics of moving bodies. Let’s take a
+            look at how trigonometry can help us with this pursuit.
         </p>
-    </div>
-    <div class="note">
-    <h4 style="text-align:right;">
-            Exercise 3.10
-        </h4>
-    <p>
-            Encapsulate the above examples into a Wave class and create a sketch that displays two waves
-            (with different amplitudes/periods) as in the screenshot below. Move beyond plain circles and
-            lines and try visualizing the wave in a more creative way.
-        </p>
-
-    <center>
-    <img style="padding: 10px; height: 460px" src="images/gifs/3.10 exercise gif.gif" alt="Two wavers of different amplitudes and periods" /></img>
-        </center>
-    </div>
-    <div class="note">
-    <h4 style="text-align:right;">
-            Exercise 3.11
-        </h4>
-    <p>
-            More complex waves can be produced by the values of multiple waves together. Create a sketch that
-            implements this, as in the screenshot below.
-        </p>
-    <h4>GIF GIF</h4>
-    </div>
-    <h2>3.9 Trigonometry and Forces: The Pendulum</h2>
-    <p>
-        Do you miss Newton’s laws of motion? I know I sure do. Well, lucky for you, it’s time to bring it
-        all back home. After all, it’s been nice learning about triangles and tangents and waves, but
-        really, the core of this book is about simulating the physics of moving bodies. Let’s take a
-        look at how trigonometry can help us with this pursuit.
-    </p>
-    <div id="ImageContainer">
-    <img src="https://natureofcode.com/book/imgs/chapter03/ch03_10.png" style="  width: 100%;
+        <div id="ImageContainer">
+            <img src="https://natureofcode.com/book/imgs/chapter03/ch03_10.png" style="  width: 100%;
                     height: 100%;" alt="Figure 3.10">
 
-    <p>
-            Figure 3.10
-        </p>
-    </div>
-    <div id="ImageContainer">
-    <img src="https://natureofcode.com/book/imgs/chapter03/ch03_11.png" style="  width: 100%;
+            <p>
+                Figure 3.10
+            </p>
+        </div>
+        <div id="ImageContainer">
+            <img src="https://natureofcode.com/book/imgs/chapter03/ch03_11.png" style="  width: 100%;
                     height: 100%;" alt="Figure 3.11">
 
-    <p>
-            Figure 3.11
+            <p>
+                Figure 3.11
+            </p>
+        </div>
+        <p>
+            A pendulum is a bob suspended from a pivot. Obviously a real-world pendulum would live in a 3D
+            space, but we’re going to look at a simpler scenario, a pendulum in a 2D space—a Unity
+            scene (see Figure 3.10).
         </p>
-    </div>
-    <p>
-        A pendulum is a bob suspended from a pivot. Obviously a real-world pendulum would live in a 3D
-        space, but we’re going to look at a simpler scenario, a pendulum in a 2D space—a Unity
-        scene (see Figure 3.10).
-    </p>
-    <p>
-        In Chapter 2, we learned how a force (such as the force of gravity in Figure 3.11) causes an
-        object to accelerate. F = M * A or A = F / M. In this case, however, the pendulum bob doesn’t
-        simply fall to the ground because it is attached by an arm to the pivot point. And so, in order
-        to determine its angular acceleration, we not only need to look at the force of gravity, but
-        also the force at the angle of the pendulum’s arm (relative to a pendulum at rest with an angle
-        of 0).
-    </p>
-    <p>
-        In the above case, since the pendulum’s arm is of fixed length, the only variable in the scenario
-        is the angle. We are going to simulate the pendulum’s motion through the use of angular velocity
-        and acceleration. The angular acceleration will be calculated using Newton’s second law with a
-        little trigonometry twist.
-    </p>
-    <p>
-        Let’s zoom in on the right triangle from the pendulum diagram.
-    </p>
-    <div id="ImageContainer">
-    <img src="https://natureofcode.com/book/imgs/chapter03/ch03_12.png" style="  width: 100%;
+        <p>
+            In Chapter 2, we learned how a force (such as the force of gravity in Figure 3.11) causes an
+            object to accelerate. F = M * A or A = F / M. In this case, however, the pendulum bob doesn’t
+            simply fall to the ground because it is attached by an arm to the pivot point. And so, in order
+            to determine its angular acceleration, we not only need to look at the force of gravity, but
+            also the force at the angle of the pendulum’s arm (relative to a pendulum at rest with an angle
+            of 0).
+        </p>
+        <p>
+            In the above case, since the pendulum’s arm is of fixed length, the only variable in the scenario
+            is the angle. We are going to simulate the pendulum’s motion through the use of angular velocity
+            and acceleration. The angular acceleration will be calculated using Newton’s second law with a
+            little trigonometry twist.
+        </p>
+        <p>
+            Let’s zoom in on the right triangle from the pendulum diagram.
+        </p>
+        <div id="ImageContainer">
+            <img src="https://natureofcode.com/book/imgs/chapter03/ch03_12.png" style="  width: 100%;
                     height: 100%;" alt="Figure 3.12">
 
-    <p>
-            Figure 3.12
+            <p>
+                Figure 3.12
+            </p>
+        </div>
+        <p>
+            We can see that the force of the pendulum (Fp) should point perpendicular to the arm of the
+            pendulum in the direction that the pendulum is swinging. After all, if there were no arm, the
+            bob would just fall straight down. It’s the tension force of the arm that keeps the bob
+            accelerating towards the pendulum’s rest state. Since the force of gravity (Fp) points downward,
+            by making a right triangle out of these two vectors, we’ve accomplished something quite
+            magnificent. We’ve made the force of gravity the hypotenuse of a right triangle and separated
+            the vector into two components, one of which represents the force of the pendulum. Since sine
+            equals opposite over hypotenuse, we have:
         </p>
-    </div>
-    <p>
-        We can see that the force of the pendulum (Fp) should point perpendicular to the arm of the
-        pendulum in the direction that the pendulum is swinging. After all, if there were no arm, the
-        bob would just fall straight down. It’s the tension force of the arm that keeps the bob
-        accelerating towards the pendulum’s rest state. Since the force of gravity (Fp) points downward,
-        by making a right triangle out of these two vectors, we’ve accomplished something quite
-        magnificent. We’ve made the force of gravity the hypotenuse of a right triangle and separated
-        the vector into two components, one of which represents the force of the pendulum. Since sine
-        equals opposite over hypotenuse, we have:
-    </p>
-    <p><b>sine(θ) = Fp / Fg</b></p>
+        <p><b>sine(θ) = Fp / Fg</b></p>
 
-    <p>
-        Therefore:
-    </p>
-    <p><b>Fp = Fg * sine(θ)</b></p>
+        <p>
+            Therefore:
+        </p>
+        <p><b>Fp = Fg * sine(θ)</b></p>
 
-    <p>
-        Lest we forget, we’ve been doing all of this with a single question in mind: What is the angular
-        acceleration of the pendulum? Once we have the angular acceleration, we’ll be able to apply our
-        rules of motion to find the new angle for the pendulum.
-    </p>
-    <p><b>angular velocity = angular velocity + angular acceleration</b></p>
-    <p><b>angle = angle + angular velocity</b></p>
+        <p>
+            Lest we forget, we’ve been doing all of this with a single question in mind: What is the angular
+            acceleration of the pendulum? Once we have the angular acceleration, we’ll be able to apply our
+            rules of motion to find the new angle for the pendulum.
+        </p>
+        <p><b>angular velocity = angular velocity + angular acceleration</b></p>
+        <p><b>angle = angle + angular velocity</b></p>
 
-    <p>
-        The good news is that with Newton’s second law, we know that there is a relationship between
-        force and acceleration, namely F = M * A, or A = F / M. So if the force of the pendulum is equal
-        to the force of gravity times sine of the angle, then:
-    </p>
-    <p><b>pendulum angular acceleration = acceleration due to gravity * sine (θ)</b></p>
+        <p>
+            The good news is that with Newton’s second law, we know that there is a relationship between
+            force and acceleration, namely F = M * A, or A = F / M. So if the force of the pendulum is equal
+            to the force of gravity times sine of the angle, then:
+        </p>
+        <p><b>pendulum angular acceleration = acceleration due to gravity * sine (θ)</b></p>
 
-    <p>
-        This is a good time to remind ourselves that we’re Unity programmers and not physicists.
-        Yes, we know that the acceleration due to gravity on earth is 9.8 meters per second squared. But
-        this number isn’t relevant to us. What we have here is just an arbitrary constant (we’ll call it
-        gravity), one that we can use to scale the acceleration to something that feels right.
-    </p>
-    <p><b>angular acceleration = gravity * sine(θ)</b></p>
+        <p>
+            This is a good time to remind ourselves that we’re Unity programmers and not physicists.
+            Yes, we know that the acceleration due to gravity on earth is 9.8 meters per second squared. But
+            this number isn’t relevant to us. What we have here is just an arbitrary constant (we’ll call it
+            gravity), one that we can use to scale the acceleration to something that feels right.
+        </p>
+        <p><b>angular acceleration = gravity * sine(θ)</b></p>
 
-    <p>
-        Amazing. After all that, the formula is so simple. You might be wondering, why bother going
-        through the derivation at all? I mean, learning is great and all, but we could have easily just
-        said, "Hey, the angular acceleration of a pendulum is some constant times the sine of the
-        angle." This is just another moment in which we remind ourselves that the purpose of the book is
-        not to learn how pendulums swing or gravity works. The point is to think creatively about how
-        things can move about the screen in a computationally based graphics system. The pendulum is
-        just a case study. If you can understand the approach to programming a pendulum, then however
-        you choose to design your onscreen world, you can apply the same techniques.
-    </p>
-    <p>
-        Of course, we’re not finished yet. We may be happy with our simple, elegant formula, but we still
-        have to apply it in code. This is most definitely a good time to practice our object-oriented
-        programming skills and create a Pendulum class. Let’s think about all the properties we’ve
-        encountered in our pendulum discussion that the class will need:
-    </p>
-    <ul>
-    <li>arm length</li>
-    <li>angle</li>
-    <li>angular velocity</li>
-    <li>angular acceleration</li>
-    </ul>
-    <pre class="prettyprint">
+        <p>
+            Amazing. After all that, the formula is so simple. You might be wondering, why bother going
+            through the derivation at all? I mean, learning is great and all, but we could have easily just
+            said, "Hey, the angular acceleration of a pendulum is some constant times the sine of the
+            angle." This is just another moment in which we remind ourselves that the purpose of the book is
+            not to learn how pendulums swing or gravity works. The point is to think creatively about how
+            things can move about the screen in a computationally based graphics system. The pendulum is
+            just a case study. If you can understand the approach to programming a pendulum, then however
+            you choose to design your onscreen world, you can apply the same techniques.
+        </p>
+        <p>
+            Of course, we’re not finished yet. We may be happy with our simple, elegant formula, but we still
+            have to apply it in code. This is most definitely a good time to practice our object-oriented
+            programming skills and create a Pendulum class. Let’s think about all the properties we’ve
+            encountered in our pendulum discussion that the class will need:
+        </p>
+        <ul>
+            <li>arm length</li>
+            <li>angle</li>
+            <li>angular velocity</li>
+            <li>angular acceleration</li>
+        </ul>
+        <pre class="prettyprint">
 
 
-    public class pendulum : MonoBehaviour
-    {
+public class pendulum : MonoBehaviour
+{
 
-        Vector3 location;
-        Vector3 origin = new Vector3(0f,10f,0f);
+    Vector3 location;
+    Vector3 origin = new Vector3(0f,10f,0f);
 
-        public float r;
-        public float angle;
-        public float aVelocity =0.0f;
-        public float aAcceleration = 0.0f;
-        public float damping = 0.995f;
-        GameObject lineDrawing;
-        LineRenderer lineRender;
-
+    public float r;
+    public float angle;
+    public float aVelocity =0.0f;
+    public float aAcceleration = 0.0f;
+    public float damping = 0.995f;
+    GameObject lineDrawing;
+    LineRenderer lineRender;
+}
                                     </pre>
 
-    <p>
-        We’ll also need to write a function update() to update the pendulum’s angle according to our
-        formula…
-    </p>
-    <pre class="prettyprint">
+        <p>
+            We’ll also need to write a function Update() to update the pendulum’s angle according to our
+            formula…
+        </p>
+        <pre class="prettyprint">
 
 
-    public void Go() {
+public void Update() 
+{
+    float gravity = .4f;
+    aAcceleration = -1 * gravity * Mathf.Sin(angle);
+    aVelocity += aAcceleration;
+    angle += aVelocity;
 
-        float gravity = .4f;
-        aAcceleration = -1 * gravity * Mathf.Sin(angle);
-        aVelocity += aAcceleration;
-        angle += aVelocity;
+    this.gameObject.transform.position = new Vector3(r * Mathf.Sin(angle), r * Mathf.Cos(angle), 0f);
+    this.gameObject.transform.position += origin;
 
-        this.gameObject.transform.position = new Vector3(r * Mathf.Sin(angle), r * Mathf.Cos(angle), 0f);
-        this.gameObject.transform.position += origin;
-
-
-        lineRender.SetPosition(0, origin);
-        lineRender.SetPosition(1, this.gameObject.transform.position);
-    }
-
+    lineRender.SetPosition(0, origin);
+    lineRender.SetPosition(1, this.gameObject.transform.position);
+}
                                     </pre>
 
-    <p>
-        …as well as a function Go() to draw the pendulum in the window. This begs the question: “Um,
-        where do we draw the pendulum?” We know the angle and the arm length, but how do we know the x,y
-        (Cartesian!) coordinates for both the pendulum’s pivot point (let’s call it origin) and bob
-        location (let’s call it location)? This may be getting a little tiring, but the answer, yet
-        again, is trigonometry.
-    </p>
-    <p>
-        The origin is just something we make up, as is the arm length. Let’s say:
-    </p>
-    <pre class="prettyprint">
+        <p>
+            …as well as functionality in Update() to draw the pendulum in the window. This begs the question: “Um,
+            where do we draw the pendulum?” We know the angle and the arm length, but how do we know the x,y
+            (Cartesian!) coordinates for both the pendulum’s pivot point (let’s call it origin) and bob
+            location (let’s call it location)? This may be getting a little tiring, but the answer, yet
+            again, is trigonometry.
+        </p>
+        <p>
+            The origin is just something we make up, as is the arm length. Let’s say:
+        </p>
+        <pre class="prettyprint">
 
-
-    void Start()
-    {
-        pendulum = pendulumObject.GetComponent<pendulum>();
-        pendulum.r = 125f;
-    }
+void Start()
+{
+    pendulum = pendulumObject.GetComponent<pendulum>();
+    pendulum.r = 125f;
+}
                                     </pre>
 
-    <p>
-        We’ve got the current angle stored in our variable angle. So relative to the origin, the
-        pendulum’s location is a polar coordinate: (r,angle). And we need it to be Cartesian. Luckily
-        for us, we just spent some time (section 3.5) deriving the formula for converting from polar to
-        Cartesian.
-    </p>
-    <p>
-        Since the location is relative to wherever the origin happens to be, we can just add origin to
-        the location Vector3:
-    </p>
-    <pre class="prettyprint">
-
+        <p>
+            We’ve got the current angle stored in our variable angle. So relative to the origin, the
+            pendulum’s location is a polar coordinate: (r,angle). And we need it to be Cartesian. Luckily
+            for us, we just spent some time (section 3.5) deriving the formula for converting from polar to
+            Cartesian.
+        </p>
+        <p>
+            Since the location is relative to wherever the origin happens to be, we can just add origin to
+            the location Vector3:
+        </p>
+        <pre class="prettyprint">
 
     this.gameObject.transform.position = new Vector3(r * Mathf.Sin(angle), r * Mathf.Cos(angle), 0f);
     this.gameObject.transform.position += origin;
 
                                     </pre>
-
-    <p>
-        And all that remains is the little matter of drawing a line and ellipse (you should be more
-        creative, of course).
-    </p>
-    <p>
-        Before we put everything together, there’s one last little detail I neglected to mention. Let’s
-        think about the pendulum arm for a moment. Is it a metal rod? A string? A rubber band? How is it
-        attached to the pivot point? How long is it? What is its mass? Is it a windy day? There are a
-        lot of questions that we could continue to ask that would affect the simulation. We’re living,
-        of course, in a fantasy world, one where the pendulum’s arm is some idealized rod that never
-        bends and the mass of the bob is concentrated in a single, infinitesimally small point.
-        Nevertheless, even though we don’t want to worry ourselves with all of the questions, we should
-        add one more variable to our calculation of angular acceleration. To keep things simple, in our
-        derivation of the pendulum’s acceleration, we assumed that the length of the pendulum’s arm is
-        1. In fact, the length of the pendulum’s arm affects the acceleration greatly: the longer the
-        arm, the slower the acceleration. To simulate a pendulum more accurately, we divide by that
-        length, in this case r. For a more involved explanation, visit The Simple Pendulum website.
-    </p>
-    <pre class="prettyprint">
-
+        <p>
+            And all that remains is the little matter of drawing a line and ellipse (you should be more
+            creative, of course).
+        </p>
+        <p>
+            Before we put everything together, there’s one last little detail I neglected to mention. Let’s
+            think about the pendulum arm for a moment. Is it a metal rod? A string? A rubber band? How is it
+            attached to the pivot point? How long is it? What is its mass? Is it a windy day? There are a
+            lot of questions that we could continue to ask that would affect the simulation. We’re living,
+            of course, in a fantasy world, one where the pendulum’s arm is some idealized rod that never
+            bends and the mass of the bob is concentrated in a single, infinitesimally small point.
+            Nevertheless, even though we don’t want to worry ourselves with all of the questions, we should
+            add one more variable to our calculation of angular acceleration. To keep things simple, in our
+            derivation of the pendulum’s acceleration, we assumed that the length of the pendulum’s arm is
+            1. In fact, the length of the pendulum’s arm affects the acceleration greatly: the longer the
+            arm, the slower the acceleration. To simulate a pendulum more accurately, we divide by that
+            length, in this case r. For a more involved explanation, visit The Simple Pendulum website.
+        </p>
+        <pre class="prettyprint">
 
     pendulum.aAcceleration = (-1*gravity/pendulum.r) * Mathf.Sin(angle);
-
                                         </pre>
 
-    <p>
-        Finally, a real-world pendulum is going to experience some amount of friction (at the pivot
-        point)
-        and air resistance. With our code as is, the pendulum would swing forever, so to make it more
-        realistic we can use a “damping” trick. I say trick because rather than model the resistance
-        forces
-        with some degree of accuracy (as we did in Chapter 2), we can achieve a similar result by simply
-        reducing the angular velocity during each cycle. The following code reduces the velocity by 1%
-        (or
-        multiplies it by 99%) during each frame of animation:
-    </p>
-    <pre class="prettyprint">
-
+        <p>
+            Finally, a real-world pendulum is going to experience some amount of friction (at the pivot
+            point)
+            and air resistance. With our code as is, the pendulum would swing forever, so to make it more
+            realistic we can use a “damping” trick. I say trick because rather than model the resistance
+            forces
+            with some degree of accuracy (as we did in Chapter 2), we can achieve a similar result by simply
+            reducing the angular velocity during each cycle. The following code reduces the velocity by 1%
+            (or
+            multiplies it by 99%) during each frame of animation:
+        </p>
+        <pre class="prettyprint">
 
     aVelocity *= 0.99f;
-
                                     </pre>
 
-    <p>
-        Putting everything together, we have the following example (with the pendulum beginning at a
-        45-degree angle).
-    </p>
-    <p>
-    <span class="example">
-            Example 3.10: Swinging pendulum
-        </span>
-    </p>
-    <ul class="tabs" role="tablist">
-    <li>
-    <input type="radio" name="tabs10" id="tab19" checked />
+        <p>
+            Putting everything together, we have the following example (with the pendulum beginning at a
+            45-degree angle).
+        </p>
+        <p>
+            <span class="example">
+                Example 3.10: Swinging pendulum
+            </span>
+        </p>
+        <ul class="tabs" role="tablist">
+            <li>
+                <input type="radio" name="tabs10" id="tab19" checked />
 
-    <label for="tab19"
-           role="tab"
-           aria-selected="true"
-           aria-controls="panel19"
-           tabindex="0">Code</label>
-    <div id="tab-content19"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="description"
-         aria-hidden="false">
-    <div id="example10" style="height: 500px"></div>
-            </div>
-        </li>
-
-    <li>
-    <input type="radio" name="tabs10" id="tab20" />
-
-    <label for="tab20"
-           role="tab"
-           aria-selected="false"
-           aria-controls="panel20"
-           tabindex="0">Demo</label>
-    <div id="tab-content20"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="specification"
-         aria-hidden="true">
-    <div align="center">
-    <iframe class="lazy"
-            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure10/index.html"
-            src=""
-            width="900"
-            height="500"
-            frameborder="0"
-            overflow="hidden"
-            seamless
-            scrolling="no"
-            Id="3.10">
-                    </iframe>
+                <label for="tab19"
+                       role="tab"
+                       aria-selected="true"
+                       aria-controls="panel19"
+                       tabindex="0">Code</label>
+                <div id="tab-content19"
+                     class="tab-content"
+                     role="tabpanel"
+                     aria-labelledby="description"
+                     aria-hidden="false">
+                    <div id="example10" style="height: 500px"></div>
                 </div>
-            </div>
-        </li>
-    </ul>
-    <p>
-        (Note that the version of the example posted on the website has additional code to allow the user
-        to
-        grab the pendulum and swing it with the mouse.)
-    </p>
-    <div class="note">
-    <h4 style="text-align:right;">
-            Exercise 3.12
-        </h4>
-    <p>
-            String together a series of pendulums so that the endpoint of one is the origin point of another.
-            Note that doing this may produce intriguing results but will be wildly inaccurate physically.
-            Simulating an actual double pendulum involves sophisticated equations, which you can read about
-            here: <a href="https://scienceworld.wolfram.com/physics/DoublePendulum.html">https://scienceworld.wolfram.com/physics/DoublePendulum.html</a>.
-        </p>
-    </div>
-    <div class="note">
-    <h4 style="text-align:right;">
-            Exercise 3.13
-        </h4>
-    <p>
-            Using trigonometry, what is the magnitude of the normal force in the illustration on the right
-            (the
-            force perpendicular to the incline on which the sled rests)? Note that, as indicated, the
-            “normal”
-            force is a component of the force of gravity.
-        </p>
-    </div>
-    <div id="ImageContainer">
-    <img src="https://natureofcode.com/book/imgs/chapter03/ch03_13.png" style="  width: 100%;
+            </li>
+
+            <li>
+                <input type="radio" name="tabs10" id="tab20" />
+
+                <label for="tab20"
+                       role="tab"
+                       aria-selected="false"
+                       aria-controls="panel20"
+                       tabindex="0">Demo</label>
+                <div id="tab-content20"
+                     class="tab-content"
+                     role="tabpanel"
+                     aria-labelledby="specification"
+                     aria-hidden="true">
+                    <div align="center">
+                        <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure10/index.html"
+                                src=""
+                                width="900"
+                                height="500"
+                                frameborder="0"
+                                overflow="hidden"
+                                seamless
+                                scrolling="no"
+                                Id="3.10">
+                        </iframe>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div class="note">
+            <h4 style="text-align:right;">
+                Exercise 3.12
+            </h4>
+            <p>
+                String together a series of pendulums so that the endpoint of one is the origin point of another.
+                Note that doing this may produce intriguing results but will be wildly inaccurate physically.
+                Simulating an actual double pendulum involves sophisticated equations, which you can read about
+                here: <a href="https://scienceworld.wolfram.com/physics/DoublePendulum.html">https://scienceworld.wolfram.com/physics/DoublePendulum.html</a>.
+            </p>
+        </div>
+        <div class="note">
+            <h4 style="text-align:right;">
+                Exercise 3.13
+            </h4>
+            <p>
+                Using trigonometry, what is the magnitude of the normal force in the illustration on the right
+                (the
+                force perpendicular to the incline on which the sled rests)? Note that, as indicated, the
+                “normal”
+                force is a component of the force of gravity.
+            </p>
+        </div>
+        <div id="ImageContainer">
+            <img src="https://natureofcode.com/book/imgs/chapter03/ch03_13.png" style="  width: 100%;
                     height: 100%;" alt="Figure 3.13">
 
-    <p>
-            Figure 3.13
+            <p>
+                Figure 3.13
+            </p>
+        </div>
+        <div class="note">
+            <h4 style="text-align:right;">
+                Exercise 3.14
+            </h4>
+            <p>
+                Create an example that simulates a box sliding down the incline with friction. Note that the
+                magnitude of the friction force is equal to the normal force.
+            </p>
+        </div>
+        <h2>3.10 Spring Forces</h2>
+        <p>
+            In section 3.6, we looked at modeling simple harmonic motion by mapping the sine wave to a pixel
+            range. Exercise 3.6 asked you to use this technique to create a simulation of a bob hanging from
+            a
+            spring. While using the sin() function is a quick-and-dirty, one-line-of-code way of getting
+            something up and running, it won’t do if what we really want is to have a bob hanging from a
+            spring
+            in a two-dimensional space that responds to other forces in the environment (wind, gravity,
+            etc.) To
+            accomplish a simulation like this (one that is identical to the pendulum example, only now the
+            arm
+            is a springy connection), we need to model the forces of a spring using Vector3.
         </p>
-    </div>
-    <div class="note">
-    <h4 style="text-align:right;">
-            Exercise 3.14
-        </h4>
-    <p>
-            Create an example that simulates a box sliding down the incline with friction. Note that the
-            magnitude of the friction force is equal to the normal force.
-        </p>
-    </div>
-    <h2>3.10 Spring Forces</h2>
-    <p>
-        In section 3.6, we looked at modeling simple harmonic motion by mapping the sine wave to a pixel
-        range. Exercise 3.6 asked you to use this technique to create a simulation of a bob hanging from
-        a
-        spring. While using the sin() function is a quick-and-dirty, one-line-of-code way of getting
-        something up and running, it won’t do if what we really want is to have a bob hanging from a
-        spring
-        in a two-dimensional space that responds to other forces in the environment (wind, gravity,
-        etc.) To
-        accomplish a simulation like this (one that is identical to the pendulum example, only now the
-        arm
-        is a springy connection), we need to model the forces of a spring using Vector3.
-    </p>
-    <div id="ImageContainer">
-    <img src="https://natureofcode.com/book/imgs/chapter03/ch03_14.png" style="  width: 100%;
+        <div id="ImageContainer">
+            <img src="https://natureofcode.com/book/imgs/chapter03/ch03_14.png" style="  width: 100%;
                         height: 100%;" alt="Figure 3.14">
 
-    <p>
-            Figure 3.14: The pendulum doesn't move because all the forces cancel each other out (add up to a
-            net
-            force of zero).
+            <p>
+                Figure 3.14: The pendulum doesn't move because all the forces cancel each other out (add up to a
+                net
+                force of zero).
+            </p>
+        </div>
+        <div>&nbsp;</div>
+        <p>
+            The force of a spring is calculated according to Hooke’s law, named for Robert Hooke, a British
+            physicist
+            who developed the formula in 1660. Hooke originally stated the law in Latin: "Ut tensio, sic
+            vis,"
+            or
+            “As the extension, so the force.” Let’s think of it this way:
         </p>
-    </div>
-    <div>&nbsp;</div>
-    <p>
-        The force of a spring is calculated according to Hooke’s law, named for Robert Hooke, a British
-        physicist
-        who developed the formula in 1660. Hooke originally stated the law in Latin: "Ut tensio, sic
-        vis,"
-        or
-        “As the extension, so the force.” Let’s think of it this way:
-    </p>
-    <p>
-        The force of the spring is directly proportional to the extension of the spring.
-    </p>
-    <div id="ImageContainer">
-    <img src="https://natureofcode.com/book/imgs/chapter03/ch03_15.png" style="  width: 100%;
+        <p>
+            The force of the spring is directly proportional to the extension of the spring.
+        </p>
+        <div id="ImageContainer">
+            <img src="https://natureofcode.com/book/imgs/chapter03/ch03_15.png" style="  width: 100%;
                     height: 100%;" alt="Figure 3.15">
 
-    <p>
-            Figure 3.15: x = current length - rest length
+            <p>
+                Figure 3.15: x = current length - rest length
+            </p>
+        </div>
+        <p>
+            In other words, if you pull on the bob a lot, the force will be strong; if you pull on the bob a
+            little,
+            the force will be weak. Mathematically, the law is stated as follows:
         </p>
-    </div>
-    <p>
-        In other words, if you pull on the bob a lot, the force will be strong; if you pull on the bob a
-        little,
-        the force will be weak. Mathematically, the law is stated as follows:
-    </p>
-    Fspring = - k * x
+        Fspring = - k * x
 
-    <p>
-        k is constant and its value will ultimately scale the force. Is the spring highly elastic or
-        quite
-        rigid?
-    </p>
-    <p>
-        x refers to the displacement of the spring, i.e. the difference between the current length and
-        the
-        rest
-        length. The rest length is defined as the length of the spring in a state of equilibrium.
-    </p>
-    <p>
-        Now remember, force is a vector, so we need to calculate both magnitude and direction. Let’s look
-        at
-        one
-        more diagram of the spring and label all the givens we might have in a Unity scene.
-    </p>
-    <div id="ImageContainer">
-    <img src="https://natureofcode.com/book/imgs/chapter03/ch03_16.png" style="  width: 100%;
+        <p>
+            k is constant and its value will ultimately scale the force. Is the spring highly elastic or
+            quite
+            rigid?
+        </p>
+        <p>
+            x refers to the displacement of the spring, i.e. the difference between the current length and
+            the
+            rest
+            length. The rest length is defined as the length of the spring in a state of equilibrium.
+        </p>
+        <p>
+            Now remember, force is a vector, so we need to calculate both magnitude and direction. Let’s look
+            at
+            one
+            more diagram of the spring and label all the givens we might have in a Unity scene.
+        </p>
+        <div id="ImageContainer">
+            <img src="https://natureofcode.com/book/imgs/chapter03/ch03_16.png" style="  width: 100%;
                     height: 100%;" alt="Figure 3.16">
 
-    <p>
-            Figure 3.16
-        </p>
-    </div>
+            <p>
+                Figure 3.16
+            </p>
+        </div>
 
-    <p>
-        Let’s establish the following three variables as shown in Figure 3.16.
-    </p>
-    <pre class="prettyprint">
+        <p>
+            Let’s establish the following three variables as shown in Figure 3.16.
+        </p>
+        <pre class="prettyprint">
 
     float restLength;
 
@@ -1955,81 +1903,125 @@ void FixedUpdate()
     public GameObject anchor;
                                     </pre>
 
-    <p>
-        First, let’s use Hooke’s law to calculate the magnitude of the force. We need to know k and x. k
-        is
-        easy;
-        it’s just a constant, so let’s make something up.
-    </p>
-    <pre class="prettyprint">
+        <p>
+            First, let’s use Hooke’s law to calculate the magnitude of the force. We need to know k and x. k
+            is
+            easy;
+            it’s just a constant, so let’s make something up.
+        </p>
+        <pre class="prettyprint">
 
     float k = 0.1f;
-
                                     </pre>
 
-    <p>
-        x is perhaps a bit more difficult. We need to know the “difference between the current length and
-        the
-        rest length.” The rest length is defined as the variable restLength. What’s the current length?
-        The
-        distance between the anchor and the bob. And how can we calculate that distance? How about the
-        magnitude
-        of a vector that points from the anchor to the bob? (Note that this is exactly the same process
-        we
-        employed when calculating distance in Example 2.9: gravitational attraction.)
-    </p>
-    <pre class="prettyprint">
+        <p>
+            x is perhaps a bit more difficult. We need to know the “difference between the current length and
+            the
+            rest length.” The rest length is defined as the variable restLength. What’s the current length?
+            The
+            distance between the anchor and the bob. And how can we calculate that distance? How about the
+            magnitude
+            of a vector that points from the anchor to the bob? (Note that this is exactly the same process
+            we
+            employed when calculating distance in Example 2.9: gravitational attraction.)
+        </p>
+        <pre class="prettyprint">
 
-
-    Vector3 dir = bob.transform.position - anchor.transform.position;
+    Vector3 force = bob.transform.position - anchor.transform.position;
     float currentLength = force.magnitude;
     float x = restLength - currentLength;
-
                                         </pre>
 
-    <p>
-        Now that we’ve sorted out the elements necessary for the magnitude of the force (-1 * k * x), we
-        need
-        to
-        figure out the direction, a unit vector pointing in the direction of the force. The good news is
-        that we
-        already have this vector. Right? Just a moment ago we thought to ourselves: “How we can
-        calculate
-        that
-        distance? How about the magnitude of a vector that points from the anchor to the bob?” Well,
-        that is
-        the
-        direction of the force!
-    </p>
-    <div id="ImageContainer">
-    <img src="https://natureofcode.com/book/imgs/chapter03/ch03_17.png" style="  width: 100%;
+        <p>
+            Now that we’ve sorted out the elements necessary for the magnitude of the force (-1 * k * x), we
+            need
+            to
+            figure out the direction, a unit vector pointing in the direction of the force. The good news is
+            that we
+            already have this vector. Right? Just a moment ago we thought to ourselves: “How we can
+            calculate
+            that
+            distance? How about the magnitude of a vector that points from the anchor to the bob?” Well,
+            that is
+            the
+            direction of the force!
+        </p>
+        <div id="ImageContainer">
+            <img src="https://natureofcode.com/book/imgs/chapter03/ch03_17.png" style="  width: 100%;
                 height: 100%;" alt="Figure 3.17">
 
-    <p>
-            Figure 3.17
+            <p>
+                Figure 3.17
+            </p>
+        </div>
+
+        <p>
+            In Figure 3.17, we can see that if we stretch the spring beyond its rest length, there should be
+            a
+            force
+            pulling it back towards the anchor. And if it shrinks below its rest length, the force should
+            push
+            it
+            away from the anchor. This reversal of direction is accounted for in the formula with the -1.
+            And so
+            all
+            we need to do is normalize the Vector3 we used for the distance calculation! Let’s take a look
+            at
+            the
+            code and rename that Vector3 variable as “force.”
         </p>
-    </div>
 
-    <p>
-        In Figure 3.17, we can see that if we stretch the spring beyond its rest length, there should be
-        a
-        force
-        pulling it back towards the anchor. And if it shrinks below its rest length, the force should
-        push
-        it
-        away from the anchor. This reversal of direction is accounted for in the formula with the -1.
-        And so
-        all
-        we need to do is normalize the Vector3 we used for the distance calculation! Let’s take a look
-        at
-        the
-        code and rename that Vector3 variable as “force.”
-    </p>
-
-    <pre class="prettyprint">
-
+        <pre class="prettyprint">
 
     float k = 0.1f;
+    Vector3 force = bob.transform.position - anchor.transform.position;
+    float distance = force.magnitude;
+    float stretch = distance - springLength;
+
+    Vector3.Normalize(force);
+    force *= (-1 * k * stretch);
+    applyForce(force);
+                                        </pre>
+
+        <p>
+            Now that we have the algorithm worked out for computing the spring force vector, the question
+            remains:
+            what object-oriented programming structure should we use? This, again, is one of those
+            situations in
+            which there is no “correct” answer. There are several possibilities; which one we choose depends
+            on
+            the
+            program’s goals and one’s own personal coding style. Still, since we’ve been working all along
+            with
+            a
+            Mover class, let’s keep going with this same framework. Let’s think of our Mover class as the
+            spring’s
+            “bob.” The bob needs location, velocity, and acceleration vectors to move about the screen.
+            Perfect—we’ve got that already! And perhaps the bob experiences a gravity force via the
+            applyForce()
+            function. Just one more step—we need to apply the spring force:
+        </p>
+        <pre class="prettyprint">
+
+void Start()
+{
+    // Create a GameObject that will be the line
+    lineDrawing = new GameObject();
+
+    //Add the Unity Component "LineRenderer" to the GameObject lineDrawing. We will see a black line.
+    lineRender = lineDrawing.AddComponent<LineRenderer>();
+}
+
+// Update is called once per frame
+void Update()
+{
+    connect(bob);
+    lineRender.SetPosition(0, anchor.transform.position);
+    lineRender.SetPosition(1, bob.transform.position);
+}
+
+void connect (GameObject bob)
+{
     Vector3 force = bob.transform.position - anchor.transform.position;
     float d = force.magnitude;
     float stretch = d - springLength;
@@ -2037,394 +2029,361 @@ void FixedUpdate()
     Vector3.Normalize(force);
     force *= (-1 * k * stretch);
     applyForce(force);
-
+}
                                         </pre>
 
-    <p>
-        Now that we have the algorithm worked out for computing the spring force vector, the question
-        remains:
-        what object-oriented programming structure should we use? This, again, is one of those
-        situations in
-        which there is no “correct” answer. There are several possibilities; which one we choose depends
-        on
-        the
-        program’s goals and one’s own personal coding style. Still, since we’ve been working all along
-        with
-        a
-        Mover class, let’s keep going with this same framework. Let’s think of our Mover class as the
-        spring’s
-        “bob.” The bob needs location, velocity, and acceleration vectors to move about the screen.
-        Perfect—we’ve got that already! And perhaps the bob experiences a gravity force via the
-        applyForce()
-        function. Just one more step—we need to apply the spring force:
-    </p>
-    <pre class="prettyprint">
-
-
-    void Start()
-        {
-            // Create a GameObject that will be the line
-            lineDrawing = new GameObject();
-
-            //Add the Unity Component "LineRenderer" to the GameObject lineDrawing. We will see a bright pink line.
-            lineRender = lineDrawing.AddComponent<LineRenderer>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            connect(bob);
-            lineRender.SetPosition(0, anchor.transform.position);
-            lineRender.SetPosition(1, bob.transform.position);
-        }
-
-        public void connect (GameObject bob)
-        {
-            Vector3 force = bob.transform.position - anchor.transform.position;
-            float d = force.magnitude;
-            float stretch = d - springLength;
-
-            Vector3.Normalize(force);
-            force *= (-1 * k * stretch);
-            applyForce(force);
-        }
-                                        </pre>
-
-    <div id="ImageContainer">
-    <img src="https://natureofcode.com/book/imgs/chapter03/ch03_17.png" style="  width: 100%;
+        <div id="ImageContainer">
+            <img src="https://natureofcode.com/book/imgs/chapter03/ch03_17.png" style="  width: 100%;
                     height: 100%;" alt="Figure 3.18">
 
-    <p>
-            Figure 3.18
+            <p>
+                Figure 3.18
+            </p>
+        </div>
+
+        <p>
+            <span class="example">
+                Example 3.11: A Spring connection
+            </span>
         </p>
-    </div>
+        <ul class="tabs" role="tablist">
+            <li>
+                <input type="radio" name="tabs11" id="tab21" checked />
 
-    <p>
-    <span class="example">
-            Example 3.11: A Spring connection
-        </span>
-    </p>
-    <ul class="tabs" role="tablist">
-    <li>
-    <input type="radio" name="tabs11" id="tab21" checked />
-
-    <label for="tab21"
-           role="tab"
-           aria-selected="true"
-           aria-controls="panel21"
-           tabindex="0">Code</label>
-    <div id="tab-content21"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="description"
-         aria-hidden="false">
-    <div id="example11" style="height: 500px"></div>
-            </div>
-        </li>
-
-    <li>
-    <input type="radio" name="tabs11" id="tab22" />
-
-    <label for="tab22"
-           role="tab"
-           aria-selected="false"
-           aria-controls="panel22"
-           tabindex="0">Demo</label>
-    <div id="tab-content22"
-         class="tab-content"
-         role="tabpanel"
-         aria-labelledby="specification"
-         aria-hidden="true">
-    <div align="center">
-    <iframe class="lazy"
-            data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure11/index.html"
-            src=""
-            width="900"
-            height="500"
-            frameborder="0"
-            overflow="hidden"
-            seamless
-            scrolling="no"
-            Id="3.11">
-                    </iframe>
+                <label for="tab21"
+                       role="tab"
+                       aria-selected="true"
+                       aria-controls="panel21"
+                       tabindex="0">Code</label>
+                <div id="tab-content21"
+                     class="tab-content"
+                     role="tabpanel"
+                     aria-labelledby="description"
+                     aria-hidden="false">
+                    <div id="example11" style="height: 500px"></div>
                 </div>
+            </li>
+
+            <li>
+                <input type="radio" name="tabs11" id="tab22" />
+
+                <label for="tab22"
+                       role="tab"
+                       aria-selected="false"
+                       aria-controls="panel22"
+                       tabindex="0">Demo</label>
+                <div id="tab-content22"
+                     class="tab-content"
+                     role="tabpanel"
+                     aria-labelledby="specification"
+                     aria-hidden="true">
+                    <div align="center">
+                        <iframe class="lazy"
+                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter3/figure11/index.html"
+                                src=""
+                                width="900"
+                                height="500"
+                                frameborder="0"
+                                overflow="hidden"
+                                seamless
+                                scrolling="no"
+                                Id="3.11">
+                        </iframe>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="note">
+            <h4 style="text-align:right;">
+                Exercise 3.15
+            </h4>
+            <p>
+                Create a system of multiple bobs and spring connections. How would you have a bob connected to a
+                bob
+                with
+                no fixed anchor?
+            </p>
+        </div>
+        <div class="note">
+            <h4>The Ecosystem Project</h4>
+            <p>Step 3 Exercise:</p>
+            <p>
+                Take one of your creatures and incorporate oscillation into its motion. You can use the
+                Oscillator
+                class
+                from Example 3.7 as a model. The Oscillator object, however, oscillates around a single point
+                (the
+                middle of the window). Try oscillating around a moving point. In other words, design a creature
+                that
+                moves around the screen according to location, velocity, and acceleration. But that creature
+                isn’t
+                just
+                a static shape, it’s an oscillating body. Consider tying the speed of oscillation to the speed
+                of
+                motion. Think of a butterfly’s flapping wings or the legs of an insect. Can you make it appear
+                that
+                the
+                creature’s internal mechanics (oscillation) drive its locomotion?
+            </p>
+        </div>
+        <div class="footer">
+            <div class="col">
+
+                <h4>Licenses</h4>
+                <p>
+                    <a class="license-badge" rel="license"
+                       href="http://creativecommons.org/licenses/by-nc/3.0/">
+                        <img alt="Creative Commons License"
+                             style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" />
+                    </a>
+                    <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/">
+                        <img alt="LGPL License" style="border-width:0"
+                             src="http://www.gnu.org/graphics/lgplv3-88x31.png" />
+                    </a>
+                </p>
+
+                <p>
+                    The book's text and illustrations are licensed under a <a rel="license"
+                                                                              href="http://creativecommons.org/licenses/by-nc/3.0/">
+                        Creative Commons
+                        Attribution-NonCommercial 3.0 Unported License
+                    </a>.
+                </p>
+
+                <p>
+                    All of the book's source code is licensed under the <a rel="license"
+                                                                           href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
+                    as published by the Free Software Foundation; either version 2.1 of the License, or (at your
+                    option) any later version.
+                </p>
             </div>
-        </li>
-    </ul>
-    <div class="note">
-    <h4 style="text-align:right;">
-            Exercise 3.15
-        </h4>
-    <p>
-            Create a system of multiple bobs and spring connections. How would you have a bob connected to a
-            bob
-            with
-            no fixed anchor?
-        </p>
-    </div>
-    <div class="note">
-    <h4>The Ecosystem Project</h4>
-    <p>Step 3 Exercise:</p>
-    <p>
-            Take one of your creatures and incorporate oscillation into its motion. You can use the
-            Oscillator
-            class
-            from Example 3.7 as a model. The Oscillator object, however, oscillates around a single point
-            (the
-            middle of the window). Try oscillating around a moving point. In other words, design a creature
-            that
-            moves around the screen according to location, velocity, and acceleration. But that creature
-            isn’t
-            just
-            a static shape, it’s an oscillating body. Consider tying the speed of oscillation to the speed
-            of
-            motion. Think of a butterfly’s flapping wings or the legs of an insect. Can you make it appear
-            that
-            the
-            creature’s internal mechanics (oscillation) drive its locomotion?
-        </p>
-    </div>
-    <div class="footer">
-        <div class="col">
+            <div class="col">
+                <h4>Remixer</h4>
+                <p>
+                    Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">
+                        Interactive
+                        Arts and Media Program
+                    </a> at Columbia College Chicago.
+                </p>
 
-        <h4>Licenses</h4>
-        <p>
-            <a class="license-badge" rel="license"
-                href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
-                    style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
-            <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
-                    alt="LGPL License" style="border-width:0"
-                    src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
-        </p>
+                <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
 
-        <p>
-            The book's text and illustrations are licensed under a <a rel="license"
-                href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
-                Attribution-NonCommercial 3.0 Unported License</a>.
-        </p>
+                <p>
+                    <a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a href="https://github.com/jadlerfisher">GitHub</a>
+                </p>
 
-        <p>
-            All of the book's source code is licensed under the <a rel="license"
-                href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
-            as published by the Free Software Foundation; either version 2.1 of the License, or (at your
-            option) any later version.
-        </p>
-</div>
-    <div class="col">
-        <h4>Remixer</h4>
-        <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
-                Arts and Media Program</a> at Columbia College Chicago.</p>
+            </div>
+            <div class="col">
+                <h4>Author</h4>
+                <p>
+                    Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">
+                        Interactive
+                        Telecommunications Program
+                    </a> at New York University.
+                </p>
 
-        <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+                <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
 
-        <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
-                href="https://github.com/jadlerfisher">GitHub</a></p>
+                <p>
+                    <a href="https://twitter.com/shiffman">Twitter</a> <a href="http://github.com/shiffman">GitHub</a>
+                </p>
 
-    </div>
-    <div class="col">
-        <h4>Author</h4>
-        <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
-                Telecommunications Program</a> at New York University.</p>
+            </div>
+        </div>
+        </section>
 
-        <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
+        <script>
+            window.onscroll = function () { scrollFunction() };
 
-        <p><a href="https://twitter.com/shiffman">Twitter</a> <a
-                href="http://github.com/shiffman">GitHub</a></p>
-
-    </div>
-</div>
-    </section>
-
-    <script>window.onscroll = function () { scrollFunction() };
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-                document.getElementById("header").style.fontSize = "16px";
-                document.getElementById("header").style.padding = "10px 30px 10px 30px"; /* Some padding */
-                document.getElementById("authorHeader").style.float = "right";
-                document.getElementById("titleHeader").style.float = "left";
+            function scrollFunction() {
+                if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                    document.getElementById("header").style.fontSize = "16px";
+                    document.getElementById("header").style.padding = "10px 30px 10px 30px"; /* Some padding */
+                    document.getElementById("authorHeader").style.float = "right";
+                    document.getElementById("titleHeader").style.float = "left";
 
 
-            } else {
-                document.getElementById("header").style.fontSize = "20px";
-                document.getElementById("header").style.padding = "10px 10px"; /* Some padding */
-                document.getElementById("authorHeader").style.float = "";
-                document.getElementById("titleHeader").style.float = "";
+                } else {
+                    document.getElementById("header").style.fontSize = "20px";
+                    document.getElementById("header").style.padding = "10px 10px"; /* Some padding */
+                    document.getElementById("authorHeader").style.float = "";
+                    document.getElementById("titleHeader").style.float = "";
 
-            }
-
-        }</script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
-    <script src="scripts/github-embed.min.js"></script>
-    <script>//////lazy loader
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var lazyloadImages;
-
-            if ("IntersectionObserver" in window) {
-                lazyloadImages = document.querySelectorAll(".lazy");
-                var imageObserver = new IntersectionObserver(function (entries, observer) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            var iframe = entry.target;
-                            iframe.src = iframe.dataset.src;
-                            iframe.classList.remove("lazy");
-                            imageObserver.unobserve(iframe);
-                        }
-                    });
-                });
-
-                lazyloadImages.forEach(function (iframe) {
-                    imageObserver.observe(iframe);
-                });
-            } else {
-                var lazyloadThrottleTimeout;
-                lazyloadImages = document.querySelectorAll(".lazy");
-
-                function lazyload() {
-                    if (lazyloadThrottleTimeout) {
-                        clearTimeout(lazyloadThrottleTimeout);
-                    }
-
-                    lazyloadThrottleTimeout = setTimeout(function () {
-                        var scrollTop = window.pageYOffset;
-                        lazyloadImages.forEach(function (iframe) {
-                            if (iframe.offsetTop < (window.innerHeight + scrollTop)) {
-                                iframe.src = iframe.dataset.src;
-                                iframe.classList.remove('lazy');
-                            }
-                        });
-                        if (lazyloadImages.length == 0) {
-                            document.removeEventListener("scroll", lazyload);
-                            window.removeEventListener("resize", lazyload);
-                            window.removeEventListener("orientationChange", lazyload);
-                        }
-                    }, 20);
                 }
 
-                document.addEventListener("scroll", lazyload);
-                window.addEventListener("resize", lazyload);
-                window.addEventListener("orientationChange", lazyload);
-            }
-        })
+            }</script>
 
-        githubEmbed('#example1', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.1/Chapter3Fig1.cs"
-            }]
-        });
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+        <script src="scripts/github-embed.min.js"></script>
+        <script>
+            //////lazy loader
 
-        githubEmbed('#example2', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.2/Chapter3Fig2.cs"
-            }]
-        });
+            document.addEventListener("DOMContentLoaded", function () {
+                var lazyloadImages;
 
-        githubEmbed('#example3', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.3/Chapter3Fig3.cs"
-            }]
-        });
+                if ("IntersectionObserver" in window) {
+                    lazyloadImages = document.querySelectorAll(".lazy");
+                    var imageObserver = new IntersectionObserver(function (entries, observer) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                var iframe = entry.target;
+                                iframe.src = iframe.dataset.src;
+                                iframe.classList.remove("lazy");
+                                imageObserver.unobserve(iframe);
+                            }
+                        });
+                    });
 
-        githubEmbed('#example4', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.4/Chapter3Fig4.cs"
-            }]
-        });
+                    lazyloadImages.forEach(function (iframe) {
+                        imageObserver.observe(iframe);
+                    });
+                } else {
+                    var lazyloadThrottleTimeout;
+                    lazyloadImages = document.querySelectorAll(".lazy");
 
-        githubEmbed('#example5', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.5/Chapter3Fig5.cs"
-            }]
-        });
+                    function lazyload() {
+                        if (lazyloadThrottleTimeout) {
+                            clearTimeout(lazyloadThrottleTimeout);
+                        }
 
-        githubEmbed('#example6', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.6/Chapter3Fig6.cs"
-            }]
-        });
+                        lazyloadThrottleTimeout = setTimeout(function () {
+                            var scrollTop = window.pageYOffset;
+                            lazyloadImages.forEach(function (iframe) {
+                                if (iframe.offsetTop < (window.innerHeight + scrollTop)) {
+                                    iframe.src = iframe.dataset.src;
+                                    iframe.classList.remove('lazy');
+                                }
+                            });
+                            if (lazyloadImages.length == 0) {
+                                document.removeEventListener("scroll", lazyload);
+                                window.removeEventListener("resize", lazyload);
+                                window.removeEventListener("orientationChange", lazyload);
+                            }
+                        }, 20);
+                    }
 
-        githubEmbed('#example7', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.7/Chapter3Fig7.cs"
-            }]
-        });
+                    document.addEventListener("scroll", lazyload);
+                    window.addEventListener("resize", lazyload);
+                    window.addEventListener("orientationChange", lazyload);
+                }
+            })
 
-        githubEmbed('#example8', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.8/Chapter3Fig8.cs"
-            }]
-        });
+            githubEmbed('#example1', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.1/Chapter3Fig1.cs"
+                }]
+            });
 
-        githubEmbed('#example8a', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.8/Chapter3Fig8.cs"
-            }]
-        });
+            githubEmbed('#example2', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.2/Chapter3Fig2.cs"
+                }]
+            });
 
-        githubEmbed('#example9', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.9/Chapter3Fig9.cs"
-            }]
-        });
+            githubEmbed('#example3', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.3/Chapter3Fig3.cs"
+                }]
+            });
 
-        githubEmbed('#example10', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.10/Chapter3Fig10.cs"
-            }]
-        });
+            githubEmbed('#example4', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.4/Chapter3Fig4.cs"
+                }]
+            });
 
-        githubEmbed('#example11', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%203/Example%203.11/Chapter3Fig11.cs"
-            }]
-        })
+            githubEmbed('#example5', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.5/Chapter3Fig5.cs"
+                }]
+            });
 
-        githubEmbed('#example101', {
-            "owner": "jadlerfisher",
-            "repo": "The-Nature-of-Code---Unity-Remix",
-            "ref": "master",
-            "embed": [{
-                "path": "/Assets/Chapter%201/Example%201.10/Chapter1Fig10.cs"
-            }]
-        });</script>
+            githubEmbed('#example6', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.6/Chapter3Fig6.cs"
+                }]
+            });
+
+            githubEmbed('#example7', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.7/Chapter3Fig7.cs"
+                }]
+            });
+
+            githubEmbed('#example8', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.8/Chapter3Fig8.cs"
+                }]
+            });
+
+            githubEmbed('#example8a', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.8/Chapter3Fig8.cs"
+                }]
+            });
+
+            githubEmbed('#example9', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.9/Chapter3Fig9.cs"
+                }]
+            });
+
+            githubEmbed('#example10', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.10/Chapter3Fig10.cs"
+                }]
+            });
+
+            githubEmbed('#example11', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%203/Example%203.11/Chapter3Fig11.cs"
+                }]
+            })
+
+            githubEmbed('#example101', {
+                "owner": "jadlerfisher",
+                "repo": "The-Nature-of-Code---Unity-Remix",
+                "ref": "master",
+                "embed": [{
+                    "path": "/Assets/Chapter%201/Example%201.10/Chapter1Fig10.cs"
+                }]
+            });</script>
 </body>
 
     </html>
