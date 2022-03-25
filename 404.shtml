@@ -1,2 +1,97 @@
-<!-- SHTML Wrapper - 404 Not Found -->
-<!--#exec cgi="/cgi-sys/fourohfour.cgi" -->
+<html>
+<head>
+    <!-- Meta -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="description" content="The Nature of Code revised for use in Unity with C#.">
+    <meta name="author" content="Joshua A. Fisher, Ph.D.">
+
+    <base href="https://natureofcodeunity.com/" target="_self">
+    <!--Google Font-->
+
+    <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova|Nunito+Sans:700&display=swap" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K5870DPNYV"></script>
+    <script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-K5870DPNYV');</script>
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="css/main.css" />
+
+    <!--scripts-->
+    <script src="scripts/scripts.js"></script>
+    <title>404 Not Found</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="header" style="overflow: hidden;">
+            <header>
+                <div id="titleHeader">
+                    The Nature of Code Remixed for Unity
+                </div>
+                <div id="authorHeader">
+                    Originally Written by Daniel Shiffman // Remixed by Joshua A. Fisher
+                </div>
+            </header>
+        </div>
+        <nav>
+            <ul class="nav">
+                <li>
+                    <a href="https://natureofcodeunity.com/">WELCOME</a>
+                </li>
+                <li>
+                    <a href="acknowledgements.html">ACKNOWLEDGMENTS</a>
+                </li>
+                <li>
+                    <a href="introduction.html">INTRODUCTION</a>
+                </li>
+                <li>
+                    <a href="chapterone.html">1. VECTORS</a>
+                </li>
+                <li>
+                    <a href="chaptertwo.html">2. FORCES</a>
+                </li>
+                <li>
+                    <a href="chapterthree.html">3. OSCILLATION</a>
+                </li>
+                <li>
+                    <a href="chapterfour.html">4. PARTICLE SYSTEMS</a>
+                </li>
+                <li>
+                    <a href="chapterfive.html">5. PHYSICS COMPONENTS</a>
+                </li>
+                <li>
+                    <a href="chaptersix.html">6. AUTONOMOUS AGENTS</a>
+                </li>
+                <li>
+                    <a href="chapterseven.html">7. CELLULAR AUTOMATA</a>
+                </li>
+                <li>
+                    <a href="chaptereight.html">8. FRACTALS</a>
+                </li>
+                <li>
+                    <a href="chapternine.html">9. THE EVOLUTION OF CODE</a>
+                </li>
+                <li>
+                    <a href="chapterten.html">10. NEURAL NETWORKS</a>
+                </li>
+            </ul>
+        </nav>
+        <section>
+            <h1>404 Bad Request</h1>
+
+            <p>Oh no! You've found the edge of nature. Head back into the forest using the menu on the left.</p>
+            <p>If you are feeling helpful, please report this broken link as an issue <a href="https://github.com/jadlerfisher/nocur_website/issues">via Github here.</a></p>
+
+            <a href="https://github.com/jadlerfisher/nocur_website/issues">via Github here.</a></p>
+            <!-- SHTML Wrapper - 404 Not Found -->
+            <!--#exec cgi="/cgi-sys/fourohfour.cgi" -->
+        </section>
+            </div>
+        </body>
+
+</html>
