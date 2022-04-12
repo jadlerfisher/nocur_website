@@ -86,20 +86,20 @@
 
 <pre class="prettyprint">
 
-        public class vehicleChapter6_1 : MonoBehaviour
-        {
-            public float r;
-            public float mass;
+    public class VehicleChapter6_1 : MonoBehaviour
+    {
+        public float r;
+        public float mass;
 
-            private GameObject vehicle;
-            public GameObject target;
-            private Rigidbody body;
-        </pre>
+        private GameObject vehicle;
+        public GameObject target;
+        private Rigidbody body;
+    }
+    </pre>
 
 <p>In his 1999 paper &ldquo;Steering Behaviors for Autonomous Characters,&rdquo; Reynolds uses the word &ldquo;vehicle&rdquo; to describe his autonomous agents, so we will follow suit.</p>
 
 <h3>Why Vehicle?</h3>
-&gt;
 
 <p>In 1986, Italian neuroscientist and cyberneticist Valentino Braitenberg described a series of hypothetical vehicles with simple internal structures in his book Vehicles: Experiments in Synthetic Psychology. Braitenberg argues that his extraordinarily simple mechanical vehicles manifest behaviors such as fear, aggression, love, foresight, and optimism. Reynolds took his inspiration from Braitenberg, and we&rsquo;ll take ours from Reynolds.</p>
 
@@ -132,9 +132,7 @@
 
 <pre class="prettyprint">
 
-
     Vector3 steer = desired - body.velocity;
-
     </pre>
 
 <p>In the above formula, velocity is no problem. After all, we&rsquo;ve got a variable for that. However, we don&rsquo;t have the desired velocity; this is something we have to calculate. Let&rsquo;s take a look at Figure 6.2. If we&rsquo;ve defined the vehicle&rsquo;s goal as &ldquo;seeking the target,&rdquo; then its desired velocity is a vector that points from its current location to the target location.</p>
@@ -149,8 +147,7 @@
 <pre class="prettyprint">
 
     Vector3 desired = target - body.transform.position;
-
-            </pre>
+    </pre>
 
 <p>But this isn&rsquo;t particularly realistic. What if we have a very high-resolution window and the target is thousands of pixels away? Sure, the vehicle might desire to teleport itself instantly to the target location with a massive velocity, but this won&rsquo;t make for an effective animation. What we really want to say is:</p>
 
@@ -160,7 +157,7 @@
 
 <pre class="prettyprint">
 
-    public class vehicleChapter6_1
+    public class VehicleChapter6_1
     {
         public float r;
         public float maxspeed;
@@ -169,7 +166,8 @@
         private GameObject vehicle;
         public GameObject target;
         private Rigidbody body;
-                            </pre>
+    }
+    </pre>
 
 <p>Then, in our desired velocity calculation, we scale according to maximum speed.</p>
 
@@ -177,25 +175,24 @@
 
 <pre class="prettyprint">
 
-        Vector3 desired = target - body.transform.position;
-        desired.Normalize();
-        desired *= maxspeed;
-                                </pre>
+    Vector3 desired = target - body.transform.position;
+    desired.Normalize();
+    desired *= maxspeed;
+    </pre>
 
 <p>Putting this all together, we can write a function called seek() that receives a Vector3 target and calculates a steering force towards that target.</p>
 
 <pre class="prettyprint">
 
-    public void seek(Vector3 target)
+    public void Seek(Vector3 target)
     {
         Vector3 desired = target - body.transform.position;
         desired.Normalize();
         desired *= maxspeed;
         Vector3 steer = desired - body.velocity;
-        applyForce(steer);
+        ApplyForce(steer);
     }
-
-                            </pre>
+    </pre>
 
 <p>Note how in the above function we finish by passing the steering force into applyForce(). This assumes that we are basing this example on the foundation we built in Chapter 2. However, you could just as easily use the steering force with Box2D&rsquo;s applyForce() function or toxiclibs&rsquo; addForce() function.</p>
 
@@ -212,31 +209,31 @@
 
 <pre class="prettyprint">
 
-        public class vehicleChapter6_1 : MonoBehaviour
-        {
-            public float r;
-            public float maxforce;
-            public float maxspeed;
-            public float mass;
-
-                            </pre>
+    public class VehicleChapter6_1 : MonoBehaviour
+    {
+        public float r;
+        public float maxforce;
+        public float maxspeed;
+        public float mass;
+    }
+    </pre>
 
 <p>followed by:</p>
 
 <pre class="prettyprint">
 
-        public void seek(Vector3 target)
-        {
-            Vector3 desired = target - body.transform.position;
-            desired.Normalize();
-            desired *= maxspeed;
-            Vector3 steer = desired - body.velocity;
-            steer.x = Mathf.Clamp(steer.x, -maxforce, maxforce);
-            steer.y = Mathf.Clamp(steer.y, -maxforce, maxforce);
-            steer.z = Mathf.Clamp(steer.z, -maxforce, maxforce);
-            applyForce(steer);
-        }
-        </pre>
+    public void Seek(Vector3 target)
+    {
+        Vector3 desired = target - body.transform.position;
+        desired.Normalize();
+        desired *= maxspeed;
+        Vector3 steer = desired - body.velocity;
+        steer.x = Mathf.Clamp(steer.x, -maxforce, maxforce);
+        steer.y = Mathf.Clamp(steer.y, -maxforce, maxforce);
+        steer.z = Mathf.Clamp(steer.z, -maxforce, maxforce);
+        ApplyForce(steer);
+    }
+    </pre>
 
 <p>Limiting the steering force brings up an important point. We must always remember that it&rsquo;s not actually our goal to get the vehicle to the target as fast as possible. If that were the case, we would just say &ldquo;location equals target&rdquo; and there the vehicle would be. Our goal, as Reynolds puts it, is to move the vehicle in a &ldquo;lifelike and improvisational manner.&rdquo; We&rsquo;re trying to make it appear as if the vehicle is steering its way to the target, and so it&rsquo;s up to us to play with the forces and variables of the system to simulate a given behavior. For example, a large maximum steering force would result in a very different path than a small one. One is not inherently better or worse than the other; it depends on your desired effect. (And of course, these values need not be fixed and could change based on other conditions. Perhaps a vehicle has health: the higher the health, the better it can steer.)</p>
 
@@ -287,7 +284,7 @@
 
 <h2>6.4 Arriving Behavior</h2>
 
-<p>After working for a bit with the seeking behavior, you probably are asking yourself, &ldquo;What if I want my vehicle to slow down as it approaches the target?&rdquo; Before we can even begin to answer this question, we should look at the reasons behind why the seek behavior causes the vehicle to fly past the target so that it has to turn around and go back. Let&rsquo;s consider the brain of a seeking vehicle. What is it thinking?</p>
+<p>After working for a bit with the seeking behavior, you are probably asking yourself, &ldquo;What if I want my vehicle to slow down as it approaches the target?&rdquo; Before we can even begin to answer this question, we should look at the reasons behind why the seek behavior causes the vehicle to fly past the target so that it has to turn around and go back. Let&rsquo;s consider the brain of a seeking vehicle. What is it thinking?</p>
 
 <p>Frame 1: I want to go as fast as possible towards the target!</p>
 
@@ -331,11 +328,10 @@
 
 <pre class="prettyprint">
 
-        Vector3 desired = target - body.transform.position;
-        desired.Normalize();
-        desired *= maxspeed;
-
-        </pre>
+    Vector3 desired = target - body.transform.position;
+    desired.Normalize();
+    desired *= maxspeed;
+    </pre>
 
 <p>In Example 6.1, the magnitude of the desired vector is always &ldquo;maximum&rdquo; speed.</p>
 
@@ -349,23 +345,23 @@
 <div id="ImageContainer"><img alt="Figure 6.9" src="https://natureofcode.com/book/imgs/chapter06/ch06_09.png" style="  width: 100%;
                 height: 100%;" />
 <p>Figure 6.9</p>
+
 </div>
+&nbsp;
 
 <pre class="prettyprint">
 
-        Vector3 desired = target - body.transform.position;
-        desired /= 2f;
-
-                            </pre>
+    Vector3 desired = target - body.transform.position;
+    desired /= 2f;
+    </pre>
 
 <p>While this nicely demonstrates our goal of a desired speed tied to our distance from the target, it&rsquo;s not particularly reasonable. After all, 10 pixels away is rather close and a desired speed of 5 is rather large. Something like a desired velocity with a magnitude of 5% of the distance would work much better.</p>
 
 <pre class="prettyprint">
 
-        Vector3 desired = target - body.transform.position;
-        desired *= .05f;
-
-            </pre>
+    Vector3 desired = target - body.transform.position;
+    desired *= .05f;
+    </pre>
 
 <p>Reynolds describes a more sophisticated approach. Let&rsquo;s imagine a circle around the target with a given radius. If the vehicle is within that circle, it slows down&mdash;at the edge of the circle, its desired speed is maximum speed, and at the target itself, its desired speed is 0.</p>
 
@@ -492,7 +488,10 @@
         // Resolution of grid relative to window width and height in pixels
         private int resolution;
 
-                            </pre>
+        // Maximum bounds of the screen
+        private Vector3 maximumPos;
+    }
+    </pre>
 
 <p>Notice how we are defining a third variable called resolution above. What is this variable? Let&rsquo;s say we have a Unity window that is 200 pixels wide by 200 pixels high. We could make a flow field that has a Vector3 object for every single pixel, or 40,000 Vector3s (200 * 200). This isn&rsquo;t terribly unreasonable, but in our case, it&rsquo;s overkill. We don&rsquo;t need a Vector3 for every single pixel; we can achieve the same effect by having, say, one every ten pixels (20 * 20 = 400). We use this resolution to define the number of columns and rows based on the size of the window divided by resolution:</p>
 
@@ -500,14 +499,14 @@
 
     public Ch6Fig4FlowField()
     {
+        FindWindowLimits();
         resolution = 10;
         columns = Screen.width / resolution; // Total columns equals width divided by resolution
         rows = Screen.height / resolution; // Total rows equals height divided by resolution
         field = new Vector2[columns, rows];
-        initializeFlowField();
+        InitializeFlowField();
     }
-
-                            </pre>
+    </pre>
 
 <p>Now that we&rsquo;ve set up the flow field&rsquo;s data structures, it&rsquo;s time to compute the vectors in the flow field itself. How do we do that? However we feel like it! Perhaps we want to have every vector in the flow field pointing to the right.</p>
 
@@ -519,18 +518,19 @@
 
 <pre class="prettyprint">
 
-        private void initializeFlowField()
+    // Using a nested loop to hit every column and every row of the flow field
+    private void InitializeFlowField()
+    {
+        for (int i = 0; i &lt; columns; i++) 
         {
-            for (int i = 0; i &lt; columns; i++) // Using a nested loop to hit every column and every row of the flow field
+            for (int j = 0; j &lt; rows; j++)
             {
-                for (int j = 0; j &lt; rows; j++)
-                {
-                    field[i,j] = new Vector2(1,0);
+                field[i,j] = new Vector2(1,0);
 
-                }
             }
         }
-                            </pre>
+    }
+    </pre>
 
 <p>Or perhaps we want the vectors to point in random directions.</p>
 
@@ -542,9 +542,10 @@
 
 <pre class="prettyprint">
 
-    private void initializeFlowField()
+    // Using a nested loop to hit every column and every row of the flow field
+    private void InitializeFlowField()
     {
-        for (int i = 0; i &lt; columns; i++) // Using a nested loop to hit every column and every row of the flow field
+        for (int i = 0; i &lt; columns; i++) 
         {
             for (int j = 0; j &lt; rows; j++)
             {
@@ -553,7 +554,7 @@
             }
         }
     }
-                            </pre>
+    </pre>
 
 <p>What if we use 2D Perlin noise (mapped to an angle)?</p>
 
@@ -565,10 +566,11 @@
 
 <pre class="prettyprint">
 
-    private void initializeFlowField()
+    // Using a nested loop to hit every column and every row of the flow field
+    private void InitializeFlowField(GameObject flowArrow)
     {
         float xOff = 0;
-        for (int i = 0; i &lt; columns; i++) // Using a nested loop to hit every column and every row of the flow field
+        for (int i = 0; i &lt; columns; i++) 
         {
             float yOff = 0;
             for (int j = 0; j &lt; rows; j++)
@@ -583,11 +585,31 @@
                 Vector2 v = new Vector2(Mathf.Cos(theta), Mathf.Sin(theta));
 
                 field[i,j] = v;
+
+                // Map values i and j to minimum and maximum bounds of viewport
+                float x = -maximumPos.x + (i - 0) * ((maximumPos.x - -maximumPos.x) / ((columns - 1) - 0));
+                float y = -maximumPos.y + (j - 0) * ((maximumPos.y - -maximumPos.y) / ((rows - 1) - 0));
+
+                // Instantiate flow indicator at each point in grid
+                GameObject flowIndicator = Object.Instantiate(flowArrow);
+                flowIndicator.name = $"Indicator{i}_{j}_{v}";
+                flowIndicator.transform.localScale = new Vector3(.3f, .3f, .3f);
+                flowIndicator.transform.position = new Vector2(x, y);
+                
+                // Set rotation of flow indicator to match the vector at each position
+                flowIndicator.transform.rotation = Quaternion.LookRotation(v);
+                Vector3 indicatorEulerAngles = flowIndicator.transform.rotation.eulerAngles;
+                flowIndicator.transform.rotation = Quaternion.Euler(indicatorEulerAngles.x + 90, indicatorEulerAngles.y, indicatorEulerAngles.z);
+
+                // Add newly instantiated indicator to a list
+                flowIndicators.Add(flowIndicator);
+
                 yOff += 0.1f;
             }
             xOff += 0.1f;
         }
-                            </pre>
+    }
+    </pre>
 
 <p>Now we&rsquo;re getting somewhere. Flow fields can be used for simulating various effects, such as an irregular gust of wind or the meandering path of a river. Calculating the direction of your vectors using Perlin noise is one way to achieve such an effect. Of course, there&rsquo;s no &ldquo;correct&rdquo; way to calculate the vectors of a flow field; it&rsquo;s really up to you to decide what you&rsquo;re looking to simulate.</p>
 
@@ -603,21 +625,24 @@
 
     int column = (int)(_lookUp.x, 0, columns - 1);
     int row = (int)(_lookUp.y, 0, rows - 1);
+    </pre>
 
-                            </pre>
-
-<p>Because a vehicle could theoretically wander off the Unity window, it&rsquo;s also useful for us to employ the constrain() function to make sure we don&rsquo;t look outside of the flow field array. Here is a function we&rsquo;ll call lookup() that goes in the FlowField class&mdash;it receives a Vector3 (presumably the location of our vehicle) and returns the corresponding flow field Vector3 for that location.</p>
+<p>Because a vehicle could theoretically wander off the Unity window, it&rsquo;s also useful for us to employ the Clamp() function to make sure we don&rsquo;t look outside of the flow field array. Here is a function we&rsquo;ll call Lookup() that goes in the FlowField class&mdash;it receives a Vector2 (presumably the location of our vehicle), maps the values to ensure the mimimum value returns 0, and returns the corresponding flow field Vector2 for that location.</p>
 
 <pre class="prettyprint">
 
     public Vector2 Lookup(Vector2 _lookUp)
     {
+        float x = 0 + (_lookUp.x - -maximumPos.x) * ((columns - 1 - 0) / (maximumPos.x - -maximumPos.x));
+        float y = 0 + (_lookUp.y - -maximumPos.y) * ((rows - 1 - 0) / (maximumPos.y - -maximumPos.y));
+
         // A method to return a Vector2 based on a location
-        int column = (int)Mathf.Clamp(_lookUp.x, 0, columns - 1);
-        int row = (int)Mathf.Clamp(_lookUp.y, 0, rows - 1);
+        int column = (int)Mathf.Clamp(x, 0, columns - 1);
+        int row = (int)Mathf.Clamp(y, 0, rows - 1);
+        Debug.Log($"column:{column}, row:{row}");
         return field[column, row];
     }
-                            </pre>
+    </pre>
 
 <p>Before we move on to the Vehicle class, let&rsquo;s take a look at the FlowField class all together.</p>
 
@@ -625,8 +650,10 @@
 
     public class Ch6Fig4FlowField
     {
-        // Declaring a 2D array of Vector2&#39;s
+        // Declaring a 2D array of Vector2's
         private Vector2[,] field;
+
+        public List&lt;GameObject&gt; flowIndicators = new List&lt;GameObject&gt;();
 
         // How many columns and how many rows in the grid?
         private int columns, rows;
@@ -634,33 +661,57 @@
         // Resolution of grid relative to window width and height in pixels
         private int resolution;
 
-        public Ch6Fig4FlowField()
+        // Maximum bounds of the screen
+        private Vector3 maximumPos;
+
+        public Ch6Fig4FlowField(GameObject flowArrow)
         {
-            resolution = 10;
+            FindWindowLimits();
+            resolution = 30;
             columns = Screen.width / resolution; // Total columns equals width divided by resolution
             rows = Screen.height / resolution; // Total rows equals height divided by resolution
             field = new Vector2[columns, rows];
-            initializeFlowField();
+            InitializeFlowField(flowArrow);        
         }
 
-        private void initializeFlowField()
+        private void InitializeFlowField(GameObject flowArrow)
         {
+            // Using a nested loop to hit every column and every row of the flow field
             float xOff = 0;
-            for (int i = 0; i &lt; columns; i++) // Using a nested loop to hit every column and every row of the flow field
+            for (int i = 0; i < columns; i++)
             {
                 float yOff = 0;
-                for (int j = 0; j &lt; rows; j++)
+                for (int j = 0; j < rows; j++) 
                 {
                     // In this example, we use Perlin noise to seed the vectors.
                     float noiseValue = Mathf.PerlinNoise(xOff, yOff);
 
-                    // A C# recreation of Processing&#39;s Map function, which re-maps
-                    // A number from one range to another.
+                    // A C# recreation of Processing's Map function, which re-maps
+                    // A number from one range to another. 
                     // https://processing.org/reference/map_.html
-                    float theta = 0 + ((Mathf.PI * 2) - 0) * ((noiseValue - 0) / (1 - 0));
+                    float theta = 0 + ((Mathf.PI * 2) - 0) * ((noiseValue - 0) / (1 - 0));                                
                     Vector2 v = new Vector2(Mathf.Cos(theta), Mathf.Sin(theta));
-
+                                              
                     field[i,j] = v;
+
+                    // Map values i and j to minimum and maximum bounds of viewport
+                    float x = -maximumPos.x + (i - 0) * ((maximumPos.x - -maximumPos.x) / ((columns - 1) - 0));
+                    float y = -maximumPos.y + (j - 0) * ((maximumPos.y - -maximumPos.y) / ((rows - 1) - 0));
+
+                    // Instantiate flow indicator at each point in grid
+                    GameObject flowIndicator = Object.Instantiate(flowArrow);
+                    flowIndicator.name = $"Indicator{i}_{j}_{v}";
+                    flowIndicator.transform.localScale = new Vector3(.3f, .3f, .3f);
+                    flowIndicator.transform.position = new Vector2(x, y);
+                
+                    // Set rotation of flow indicator to match the vector at each position
+                    flowIndicator.transform.rotation = Quaternion.LookRotation(v);
+                    Vector3 indicatorEulerAngles = flowIndicator.transform.rotation.eulerAngles;
+                    flowIndicator.transform.rotation = Quaternion.Euler(indicatorEulerAngles.x + 90, indicatorEulerAngles.y, indicatorEulerAngles.z);
+
+                    // Add newly instantiated indicator to a list
+                    flowIndicators.Add(flowIndicator);
+
                     yOff += 0.1f;
                 }
                 xOff += 0.1f;
@@ -669,13 +720,48 @@
 
         public Vector2 Lookup(Vector2 _lookUp)
         {
+            float x = 0 + (_lookUp.x - -maximumPos.x) * ((columns - 1 - 0) / (maximumPos.x - -maximumPos.x));
+            float y = 0 + (_lookUp.y - -maximumPos.y) * ((rows - 1 - 0) / (maximumPos.y - -maximumPos.y));
+
             // A method to return a Vector2 based on a location
-            int column = (int)Mathf.Clamp(_lookUp.x, 0, columns - 1);
-            int row = (int)Mathf.Clamp(_lookUp.y, 0, rows - 1);
+            int column = (int)Mathf.Clamp(x, 0, columns - 1);
+            int row = (int)Mathf.Clamp(y, 0, rows - 1);
+            Debug.Log($"column:{column}, row:{row}");
             return field[column, row];
         }
-    }
-                            </pre>
+
+        private void FindWindowLimits()
+        {
+            // We want to start by setting the camera's projection to Orthographic mode
+            Camera.main.orthographic = true;
+
+            // For FindWindowLimits() to function correctly, the camera must be set to coordinates 0, 0, -10
+            Camera.main.transform.position = new Vector3(0, 0, -10);
+
+            // Next we grab the maximum position for the screen
+            maximumPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        }
+
+        public void ShowFlowField()
+        {
+            // Set indicators active if holding space, set inactive if not
+            if (Input.GetKey(KeyCode.Space))
+            {
+                // Loop through flowIndicators list and set active state for each item
+                for (int i = 0; i < flowIndicators.Count; i++)
+                {
+                    flowIndicators[i].SetActive(true);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < flowIndicators.Count; i++)
+                {
+                    flowIndicators[i].SetActive(false);
+                }
+            }
+        }
+        </pre>
 
 <p>So let&rsquo;s assume we have a FlowField object called &ldquo;flow&rdquo;. Using the lookup() function above, our vehicle can then retrieve a desired vector from the flow field and use Reynolds&rsquo;s rules (steering = desired - velocity) to calculate a steering force.</p>
 
@@ -747,8 +833,7 @@
     Vector2 b = new Vector2(10,1);
 
     float n = Vector2.Dot(a, b);
-
-</pre>
+    </pre>
 
 <p>The Vector3 class includes a function to calculate the dot product.</p>
 
@@ -758,19 +843,19 @@
 
 <p>One of the more common uses of the dot product is to find the angle between two vectors. Another way in which the dot product can be expressed is:</p>
 
-<p>A&rarr; &middot; B&rarr; = ∥∥∥A&rarr;∥∥∥ * ∥∥∥B&rarr;∥∥∥ * cos(&theta;)</p>
+<p>A&rarr; &middot; B&rarr; = ∥A&rarr;∥ * ∥B&rarr;∥ * cos(&theta;)</p>
 
 <p>In other words, A dot B is equal to the magnitude of A times magnitude of B times cosine of theta (with theta defined as the angle between the two vectors A and B).</p>
 
 <p>The two formulas for dot product can be derived from one another with trigonometry, but for our purposes we can be happy with operating on the assumption that:</p>
 
-<p>A&rarr; &middot; B&rarr; = ∥∥∥A&rarr;∥∥∥ * ∥∥∥B&rarr;∥∥∥ * cos(&theta;)</p>
+<p>A&rarr; &middot; B&rarr; = ∥A&rarr;∥ * ∥B&rarr;∥ * cos(&theta;)</p>
 
 <p>A&rarr; &middot; B&rarr; = ax*bx+ay*by</p>
 
 <p>both hold true and therefore:</p>
 
-<p>ax*bx+ay*by = ∥∥∥A&rarr;∥∥∥ * ∥∥∥B&rarr;∥∥∥ * cos(&theta;)</p>
+<p>ax*bx+ay*by = ∥A&rarr;∥ * ∥B&rarr;∥ * cos(&theta;)</p>
 
 <div id="ImageContainer"><img alt="Figure 6.19" src="https://natureofcode.com/book/imgs/chapter06/ch06_19.png" style="  width: 100%;
                 height: 100%;" />
@@ -785,17 +870,17 @@
 
 <p>We now have a situation in which we know everything except for theta. We know the components of the vector and can calculate the magnitude of each vector. We can therefore solve for cosine of theta:</p>
 
-<p>cos(&theta;) = ( A&rarr; &middot; B&rarr; ) / ( ∥∥∥A&rarr;∥∥∥ * ∥∥∥B&rarr;∥∥∥ )</p>
+<p>cos(&theta;) = ( A&rarr; &middot; B&rarr; ) / ( ∥A&rarr;∥ * ∥B&rarr;∥ )</p>
 
 <p>To solve for theta, we can take the inverse cosine (often expressed as cosine-1 or arccosine).</p>
 
-<p>&theta; = cos&minus;1 ( ( A&rarr; &middot; B&rarr; ) / ( ∥∥∥A&rarr;∥∥∥ * ∥∥∥B&rarr;∥∥∥ ) )</p>
+<p>&theta; = cos&minus;1 ( ( A&rarr; &middot; B&rarr; ) / ( ∥A&rarr;∥ * ∥B&rarr;∥ ) )</p>
 
 <p>Let&rsquo;s now do the math with actual numbers:</p>
 
-<p>∥∥∥A&rarr;∥∥∥ = 10.2</p>
+<p>∥A&rarr;∥ = 10.2</p>
 
-<p>∥∥∥B&rarr;∥∥∥ = 5</p>
+<p>∥B&rarr;∥ = 5</p>
 
 <p>Therefore:</p>
 
@@ -823,7 +908,7 @@
         Vector2 normalPoint = ab + start;
         return normalPoint;
     }
-                                </pre>
+    </pre>
 
 <div class="note">
 <h4 style="text-align:right;">Exercise 6.9</h4>
@@ -878,8 +963,8 @@
         {
             // Create a mesh for the path.
             GameObject path = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            Destroy(path.GetComponent<meshcollider>());
-            path.GetComponent<renderer>().material = pathMaterial;
+            Destroy(path.GetComponent&lt;meshcollider&gt;());
+            path.GetComponent&lt;renderer&gt;().material = pathMaterial;
 
             // Align the mesh to the path.
             // Center the path to the midpoint of the track start and end:
@@ -895,7 +980,7 @@
                 Vector3.forward * Vector3.Angle(Vector3.down, endVector.position - startVector.position);
         }
     }
-                            </renderer></meshcollider></pre>
+    </pre>
 
 <p>Now, let&rsquo;s assume we have a vehicle (as depicted below) outside of the path&rsquo;s radius, moving with a velocity.</p>
 
@@ -910,8 +995,7 @@
 
     // Predict the future location of the body.
     Vector2 predictedLocation = body.position + body.velocity.normalized * 2.5f;
-
-                            </pre>
+    </pre>
 
 <p>Once we have that location, it&rsquo;s now our job to find out the vehicle&rsquo;s current distance from the path of that predicted location. If it&rsquo;s very far away, well, then, we&rsquo;ve strayed from the path and need to steer back towards it. If it&rsquo;s close, then we&rsquo;re doing OK and are following the path nicely.</p>
 
@@ -932,7 +1016,7 @@
 
     // Determine a follow target some distance further down the path.
     Vector2 pathDirection = b - a;
-                            </pre>
+    </pre>
 
 <p>We also know that we can define a vector (call it B&rarr;) that points from the start of the path to the end.</p>
 
@@ -944,8 +1028,7 @@
     Vector2 pathDirection = b - a;
     Vector2 alongPath = pathDirection.normalized * 2.5f;
     Vector2 target = normalPoint + alongPath;
-
-                                </pre>
+    </pre>
 
 <p>Now, with basic trigonometry, we know that the distance from the path&rsquo;s start to the normal point is: |A| * cos(theta).</p>
 
@@ -965,7 +1048,6 @@
     Vector2 a = path.startVector.position;
     Vector2 b = path.endVector.position;
     Vector2 normalPoint = GetNormalPoint(predictedLocation, a, b);
-
     </pre>
 
 <p>And if the dot product has taught us anything, it&rsquo;s that given two vectors, we can get theta, the angle between.</p>
@@ -988,34 +1070,33 @@
         Vector2 normalPoint = ab + start;
         return normalPoint;
     }
-                            </pre>
+    </pre>
 
 <p>While the above code will work, there&rsquo;s one more simplification we can make. If you&rsquo;ll notice, the desired magnitude for vector B&rarr; is:</p>
 a.mag()*cos(theta)
 
 <p>which is the code translation of:</p>
 
-<p>∥∥∥A&rarr;∥∥∥ * cos(&theta;)</p>
+<p>∥A&rarr;∥ * cos(&theta;)</p>
 
 <p>And if you recall:</p>
 
-<p>A&rarr; &middot; B&rarr; = ∥∥∥A&rarr;∥∥∥ * ∥∥∥B&rarr;∥∥∥ * cos(&theta;)</p>
+<p>A&rarr; &middot; B&rarr; = ∥A&rarr;∥ * ∥B&rarr;∥ * cos(&theta;)</p>
 
 <p>Now, what if vector B&rarr; is a unit vector, i.e. length 1? Then:</p>
 
-<p>A&rarr; &middot; B&rarr; = ∥∥∥A&rarr;∥∥∥ * 1 * cos(&theta;)</p>
+<p>A&rarr; &middot; B&rarr; = ∥A&rarr;∥ * 1 * cos(&theta;)</p>
 
 <p>or</p>
 
-<p>A&rarr; &middot; B&rarr; = ∥∥∥A&rarr;∥∥∥ * cos(&theta;)</p>
+<p>A&rarr; &middot; B&rarr; = ∥A&rarr;∥ * cos(&theta;)</p>
 
 <p>And what are we doing in our code? Normalizing ab!</p>
 
 <pre class="prettyprint">
 
     ab.Normalize();
-
-                            </pre>
+    </pre>
 
 <p>Because of this fact, we can simplify our code as:</p>
 
@@ -1027,8 +1108,7 @@ a.mag()*cos(theta)
 
     // Re-add the relative position of our input.
     Vector2 normalPoint = ab + start;
-
-                            </pre>
+    </pre>
 
 <p>This process is commonly known as &ldquo;scalar projection.&rdquo; |A| cos(&theta;) is the scalar projection of A onto B.</p>
 
@@ -1054,8 +1134,7 @@ a.mag()*cos(theta)
         // If so, steer the vehicle towards the path.
         Seek(target);
     }
-
-                            </pre>
+    </pre>
 
 <p>But what is the target?</p>
 
@@ -1070,8 +1149,7 @@ a.mag()*cos(theta)
         // If so, steer the vehicle towards the path.
         Seek(normalPoint);
     }
-
-                            </pre>
+    </pre>
 
 <p>Since we know the vector that defines the path (we&rsquo;re calling it &ldquo;B&rdquo;), we can implement Reynolds&rsquo;s &ldquo;point ahead on the path&rdquo; without too much trouble.</p>
 
@@ -1083,7 +1161,7 @@ a.mag()*cos(theta)
 
 <pre class="prettyprint">
 
-                Vector2 target = normalPoint + alongPath;
+    Vector2 target = normalPoint + alongPath;
 
     // Is the vehicle predicted to leave the path?
     float distance = Vector2.Distance(normalPoint, predictedLocation);
@@ -1092,8 +1170,7 @@ a.mag()*cos(theta)
         // If so, steer the vehicle towards the path.
         Seek(target);
     }
-
-                            </pre>
+    </pre>
 
 <p>Putting it all together, we have the following steering function in our Vehicle class.</p>
 
@@ -1137,8 +1214,7 @@ a.mag()*cos(theta)
         Vector2 normalPoint = ab + start;
         return normalPoint;
     }
-
-                            </pre>
+    </pre>
 
 <p>What do we have so far? We have a Path class that defines a path as a line between two points. We have a Vehicle class that defines a vehicle that can follow the path (using a steering behavior to seek a target along the path). What is missing?</p>
 
@@ -1189,7 +1265,7 @@ a.mag()*cos(theta)
         void Start()
         {
             // Create a line renderer to draw the path.
-            pathRenderer = new GameObject().AddComponent<linerenderer>();
+            pathRenderer = new GameObject().AddComponent&gt;linerenderer&lt;();
             pathRenderer.generateLightingData = true;
             pathRenderer.material = pathMaterial;
             pathRenderer.widthMultiplier = radius * 2;
@@ -1202,7 +1278,7 @@ a.mag()*cos(theta)
             }
         }
     }
-                            </linerenderer></pre>
+    </pre>
 
 <p>Now that we have the Path class defined, it&rsquo;s the vehicle&rsquo;s turn to deal with multiple line segments. All we did before was find the normal for one line segment. We can now find the normals for all the line segments in a loop.</p>
 
@@ -1213,8 +1289,8 @@ a.mag()*cos(theta)
         Vector2 a = path.points[i].position;
         Vector2 b = path.points[i + 1].position;
         Vector2 normalPoint = GetNormalPoint(predictedLocation, a, b);
-
-                            </pre>
+    }
+    </pre>
 
 <p>Then we should make sure the normal point is actually between points a and b. Since we know our path goes from left to right in this example, we can test if the x component of normalPoint is outside the x components of a and b.</p>
 
@@ -1225,7 +1301,7 @@ a.mag()*cos(theta)
     {
         normalPoint = b;
     }
-                            </pre>
+    </pre>
 
 <p>As a little trick, we&rsquo;ll say that if it&rsquo;s not within the line segment, let&rsquo;s just pretend the end point of that line segment is the normal. This will ensure that our vehicle always stays on the path, even if it strays out of the bounds of our line segments.</p>
 
@@ -1295,20 +1371,21 @@ a.mag()*cos(theta)
     {
         public float maxSpeed = 2, maxForce = 2;
 
-        private List<vehicle> vehicles; // Declare a List of Vehicle objects.
+        private List&lt;vehicle&gt; vehicles; // Declare a List of Vehicle objects.
         private Vector2 minimumPos, maximumPos;
 
         void Start()
         {
             findWindowLimits();
-            vehicles = new List<vehicle>(); // Initilize and fill the List with a bunch of Vehicles
+            vehicles = new List&lt;vehicle&gt;(); // Initilize and fill the List with a bunch of Vehicles
             for (int i = 0; i &lt; 100; i++) {
                 float ranX = Random.Range(minimumPos.x, maximumPos.x);
                 float ranY = Random.Range(minimumPos.y, maximumPos.y);
                 vehicles.Add(new Vehicle(new Vector2(ranX, ranY), minimumPos, maximumPos, maxSpeed, maxForce));
             }
         }
-                            </vehicle></vehicle></pre>
+    }
+    </pre>
 
 <p>Now when it comes time to deal with all the vehicles in Update(), we simply loop through all of them and call the necessary functions.</p>
 
@@ -1321,10 +1398,10 @@ a.mag()*cos(theta)
         foreach (Vehicle v in vehicles)
         {
             v.Separate(vehicles);
-            v.Update();
+            v.CheckEdges();
         }
     }
-                                </pre>
+    </pre>
 
 <p>OK, so maybe we want to add a behavior, a force to be applied to all the vehicles. This could be seeking the mouse.</p>
 
@@ -1334,23 +1411,21 @@ a.mag()*cos(theta)
     mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
     v.Seek(mousePos);
-            </pre>
+    </pre>
 
 <p>But that&rsquo;s an individual behavior. We&rsquo;ve already spent thirty-odd pages worrying about individual behaviors. We&rsquo;re here because we want to apply a group behavior. Let&rsquo;s begin with separation, a behavior that commands, &ldquo;Avoid colliding with your neighbors!&rdquo;</p>
 
 <pre class="prettyprint">
 
     v.Separate();
-
-                            </pre>
+    </pre>
 
 <p>Is that right? It sounds good, but it&rsquo;s not. What&rsquo;s missing? In the case of seek, we said, &ldquo;Seek mouseX and mouseY.&rdquo; In the case of separate, we&rsquo;re saying &ldquo;separate from everyone else.&rdquo; Who is everyone else? It&rsquo;s the list of all the other vehicles.</p>
 
 <pre class="prettyprint">
 
     v.Separate(vehicles);
-
-                            </pre>
+    </pre>
 
 <p>This is the big leap beyond what we did before with particle systems. Instead of having each element (particle or vehicle) operate on its own, we&rsquo;re now saying, &ldquo;Hey you, the vehicle! When it comes time for you to operate, you need to operate with an awareness of everyone else. So I&rsquo;m going to go ahead and pass you the List of everyone else.&rdquo;</p>
 
@@ -1362,13 +1437,13 @@ a.mag()*cos(theta)
     {
         public float maxSpeed = 2, maxForce = 2;
 
-        private List<vehicle> vehicles; // Declare a List of Vehicle objects.
-        private Vector2 minimumPos, maximumPos;
+        private List&lt;vehicle&gt; vehicles; // Declare a List of Vehicle objects.
+        private Vector2 maximumPos;
 
         void Start()
         {
-            findWindowLimits();
-            vehicles = new List<vehicle>(); // Initilize and fill the List with a bunch of Vehicles
+            FindWindowLimits();
+            vehicles = new List&lt;vehicle&gt;(); // Initilize and fill the List with a bunch of Vehicles
             for (int i = 0; i &lt; 100; i++) {
                 float ranX = Random.Range(minimumPos.x, maximumPos.x);
                 float ranY = Random.Range(minimumPos.y, maximumPos.y);
@@ -1381,7 +1456,7 @@ a.mag()*cos(theta)
             foreach (Vehicle v in vehicles)
             {
                 v.Separate(vehicles);
-                v.Update();
+                v.CheckEdges();
             }
 
             if (Input.GetMouseButton(0))
@@ -1393,15 +1468,19 @@ a.mag()*cos(theta)
             }
         }
 
-        private void findWindowLimits()
+        private void FindWindowLimits()
         {
+            // We want to start by setting the camera's projection to Orthographic mode
             Camera.main.orthographic = true;
-            Camera.main.orthographicSize = 10;
-            minimumPos = Camera.main.ScreenToWorldPoint(Vector2.zero);
+
+            // For FindWindowLimits() to function correctly, the camera must be set to coordinates 0, 0, -10
+            Camera.main.transform.position = new Vector3(0, 0, -5);
+
+            // Next we grab the maximum position for the screen
             maximumPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         }
     }
-                            </vehicle></vehicle></pre>
+    </pre>
 &nbsp;
 
 <div id="ImageContainer"><img alt="Figure 6.33" src="https://natureofcode.com/book/imgs/chapter06/ch06_33.png" style="  width: 100%;
@@ -1422,34 +1501,34 @@ a.mag()*cos(theta)
 
 <pre class="prettyprint">
 
-    public void Separate(List<vehicle> vehicles)
-        {
+    public void Separate(List&lt;vehicle&gt; vehicles)
+    {
 
-        }
-                            </vehicle></pre>
+    }
+    </pre>
 
 <p>Inside this function, we&rsquo;re going to loop through all of the vehicles and see if any are too close.</p>
 
 <pre class="prettyprint">
 
-    public void Separate(List<vehicle> vehicles)
+    public void Separate(List&lt;vehicle&gt; vehicles)
+    {
+
+        // Note how the desired separation is based on the Vehicle&#39;s size.
+        float desiredSeparation = myVehicle.transform.localScale.x * 2;
+
+        foreach (Vehicle other in vehicles)
         {
+            // What is the distance between me and another Vehicle?
+            float d = Vector2.Distance(other.location, location);
 
-            // Note how the desired separation is based on the Vehicle&#39;s size.
-            float desiredSeperation = myVehicle.transform.localScale.x * 2;
-
-            foreach (Vehicle other in vehicles)
+            if ((d &gt; 0) &amp;&amp; (d &lt; desiredSeparation))
             {
-                // What is the distance between me and another Vehicle?
-                float d = Vector2.Distance(other.location, location);
 
-                if ((d &gt; 0) &amp;&amp; (d &lt; desiredSeperation))
-                {
-
-                }
             }
-
-                            </vehicle></pre>
+        }
+    }
+    </pre>
 
 <p>Notice how in the above code, we are not only checking if the distance is less than a desired separation (i.e. too close!), but also if the distance is greater than zero. This is a little trick that makes sure we don&rsquo;t ask a vehicle to separate from itself. Remember, all the vehicles are in the List, so if you aren&rsquo;t careful you&rsquo;ll be comparing each vehicle to itself!</p>
 
@@ -1463,50 +1542,51 @@ a.mag()*cos(theta)
         Vector2 diff = location - other.location; // A Vector2 pointing away from the other&rsquo;s location.
         diff.Normalize();
     }
-                            </pre>
+    </pre>
 
 <p>This is not enough. We have that vector now, but we need to make sure we calculate the average of all vectors pointing away from close vehicles. How do we compute average? We add up all the vectors and divide by the total.</p>
 
 <pre class="prettyprint">
 
-    public void Separate(List<vehicle> vehicles)
+    public void Separate(List&lt;vehicle&gt; vehicles)
+    {
+        Vector2 sum = Vector2.zero; // Start with a blank Vector2.
+        int count = 0; // We have to keep track of how many Vehicles are too close.
+
+        // Note how the desired separation is based on the Vehicle&#39;s size.
+        float desiredSeparation = myVehicle.transform.localScale.x * 2;
+
+        foreach (Vehicle other in vehicles)
         {
-            Vector2 sum = Vector2.zero; // Start with a blank Vector2.
-            int count = 0; // We have to keep track of how many Vehicles are too close.
+            // What is the distance between me and another Vehicle?
+            float d = Vector2.Distance(other.location, location);
 
-            // Note how the desired separation is based on the Vehicle&#39;s size.
-            float desiredSeperation = myVehicle.transform.localScale.x * 2;
-
-            foreach (Vehicle other in vehicles)
+            if ((d &gt; 0) &amp;&amp; (d &lt; desiredSeparation))
             {
-                // What is the distance between me and another Vehicle?
-                float d = Vector2.Distance(other.location, location);
+                // Any code here will be executed if the Vehicle is within 0.5 Meters.
+                Vector2 diff = location - other.location; // A Vector2 pointing away from the other&rsquo;s location.
+                diff.Normalize();
 
-                if ((d &gt; 0) &amp;&amp; (d &lt; desiredSeperation))
-                {
-                    // Any code here will be executed if the Vehicle is within 0.5 Meters.
-                    Vector2 diff = location - other.location; // A Vector2 pointing away from the other&rsquo;s location.
-                    diff.Normalize();
+                /* What is the magnitude of the PVector pointing away
+                * from the other vehicle? The closer it is, the more we
+                * should flee. The farther, the less. So we divide by the
+                * distance to weight it appropriately. */
+                diff /= d;
 
-                    /* What is the magnitude of the PVector pointing away
-                        * from the other vehicle? The closer it is, the more we
-                        * should flee. The farther, the less. So we divide by the
-                        * distance to weight it appropriately. */
-                    diff /= d;
-
-                    sum += diff; // Add all the vectors together and increment the count
-                    count++;
-                }
+                sum += diff; // Add all the vectors together and increment the count
+                count++;
             }
+        }
 
-            /* We have to make sure we found at least one close vehicle.
-            * We don&#39;t want to bother doing anything if nothing is
-            * too close (not to mention we can&#39;t divide by zero!) */
-           if (count &gt; 0)
-           {
-               sum /= count;
-           }
-                                                </vehicle></pre>
+        /* We have to make sure we found at least one close vehicle.
+        * We don&#39;t want to bother doing anything if nothing is
+        * too close (not to mention we can&#39;t divide by zero!) */
+        if (count &gt; 0)
+        {
+            sum /= count;
+        }
+    }
+    </pre>
 
 <p>We have to make sure we found at least one close vehicle. We don&rsquo;t want to bother doing anything if nothing is too close (not to mention we can&rsquo;t divide by zero!)</p>
 if (count &gt; 0) { sum.div(count); }
@@ -1529,7 +1609,7 @@ if (count &gt; 0) { sum.div(count); }
 
         rb.AddForce(steer); // Apply the force to the Vehicle&#39;s acceleration.
     }
-                                        </pre>
+    </pre>
 
 <p>Let&rsquo;s see the function in its entirety. There are two additional improvements, noted in the code comments.</p>
 
@@ -1581,7 +1661,7 @@ if (count &gt; 0) { sum.div(count); }
             mover.CheckBoundaries();
         }
     }
-                            </pre>
+    </pre>
 
 <p>Here we have a mover that responds to two forces. This all works nicely because of the way we designed the Mover class to accumulate the force vectors into its acceleration vector. In this chapter, however, our forces stem from internal desires of the movers (now called vehicles). And those desires can be weighted. Let&rsquo;s consider a scene where all vehicles have two desires:</p>
 
@@ -1600,11 +1680,11 @@ if (count &gt; 0) { sum.div(count); }
 
         foreach (Vehicle v in vehicles)
         {
-            Vector2 seperate = v.Separate(vehicles);
+            Vector2 separate = v.Separate(vehicles);
             Vector2 seek = v.Seek(mousePos);
         }
     }
-                </pre>
+    </pre>
 
 <p>Let&rsquo;s look at how the seek function changed.</p>
 
@@ -1679,25 +1759,24 @@ if (count &gt; 0) { sum.div(count); }
 
 <pre class="prettyprint">
 
-    public void Flock(List<boid> boids)
-        {
-            Vector2 sep = Separate(boids); // The three flocking rules
-            Vector2 ali = Align(boids);
-            Vector2 coh = Cohesion(boids);
+    public void Flock(List&lt;boid&gt; boids)
+    {
+        Vector2 sep = Separate(boids); // The three flocking rules
+        Vector2 ali = Align(boids);
+        Vector2 coh = Cohesion(boids);
 
-            sep *= 5.0f; // Arbitrary weights for these forces (Try different ones!)
-            ali *= 1.5f;
-            coh *= 0.5f;
+        sep *= 5.0f; // Arbitrary weights for these forces (Try different ones!)
+        ali *= 1.5f;
+        coh *= 0.5f;
 
-            ApplyForce(sep); // Applying all the forces
-            ApplyForce(ali);
-            ApplyForce(coh);
+        ApplyForce(sep); // Applying all the forces
+        ApplyForce(ali);
+        ApplyForce(coh);
 
-            checkBounds(); // To loop the world to the other side of the screen.
-            lookForward(); // Make the boids face forward.
-        }
-
-                            </boid></pre>
+        checkBounds(); // To loop the world to the other side of the screen.
+        lookForward(); // Make the boids face forward.
+    }
+    </pre>
 
 <p>Now, it&rsquo;s just a matter of implementing the three rules. We did separation before; it&rsquo;s identical to our previous example. Let&rsquo;s take a look at alignment, or steering in the same direction as your neighbors. As with all of our steering behaviors, we&rsquo;ve got to boil down this concept into a desire: the boid&rsquo;s desired velocity is the average velocity of its neighbors.</p>
 
@@ -1705,34 +1784,33 @@ if (count &gt; 0) { sum.div(count); }
 
 <pre class="prettyprint">
 
-    public Vector2 Align(List<boid> boids)
+    public Vector2 Align(List&lt;boid&gt; boids)
+    {
+        /* Add up all the velocities and divide by the total to
+        * calculate the average velocity. */
+        Vector2 sum = Vector2.zero;
+        int count = 0;
+        foreach (Boid other in boids)
         {
-
-            /* Add up all the velocities and divide by the total to
-                * calculate the average velocity. */
-            Vector2 sum = Vector2.zero;
-            int count = 0;
-            foreach (Boid other in boids)
+            float d = Vector2.Distance(location, other.location);
+            if((d &gt; 0) &amp;&amp; (d &lt; neighborDist))
             {
-                float d = Vector2.Distance(location, other.location);
-                if((d &gt; 0) &amp;&amp; (d &lt; neighborDist))
-                {
-                    sum += other.velocity;
-                }
-            }
-
-            if (count &gt; 0)
-            {
-                sum /= count;
-
-                sum = sum.normalized * maxSpeed; // We desite to go in that direction at maximum speed.
-
-                Vector2 steer = sum - velocity; // Reynolds&#39;s steering force formula.
-                steer = Vector2.ClampMagnitude(steer, maxForce);
-                return steer;
+                sum += other.velocity;
             }
         }
-                            </boid></pre>
+
+        if (count &gt; 0)
+        {
+            sum /= count;
+
+            sum = sum.normalized * maxSpeed; // We desite to go in that direction at maximum speed.
+
+            Vector2 steer = sum - velocity; // Reynolds&#39;s steering force formula.
+            steer = Vector2.ClampMagnitude(steer, maxForce);
+            return steer;
+        }
+    }
+    </pre>
 
 <p>The above is pretty good, but it&rsquo;s missing one rather crucial detail. One of the key principles behind complex systems like flocking is that the elements (in this case, boids) have short-range relationships. Thinking about ants again, it&rsquo;s pretty easy to imagine an ant being able to sense its immediate environment, but less so an ant having an awareness of what another ant is doing hundreds of feet away. The fact that the ants can perform such complex collective behavior from only these neighboring relationships is what makes them so exciting in the first place.</p>
 
@@ -1747,40 +1825,40 @@ if (count &gt; 0) { sum.div(count); }
 
 <pre class="prettyprint">
 
-    public Vector2 Align(List<boid> boids)
+    public Vector2 Align(List&lt;boid&gt; boids)
+    {
+        float neighborDist = 6f; // This is an arbitrary value and could vary from boid to boid.
+
+        /* Add up all the velocities and divide by the total to
+            * calculate the average velocity. */
+        Vector2 sum = Vector2.zero;
+        int count = 0;
+        foreach (Boid other in boids)
         {
-            float neighborDist = 6f; // This is an arbitrary value and could vary from boid to boid.
-
-            /* Add up all the velocities and divide by the total to
-                * calculate the average velocity. */
-            Vector2 sum = Vector2.zero;
-            int count = 0;
-            foreach (Boid other in boids)
+            float d = Vector2.Distance(location, other.location);
+            if((d &gt; 0) &amp;&amp; (d &lt; neighborDist))
             {
-                float d = Vector2.Distance(location, other.location);
-                if((d &gt; 0) &amp;&amp; (d &lt; neighborDist))
-                {
-                    sum += other.velocity;
-                    count++; // For an average, we need to keep track of how many boids are within the distance.
-                }
-            }
-
-            if (count &gt; 0)
-            {
-                sum /= count;
-
-                sum = sum.normalized * maxSpeed; // We desite to go in that direction at maximum speed.
-
-                Vector2 steer = sum - velocity; // Reynolds&#39;s steering force formula.
-                steer = Vector2.ClampMagnitude(steer, maxForce);
-                return steer;
-            }
-            else
-            {
-                return Vector2.zero; // If we don&#39;t find any close boids, the steering force is Zero.
+                sum += other.velocity;
+                count++; // For an average, we need to keep track of how many boids are within the distance.
             }
         }
-                            </boid></pre>
+
+        if (count &gt; 0)
+        {
+            sum /= count;
+
+            sum = sum.normalized * maxSpeed; // We desite to go in that direction at maximum speed.
+
+            Vector2 steer = sum - velocity; // Reynolds&#39;s steering force formula.
+            steer = Vector2.ClampMagnitude(steer, maxForce);
+            return steer;
+        }
+        else
+        {
+            return Vector2.zero; // If we don&#39;t find any close boids, the steering force is Zero.
+        }
+    }
+    </pre>
 
 <div class="note">
 <h4 style="text-align:right;">Exercise 6.15</h4>
@@ -1792,34 +1870,34 @@ if (count &gt; 0) { sum.div(count); }
 
 <pre class="prettyprint">
 
-    public Vector2 Cohesion(List<boid> boids)
+    public Vector2 Cohesion(List&lt;boid&gt; boids)
+    {
+        float neighborDist = 6f;
+        Vector2 sum = Vector2.zero;
+        int count = 0;
+        foreach (Boid other in boids)
         {
-            float neighborDist = 6f;
-            Vector2 sum = Vector2.zero;
-            int count = 0;
-            foreach (Boid other in boids)
+            float d = Vector2.Distance(location, other.location);
+            if ((d &gt; 0) &amp;&amp; (d &lt; neighborDist))
             {
-                float d = Vector2.Distance(location, other.location);
-                if ((d &gt; 0) &amp;&amp; (d &lt; neighborDist))
-                {
-                    sum += other.location; // Adding up all the other&#39;s locations
-                    count++;
-                }
-            }
-            if (count &gt; 0)
-            {
-                sum /= count;
-                /* Here we make use of the Seek() function we wrote in
-                    * Example 6.8. The target we seek is thr average
-                    * location of our neighbors. */
-                return Seek(sum);
-            }
-            else
-            {
-                return Vector2.zero;
+                sum += other.location; // Adding up all the other&#39;s locations
+                count++;
             }
         }
-                            </boid></pre>
+        if (count &gt; 0)
+        {
+            sum /= count;
+            /* Here we make use of the Seek() function we wrote in
+            * Example 6.8. The target we seek is thr average
+            * location of our neighbors. */
+            return Seek(sum);
+        }
+        else
+        {
+            return Vector2.zero;
+        }
+    }
+    </pre>
 
 <p>It&rsquo;s also worth taking the time to write a class called Flock, which will be virtually identical to the ParticleSystem class we wrote in Chapter 4 with only one tiny change: When we call run() on each Boid object (as we did to each Particle object), we&rsquo;ll pass in a reference to the entire List of boids.</p>
 
@@ -1852,12 +1930,12 @@ if (count &gt; 0) { sum.div(count); }
             maxForce = _maxForce;
 
             myVehicle = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            GameObject.Destroy(myVehicle.GetComponent<boxcollider>());
+            GameObject.Destroy(myVehicle.GetComponent&lt;boxcollider&gt;());
 
             myVehicle.transform.position = new Vector2(initPos.x, initPos.y);
 
-            myVehicle.AddComponent<rigidbody>();
-            rb = myVehicle.GetComponent<rigidbody>();
+            myVehicle.AddComponent&lt;rigidbody&gt;();
+            rb = myVehicle.GetComponent&lt;rigidbody&gt;();
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             rb.useGravity = false; // Remember to ignore gravity!
 
@@ -1867,7 +1945,7 @@ if (count &gt; 0) { sum.div(count); }
                 * instead ans use that for our boids. */
             if (coneMesh != null)
             {
-                MeshFilter filter = myVehicle.GetComponent<meshfilter>();
+                MeshFilter filter = myVehicle.GetComponent&lt;meshfilter&gt;();
                 filter.mesh = coneMesh;
             }
             else
@@ -1875,7 +1953,8 @@ if (count &gt; 0) { sum.div(count); }
                 myVehicle.transform.localScale = new Vector3(1f, 2f, 1f);
             }
         }
-                            </meshfilter></rigidbody></rigidbody></boxcollider></pre>
+    }
+    </pre>
 
 <p><span class="example">Example 6.9: Flocking </span></p>
 
@@ -2079,7 +2158,7 @@ if (count &gt; 0) { sum.div(count); }
             "repo": "The-Nature-of-Code---Unity-Remix",
             "ref": "master",
             "embed": [{
-                "path": "/Assets/Chapter%206/Example%206.4/Ch6Fig4.cs"
+                "path": "/Assets/Chapter%206/Example%206.4/Chapter6Fig4.cs"
             }]
         });
 
@@ -2088,10 +2167,10 @@ if (count &gt; 0) { sum.div(count); }
             "repo": "The-Nature-of-Code---Unity-Remix",
             "ref": "master",
             "embed": [{
-                "path": "/Assets/Chapter%206/Example%206_5/Example6_5.cs"},
-                {"path": "/Assets/Chapter%206/Example%206_5/Vehicle6_5.cs"
+                "path": "/Assets/Chapter%206/Example%206.5/Example6_5.cs"},
+                {"path": "/Assets/Chapter%206/Example%206.5/Vehicle6_5.cs"
             },
-            {"path": "/Assets/Chapter%206/Example%206_5/Path6_5.cs"
+            {"path": "/Assets/Chapter%206/Example%206.5/Path6_5.cs"
             }]
         });
 
