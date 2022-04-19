@@ -323,12 +323,13 @@ height: 100%;" alt="A Textile Cone Snail (Conus textile), Cod Hole, Great Barrie
                 what generation it’s on, who its neighbors are, where it lives pixel-wise on the screen. And maybe it
                 has some functions: it can display itself, it can generate its new state, etc.” This line of thinking is
                 an excellent one and would likely lead you to write some code like this:</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
-    public class cell{
+    public class Cell
+    {
 
     }
-</pre>
+    </pre>
             <p>This line of thinking, however, is not the road we will first travel. Later in this chapter, we will
                 discuss why an object-oriented approach could prove valuable in developing a CA simulation, but to
                 begin, we can work with a more elementary data structure. After all, what is an elementary CA but a list
@@ -338,15 +339,14 @@ height: 100%;" alt="Figure 7.17">
             <p>
                 Figure 7.17
             </p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     public int[] ruleSet0 = { 1,0,1,0,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,0 };
-
-</pre>
+    </pre>
             <p>
                 To draw that array, we simply check if we’ve got a 0 or a 1 and create a fill accordingly.
             </p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     public void Display() // Drawing the cells. Cells with a state of 1 are black, cells with a state of 0 are white
     {
@@ -356,9 +356,9 @@ height: 100%;" alt="Figure 7.17">
             {
                 GameObject newCell = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 numberOfCells++;
-                Renderer r = newCell.GetComponent<Renderer>();
+                Renderer r = newCell.GetComponent&lt;Renderer>();
                 r.material = new Material(Shader.Find("Diffuse"));
-                Object.Destroy(newCell.GetComponent<BoxCollider>());
+                Object.Destroy(newCell.GetComponent&lt;BoxCollider>());
                 if (cells[i] == 1)
                 {
                     r.material.color = Color.black;
@@ -374,7 +374,7 @@ height: 100%;" alt="Figure 7.17">
             }
         }
     }
-</pre>
+    </pre>
             <p>Now that we have the array to describe the cell states of a given generation (which we’ll ultimately
                 consider the “current” generation), we need a mechanism by which to compute the next generation. Let’s
                 think about the pseudocode of what we are doing at the moment.</p>
@@ -385,7 +385,7 @@ height: 100%;" alt="Figure 7.17">
                 <li>Set the cell’s state to that new value.</li>
                 <li>This may lead you to write some code like this:</li>
             </ul>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     public void Generate()
     {
@@ -406,7 +406,7 @@ height: 100%;" alt="Figure 7.17">
         cells = nextGen;
         generation++;
     }
-</pre>
+    </pre>
             <p>We’re fairly close to getting this right, but we’ve made one minor blunder and one major blunder in the
                 above code. Let’s talk about what we’ve done well so far.</p>
             <p>Notice how easy it is to look at a cell’s neighbors. Because an array is an ordered list of data, we can
@@ -436,7 +436,7 @@ height: 100%;" alt="Figure 7.17">
             <p>To make the code easiest to read and understand right now, we’ll go with option #1 and just skip the edge
                 cases, leaving their values constant. This can be accomplished by starting the loop one cell later and
                 ending one cell earlier:</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     public void Generate()
     {
@@ -457,17 +457,16 @@ height: 100%;" alt="Figure 7.17">
         cells = nextGen;
         generation++;
     }
-</pre>
+    </pre>
             <p>We’re almost done. The above code is complete except for the fact that we haven’t yet written the rules()
                 function that computes the new state value based on the neighborhood (left, middle, and right cells). We
                 know that function needs to return an integer (0 or 1) as well as receive three arguments (for the three
                 neighbors).</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     private int rules (int a, int b, int c)
     {
-
-</pre>
+    </pre>
             <p>Now, there are many ways we could write this function, but I’d like to start with a long-winded one that
                 will hopefully provide a clear illustration of what we are doing.</p>
             <p>Let’s first establish how we are storing the ruleset. The ruleset, if you remember from the previous
@@ -494,9 +493,9 @@ height: 100%;" alt="Figure 7.14 Repeated">
             <p>If left, middle, and right all have the state 1, then that matches the configuration 111 and the new
                 state should be equal to the first value in the ruleset array. We can now duplicate this strategy for
                 all eight possibilities.</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
-    private int rules (int a, int b, int c) // Implementing the Wolfram rules
+    private int Rules (int a, int b, int c) // Implementing the Wolfram rules
     {
         if (a == 1 && b == 1 && c == 1) return ruleset[0];
         if (a == 1 && b == 1 && c == 0) return ruleset[1];
@@ -508,7 +507,7 @@ height: 100%;" alt="Figure 7.14 Repeated">
         if (a == 0 && b == 0 && c == 0) return ruleset[7];
         return 0;
     }
-</pre>
+    </pre>
             <p>For this function to be valid, we have to make sure something is returned in cases where the states do
                 not match one of the eight possibilities. We know this is impossible given the rest of our code, but
                 Unity does not.</p>
@@ -523,7 +522,7 @@ height: 100%;" alt="Figure 7.14 Repeated">
             <p>So far in this section, we’ve written everything we need to compute the generations for a Wolfram
                 elementary CA. Let’s take a moment to organize the above code into a class, which will ultimately help
                 in the design of our overall scene.</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     public class Chapter7Fig1CA
     {
@@ -533,23 +532,41 @@ height: 100%;" alt="Figure 7.14 Repeated">
         private int rowWidth; // How wide to make the array
         private int cellCapacity; // We limit how many cells we instantiate
         private int numberOfCells; // Which needs us to keep count
-        private Vector2 screenSize;
+        private Vector2 screenSize; 
         private float yScreenOffset; // Cells are spawned with a small offset so they spawn in centered
-        private float xScreenOffset;
+        private float xScreenOffset; 
 
         public Chapter7Fig1CA(int[] ruleSetToUse)
         {
             rowWidth = 17;
-            cellCapacity = 650;
-            yScreenOffset = 2.5f;
-            xScreenOffset = 1.25f;
+            cellCapacity = 700;
+            yScreenOffset = 0.5f;
+            xScreenOffset = -0.5f;
 
             // How big our screen is in World Units
-            screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+            screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));        
             numberOfCells = 0;
-            ruleset = {0,1,0,1,1,0,1,0};
+            ruleset = ruleSetToUse;
             cells = new int[cellCapacity / rowWidth];
-            restart();
+            Restart();
+        }
+
+        public void Randomize() // If we wanted to make a random Ruleset
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                ruleset[i] = Random.Range(0, 2);
+            }
+        }
+
+        private void Restart()
+        {
+            for (int i = 0; i < cells.Length; i++)
+            {
+                cells[i] = 0;
+            }
+            cells[cells.Length / 2] = 1; // We arbitrarily start with just the middle cell having a state of "1"
+            generation = 0;
         }
 
         // The process of creating the new generation
@@ -565,25 +582,25 @@ height: 100%;" alt="Figure 7.14 Repeated">
                 int left = cells[i - 1]; // Left neighbor state
                 int me = cells[i]; // Current state
                 int right = cells[i + 1]; // Right neighbor state
-                nextGen[i] = rules(left, me, right); // Compute next generation state based on ruleset
+                nextGen[i] = Rules(left, me, right); // Compute next generation state based on ruleset
             }
 
             // The current generation is the new generation
             cells = nextGen;
             generation++;
         }
-
+    
         public void Display() // Drawing the cells. Cells with a state of 1 are black, cells with a state of 0 are white
         {
-            if (numberOfCells <= cellCapacity)
+         if (numberOfCells <= cellCapacity)
             {
                 for (int i = 0; i < cells.Length; i++)
                 {
-                    GameObject newCell = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                    numberOfCells++;
-                    Renderer r = newCell.GetComponent<Renderer>();
+                    GameObject newCell = GameObject.CreatePrimitive(PrimitiveType.Quad);                
+                    numberOfCells++;                
+                    Renderer r = newCell.GetComponent&lt;Renderer>();
                     r.material = new Material(Shader.Find("Diffuse"));
-                    Object.Destroy(newCell.GetComponent<BoxCollider>());
+                    Object.Destroy(newCell.GetComponent&lt;BoxCollider>());
                     if (cells[i] == 1)
                     {
                         r.material.color = Color.black;
@@ -594,10 +611,23 @@ height: 100%;" alt="Figure 7.14 Repeated">
                     }
 
                     // Set position based to lower left of screen, with screen offset
-                    newCell.transform.position = new Vector3(i - screenSize.x - xScreenOffset,
+                    newCell.transform.position = new Vector3(i - screenSize.x - xScreenOffset, 
                                                     generation - screenSize.y + yScreenOffset);
                 }
             }
+        }
+
+        private int Rules (int a, int b, int c) // Implementing the Wolfram rules
+        {
+            if (a == 1 && b == 1 && c == 1) return ruleset[0];
+            if (a == 1 && b == 1 && c == 0) return ruleset[1];
+            if (a == 1 && b == 0 && c == 1) return ruleset[2];
+            if (a == 1 && b == 0 && c == 0) return ruleset[3];
+            if (a == 0 && b == 1 && c == 1) return ruleset[4];
+            if (a == 0 && b == 1 && c == 0) return ruleset[5];
+            if (a == 0 && b == 0 && c == 1) return ruleset[6];
+            if (a == 0 && b == 0 && c == 0) return ruleset[7];
+            return 0;
         }
 
         public bool IsFinished() // The CA is done if it reaches a height limit
@@ -607,19 +637,8 @@ height: 100%;" alt="Figure 7.14 Repeated">
             else
                 return false;
         }
-
-
-        private void restart()
-        {
-            for (int i = 0; i < cells.Length; i++)
-            {
-                cells[i] = 0;
-            }
-            cells[cells.Length / 2] = 1; // We arbitrarily start with just the middle cell having a state of "1"
-            generation = 0;
-        }
     }
-</pre>
+    </pre>
             <h2>7.4 Drawing an Elementary CA</h2>
             <p>What’s missing? Presumably, it’s our intention to display cells and their states in visual form. As we
                 saw earlier, the standard technique for doing this is to stack the generations one on top of each other
@@ -644,13 +663,11 @@ height: 100%;" alt="Figure 7.12 Repeated">
                 would render a single generation. Assume we have a Unity window 600 pixels wide and we want each cell to
                 be a 10x10 square. We therefore have a CA with 60 cells. Of course, we can calculate this value
                 dynamically.</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     rowWidth = 17;
     cells = new int[cellCapacity / rowWidth];
-
-
-</pre>
+    </pre>
             <p>In truth, we could optimize the above by having a white background and only drawing when there is a black
                 cell (saving us the work of drawing many white squares), but in most cases this solution is good enough
                 (and necessary for other more sophisticated designs with varying colors, etc.) Also, if we wanted each
@@ -908,7 +925,7 @@ height: 100%;" alt="Figure 7.26">
                 After all, if the state is only a 0 or 1, the sum of all the neighbors’ states will yield the total
                 number of live cells. Since the neighbors are arranged in a mini 3x3 grid, we can add them all up with
                 another loop.</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     int[,] next = new int[columns, rows];
 
@@ -926,27 +943,28 @@ height: 100%;" alt="Figure 7.26">
                     neighbors += board[x + i, y + j];
                 }
             }
-        </pre>
+    }
+    </pre>
             <p>Of course, we’ve made a mistake in the code above. In the Game of Life, the cell itself does not count as
                 one of the neighbors. We could use a conditional to skip adding the state when both i and j equal 0, but
                 another option would be to just subtract the cell state once we’ve finished the loop.</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     neighbors -= board[x, y];
-        </pre>
+    </pre>
             <p>Finally, once we know the total number of live neighbors, we can decide what the cell’s new state should
                 be according to the rules: birth, death, or stasis.</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     // Rules of Life
-    if ((board[x,y] == 1) && (neighbors < 2)) next[x,y] = 0;           // Loneliness
-    else if ((board[x,y] == 1) && (neighbors > 3)) next[x,y] = 0;           // Overpopulation
-    else if ((board[x,y] == 0) && (neighbors == 3)) next[x,y] = 1;           // Reproduction
-    else next[x,y] = board[x,y];  // Stasis
-        </pre>
+    if ((board[x,y] == 1) && (neighbors < 2)) next[x,y] = 0;        // Loneliness
+    else if ((board[x,y] == 1) && (neighbors > 3)) next[x,y] = 0;   // Overpopulation
+    else if ((board[x,y] == 0) && (neighbors == 3)) next[x,y] = 1;  // Reproduction
+    else next[x,y] = board[x,y];                                    // Stasis
+    </pre>
             <p>Finally, once the next generation is calculated, we can employ the same method we used to draw the
                 Wolfram CA—a square for each spot, white for off, black for on.</p>
-                <pre class="prettyprint">
+<pre class="prettyprint">
 
     // The process of creating the new generation
     public void Generate()
@@ -973,17 +991,17 @@ height: 100%;" alt="Figure 7.26">
                 neighbors -= board[x, y];
 
                 // Rules of Life
-                if ((board[x,y] == 1) && (neighbors < 2)) next[x,y] = 0;           // Loneliness
-                else if ((board[x,y] == 1) && (neighbors > 3)) next[x,y] = 0;           // Overpopulation
-                else if ((board[x,y] == 0) && (neighbors == 3)) next[x,y] = 1;           // Reproduction
-                else next[x,y] = board[x,y];  // Stasis
+                if ((board[x,y] == 1) && (neighbors < 2)) next[x,y] = 0;        // Loneliness
+                else if ((board[x,y] == 1) && (neighbors > 3)) next[x,y] = 0;   // Overpopulation
+                else if ((board[x,y] == 0) && (neighbors == 3)) next[x,y] = 1;  // Reproduction
+                else next[x,y] = board[x,y];                                    // Stasis
             }
         }
 
         // Next is now our board
         board = next;
     }
-            </pre>
+    </pre>
 
             <p><span class="example">Example 7.2: Game of Life</span></p>
             <ul class="tabs" role="tablist">
@@ -1050,18 +1068,18 @@ height: 100%;" alt="Figure 7.26">
             <p>To accomplish any of these ideas (and more), it would be helpful to see how we might treat a cell as an
                 object with multiple properties, rather than as a single 0 or 1. To show this, let’s just recreate the
                 Game of Life simulation. Only instead of:</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     private int[,] board;
-            </pre>
+    </pre>
             <p>Let's have:</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     private Chapter7Figure3Cell[,] board;
-            </pre>
+    </pre>
             <p>where Cell is a class we will write. What are the properties of a Cell object? In our Game of Life
                 example, each cell has a location and size, as well as a state.</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     public class Chapter7Figure3Cell
     {
@@ -1078,7 +1096,8 @@ height: 100%;" alt="Figure 7.26">
         private float x, y;
 
         public int State;
-            </pre>
+    }
+    </pre>
             <p>In the non-OOP version, we used a separate 2D array to keep track of the states for the current and next
                 generation. By making a cell an object, however, each cell could keep track of both states. In this
                 case, we’ll think of the cell as remembering its previous state (for when new states need to be
@@ -1118,7 +1137,7 @@ height: 100%;" alt="Figure 7.26">
             <p>Not much else about the code (at least for our purposes here) has to change. The neighbors can still be
                 counted the same way; the difference is that we now need to refer to the object’s state variables as we
                 loop through the 2D array.</p>
-            <pre class="prettyprint">
+<pre class="prettyprint">
 
     // The process of creating the new generation
     public void Generate()
@@ -1163,7 +1182,7 @@ height: 100%;" alt="Figure 7.26">
             }
         }
     }
-            </pre>
+    </pre>
             <h2>7.9 Variations of Traditional CA</h2>
             <p>Now that we have covered the basic concepts, algorithms, and programming strategies behind the most
                 famous 1D and 2D cellular automata, it’s time to think about how you might take this foundation of code
