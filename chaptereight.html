@@ -102,8 +102,10 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
 
 <div id="ImageContainer"><img alt="Figure 8.1" src="https://natureofcode.com/book/imgs/chapter08/ch08_02.png" style="  width: 100%;
         height: 100%;" />
-<p>Figure 8.2: One of the most well-known and recognizable fractal patterns is named for Benoit Mandelbrot himself. Generating the Mandelbrot set involves testing the properties of complex numbers after they are passed through an iterative function. Do they tend to infinity? Do they stay bounded? While a fascinating mathematical discussion, this &ldquo;escape-time&rdquo; algorithm is a less practical method for generating fractals than the recursive techniques we&rsquo;ll examine in this chapter. However, an example for generating the Mandelbrot set is included in the code examples.</p>
-</div>
+<p>Figure 8.2</p> 
+</div>   
+    
+<p>One of the most well-known and recognizable fractal patterns is named for Benoit Mandelbrot himself. Generating the Mandelbrot set involves testing the properties of complex numbers after they are passed through an iterative function. Do they tend to infinity? Do they stay bounded? While a fascinating mathematical discussion, this &ldquo;escape-time&rdquo; algorithm is a less practical method for generating fractals than the recursive techniques we&rsquo;ll examine in this chapter. However, an example for generating the Mandelbrot set is included in the code examples.</p>
 
 <p>Let&rsquo;s illustrate this definition with two simple examples. First, let&rsquo;s think about a tree branching structure (for which we&rsquo;ll write the code later):</p>
 
@@ -162,21 +164,23 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
 <p>Before we implement the Cantor set, let&rsquo;s take a look at what it means to have recursion in code. Here&rsquo;s something we&rsquo;re used to doing all the time&mdash;calling a function inside another function.</p>
 
 <pre class="prettyprint">
-    //Calling the function background() in the definition of someFunction()
 
-    void someFunction() {
-            background(0);
-        }
-</pre>
+    //Calling the function Background() in the definition of SomeFunction()
+    void SomeFunction() 
+    {
+        Background(0);
+    }
+    </pre>
 
 <p>What would happen if we called the function we are defining within the function itself? Can someFunction() call someFunction()?</p>
 
 <pre class="prettyprint">
-    void someFunction() {
-        someFunction();
-        }
 
-</pre>
+    void SomeFunction() 
+    {
+        SomeFunction();
+    }
+    </pre>
 
 <p>In fact, this is not only allowed, but it&rsquo;s quite common (and essential to how we will implement the Cantor set). Functions that call themselves are recursive and good for solving certain problems. For example, certain mathematical calculations are implemented recursively; the most common example is factorial.</p>
 
@@ -187,15 +191,17 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
 <p>Here we&rsquo;ll write a function in Unity that uses a for loop to calculate factorial:</p>
 
 <pre class="prettyprint">
-    int factorial(int n) {
+
+    int Factorial(int n) 
+    {
         int f = 1;
-        for (int i = 0; i &lt; n; i++) {
+        for (int i = 0; i &lt; n; i++) 
+        {
             f = f * (i+1);
         }
         return f;
-        }
-
-</pre>
+    }
+    </pre>
 
 <p>Upon close examination, you&rsquo;ll notice something interesting about how factorial works. Let&rsquo;s look at 4! and 3!</p>
 
@@ -216,14 +222,19 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
 <p>The definition of <b>factorial</b> includes <b>factorial</b>?! It&rsquo;s kind of like defining &ldquo;tired&quot; as &ldquo;the feeling you get when you are tired.&rdquo; This concept of self-reference in functions is an example of recursion. And we can use it to write a factorial function that calls itself.</p>
 
 <pre class="prettyprint">
-    int factorial(int n) {
-        if (n == 1) {
+
+    int factorial(int n) 
+    {
+        if (n == 1) 
+        {
             return 1;
-        } else {
+        } 
+        else 
+        {
             return n * factorial(n-1);
         }
     }
-</pre>
+    </pre>
 
 <p>It may look crazy, but it works. Here are the steps that happen when factorial(4) is called.</p>
 
@@ -251,13 +262,13 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
 	</li>
 </ul>
 
-<p>drawCircle() draws an ellipse based on a set of parameters that it receives as arguments. It then calls itself with those same parameters, adjusting them slightly. The result is a series of circles, each of which is drawn inside the previous circle.</p>
+<p>DrawCircle() draws an ellipse based on a set of parameters that it receives as arguments. It then calls itself with those same parameters, adjusting them slightly. The result is a series of circles, each of which is drawn inside the previous circle.</p>
 
 <p>Notice that the above function only recursively calls itself if the radius is greater than 2. This is a crucial point. As with iteration, all recursive functions must have an exit condition! You likely are already aware that all for and while loops must include a boolean expression that eventually evaluates to false, thus exiting the loop. Without one, the program would crash, caught inside of an infinite loop. The same can be said about recursion. If a recursive function calls itself forever and ever, you&rsquo;ll be most likely be treated to a nice frozen screen.</p>
 
 <p>This circles example is rather trivial; it could easily be achieved through simple iteration. However, for scenarios in which a function calls itself more than once, recursion becomes wonderfully elegant.</p>
 
-<p>Let&rsquo;s make drawCircle() a bit more complex. For every circle displayed, draw a circle half its size to the left and right of that circle.</p>
+<p>Let&rsquo;s make DrawCircle() a bit more complex. For every circle displayed, draw a circle half its size to the left and right of that circle.</p>
 
 <p><span class="example">Example 8.2: Recursion twice </span></p>
 
@@ -300,25 +311,25 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
 <p>Now we&rsquo;re ready to visualize the Cantor set in Unity using a recursive function. Where do we begin? Well, we know that the Cantor set begins with a line. So let&rsquo;s start there and write a function that draws a line.</p>
 
 <pre class="prettyprint">
-    void cantor(float x, float y, float len)
+
+    void Cantor(float x, float y, float len)
     {
         line(x, y, x + len, y); // Create the first line
     }
-
-</pre>
+    </pre>
 
 <p>The above cantor() function draws a line that starts at pixel coordinate (x,y) with a length of len. (The line is drawn horizontally here, but this is an arbitrary decision.) So if we called that function, saying:</p>
 
 <pre class="prettyprint">
-    cantor(minPos.x + 3, maxPos.y - 2, (maxPos.x - minPos.x) - 6);
 
-</pre>
+    cantor(minPos.x + 3, maxPos.y - 2, (maxPos.x - minPos.x) - 6);
+    </pre>
 
 <div id="ImageContainer"><img alt="Figure 8.7" src="https://natureofcode.com/book/imgs/chapter08/ch08_10.png" style="  width: 100%;
         height: 100%;" />
 <p>Figure 8.10</p>
 </div>
-
+<br>
 <div id="ImageContainer"><img alt="Figure 8.7" src="https://natureofcode.com/book/imgs/chapter08/ch08_11.png" style="  width: 100%;
         height: 100%;" />
 <p>Figure 8.11</p>
@@ -329,19 +340,20 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
 <p>We can now add two more lines of code to draw the second pair of lines, moving the y-location down a bunch of pixels so that we can see the result below the original line.</p>
 
 <pre class="prettyprint">
-    void cantor(float x, float y, float len)
+
+    void Cantor(float x, float y, float len)
     {
-        line(x, y, x + len, y); // Create the first line
+        Line(x, y, x + len, y); // Create the first line
 
         if (len &gt;= 0.01f) // Stop at 0.01 meters length!
         {
             y -= 2;
 
-            line(x, y, len / 3);
-            line(x + len * 2 / 3, y, len / 3);
+            Line(x, y, len / 3);
+            Line(x + len * 2 / 3, y, len / 3);
         }
     }
-</pre>
+    </pre>
 
 <div id="ImageContainer"><img alt="Figure 8.12" src="https://natureofcode.com/book/imgs/chapter08/ch08_12.png" style="  width: 100%;
         height: 100%;" />
@@ -353,28 +365,29 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
 <p>Take a look at where we draw that first line from the start to the one-third mark.</p>
 
 <pre class="prettyprint">
-    line(x, y, x + len/3, y); // Create the first line
-</pre>
+
+    Line(x, y, x + len/3, y); // Create the first line
+    </pre>
 
 <p>Instead of calling the line() function directly, we can simply call the cantor() function itself. After all, what does the cantor() function do? It draws a line at an (x,y) location with a given length! And so:</p>
 
 <pre class="prettyprint">
-    line(x,y,x+len/3,y);         becomes -------&gt;  cantor(x,y,len/3);
 
-</pre>
+    Line(x,y,x+len/3,y);         becomes -------&gt;  Cantor(x,y,len/3);
+    </pre>
 
 <p>And for the second line:</p>
 
 <pre class="prettyprint">
-    line(x+len*2/3,y,x+len,y);   becomes -------&gt;  cantor(x+len*2/3,y,len/3);
 
-</pre>
+    Line(x+len*2/3,y,x+len,y);   becomes -------&gt;  Cantor(x+len*2/3,y,len/3);
+    </pre>
 
 <p>Leaving us with:</p>
 
 <pre class="prettyprint">
 
-    void cantor(float x, float y, float len)
+    void Cantor(float x, float y, float len)
     {
         line(x, y, x + len, y); // Create the first line
 
@@ -382,14 +395,13 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
         {
             y -= 2;
 
-            cantor(x, y, len / 3); // Call the function recursively
-            cantor(x + len * 2 / 3, y, len / 3); // We need two lines for each line above it
+            Cantor(x, y, len / 3); // Call the function recursively
+            Cantor(x + len * 2 / 3, y, len / 3); // We need two lines for each line above it
         }
     }
+    </pre>
 
-</pre>
-
-<p>And since the cantor() function is called recursively, the same rule will be applied to the next lines and to the next and to the next as cantor() calls itself again and again! Now, don&rsquo;t go and run this code yet. We&rsquo;re missing that crucial element: an exit condition. We&rsquo;ll want to make sure we stop at some point&mdash;for example, if the length of the line ever is less than 1 pixel.</p>
+<p>And since the Cantor() function is called recursively, the same rule will be applied to the next lines and to the next and to the next as Cantor() calls itself again and again! Now, don&rsquo;t go and run this code yet. We&rsquo;re missing that crucial element: an exit condition. We&rsquo;ll want to make sure we stop at some point&mdash;for example, if the length of the line ever is less than 1 pixel.</p>
 
 <p><span class="example">Example 8.4: Cantor set </span></p>
 
@@ -409,7 +421,7 @@ On a cold November day a man named Benoit Mandelbrot was born&rdquo;
 
 <div class="note">
 <h4 style="text-align:right;">Exercise 8.1</h4>
-Using drawCircle() and the Cantor set as models, generate your own pattern with recursion. Here is a screenshot of one that uses lines.</div>
+Using DrawCircle() and the Cantor set as models, generate your own pattern with recursion. Here is a screenshot of one that uses lines.</div>
 
 <h2>8.4 The Koch Curve and the List Technique</h2>
 
@@ -421,7 +433,8 @@ Using drawCircle() and the Cantor set as models, generate your own pattern with 
         height: 100%;" />
 <p>Figure 8.13</p>
 </div>
-The result looks like:
+
+<p>The result looks like:</p>
 
 <div id="ImageContainer"><img alt="Figure 8.7" src="https://natureofcode.com/book/imgs/chapter08/ch08_14.png" style="  width: 100%;
         height: 100%;" />
@@ -443,197 +456,32 @@ The result looks like:
 <p>The Koch curve is a series of connected lines, and so we will think of each segment as a &ldquo;KochLine.&rdquo; Each KochLine object has a start point (&ldquo;a&rdquo;) and an end point (&ldquo;b&rdquo;). These points are PVector objects, and the line is drawn with Unity&rsquo;s line() function.</p>
 
 <pre class="prettyprint">
-        void Start()
-        {
-            findWindowLimits();
 
-            points = new List<vector2>(); // Our List of points that will make up our line
-
-            points.Add(new Vector2(minPos.x, minPos.y + 1f)); // Left side of window
-            points.Add(new Vector2(maxPos.x, minPos.y + 1f)); // Right side of window
-
-            for (int i = 0; i &lt; 5; i++)
-            {
-                generate(); // We want to expand our points 5 times!
-            }
-
-            KochLine = line(points); // We then show the line by passing the points into a LineRenderer
-        }
-
-        void generate()
-        {
-            if (KochLine != null)  // We&#39;re going to replace the line!
-            {
-                Destroy(KochLine);
-            }
-
-            List<vector2> newPoints = new List<vector2>();
-
-            for (int i = 0; i &lt; points.Count - 1; i++) // We&#39;re going to use 2 points each time to make a line
-            {
-                Vector2 v = points[i+1] - points[i]; // This gives up the length of the line in 2 dimentions
-                v = v / 3; // We only need 1/3rd of it since the line is split into thirds
-
-                // First we need to define each new point from the original points in the line
-
-                Vector2 a = points[i]; // This is the first point in the original line
-                Vector2 b = v + a;  // 1/3rd after point A is where point B lies
-                Vector2 c = Rotate(v, 60) + b; // Point C is 60 Degrees up from point B
-                Vector2 d = (v * 2f) + a; // 2/3rds after point A is where point D lies
-                Vector2 e = points[i+1]; // This is the last point in the original line
-
-                // Now we add those points, in order, to our newPoint list
-
-                newPoints.Add(a);
-                newPoints.Add(b);
-                newPoints.Add(c);
-                newPoints.Add(d);
-                newPoints.Add(e);
-            }
-
-            // After each line is added, we redefine the original points with the newPoints
-            points = newPoints;
-        }
-
-</vector2></vector2></vector2></pre>
-
-<p>Now that we have our KochLine method in our Chapter8 Figure 5 class, we can get started on the main program. We&rsquo;ll need a data structure to keep track of what will eventually become many KochLine objects, and a List (see Chapter 4 for a review of Lists) will do just fine.</p>
-
-<pre class="prettyprint">
-    List<vector2> points;
-</vector2></pre>
-
-<p>In start(), we&rsquo;ll want to create the List and add the first line segment to it, a line that stretches from 0 to the width of the scene.</p>
-
-<pre class="prettyprint">
-    points = new List<vector2>(); // Our List of points that will make up our line
-
-    points.Add(new Vector2(minPos.x, minPos.y + 1f)); // Left side of window
-    points.Add(new Vector2(maxPos.x, minPos.y + 1f)); // Right side of window
-
-
-</vector2></pre>
-
-<p>Then in line(), all the KochLine object will be created (just one right now).</p>
-
-<pre class="prettyprint">
     void Start()
     {
-        findWindowLimits();
+        FindWindowLimits();
 
-        points = new List<vector2>(); // Our List of points that will make up our line
+        points = new List&lt;vector2>(); // Our List of points that will make up our line
 
         points.Add(new Vector2(minPos.x, minPos.y + 1f)); // Left side of window
         points.Add(new Vector2(maxPos.x, minPos.y + 1f)); // Right side of window
 
         for (int i = 0; i &lt; 5; i++)
         {
-            generate(); // We want to expand our points 5 times!
+            Generate(); // We want to expand our points 5 times!
         }
 
-        KochLine = line(points); // We then show the line by passing the points into a LineRenderer
+        KochLine = Line(points); // We then show the line by passing the points into a LineRenderer
     }
 
-    private GameObject line(List<vector2> linePoints)
-        {
-            // We first generate a new object and give it a LineRenderer like in 8.4
-            GameObject obj = new GameObject();
-            obj.name = &quot;Line&quot;;
-            LineRenderer line = obj.AddComponent<linerenderer>();
-
-            // We give it a material and a color so we can see it
-            line.material = new Material(Shader.Find(&quot;Sprites/Default&quot;));
-            line.startColor = line.endColor = Color.black;
-
-            // Let&#39;s give it a small width so we can see the complexity of the curve
-            line.startWidth = line.endWidth = 0.1f;
-
-            // We have to tell the LineRenderer to expect as many points as we have before we assign them
-            line.positionCount = linePoints.Count;
-
-            // We then can loop through those empty points and give them values
-            int index = 0;
-            foreach (Vector2 point in linePoints) {
-                line.SetPosition(index, new Vector3(point.x, point.y, 0));
-                index++;
-            }
-
-            return obj;
-        }
-</linerenderer></vector2></vector2></pre>
-
-<p>This is our foundation. Let&rsquo;s review what we have so far:</p>
-
-<ul>
-	<li>KochLine GameObject: A GameObject to keep track of a line from point A to B.</li>
-	<li>&gt;</li>
-	<li>List: A list of all KochLine points.</li>
-</ul>
-
-<p>With the above elements, how and where do we apply Koch rules and principles of recursion?</p>
-
-<p>Remember the Game of Life cellular automata? In that simulation, we always kept track of two generations: current and next. When we were finished computing the next generation, next became current and we moved on to computing the new next generation. We are going to apply a similar technique here. We have a List that keeps track of the current set of KochLine objects (at the start of the program, there is only one). We will need a second List (let&rsquo;s call it &ldquo;next&rdquo;) where we will place all the new KochLine objects that are generated from applying the Koch rules. For every KochLine object in the current List, four new KochLine objects are added to the next List. When we&rsquo;re done, the next List becomes the current one.</p>
-
-<div id="ImageContainer"><img alt="Figure 8.15" src="https://natureofcode.com/book/imgs/chapter08/ch08_15.png" style="  width: 100%;
-        height: 100%;" />
-<p>Figure 8.15</p>
-</div>
-
-<p>Here&rsquo;s how the code will look:</p>
-
-<pre class="prettyprint">
-    void generate()
+    void Generate()
     {
         if (KochLine != null)  // We&#39;re going to replace the line!
         {
             Destroy(KochLine);
         }
 
-        List<vector2> newPoints = new List<vector2>();
-
-        for (int i = 0; i &lt; points.Count - 1; i++) // We&#39;re going to use 2 points each time to make a line
-        {
-            newPoints.Add(?????);
-            newPoints.Add(?????);
-            newPoints.Add(?????);
-            newPoints.Add(?????);
-            newPoints.Add(?????);
-        }
-
-        // After each line is added, we redefine the original points with the newPoints
-        points = newPoints;
-    }
-
-</vector2></vector2></pre>
-
-<p>By calling generate() over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of KochLine objects. Of course, the above omits the real &ldquo;work&rdquo; here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our KochLine object uses PVector, this is a nice opportunity for us to practice our vector math. Let&rsquo;s establish how many points we need to compute for each KochLine object.</p>
-
-<div id="ImageContainer"><img alt="Figure 8.16" src="https://natureofcode.com/book/imgs/chapter08/ch08_16.png" style="  width: 100%;
-        height: 100%;" />
-<p>Figure 8.16</p>
-</div>
-
-<p>As you can see from the above figure, we need five points (a, b, c, d, and e) to generate the new KochLine objects.</p>
-
-<pre class="prettyprint">
-    newPoints.Add(a);
-    newPoints.Add(b);
-    newPoints.Add(c);
-    newPoints.Add(d);
-    newPoints.Add(e);
-</pre>
-
-<p>Where do we get these points? Since we have a KochLine object, why not ask the KochLine object to compute all these points for us?</p>
-
-<pre class="prettyprint">
-    void generate()
-    {
-        if (KochLine != null)  // We&#39;re going to replace the line!
-        {
-            Destroy(KochLine);
-        }
-
-        List<vector2> newPoints = new List<vector2>();
+        List&lt;vector2> newPoints = new List&lt;vector2>();
 
         for (int i = 0; i &lt; points.Count - 1; i++) // We&#39;re going to use 2 points each time to make a line
         {
@@ -660,8 +508,174 @@ The result looks like:
         // After each line is added, we redefine the original points with the newPoints
         points = newPoints;
     }
+    </pre>
 
-</vector2></vector2></pre>
+<p>Now that we have our KochLine method in our Chapter8 Figure 5 class, we can get started on the main program. We&rsquo;ll need a data structure to keep track of what will eventually become many KochLine objects, and a List (see Chapter 4 for a review of Lists) will do just fine.</p>
+
+<pre class="prettyprint">
+
+    List&lt;vector2> points;
+    </pre>
+
+<p>In start(), we&rsquo;ll want to create the List and add the first line segment to it, a line that stretches from 0 to the width of the scene.</p>
+
+<pre class="prettyprint">
+
+    points = new List&lt;vector2>(); // Our List of points that will make up our line
+
+    points.Add(new Vector2(minPos.x, minPos.y + 1f)); // Left side of window
+    points.Add(new Vector2(maxPos.x, minPos.y + 1f)); // Right side of window
+    </pre>
+
+<p>Then in line(), all the KochLine object will be created (just one right now).</p>
+
+<pre class="prettyprint">
+
+    void Start()
+    {
+        FindWindowLimits();
+
+        points = new List&lt;vector2>(); // Our List of points that will make up our line
+
+        points.Add(new Vector2(minPos.x, minPos.y + 1f)); // Left side of window
+        points.Add(new Vector2(maxPos.x, minPos.y + 1f)); // Right side of window
+
+        for (int i = 0; i &lt; 5; i++)
+        {
+            Generate(); // We want to expand our points 5 times!
+        }
+
+        KochLine = Line(points); // We then show the line by passing the points into a LineRenderer
+    }
+
+    private GameObject Line(List&lt;vector2> linePoints)
+    {
+        // We first generate a new object and give it a LineRenderer like in 8.4
+        GameObject obj = new GameObject();
+        obj.name = &quot;Line&quot;;
+        LineRenderer line = obj.AddComponent&lt;linerenderer>();
+
+        // We give it a material and a color so we can see it
+        line.material = new Material(Shader.Find(&quot;Sprites/Default&quot;));
+        line.startColor = line.endColor = Color.black;
+
+        // Let&#39;s give it a small width so we can see the complexity of the curve
+        line.widthMultiplier = .01f;
+
+        // We have to tell the LineRenderer to expect as many points as we have before we assign them
+        line.positionCount = linePoints.Count;
+
+        // We then can loop through those empty points and give them values
+        int index = 0;
+        foreach (Vector2 point in linePoints) 
+        {
+            line.SetPosition(index, new Vector3(point.x, point.y, 0));
+            index++;
+        }
+
+        return obj;
+    }
+    </pre>
+
+<p>This is our foundation. Let&rsquo;s review what we have so far:</p>
+
+<ul>
+	<li>KochLine GameObject: A GameObject to keep track of a line from point A to B.</li>
+	<li>&gt;</li>
+	<li>List: A list of all KochLine points.</li>
+</ul>
+
+<p>With the above elements, how and where do we apply Koch rules and principles of recursion?</p>
+
+<p>Remember the Game of Life cellular automata? In that simulation, we always kept track of two generations: current and next. When we were finished computing the next generation, next became current and we moved on to computing the new next generation. We are going to apply a similar technique here. We have a List that keeps track of the current set of KochLine objects (at the start of the program, there is only one). We will need a second List (let&rsquo;s call it &ldquo;next&rdquo;) where we will place all the new KochLine objects that are generated from applying the Koch rules. For every KochLine object in the current List, four new KochLine objects are added to the next List. When we&rsquo;re done, the next List becomes the current one.</p>
+
+<div id="ImageContainer"><img alt="Figure 8.15" src="https://natureofcode.com/book/imgs/chapter08/ch08_15.png" style="  width: 100%;
+        height: 100%;" />
+<p>Figure 8.15</p>
+</div>
+
+<p>Here&rsquo;s how the code will look:</p>
+
+<pre class="prettyprint">
+
+    void Generate()
+    {
+        if (KochLine != null)  // We&#39;re going to replace the line!
+        {
+            Destroy(KochLine);
+        }
+
+        List&lt;vector2> newPoints = new List&lt;vector2>();
+
+        for (int i = 0; i &lt; points.Count - 1; i++) // We&#39;re going to use 2 points each time to make a line
+        {
+            newPoints.Add(?????);
+            newPoints.Add(?????);
+            newPoints.Add(?????);
+            newPoints.Add(?????);
+            newPoints.Add(?????);
+        }
+
+        // After each line is added, we redefine the original points with the newPoints
+        points = newPoints;
+    }
+    </pre>
+
+<p>By calling Generate() over and over again (for example, each time the mouse is pressed), we recursively apply the Koch curve rules to the existing set of KochLine objects. Of course, the above omits the real &ldquo;work&rdquo; here, which is figuring out those rules. How do we break one line segment into four as described by the rules? While this can be accomplished with some simple arithmetic and trigonometry, since our KochLine object uses PVector, this is a nice opportunity for us to practice our vector math. Let&rsquo;s establish how many points we need to compute for each KochLine object.</p>
+
+<div id="ImageContainer"><img alt="Figure 8.16" src="https://natureofcode.com/book/imgs/chapter08/ch08_16.png" style="  width: 100%;
+        height: 100%;" />
+<p>Figure 8.16</p>
+</div>
+
+<p>As you can see from the above figure, we need five points (a, b, c, d, and e) to generate the new KochLine objects.</p>
+
+<pre class="prettyprint">
+
+    newPoints.Add(a);
+    newPoints.Add(b);
+    newPoints.Add(c);
+    newPoints.Add(d);
+    newPoints.Add(e);
+    </pre>
+
+<p>Where do we get these points? Since we have a KochLine object, why not ask the KochLine object to compute all these points for us?</p>
+
+<pre class="prettyprint">
+
+    void Generate()
+    {
+        if (KochLine != null)  // We&#39;re going to replace the line!
+        {
+            Destroy(KochLine);
+        }
+
+        List&lt;vector2> newPoints = new List&lt;vector2>();
+
+        for (int i = 0; i &lt; points.Count - 1; i++) // We&#39;re going to use 2 points each time to make a line
+        {
+            Vector2 v = points[i+1] - points[i]; // This gives up the length of the line in 2 dimentions
+            v = v / 3; // We only need 1/3rd of it since the line is split into thirds
+
+            // First we need to define each new point from the original points in the line
+            Vector2 a = points[i]; // This is the first point in the original line
+            Vector2 b = v + a;  // 1/3rd after point A is where point B lies
+            Vector2 c = Rotate(v, 60) + b; // Point C is 60 Degrees up from point B
+            Vector2 d = (v * 2f) + a; // 2/3rds after point A is where point D lies
+            Vector2 e = points[i+1]; // This is the last point in the original line
+
+            // Now we add those points, in order, to our newPoint list
+            newPoints.Add(a);
+            newPoints.Add(b);
+            newPoints.Add(c);
+            newPoints.Add(d);
+            newPoints.Add(e);
+        }
+
+        // After each line is added, we redefine the original points with the newPoints
+        points = newPoints;
+    }
+    </pre>
 
 <div id="ImageContainer"><img alt="Figure 8.17" src="https://natureofcode.com/book/imgs/chapter08/ch08_17.png" style="  width: 100%;
         height: 100%;" />
@@ -674,6 +688,7 @@ The result looks like:
         height: 100%;" />
 <p>Figure 8.18</p>
 </div>
+    <br />
 <span class="example">Example 8.5: Koch curve </span>
 
 <p></p>
@@ -732,17 +747,18 @@ Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion
 <p>Let&rsquo;s begin by drawing a single branch, the trunk of the tree. This is as simple as setting a particular transform. In this instance, we&#39;ll take the transform of the script object. You&#39;ve seen this object in every one of our scenes. We&#39;ll also go ahead and give it a startLength!</p>
 
 <pre class="prettyprint">
-                void Start()
-                {
-                    // Start the recursive branch function.
-                    Branch(transform, startLength);
-                }
 
-                void Branch(Transform parentRoot, float length)
-                {
+    void Start()
+    {
+        // Start the recursive branch function.
+        Branch(transform, startLength);
+    }
 
-                }
-</pre>
+    void Branch(Transform parentRoot, float length)
+    {
+
+    }
+    </pre>
 
 <div id="ImageContainer"><img alt="Figure 8.20" src="https://natureofcode.com/book/imgs/chapter08/ch08_20.png" style="  width: 100%;
         height: 100%;" />
@@ -752,6 +768,7 @@ Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion
 <p>&hellip;followed by drawing a line upwards (Figure 8.20):</p>
 
 <pre class="prettyprint">
+
     void Branch(Transform parentRoot, float length)
     {
         // Determine where this branch ends.
@@ -760,8 +777,7 @@ Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion
         // Create the line renderer for this branch.
         DrawLine(parentRoot.gameObject, parentRoot.position, end);
     }
-
-</pre>
+    </pre>
 
 <p>Once we&rsquo;ve finished the root, we just need to translate to the end and rotate in order to draw the next branch. (Eventually, we&rsquo;re going to need to package up what we&rsquo;re doing right now into a recursive function, but let&rsquo;s sort out the steps first.)</p>
 
@@ -773,14 +789,16 @@ Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion
 <p>Remember, when we rotate in Unity, we are always rotating around the point of origin, so here the point of origin must always be translated to the end of our current branch.</p>
 
 <pre class="prettyprint">
-            Transform leftRoot = new GameObject().transform;
-            leftRoot.parent = parentRoot;
-            // Set the position and rotation relative to the previous branch.
-            leftRoot.localPosition = Vector2.up * length;
-            //use eulerAngles to handle rotation
-            leftRoot.localEulerAngles = new Vector3(0, 0, childAngle);
 
-</pre>
+    Transform leftRoot = new GameObject().transform;
+    leftRoot.parent = parentRoot;
+
+    // Set the position and rotation relative to the previous branch.
+    leftRoot.localPosition = Vector2.up * length;
+
+    //use eulerAngles to handle rotation
+    leftRoot.localEulerAngles = new Vector3(0, 0, childAngle);
+    </pre>
 
 <p>Now that we have a branch going to the right, we need one going to the left. Let&rsquo;s look at all the code together.</p>
 
@@ -788,13 +806,14 @@ Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion
         height: 100%;" />
 <p>Figure 8.22</p>
 </div>
-
+<br />
 <div id="ImageContainer"><img alt="Figure 8.23" src="https://natureofcode.com/book/imgs/chapter08/ch08_23.png" style="  width: 100%;
         height: 100%;" />
 <p>Figure 8.23</p>
 </div>
-
+<br />
 <pre class="prettyprint">
+
     void Branch(Transform parentRoot, float length)
     {
         // Determine where this branch ends.
@@ -809,9 +828,11 @@ Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion
             // Create a new child transform for this branch.
             Transform leftRoot = new GameObject().transform;
             leftRoot.parent = parentRoot;
+
             // Set the position and rotation relative to the previous branch.
             leftRoot.localPosition = Vector2.up * length;
             leftRoot.localEulerAngles = new Vector3(0, 0, childAngle);
+
             // Call this function again.
             Branch(leftRoot, length * childScale);
 
@@ -823,7 +844,7 @@ Draw the Sierpiński triangle (as seen in Wolfram elementary CA) using recursion
             Branch(rightRoot, length * childScale);
         }
     }
-</pre>
+    </pre>
 
 <p>If you think of each call to the function line() as a &ldquo;branch,&rdquo; you can see from the code above that we have implemented our definition of branching as a line that has two lines connected to its end. We could keep adding more and more calls to line() for more and more branches, but just as with the Cantor set and Koch curve, our code would become incredibly complicated and unwieldy. Instead, we can use the above logic as our foundation for writing a recursive function, replacing the direct calls to line() with our own function called branch(). Let&rsquo;s take a look.</p>
 
@@ -852,6 +873,7 @@ Emulate the Unity code in Example 8.6 and number the branches in the above diagr
 <p>You may have noticed that the recursive function we just wrote would not actually draw the above tree. After all, it has no exit condition and would get stuck in infinite recursive calls to itself. You&rsquo;ll also probably notice that the branches of the tree get shorter at each level. Let&rsquo;s look at how we can shrink the length of the lines as the tree is drawn, and stop branching once the lines have become too short.</p>
 
 <pre class="prettyprint">
+
     void Branch(Transform parentRoot, float length)
     {
         // Determine where this branch ends.
@@ -870,16 +892,17 @@ Emulate the Unity code in Example 8.6 and number the branches in the above diagr
                 // Create a new child transform for this branch.
                 Transform newBranch = new GameObject().transform;
                 newBranch.parent = parentRoot;
+
                 // Set the position and rotation relative to the previous branch.
                 newBranch.localPosition = Vector2.up * length;
                 newBranch.localEulerAngles = new Vector3(0, 0, Random.Range(minChildAngle, maxChildAngle));
+
                 // Call this function again.
                 Branch(newBranch, length * childScale);
             }
         }
     }
-
-</pre>
+    </pre>
 
 <p><span class="example">Example 8.7: Recursive tree </span></p>
 
@@ -947,21 +970,23 @@ Use toxiclibs to simulate tree physics. Each branch of the tree should be two pa
 <p>Let&rsquo;s look at how we might create these generations with code. We&rsquo;ll start by using a String object to store the axiom.</p>
 
 <pre class="prettyprint">
+
     // Start with &quot;A&quot;
     private string current = &quot;A&quot;;
-</pre>
+    </pre>
 
 <p>And once again, just as we did with the Game of Life and the Koch curve List examples, we will need an entirely separate string to keep track of the &ldquo;next&rdquo; generation.</p>
 
 <pre class="prettyprint">
+
     // A new StringBuilder for the next generation
     System.Text.StringBuilder next = new StringBuilder();
-
-</pre>
+    </pre>
 
 <p>Now it&rsquo;s time to apply the rules to the current generation and place the results in the next.</p>
 
 <pre class="prettyprint">
+
     // A new StringBuilder for the next generation
     System.Text.StringBuilder next = new StringBuilder();
     char[] currentCharString = current.ToCharArray();
@@ -985,16 +1010,15 @@ Use toxiclibs to simulate tree physics. Each branch of the tree should be two pa
     // The current String is now the next one
     current = next.ToString();
     count++;
-
-</pre>
+    </pre>
 
 <p>And when we&rsquo;re done, current can become next.</p>
 
 <pre class="prettyprint">
+
     // Print to console
     print(&quot;Generation &quot; + count + &quot;: &quot; + current);
-
-</pre>
+    </pre>
 
 <p>To be sure this is working, let&rsquo;s package it into a function and and call it every time the mouse is pressed.</p>
 
@@ -1020,26 +1044,31 @@ Use toxiclibs to simulate tree physics. Each branch of the tree should be two pa
 <p>Since the rules are applied recursively to each generation, the length of the string grows exponentially. By generation #11, the sentence is 233 characters long; by generation #22, it is over 46,000 characters long. The C# String class, while convenient to use, is a grossly inefficient data structure for concatenating large strings. A String object is &ldquo;immutable,&rdquo; which means once the object is created it can never be changed. Whenever you add on to the end of a String object, C# has to make a brand new String object (even if you are using the same variable name).</p>
 
 <pre class="prettyprint">
+
     String s = &quot;blah&quot;;
     s += &quot;add some more stuff&quot;;
-
-</pre>
+    </pre>
 
 <p>In most cases, this is fine, but why duplicate a 46,000-character string if you don&rsquo;t have to? For better efficiency in our L-system examples, we&rsquo;ll use the StringBuffer class, which is optimized for this type of task and can easily be converted into a string after concatenation is complete.</p>
 
 <pre class="prettyprint">
+
     StringBuffer str = new StringBuffer();
-    for (int i = 0; i &lt; current.length(); i++) {
+    for (int i = 0; i &lt; current.length(); i++) 
+    {
         char c = current.charAt(i);
-        if (c == &#39;A&#39;) {
+        if (c == &#39;A&#39;) 
+        {
           next.append(&quot;AB&quot;);
-        } else if (c == &#39;B&#39;) {
+        } 
+        else if (c == &#39;B&#39;) 
+        {
           next.append(&quot;A&quot;);
         }
       }
       current = next.toString();
-
-</pre>
+    }
+    </pre>
 
 <p>You may find yourself wondering right about now: what exactly is the point of all this? After all, isn&rsquo;t this a chapter about drawing fractal patterns? Yes, the recursive nature of the L-system sentence structure seems relevant to the discussion, but how exactly does this model plant growth in a visual way?</p>
 
@@ -1071,6 +1100,7 @@ Use toxiclibs to simulate tree physics. Each branch of the tree should be two pa
 <p>Assuming we have a sentence generated from the L-system, we can walk through the sentence character by character and call the appropriate function as outlined above.</p>
 
 <pre class="prettyprint">
+
     string sentence = lSys.Sentence;
     for(int i = 0; i &lt; sentence.Length; i++)
     {
@@ -1095,7 +1125,8 @@ Use toxiclibs to simulate tree physics. Each branch of the tree should be two pa
         {
             state = savedStates.Pop();
         }
-</pre>
+    }
+    </pre>
 
 <p>The next example will draw a more elaborate structure with the following L-system.</p>
 
