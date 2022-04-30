@@ -193,7 +193,7 @@
                     Figure 10.2
                 </p>
             </div>
-            <br></br>
+            <br>
 
             <p>Here we have yet another example of a complex system, much like the ones we examined in Chapters 6, 7,
                 and 8. The individual elements of the network, the neurons, are simple. They read an input, process it,
@@ -409,8 +409,7 @@
 
     List<float> weights = new List<float>();
     List<float> insights = new List<float>();
-
-            </pre>
+        </pre>
             <p>“For every input” implies a loop that multiplies each input by its corresponding weight. Since we need
                 the sum, we can add up the results in that very loop.
 
@@ -424,7 +423,6 @@
     {
         sum += inputs[i] * weights[i];
     }
-
         </pre>
             <p>
                 Once we have the sum we can compute the output.
@@ -433,13 +431,12 @@
 
     float output = activate(sum);
 
-    int activate(float sum)
+    int Activate(float sum)
     {
         if (sum > 0) return 1;
         else return -1;
     }
-
-    </pre>
+        </pre>
 
             <h2>10.3 Simple Pattern Recognition Using a Perceptron </h2>
 
@@ -537,8 +534,7 @@ height: 100%;" alt="Figure 10.6">
             weights.Add(Random.Range(-1f, 1f));
         }
     }
-
-</pre>
+        </pre>
             <p>A perceptron needs to be able to receive inputs and generate an output. We can package these requirements
                 into a function called feedforward(). In this example, we’ll have the perceptron receive its inputs as
                 an array (which should be the same length as the array of weights) and return the output as an integer.
@@ -546,20 +542,18 @@ height: 100%;" alt="Figure 10.6">
             </p>
             <pre class="prettyprint">
 
-    public int feedforward(List<float> inputs)
+    public int FeedForward(List&lt;float> inputs)
+    {
+        float sum = 0f;
+
+        for(int i = 0; i < weights.Count; i++)
         {
-            float sum = 0f;
-
-            for(int i = 0; i < weights.Count; i++)
-            {
-                sum += inputs[i] * weights[i];
-            }
-
-            return activate(sum);
+            sum += inputs[i] * weights[i];
         }
 
-
-</pre>
+        return activate(sum);
+    }
+        </pre>
             <p>Presumably, we could now create a Perceptron object and ask it to make a guess for any given point.
 
             </p>
@@ -575,9 +569,8 @@ height: 100%;" alt="Figure 10.7">
 
     Perceptron p = new Perceptron(3);
     float[] point = {50f,-12f,1f};
-    int result = p.feedforward(point);
-
-</pre>
+    int result = p.FeedForward(point);
+        </pre>
             <p>Did the perceptron get it right? At this point, the perceptron has no better than a 50/50 chance of
                 arriving at the right answer. Remember, when we created it, we gave each weight a random value. A neural
                 network isn’t magic. It’s not going to be able to guess anything correctly unless we teach it how to!
@@ -730,17 +723,17 @@ height: 100%;" alt="Figure 10.7">
             <pre class="prettyprint">
 
     float c = 0.1f;
-    //Train the network against known data
-    public void train(List<float> inputs, int desired)
+    // Train the network against known data
+    public void Train(List<float> inputs, int desired)
     {
-        int guess = feedforward(inputs);
+        int guess = FeedForward(inputs);
         float error = desired - guess;
         for (int i = 0; i < weights.Count; i++)
         {
             weights[i] += c * error * inputs[i];
         }
     }
-            </pre>
+        </pre>
             <p>We can now see the Perceptron class as a whole.
 
             </p>
@@ -749,7 +742,7 @@ height: 100%;" alt="Figure 10.7">
     public class Perceptron
     {
         //The Perceptron stores its weightsand Learning Constants
-        List<float> weights = new List<float>();
+        List&lt;float> weights = new List&lt;float>();
         float c = 0.1f;
 
         public Perceptron(int n)
@@ -762,7 +755,7 @@ height: 100%;" alt="Figure 10.7">
         }
 
         //Return an output based on inputs
-        public int feedforward(List<float> inputs)
+        public int FeedForward(List&lt;float> inputs)
         {
             float sum = 0f;
 
@@ -771,18 +764,18 @@ height: 100%;" alt="Figure 10.7">
                 sum += inputs[i] * weights[i];
             }
 
-            return activate(sum);
+            return Activate(sum);
         }
 
         //Output is a +1 or -1
-        int activate(float sum)
+        int Activate(float sum)
         {
             if (sum > 0) return 1;
             else return -1;
         }
 
         //Train the network against known data
-        public void train(List<float> inputs, int desired)
+        public void Train(List&lt;float> inputs, int desired)
         {
             int guess = feedforward(inputs);
             float error = desired - guess;
@@ -792,12 +785,12 @@ height: 100%;" alt="Figure 10.7">
             }
         }
 
-        public List<float> getWeights()
+        public List&lt;float> GetWeights()
         {
             return weights;
         }
     }
-            </pre>
+        </pre>
             <p>To train the perceptron, we need a set of inputs with a known answer. We could package this up in a class
                 like so:
             </p>
@@ -807,7 +800,7 @@ height: 100%;" alt="Figure 10.7">
     public class Trainer
     {
         //A "Trainer" object stores the inputs and the correct answer
-        public List<float> inputs = new List<float>();
+        public List&lt;float> inputs = new List&lt;float>();
         public int answer;
 
         public Trainer(float x, float y, int a)
@@ -820,8 +813,6 @@ height: 100%;" alt="Figure 10.7">
             answer = a;
         }
     }
-
-
         </pre>
             <p>Now the question becomes, how do we pick a point and know whether it is above or below a line? Let’s
                 start with the formula for a line, where y is calculated as a function of x:
@@ -850,18 +841,16 @@ height: 100%;" alt="Figure 10.7">
     {
         return 2 * x + 1;
     }
-
         </pre>
             <p>
                 So, if we make up a point:
             </p>
             <pre class="prettyprint">
 
-    maximumPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+    FindWindowLimits();
 
     float x = Random.Range(-maximumPos.x, maximumPos.x)
     float y = Random.Range(-maximumPos.y, maximumPos.y)
-
         </pre>
             <p>
                 How do we know if this point is above or below the line? The line function f(x) gives us the y value on
@@ -870,7 +859,6 @@ height: 100%;" alt="Figure 10.7">
             <pre class="prettyprint">
 
     float yline = f(x);
-
         </pre>
             <p>If the y value we are examining is above the line, it will be less than yline.
             </p>
@@ -886,20 +874,20 @@ height: 100%;" alt="Figure 10.7">
 
             <pre class="prettyprint">
 
-    if (y < yline
+    if (y < yline)
     {
         answer = -1;
-    } else {
+    } 
+    else 
+    {
         answer = 1;
     }
-
         </pre>
             <p>We can then make a Trainer object with the inputs and the correct answer.
             </p>
             <pre class="prettyprint">
 
     Trainer t = new Trainer(x, y, answer);
-
         </pre>
             <p>Assuming we had a Perceptron object ptron, we could then train it by sending the inputs along with the
                 known answer.
@@ -907,8 +895,7 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    ptron.train(t.inputs,t.answer);
-
+    ptron.Train(t.inputs,t.answer);
         </pre>
             <p>Now, it’s important to remember that this is just a demonstration. Remember our Shakespeare-typing
                 monkeys? We asked our genetic algorithm to solve for “to be or not to be”—an answer we already knew. We
@@ -988,7 +975,7 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    public class vehicleChapter10_2
+    public class VehicleChapter10_2
     {
         Perceptron10_2 brain;
 
@@ -1001,8 +988,8 @@ height: 100%;" alt="Figure 10.7">
         Vector3 acceleration;
         Vector3 desired;
         etc.
-
-</pre>
+    }
+        </pre>
             <p>Here’s our scenario. Let’s say we have a Unity scene with an List of targets and a single
                 vehicle.
 
@@ -1024,15 +1011,15 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    public void seek(List<Vector3> targets){
-        foreach(Vector3 target in targets){
+    public void Seek(List&lt;Vector3> targets)
+    {
+        foreach(Vector3 target in targets)
+        {
             Vector3 force = target;
-            applyForce(force);
+            ApplyForce(force);
         }
-
     }
-
-</pre>
+        </pre>
             <p>In Chapter 6, we also examined how we could create more dynamic simulations by weighting each steering
                 force according to some rule. For example, we could say that the farther you are from a target, the
                 stronger the force.
@@ -1040,18 +1027,19 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    public void seek(List<Vector3> targets){
-        foreach(Vector3 target in targets){
+    public void Seek(List&lt;Vector3> targets)
+    {
+        foreach(Vector3 target in targets)
+        {
             Vector3 force = target;
             float d = Vector3.SqrMagnitude(target - location);
             float weight = ExtensionMethods.Remap(d,0f,Screen.width,0f,5f);
             force *= weight;
-            applyForce(force);
+            ApplyForce(force);
         }
 
     }
-
-</pre>
+        </pre>
             <p>But what if instead we could ask our brain (i.e. perceptron) to take in all the forces as an input,
                 process them according to weights of the perceptron inputs, and generate an output steering force? What
                 if we could instead say:
@@ -1059,9 +1047,9 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    public void seek(List<Vector3> targets){
-
-        List<Vector3> forces = new List<Vector3>();
+    public void Seek(List&lt;Vector3> targets)
+    {
+        List&lt;Vector3> forces = new List&lt;Vector3>();
         forces.AddRange(targets);
 
         for (int i = 0; i < forces.Count;  i++)
@@ -1069,11 +1057,10 @@ height: 100%;" alt="Figure 10.7">
             forces[i] = seek(targets[i]);
         }
 
-           Vector3 output = brain.process(forces);
-           applyForce(output);
+        Vector3 output = brain.Process(forces);
+        ApplyForce(output);
     }
-
-</pre>
+        </pre>
             <p>In other words, instead of weighting and accumulating the forces inside our vehicle, we simply pass an
                 array of forces to the vehicle’s “brain” object and allow the brain to weight and sum the forces for us.
                 The output is then applied as a steering force. This opens up a range of possibilities. A vehicle could
@@ -1121,11 +1108,11 @@ height: 100%;" alt="Figure 10.7">
             <pre class="prettyprint">
 
     Vector3 desired = Vector3.zero;
+
     // Train the brain according to the error
     Vector3 error = desired - position;
-    brain.train(forces, error);
-
-</pre>
+    brain.Train(forces, error);
+        </pre>
             <p>
                 Here we are passing the brain a copy of all the inputs (which it will need for error correction) as well
                 as an observation about its environment: a Vector2 (or 3) that points from its current location to where it
@@ -1145,8 +1132,7 @@ height: 100%;" alt="Figure 10.7">
 
     weights[i] += c * error.x * forces[i].x;
     weights[i] += c * error.y * forces[i].y;
-
-</pre>
+        </pre>
             <p>We can now look at the Vehicle class and see how the steer function uses a perceptron to control the
                 overall steering force. The new content from this chapter is highlighted.
 
@@ -1297,11 +1283,6 @@ height: 100%;" alt="Figure 10.7">
             <p>The primary building block for this diagram is a neuron. For the purpose of this example, the Neuron
                 class describes an entity with an (x,y) location.
             </p>
-            <pre class="prettyprint">
-
-
-
-            </pre>
             <p>
                 The Network class can then manage an List of neurons, as well as have its own location (so that
                 each neuron is drawn relative to the network’s center). This is particle systems 101. We have a single
@@ -1311,40 +1292,39 @@ height: 100%;" alt="Figure 10.7">
 
     public class Neuron
     {
-        //Neuron has a position
+        // Neuron has a position
         public Vector2 position;
 
-        //Neuron has a list of connections
-        List<Connection> connections = new List<Connection>();
+        // Neuron has a list of connections
+        List&lt;Connection> connections = new List&lt;Connection>();
 
         public Neuron(float x, float y)
         {
             position = new Vector2(x, y);
         }
 
-        //Add a connection
-        public void addConnection(Connection c)
+        // Add a connection
+        public void AddConnection(Connection c)
         {
             connections.Add(c);
         }
 
-        //Draw the Neuron as a circle
-        public void display()
+        // Draw the Neuron as a circle
+        public void Display()
         {
             GameObject neuronGO = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            Renderer r = neuronGO.GetComponent<Renderer>();
+            Renderer r = neuronGO.GetComponent&lt;Renderer>();
             r.material = new Material(Shader.Find("Diffuse"));
             neuronGO.transform.position = position;
 
-            //Draw all of its connections
+            // Draw all of its connections
             foreach (Connection c in connections)
             {
-                c.display();
+                c.Display();
             }
         }
     }
-
-            </pre>
+        </pre>
             <p>Now we can pretty easily make the diagram above.
 
             </p>
@@ -1352,39 +1332,38 @@ height: 100%;" alt="Figure 10.7">
 
     public class Network
     {
-        //The Network has a list of neurons
-        List<Neuron> neurons;
+        // The Network has a list of neurons
+        List&lt;Neuron> neurons;
         Vector2 position;
 
         public Network(float x, float y)
         {
             position = new Vector2(x, y);
-            neurons = new List<Neuron>();
+            neurons = new List&lt;Neuron>();
         }
 
-        //We can add a Neuron
-        public void addNeuron(Neuron n)
+        // We can add a Neuron
+        public void AddNeuron(Neuron n)
         {
             neurons.Add(n);
         }
 
-        //We can connect the two Neurons
-        public void connect(Neuron a, Neuron b)
+        // We can connect the two Neurons
+        public void Connect(Neuron a, Neuron b)
         {
             Connection c = new Connection(a, b, Random.Range(0f, 1f));
             a.addConnection(c);
         }
 
-        public void display()
+        public void Display()
         {
             foreach(Neuron n in neurons)
             {
-                n.display();
+                n.Display();
             }
         }
     }
-
-            </pre>
+        </pre>
             <p>
                 The above yields:
             </p>
@@ -1403,36 +1382,36 @@ height: 100%;" alt="Figure 10.7">
     {
         Vector2 maximumPos;
         Network network;
+
         // Start is called before the first frame update
         void Start()
         {
-            maximumPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+            FindWindowLimits;
 
-            //Create the Network Object
+            // Create the Network Object
             network = new Network(maximumPos.x / 2, maximumPos.y / 2);
 
-            //Create a bunch of neurons
+            // Create a set of neurons
             Neuron a = new Neuron(-20, 0);
             Neuron b = new Neuron(0, 7);
             Neuron c = new Neuron(0, -7);
             Neuron d = new Neuron(20, 0);
 
-            //Add them to the network
-            network.addNeuron(a);
-            network.addNeuron(b);
-            network.addNeuron(c);
-            network.addNeuron(d);
+            // Add them to the network
+            network.AddNeuron(a);
+            network.AddNeuron(b);
+            network.AddNeuron(c);
+            network.AddNeuron(d);
 
-            drawNetwork();
+            DrawNetwork();
         }
 
-        void drawNetwork()
+        void DrawNetwork()
         {
-            network.display();
+            network.Display();
         }
     }
-
-            </pre>
+        </pre>
             <p>
                 Once we have the idea of a Connection object, we can write a function (let’s put it inside the Network
                 class) that connects two neurons together—the goal being that in addition to making the neurons in
@@ -1444,11 +1423,11 @@ height: 100%;" alt="Figure 10.7">
 
     public class Connection
     {
-        //Connection from Neuron A to B
+        // Connection from Neuron A to B
         Neuron a;
         Neuron b;
 
-        //Connection has a weight
+        // Connection has a weight
         float weight;
 
         GameObject theLine;
@@ -1461,19 +1440,18 @@ height: 100%;" alt="Figure 10.7">
             b = to;
         }
 
-        //Draw as a Line
-        public void display()
+        // Draw as a Line
+        public void Display()
         {
             theLine = new GameObject();
-            lR = theLine.AddComponent<LineRenderer>();
+            lR = theLine.AddComponent&lt;LineRenderer>();
             lR.material = new Material(Shader.Find("Diffuse"));
             lR.material.color = Color.black;
             lR.SetPosition(0, new Vector2(a.position.x, a.position.y));
             lR.SetPosition(1, new Vector2(b.position.x, b.position.y));
         }
     }
-
-            </pre>
+        </pre>
             <p>
                 The Network class therefore needs a new function called connect(), which makes a Connection object
                 between the two specified neurons.
@@ -1484,38 +1462,37 @@ height: 100%;" alt="Figure 10.7">
 
     void Start()
     {
-        maximumPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        FindWindowLimits();
 
-        //Create the Network Object
+        // Create the Network Object
         network = new Network(maximumPos.x / 2, maximumPos.y / 2);
 
-        //Create a bunch of neurons
+        // Create a set of neurons
         Neuron a = new Neuron(-20, 0);
         Neuron b = new Neuron(0, 7);
         Neuron c = new Neuron(0, -7);
         Neuron d = new Neuron(20, 0);
 
-        //Connect them
-        network.connect(a, b);
-        network.connect(a, c);
-        network.connect(b, d);
-        network.connect(c, d);
+        // Connect them
+        network.Connect(a, b);
+        network.Connect(a, c);
+        network.Connect(b, d);
+        network.Connect(c, d);
 
-        //Add them to the network
-        network.addNeuron(a);
-        network.addNeuron(b);
-        network.addNeuron(c);
-        network.addNeuron(d);
+        // Add them to the network
+        network.AddNeuron(a);
+        network.AddNeuron(b);
+        network.AddNeuron(c);
+        network.AddNeuron(d);
 
-        drawNetwork();
+        DrawNetwork();
     }
 
-    void drawNetwork()
+    void DrawNetwork()
     {
-        network.display();
+        network.Display();
     }
-
-            </pre>
+        </pre>
             <p>
                 Presumably, we might think that the Network should store an List of connections, just like it
                 stores an List of neurons. While useful, in this case such an List is not necessary and is
@@ -1529,15 +1506,14 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    //We can connect the two Neurons
-    public void connect(Neuron a, Neuron b)
+    // We can connect the two Neurons
+    public void Connect(Neuron a, Neuron b)
     {
         Connection c = new Connection(a, b, Random.Range(0f, 1f));
 
         // But what do we do with the Connection object?
     }
-
-            </pre>
+        </pre>
             <p>In some cases, we also might want Neuron b to know about this connection, but in this particular example
                 we are only going to pass information in one direction.
 
@@ -1551,24 +1527,24 @@ height: 100%;" alt="Figure 10.7">
 
     public class Neuron
     {
-        //Neuron has a position
+        // Neuron has a position
         public Vector2 position;
 
-        //Neuron has a list of connections
-        List<Connection> connections = new List<Connection>();
+        // Neuron has a list of connections
+        List&lt;Connection> connections = new List&lt;Connection>();
 
         public Neuron(float x, float y)
         {
             position = new Vector2(x, y);
         }
 
-        //Add a connection
-        public void addConnection(Connection c)
+        // Add a connection
+        public void AddConnection(Connection c)
         {
             connections.Add(c);
         }
-
-            </pre>
+    }
+        </pre>
             <p>The neuron’s display() function can draw the connections as well. And finally, we have our network
                 diagram.
 
@@ -1610,13 +1586,13 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    //All the old code plus a new method
-    void start() {
+    // All the old code plus a new method
+    void start() 
+    {
 
         network.feedforward(Random.Range(0f,1f));
     }
-
-            </pre>
+        </pre>
             <p>The network, which manages all the neurons, can choose to which neurons it should apply that input. In
                 this case, we’ll do something simple and just feed a single input into the first neuron in the
                 List, which happens to be the left-most one.
@@ -1626,16 +1602,13 @@ height: 100%;" alt="Figure 10.7">
 
     public class Network10_4
     {
-
-        public void feedforward(float input)
+        public void FeedForward(float input)
         {
             Neuron10_4 start = neurons[0];
-            start.feedforward(input);
+            start.FeedForward(input);
         }
-
     }
-
-            </pre>
+        </pre>
             <p>What did we do? Well, we made it necessary to add a function called feedforward() in the Neuron class
                 that will receive the input and process it.
 
@@ -1644,13 +1617,12 @@ height: 100%;" alt="Figure 10.7">
 
     public class Neuron10_4
     {
-        public void feedforward(float input)
+        public void FeedForward(float input)
         {
 
         }
     }
-
-            </pre>
+        </pre>
             <p>If you recall from working with our perceptron, the standard task that the processing unit performs is to
                 sum up all of its inputs. So if our Neuron class adds a variable called sum, it can simply accumulate
                 the inputs as they are received.
@@ -1661,13 +1633,12 @@ height: 100%;" alt="Figure 10.7">
     public class Neuron10_4
     {
         int sum = 0;
-        public void feedforward(float input)
+        public void FeedForward(float input)
         {
             sum += input;
         }
     }
-
-            </pre>
+        </pre>
             <p>The neuron can then decide whether it should “fire,” or pass an output through any of its connections to
                 the next layer in the network. Here we can create a really simple activation function: if the sum is
                 greater than 1, fire!
@@ -1675,19 +1646,18 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    public void feedforward(float input)
+    public void FeedForward(float input)
     {
-        //Accumulate it
+        // Accumulate it
         sum += input;
-        //Activate it?
+        // Activate it?
         if (sum > 1)
         {
-            fire();
+            Fire();
             sum = 0;
         }
     }
-
-            </pre>
+        </pre>
             <p>Now, what do we do in the fire() function? If you recall, each neuron keeps track of its connections to
                 other neurons. So all we need to do is loop through those connections and feedforward() the neuron’s
                 output. For this simple example, we’ll just take the neuron’s sum variable and make it the output.
@@ -1695,15 +1665,14 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    public void fire()
+    public void Fire()
     {
         foreach(Connection10_4 c in connections)
         {
-            c.feedforward(sum);
+            c.FeedForward(sum);
         }
     }
-
-            </pre>
+        </pre>
             <p>Here’s where things get a little tricky. After all, our job here is not to actually make a functioning
                 neural network, but to animate a simulation of one. If the neural network were just continuing its work,
                 it would instantly pass those inputs (multiplied by the connection’s weight) along to the connected
@@ -1712,12 +1681,12 @@ height: 100%;" alt="Figure 10.7">
 
     public class Connection10_4
     {
-        void feedforward(float val) {
-            b.feedforward(val*weight);
-            }
+        void FeedForward(float val) 
+        {
+            b.FeedForward(val * weight);
+        }
     }
-
-            </pre>
+        </pre>
             <p>But this is not what we want. What we want to do is draw something that we can see traveling along the
                 connection from Neuron a to Neuron b.
             </p>
@@ -1727,8 +1696,7 @@ height: 100%;" alt="Figure 10.7">
             <pre class="prettyprint">
 
     sender = a.position;
-
-            </pre>
+        </pre>
             <p>Once we have a copy of that location, we can use any of the motion algorithms that we’ve studied
                 throughout this book to move along this path. Here—let’s pick something very simple and just interpolate
                 from a to b.
@@ -1739,8 +1707,7 @@ height: 100%;" alt="Figure 10.7">
     // Move our position a step closer to the target.
     float step = 2.0f * Time.deltaTime;
     sender = Vector2.MoveTowards(sender, b.position, step);
-
-            </pre>
+        </pre>
             <p>This resembles the following:
             </p>
             <div id="ImageContainer">
@@ -1759,11 +1726,11 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    void feedforward(float val) {
-        b.feedforward(val*weight);
-        }
-
-            </pre>
+    void FeedForward(float val) 
+    {
+        b.FeedForward(val*weight);
+    }
+        </pre>
             <p>Now, instead of sending the value on straight away, we’ll trigger an animation: </p>
             <pre class="prettyprint">
 
@@ -1773,25 +1740,24 @@ height: 100%;" alt="Figure 10.7">
         a = from;
         b = to;
 
-        //Create the cognate Game Object that will signify thinking
+        // Create the cognate Game Object that will signify thinking
         cognateGO = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        Renderer r = cognateGO.GetComponent<Renderer>();
+        Renderer r = cognateGO.GetComponent&lt;Renderer>();
         r.material = new Material(Shader.Find("Diffuse"));
         r.material.color = Color.red;
         cognateGO.transform.position = from.position;
     }
 
-    public void feedforward(float val)
+    public void FeedForward(float val)
     {
-        //Compute output
+        // Compute output
         output = val * weight;
-        //Start animation
+        // Start animation
         sender = a.position;
-        //Turn on send
+        // Turn on send
         sending = true;
     }
-
-            </pre>
+        </pre>
             <p>
                 Notice how our Connection class now needs three new variables. We need a boolean “sending” that starts
                 as false and that will track whether or not the connection is actively sending (i.e. animating). We need
@@ -1805,48 +1771,48 @@ height: 100%;" alt="Figure 10.7">
             </p>
             <pre class="prettyprint">
 
-    public void cognition()
+    public void Cognition()
     {
         if (sending)
         {
             cognateGO.transform.position = sender;
+
             // Move our position a step closer to the target.
             float step = 2.0f * Time.deltaTime;
             sender = Vector2.MoveTowards(sender, b.position, step);
         }
     }
-
-            </pre>
+        </pre>
             <p>We’re missing a key element, however. We need to check if the sender has arrived at location b, and if it
                 has, feed forward that output to the next neuron.
             </p>
             <pre class="prettyprint">
 
-    public void cognition()
+    public void Cognition()
     {
         if (sending)
         {
             cognateGO.transform.position = sender;
-            Renderer r = cognateGO.GetComponent<Renderer>();
+            Renderer r = cognateGO.GetComponent&lt;Renderer>();
             r.material = new Material(Shader.Find("Diffuse"));
             r.material.color = Color.red;
+
             // Move our position a step closer to the target.
             float step = 2.0f * Time.deltaTime;
             sender = Vector2.MoveTowards(sender, b.position, step);
 
-            //How far we we from neuron b?
+            // How far we we from neuron b?
             float d = Vector2.SqrMagnitude(sender - b.position);
-            //If we are flose enough, stop sending
+            // If we are close enough, stop sending
             if (d < 1)
             {
-                //Pass along the output!
-                b.feedforward(output);
+                // Pass along the output!
+                b.FeedForward(output);
                 sending = false;
             }
         }
     }
-
-            </pre>
+        </pre>
             <p>Let’s look at the Connection class all together, as well as our new display() function. </p>
             <p><span class="example">Example 10.4: Animating a neural network diagram </span></p>
             <ul class="tabs" role="tablist">
