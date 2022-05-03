@@ -96,7 +96,8 @@
 
 
             </h2>
-            <h3>“The fact that life evolved out of nearly nothing, some 10 billion years after the universe evolved out
+            <h3>
+                “The fact that life evolved out of nearly nothing, some 10 billion years after the universe evolved out
                 of literally nothing, is a fact so staggering that I would be mad to attempt words to do it justice.”
 
 
@@ -104,7 +105,8 @@
                 — Richard Dawkins
 
             </h3>
-            <p>Let’s take a moment to think back to a simpler time, when you wrote your first Unity scenes and
+            <p>
+                Let’s take a moment to think back to a simpler time, when you wrote your first Unity scenes and
                 life was free and easy. What is one of programming’s fundamental concepts that you likely used in those
                 first scenes and continue to use over and over again? Variables. Variables allow you to save data and
                 reuse that data while a program runs. This, of course, is nothing new to us. In fact, we have moved far
@@ -115,28 +117,33 @@
 
 
             </p>
-            <P>In each and every example in this book, the variables of these objects have to be initialized. Perhaps
+            <P>
+                In each and every example in this book, the variables of these objects have to be initialized. Perhaps
                 you made a whole bunch of particles with random colors and sizes or a list of vehicles all starting at
                 the same x,y location on screen. But instead of acting as “intelligent designers” and assigning the
                 properties of our objects through randomness or thoughtful consideration, we can let a process found in
                 nature—evolution—decide for us.
 
             </P>
-            <P>Can we think of the variables of an object as its DNA? Can objects make other objects and pass down their
+            <P>
+                Can we think of the variables of an object as its DNA? Can objects make other objects and pass down their
                 DNA to a new generation? Can our simulation evolve?
 
             </P>
-            <p>The answer to all these questions is yes. After all, we wouldn’t be able to face ourselves in the mirror
+            <p>
+                The answer to all these questions is yes. After all, we wouldn’t be able to face ourselves in the mirror
                 as nature-of-coders without tackling a simulation of one of the most powerful algorithmic processes
                 found in nature itself. This chapter is dedicated to examining the principles behind biological
                 evolution and finding ways to apply those principles in code.
 
             </p>
-            <h2>9.1 Genetic Algorithms: Inspired by Actual Events
+            <h2>
+                9.1 Genetic Algorithms: Inspired by Actual Events
             </h2>
 
 
-            <p> It’s important for us to clarify the goals of this chapter. We will not go into depth about the science
+            <p>
+                It’s important for us to clarify the goals of this chapter. We will not go into depth about the science
                 of genetics and evolution as it happens in the real world. We won’t be making Punnett squares (sorry to
                 disappoint) and there will be no discussion of nucleotides, protein synthesis, RNA, and other topics
                 related to the actual biological processes of evolution. Instead, we are going to look at the core
@@ -144,12 +151,14 @@
                 principles. We don’t care so much about an accurate simulation of evolution; rather, we care about
                 methods for applying evolutionary strategies in software.
             </p>
-            <p> This is not to say that a project with more scientific depth wouldn’t have value, and I encourage
+            <p>
+                This is not to say that a project with more scientific depth wouldn’t have value, and I encourage
                 readers with a particular interest in this topic to explore possibilities for expanding the examples
                 provided with additional evolutionary features. Nevertheless, for the sake of keeping things manageable,
                 we’re going to stick to the basics, which will be plenty complex and exciting.
             </p>
-            <p> The term “genetic algorithm” refers to a specific algorithm implemented in a specific way to solve
+            <p>
+                The term “genetic algorithm” refers to a specific algorithm implemented in a specific way to solve
                 specific sorts of problems. While the formal genetic algorithm itself will serve as the foundation for
                 the examples we create in this chapter, we needn’t worry about implementing the algorithm with perfect
                 accuracy, given that we are looking for creative uses of evolutionary theories in our code. This chapter
@@ -189,12 +198,14 @@
             </ul>
 
 
-            <h2> 9.2 Why Use Genetic Algorithms?
+            <h2>
+                9.2 Why Use Genetic Algorithms?
             </h2>
 
 
 
-            <p> While computer simulations of evolutionary processes date back to the 1950s, much of what we think of as
+            <p>
+                While computer simulations of evolutionary processes date back to the 1950s, much of what we think of as
                 genetic algorithms (also known as “GAs”) today was developed by John Holland, a professor at the
                 University of Michigan, whose book Adaptation in Natural and Artificial Systems pioneered GA research.
                 Today, more genetic algorithms are part of a wider field of research, often referred to as "Evolutionary
@@ -202,51 +213,60 @@
             </p>
 
 
-            <p> To help illustrate the traditional genetic algorithm, we are going to start with monkeys. No, not our
+            <p>
+                To help illustrate the traditional genetic algorithm, we are going to start with monkeys. No, not our
                 evolutionary ancestors. We’re going to start with some fictional monkeys that bang away on keyboards
                 with the goal of typing out the complete works of Shakespeare.
             </p>
 
-            ￼ <div id="ImageContainer">
+            <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_01.png" style="  width: 100%;
         height: 100%;" alt="Figure 9.1">
                 <p>
                     Figure 9.1
                 </p>
             </div>
-            <p> The “infinite monkey theorem” is stated as follows: A monkey hitting keys randomly on a typewriter will
+            <p>
+                The “infinite monkey theorem” is stated as follows: A monkey hitting keys randomly on a typewriter will
                 eventually type the complete works of Shakespeare (given an infinite amount of time). The problem with
                 this theory is that the probability of said monkey actually typing Shakespeare is so low that even if
                 that monkey started at the Big Bang, it’s unbelievably unlikely we’d even have Hamlet at this point.
             </p>
-            <p> Let’s consider a monkey named George. George types on a reduced typewriter containing only twenty-seven
+            <p>
+                Let’s consider a monkey named George. George types on a reduced typewriter containing only twenty-seven
                 characters: twenty-six letters and one space bar. So the probability of George hitting any given key is
                 one in twenty-seven.
             </p>
-            <p> Let’s consider the phrase “to be or not to be that is the question” (we’re simplifying it from the
+            <p>
+                Let’s consider the phrase “to be or not to be that is the question” (we’re simplifying it from the
                 original “To be, or not to be: that is the question”). The phrase is 39 characters long. If George
                 starts typing, the chance he’ll get the first character right is 1 in 27. Since the probability he’ll
                 get the second character right is also 1 in 27, he has a 1 in 27*27 chance of landing the first two
                 characters in correct order—which follows directly from our discussion of "event probability" in the
                 Introduction. Therefore, the probability that George will type the full phrase is:
             </p>
-            <p> (1/27) multiplied by itself 39 times, i.e. (1/27)39
+            <p>
+                (1/27) multiplied by itself 39 times, i.e. (1/27)39
             </p>
-            <p> which equals a 1 in 66,555,937,033,867,822,607,895,549,241,096,482,953,017,615,834,735,226,163 chance of
+            <p>
+                which equals a 1 in 66,555,937,033,867,822,607,895,549,241,096,482,953,017,615,834,735,226,163 chance of
                 getting it right!
             </p>
-            <p> Needless to say, even hitting just this one phrase, not to mention an entire play, is highly unlikely.
+            <p>
+                Needless to say, even hitting just this one phrase, not to mention an entire play, is highly unlikely.
                 Even if George is a computer simulation and can type one million random phrases per second, for George
                 to have a 99% probability of eventually getting it right, he would have to type for
                 9,719,096,182,010,563,073,125,591,133,903,305,625,605,017 years. (Note that the age of the universe is
                 estimated to be a mere 13,750,000,000 years.)
             </p>
-            <p> The point of all these unfathomably large numbers is not to give you a headache, but to demonstrate that
+            <p>
+                The point of all these unfathomably large numbers is not to give you a headache, but to demonstrate that
                 a brute force algorithm (typing every possible random phrase) is not a reasonable strategy for arriving
                 randomly at “to be or not to be that is the question”. Enter genetic algorithms, which will show that we
                 can still start with random phrases and find the solution through simulated evolution.
             </p>
-            <p> Now, it’s worth noting that this problem (arrive at the phrase “to be or not to be that is the
+            <p>
+                Now, it’s worth noting that this problem (arrive at the phrase “to be or not to be that is the
                 question”) is a ridiculous one. Since we know the answer, all we need to do is type it. Here’s a
                 Unity scene that solves the problem.
             </p>
@@ -254,10 +274,9 @@
 
     string s = "To be or not to be that is the question";
     print(s);
-
-
-</pre>
-            <p> Nevertheless, the point here is that solving a problem with a known answer allows us to easily test our
+    </pre>
+            <p>
+                Nevertheless, the point here is that solving a problem with a known answer allows us to easily test our
                 code. Once we’ve successfully solved the problem, we can feel more confident in using genetic algorithms
                 to do some actual useful work: solving problems with unknown answers. So this first example serves no
                 real purpose other than to demonstrate how genetic algorithms work. If we test the GA results against
@@ -266,7 +285,8 @@
 
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.1</h4>
+                    Exercise 9.1
+                </h4>
                 Create a scene that generates random strings. We’ll need to know how to do this in order to implement
                 the genetic algorithm example that will shortly follow. How long does it take for Unity to randomly
                 generate the string “cat”? How could you adapt this to generate a random design using Unity’s
@@ -274,11 +294,13 @@
 
             </div>
 
-            <h2> 9.3 Darwinian Natural Selection
+            <h2>
+                9.3 Darwinian Natural Selection
             </h2>
 
 
-            <p> Before we begin walking through the genetic algorithm, let’s take a moment to describe three core
+            <p>
+                Before we begin walking through the genetic algorithm, let’s take a moment to describe three core
                 principles of Darwinian evolution that will be required as we implement our simulation. In order for
                 natural selection to occur as it does in nature, all three of these elements must be present.
             </p>
@@ -314,17 +336,20 @@
 
                 </li>
             </ul>
-            <p> Next I’d like to walk through the narrative of the genetic algorithm. We’ll do this in the context of
+            <p>
+                Next I’d like to walk through the narrative of the genetic algorithm. We’ll do this in the context of
                 the typing monkey. The algorithm itself will be divided into two parts: a set of conditions for
                 initialization (i.e. Unity’s setup()) and the steps that are repeated over and over again (i.e.
                 Unity’s draw()) until we arrive at the correct answer.
             </p>
 
-            <h2> 9.4 The Genetic Algorithm, Part I: Creating a Population
+            <h2>
+                9.4 The Genetic Algorithm, Part I: Creating a Population
             </h2>
 
 
-            <p> In the context of the typing monkey example, we will create a population of phrases. (Note that we are
+            <p>
+                In the context of the typing monkey example, we will create a population of phrases. (Note that we are
                 using the term “phrase” rather loosely, meaning a string of characters.) This begs the question: How do
                 we create this population? Here is where the Darwinian principle of variation applies. Let’s say, for
                 simplicity, that we are trying to evolve the phrase “cat” and that we have a population of three
@@ -341,7 +366,8 @@
                     won
                 </li>
             </ul>
-            <p> Sure, there is variety in the three phrases above, but try to mix and match the characters every which
+            <p>
+                Sure, there is variety in the three phrases above, but try to mix and match the characters every which
                 way and you will never get cat. There is not enough variety here to evolve the optimal solution.
                 However, if we had a population of thousands of phrases, all generated randomly, chances are that at
                 least one member of the population will have a c as the first character, one will have an a as the
@@ -350,9 +376,11 @@
                 more variation in case there isn’t enough in the first place). So we can be more specific in describing
                 Step 1 and say:
             </p>
-            <p> Create a population of randomly generated elements.
+            <p>
+                Create a population of randomly generated elements.
             </p>
-            <p> This brings up another important question. What is the element itself? As we move through the examples
+            <p>
+                This brings up another important question. What is the element itself? As we move through the examples
                 in this chapter, we’ll see several different scenarios; we might have a population of images or a
                 population of vehicles à la Chapter 6. The key, and the part that is new for us in this chapter, is that
                 each member of the population has a virtual “DNA,” a set of properties (we can call them “genes”) that
@@ -360,7 +388,8 @@
                 simply a string of characters.
             </p>
 
-            <p> In the field of genetics, there is an important distinction between the concepts genotype and phenotype.
+            <p>
+                In the field of genetics, there is an important distinction between the concepts genotype and phenotype.
                 The actual genetic code—in our case, the digital information itself—is an element’s genotype. This is
                 what gets passed down from generation to generation. The phenotype, however, is the expression of that
                 data. This distinction is key to how you will use genetic algorithms in your own work. What are the
@@ -376,29 +405,27 @@
                 <tr>
                     <td>int c = 255;</td>
                     <td>
-                        <div
-                            style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; border: black thin solid; height: 20px; width: 20px">
+                        <div style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; border: black thin solid; height: 20px; width: 20px">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>int c = 127;</td>
                     <td>
-                        <div
-                            style="background-color: #7F7F7F; margin-left: auto; margin-right: auto; border: black thin solid; height: 20px; width: 20px">
+                        <div style="background-color: #7F7F7F; margin-left: auto; margin-right: auto; border: black thin solid; height: 20px; width: 20px">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>int c = 0;</td>
                     <td>
-                        <div
-                            style="background-color: #000000; margin-left: auto; margin-right: auto; border: black thin solid; height: 20px; width: 20px">
+                        <div style="background-color: #000000; margin-left: auto; margin-right: auto; border: black thin solid; height: 20px; width: 20px">
                         </div>
                     </td>
                 </tr>
             </table>
-            <p> As we can see, the genotype is the digital information. Each color is a variable that stores an integer
+            <p>
+                As we can see, the genotype is the digital information. Each color is a variable that stores an integer
                 and we choose to express that integer as a color. But how we choose to express the data is arbitrary. In
                 a different approach, we could have used the integer to describe the length of a line, the weight of a
                 force, etc.
@@ -411,55 +438,59 @@
                 <tr>
                     <td>int c = 255;</td>
                     <td>
-                        <div
-                            style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; border-top: black thin solid; height: 1px; width: 255px">
+                        <div style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; border-top: black thin solid; height: 1px; width: 255px">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>int c = 127;</td>
                     <td>
-                        <div
-                            style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; border-top: black thin solid; height: 1px; width: 127px">
+                        <div style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; border-top: black thin solid; height: 1px; width: 127px">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>int c = 0;</td>
                     <td>
-                        <div
-                            style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; border-top: black thin solid; height: 1px; width: 0px">
+                        <div style="background-color: #FFFFFF; margin-left: auto; margin-right: auto; border-top: black thin solid; height: 1px; width: 0px">
                         </div>
                     </td>
                 </tr>
             </table>
-            <p> The nice thing about our monkey-typing example is that there is no difference between genotype and
+            <p>
+                The nice thing about our monkey-typing example is that there is no difference between genotype and
                 phenotype. The DNA data itself is a string of characters and the expression of that data is that very
                 string.
             </p>
-            <p> So, we can finally end the discussion of this first step and be more specific with its description,
+            <p>
+                So, we can finally end the discussion of this first step and be more specific with its description,
                 saying:
             </p>
-            <p> Create a population of N elements, each with randomly generated DNA.
+            <p>
+                Create a population of N elements, each with randomly generated DNA.
             </p>
 
-            <h2> 9.5 The Genetic Algorithm, Part II: Selection
+            <h2>
+                9.5 The Genetic Algorithm, Part II: Selection
             </h2>
 
-            <p> Here is where we apply the Darwinian principle of selection. We need to evaluate the population and
+            <p>
+                Here is where we apply the Darwinian principle of selection. We need to evaluate the population and
                 determine which members are fit to be selected as parents for the next generation. The process of
                 selection can be divided into two steps.
             </p>
             <h3>1) Evaluate fitness.</h3>
 
-            <p> For our genetic algorithm to function properly, we will need to design what is referred to as a fitness
+            <p>
+                For our genetic algorithm to function properly, we will need to design what is referred to as a fitness
                 function. The function will produce a numeric score to describe the fitness of a given member of the
                 population. This, of course, is not how the real world works at all. Creatures are not given a score;
                 they simply survive or not. But in the case of the traditional genetic algorithm, where we are trying to
                 evolve an optimal solution to a problem, we need to be able to numerically evaluate any given possible
                 solution.
             </p>
-            <p> Let’s examine our current example, the typing monkey. Again, let’s simplify the scenario and say we are
+            <p>
+                Let’s examine our current example, the typing monkey. Again, let’s simplify the scenario and say we are
                 attempting to evolve the word “cat”. We have three members of the population: hut, car, and box. Car is
                 obviously the most fit, given that it has two correct characters, hut has only one, and box has zero.
                 And there it is, our fitness function:
@@ -519,14 +550,21 @@
 
                 </tbody>
             </table>
-            <code>fitness = the number of correct characters</code>
+            <pre class="prettyprint">
 
-            <p>We will eventually want to look at examples with more sophisticated fitness functions, but this is a good
-                place to start.</p>
-            <h3> 2) Create a mating pool.
+    fitness = the number of correct characters
+    </pre>
+
+            <p>
+                We will eventually want to look at examples with more sophisticated fitness functions, but this is a good
+                place to start.
+            </p>
+            <h3>
+                2) Create a mating pool.
             </h3>
 
-            <p> Once the fitness has been calculated for all members of the population, we can then select which members
+            <p>
+                Once the fitness has been calculated for all members of the population, we can then select which members
                 are fit to become parents and place them in a mating pool. There are several different approaches we
                 could take here. For example, we could employ what is known as the elitist method and say, “Which two
                 members of the population scored the highest? You two will make all the children for the next
@@ -540,7 +578,8 @@
                 reproducing, while element number 501 has no shot?
             </p>
 
-            <p> A better solution for the mating pool is to use a probabilistic method, which we’ll call the “wheel of
+            <p>
+                A better solution for the mating pool is to use a probabilistic method, which we’ll call the “wheel of
                 fortune” (also known as the “roulette wheel”). To illustrate this method, let’s consider a simple
                 example where we have a population of five elements, each with a fitness score.
             </p>
@@ -624,14 +663,17 @@
                 </tbody>
             </table>
 
-            <p> The first thing we’ll want to do is normalize all the scores. Remember normalizing a vector? That
+            <p>
+                The first thing we’ll want to do is normalize all the scores. Remember normalizing a vector? That
                 involved taking an vector and standardizing its length, setting it to 1. When we normalize a set of
                 fitness scores, we are standardizing their range to between 0 and 1, as a percentage of total fitness.
                 Let’s add up all the fitness scores.
             </p>
-            <p> total fitness = 3 + 4 + 0.5 + 1.5 + 1 = 10
+            <p>
+                total fitness = 3 + 4 + 0.5 + 1.5 + 1 = 10
             </p>
-            <p> Then let’s divide each score by the total fitness, giving us the normalized fitness.
+            <p>
+                Then let’s divide each score by the total fitness, giving us the normalized fitness.
             </p>
             <table>
 
@@ -756,17 +798,19 @@
 
                 </tbody>
             </table>
-            <p> Now it’s time for the wheel of fortune.
+            <p>
+                Now it’s time for the wheel of fortune.
             </p>
 
-            ￼ <div id="ImageContainer">
+            <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_02.png" style="  width: 100%;
         height: 100%;" alt="Figure 9.2">
                 <p>
                     Figure 9.2
                 </p>
             </div>
-            <p> Spin the wheel and you’ll notice that Element B has the highest chance of being selected, followed by A,
+            <p>
+                Spin the wheel and you’ll notice that Element B has the highest chance of being selected, followed by A,
                 then D, then E, and finally C. This probability-based selection according to fitness is an excellent
                 approach. One, it guarantees that the highest-scoring elements will be most likely to reproduce. Two, it
                 does not entirely eliminate any variation from the population. Unlike with the elitist method, even the
@@ -777,20 +821,24 @@
             </p>
             <b>A: to be or not to go</b>
             <b>B: to be or not to pi</b>
-            <b> C: xxxxxxxxxxxxxxxxbe
+            <b>
+                C: xxxxxxxxxxxxxxxxbe
             </b>
-            <p> As you can see, elements A and B are clearly the most fit and would have the highest score. But neither
+            <p>
+                As you can see, elements A and B are clearly the most fit and would have the highest score. But neither
                 contains the correct characters for the end of the phrase. Element C, even though it would receive a
                 very low score, happens to have the genetic data for the end of the phrase. And so while we would want A
                 and B to be picked to generate the majority of the next generation, we would still want C to have a
                 small chance to participate in the reproductive process.
             </p>
 
-            <h2> 9.6 The Genetic Algorithm, Part III: Reproduction
+            <h2>
+                9.6 The Genetic Algorithm, Part III: Reproduction
             </h2>
 
 
-            <p> Now that we have a strategy for picking parents, we need to figure out how to use reproduction to make
+            <p>
+                Now that we have a strategy for picking parents, we need to figure out how to use reproduction to make
                 the population’s next generation, keeping in mind the Darwinian principle of heredity—that children
                 inherit properties from their parents. Again, there are a number of different techniques we could employ
                 here. For example, one reasonable (and easy to program) strategy is asexual reproduction, meaning we
@@ -800,7 +848,8 @@
             <h3>1) Crossover.</h3>
 
 
-            <p>Crossover involves creating a child out of the genetic code of two parents. In the case of the
+            <p>
+                Crossover involves creating a child out of the genetic code of two parents. In the case of the
                 monkey-typing example, let’s assume we’ve picked two phrases from the mating pool (as outlined in our
                 selection step).
             </p>
@@ -825,38 +874,42 @@
                     Figure 9.3
                 </p>
             </div>
-            <p> A variation of this technique is to pick a random midpoint. In other words, we don’t have to pick
+            <p>
+                A variation of this technique is to pick a random midpoint. In other words, we don’t have to pick
                 exactly half of the code from each parent. We could sometimes end up with FLAY, and sometimes with FORY.
                 This is preferable to the 50/50 approach, since we increase the variety of possibilities for the next
                 generation.
             </p>
 
-            ￼ <div id="ImageContainer">
+            <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_04.png" style="  width: 100%;
         height: 100%;" alt="Figure 9.4">
                 <p>
                     Figure 9.4: Picking a random midpoint
                 </p>
             </div>
-            <p> Another possibility is to randomly select a parent for each character in the child string. You can think
+            <p>
+                Another possibility is to randomly select a parent for each character in the child string. You can think
                 of this as flipping a coin four times: heads take from parent A, tails from parent B. Here we could end
                 up with many different results such as: PLRY, FLRK, FLRY, FORY, etc.
             </p>
 
-            ￼ <div id="ImageContainer">
+            <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_05.png" style="  width: 100%;
         height: 100%;" alt="Figure 9.5">
                 <p>
                     Figure 9.5: Coin-flipping approach
                 </p>
-            </div>￼
-            <p> This strategy will produce essentially the same results as the random midpoint method; however, if the
+            </div>
+            <p>
+                This strategy will produce essentially the same results as the random midpoint method; however, if the
                 order of the genetic information plays some role in expressing the phenotype, you may prefer one
                 solution over the other.
             </p>
             <h3>2) Mutation.</h3>
 
-            <p> Once the child DNA has been created via crossover, we apply one final process before adding the child to
+            <p>
+                Once the child DNA has been created via crossover, we apply one final process before adding the child to
                 the next generation—mutation. Mutation is an optional step, as there are some cases in which it is
                 unnecessary. However, it exists because of the Darwinian principle of variation. We created an initial
                 population randomly, making sure that we start with a variety of elements. However, there can only be so
@@ -864,15 +917,15 @@
                 throughout the evolutionary process itself.
             </p>
 
-            ￼
             <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_06.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.6">
+                     alt="Figure 9.6">
                 <p>
                     Figure 9.6
                 </p>
             </div>
-            <p> Mutation is described in terms of a rate. A given genetic algorithm might have a mutation rate of 5% or
+            <p>
+                Mutation is described in terms of a rate. A given genetic algorithm might have a mutation rate of 5% or
                 1% or 0.1%, etc. Let’s assume we just finished with crossover and ended up with the child FORY. If we
                 have a mutation rate of 1%, this means that for each character in the phrase generated from crossover,
                 there is a 1% chance that it will mutate. What does it mean for a character to mutate? In this case, we
@@ -880,17 +933,20 @@
                 mutation will not occur at all in a four-character string (96% of the time to be more precise). However,
                 when it does, the mutated character is replaced with a randomly generated one (see Figure 9.6).
             </p>
-            <p> As we’ll see in some of the examples, the mutation rate can greatly affect the behavior of the system.
+            <p>
+                As we’ll see in some of the examples, the mutation rate can greatly affect the behavior of the system.
                 Certainly, a very high mutation rate (such as, say, 80%) would negate the evolutionary process itself.
                 If the majority of a child’s genes are generated randomly, then we cannot guarantee that the more “fit”
                 genes occur with greater frequency with each successive generation.
             </p>
-            <p> The process of selection (picking two parents) and reproduction (crossover and mutation) is applied over
+            <p>
+                The process of selection (picking two parents) and reproduction (crossover and mutation) is applied over
                 and over again N times until we have a new population of N elements. At this point, the new population
                 of children becomes the current population and we loop back to evaluate fitness and perform selection
                 and reproduction again.
             </p>
-            <p> Now that we have described all the steps of the genetic algorithm in detail, it’s time to translate
+            <p>
+                Now that we have described all the steps of the genetic algorithm in detail, it’s time to translate
                 these steps into Unity code. Because the previous description was a bit longwinded, let’s look at
                 an overview of the algorithm first. We’ll then cover each of the three steps in its own section, working
                 out the code.
@@ -898,9 +954,11 @@
             <i><b>SETUP:</b></i>
             <p>Step 1: Initialize. Create a population of N elements, each with randomly generated DNA.</p>
             <i><b>LOOP:</b></i>
-            <p> Step 2: Selection. Evaluate the fitness of each element of the population and build a mating pool.
+            <p>
+                Step 2: Selection. Evaluate the fitness of each element of the population and build a mating pool.
             </p>
-            <p> Step 3: Reproduction. Repeat N times:
+            <p>
+                Step 3: Reproduction. Repeat N times:
             </p>
             <ul>
                 <li>
@@ -914,13 +972,16 @@
                 </li>
                 <li>d) Add the new child to a new population.</li>
             </ul>
-                <p> Step 4. Replace the old population with the new population and return to Step 2.
-            </p>                                       
-            <h2> 9.7 Code for Creating the Population
+            <p>
+                Step 4. Replace the old population with the new population and return to Step 2.
+            </p>
+            <h2>
+                9.7 Code for Creating the Population
             </h2>
 
             <h3>Step 1: Initialize Population</h3>
-            <p> If we’re going to create a population, we need a data structure to store a list of members of the
+            <p>
+                If we’re going to create a population, we need a data structure to store a list of members of the
                 population. In most cases (such as our typing-monkey example), the number of elements in the population
                 can be fixed, and so we use an array. (Later we’ll see examples that involve a growing/shrinking
                 population and we’ll use an ArrayList.) But an array of what? We need an object that stores the genetic
@@ -932,16 +993,16 @@
     {
 
     }
-
-            </pre>
-            <p> The population will then be an array of DNA objects.
+    </pre>
+            <p>
+                The population will then be an array of DNA objects.
             </p>
             <pre class="prettyprint">
 
     DNA[] population;
-
-            </pre>
-            <p> But what stuff goes in the DNA class? For a typing monkey, its DNA is the random phrase it types, a
+    </pre>
+            <p>
+                But what stuff goes in the DNA class? For a typing monkey, its DNA is the random phrase it types, a
                 string of characters.
             </p>
             <pre class="prettyprint">
@@ -950,9 +1011,9 @@
     {
 
     }
-
-            </pre>
-            <p> While this is perfectly reasonable for this particular example, we’re not going to use an
+    </pre>
+            <p>
+                While this is perfectly reasonable for this particular example, we’re not going to use an
                 actual String object as the genetic code. Instead, we’ll use an array of characters.
             </p>
             <pre class="prettyprint">
@@ -966,15 +1027,16 @@
             genes[i] = new char[18];
         }
     }
-
-            </pre>
-            <p> By using an array, we’ll be able to extend all the code we write into other examples. For example, the
+    </pre>
+            <p>
+                By using an array, we’ll be able to extend all the code we write into other examples. For example, the
                 DNA of a creature in a physics system might be an array of Vector2s—or for an image, an array of
                 integers (RGB colors). We can describe any set of properties in an array, and even though a string is
                 convenient for this particular scene, an array will serve as a better foundation for future
                 evolutionary examples.
             </p>
-            <p> Our genetic algorithm dictates that we create a population of N elements, each with randomly generated
+            <p>
+                Our genetic algorithm dictates that we create a population of N elements, each with randomly generated
                 DNA. Therefore, in the object’s constructor, we randomly create each character of the array.
             </p>
             <pre class="prettyprint">
@@ -988,57 +1050,60 @@
             genes[i] = (char)Random.Range(32, 128);
         }
     }
-
-            </pre>
-            <p> Now that we have the constructor, we can return to setup() and initialize each DNA object in the
+    </pre>
+            <p>
+                Now that we have the constructor, we can return to setup() and initialize each DNA object in the
                 population array.
             </p>
             <pre class="prettyprint">
 
-                // Start is called before the first frame update
-                void Start()
-                {
-                    target = "to be or not to be";
+    // Start is called before the first frame update
+    void Start()
+    {
+        target = "to be or not to be";
 
 
-                    InitializePopulation();   //STEP 1
+        InitializePopulation();   //STEP 1
 
-                }
+    }
 
-                void InitializePopulation()
-                {
-                    population = new DNA[totalPopulation];
+    void InitializePopulation()
+    {
+        population = new DNA[totalPopulation];
 
-                    for (int i = 0; i < population.Length; i++)
-                    {
-                        population[i] = new DNA(target);
-                    }
-                }
-
-            </pre>
-            <p> Our DNA class is not at all complete. We’ll need to add functions to it to perform all the other tasks
+        for (int i = 0; i < population.Length; i++)
+        {
+            population[i] = new DNA(target);
+        }
+    }
+    </pre>
+            <p>
+                Our DNA class is not at all complete. We’ll need to add functions to it to perform all the other tasks
                 in our genetic algorithm, which we’ll do as we walk through steps 2 and 3.
             </p>
 
             <h3>Step 2: Selection</h3>
-            <p> Step 2 reads, “Evaluate the fitness of each element of the population and build a mating pool.” Let’s
+            <p>
+                Step 2 reads, “Evaluate the fitness of each element of the population and build a mating pool.” Let’s
                 first evaluate each object’s fitness. Earlier we stated that one possible fitness function for our typed
                 phrases is the total number of correct characters. Let’s revise this fitness function a little bit and
                 state it as the percentage of correct characters—i.e., the total number of correct characters divided by
                 the total characters.
             </p>
-            <p> <center><b>Fitness = Total # Characters Correct/Total # Characters</b></center>
+            <p>
+                <center><b>Fitness = Total # Characters Correct/Total # Characters</b></center>
             </p>
-            <p> Where should we calculate the fitness? Since the DNA class contains the genetic information (the phrase
+            <p>
+                Where should we calculate the fitness? Since the DNA class contains the genetic information (the phrase
                 we will test against the target phrase), we can write a function inside the DNA class itself to score
                 its own fitness. Let’s assume we have a target phrase:
             </p>
             <pre class="prettyprint">
 
     target = "to be or not to be";
-
-            </pre>
-            <p> We can now compare each “gene” against the corresponding character in the target phrase, incrementing a
+    </pre>
+            <p>
+                We can now compare each “gene” against the corresponding character in the target phrase, incrementing a
                 counter each time we get a correct character.
             </p>
             <pre class="prettyprint">
@@ -1061,9 +1126,10 @@
             }
             fitness = (float)score / target.Length;
         }
-
-            </pre>
-            <p> In the main tab’s draw(), the very first step we’ll take is to call the fitness function for each member
+    }
+    </pre>
+            <p>
+                In the main tab’s draw(), the very first step we’ll take is to call the fitness function for each member
                 of the population.
             </p>
             <pre class="prettyprint">
@@ -1072,34 +1138,36 @@
     {
         population[i].CalculateFitness();
     }
+    </pre>
 
-            </pre>
-
-            <p> After we have all the fitness scores, we can build the “mating pool” that we’ll need for the
+            <p>
+                After we have all the fitness scores, we can build the “mating pool” that we’ll need for the
                 reproduction step. The mating pool is a data structure from which we’ll continuously pick two parents.
                 Recalling our description of the selection process, we want to pick parents with probabilities
                 calculated according to fitness. In other words, the members of the population that have the highest
                 fitness scores should be most likely to be picked; those with the lowest scores, the least likely.
             </p>
-            <p> In the Introduction, we covered the basics of probability and generating a custom distribution of random
+            <p>
+                In the Introduction, we covered the basics of probability and generating a custom distribution of random
                 numbers. We’re going to use those techniques to assign a probability to each member of the population,
                 picking parents by spinning the “wheel of fortune.” Let’s look at Figure 9.2 again.
             </p>
 
-            ￼ <div id="ImageContainer">
+            <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_02.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.2">
+                     alt="Figure 9.2">
                 <p>
                     Figure 9.2
                 </p>
             </div>
-            <p> It might be fun to do something ridiculous and actually program a simulation of a spinning wheel as
+            <p>
+                It might be fun to do something ridiculous and actually program a simulation of a spinning wheel as
                 depicted above. But this is quite unnecessary.
             </p>
 
-            ￼ <div id="ImageContainer">
+            <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_07.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.7">
+                     alt="Figure 9.7">
                 <p>
                     Figure 9.7
                 </p>
@@ -1118,7 +1186,7 @@
             </p>
             <pre class="prettyprint">
 
-    matingPool = new List<DNA>();
+    matingPool = new List&lt;DNA>();
 
     for (int i = 0; i < population.Length; i++)
     {
@@ -1129,11 +1197,11 @@
             matingPool.Add(population[i]);
         }
     }
-
-            </pre>
+    </pre>
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.2</h4>
+                    Exercise 9.2
+                </h4>
                 One of the other methods we used to generate a custom distribution of random numbers is called the Monte
                 Carlo method. This technique involved picking two random numbers, with the second number acting as a
                 qualifying number and determining if the first random number should be kept or thrown away. Rewrite the
@@ -1141,8 +1209,10 @@
             </div>
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.3</h4>
-                <p> In some cases, the wheel of fortune algorithm will have an extraordinarily high preference for some
+                    Exercise 9.3
+                </h4>
+                <p>
+                    In some cases, the wheel of fortune algorithm will have an extraordinarily high preference for some
                     elements over others. Take the following probabilities:
                 </p>
                 <ul>
@@ -1156,27 +1226,31 @@
                         C: 1
                     </li>
                 </ul></b>
-                <p> This is sometimes undesirable given how it will decrease the amount of variety in this system. A
+                <p>
+                    This is sometimes undesirable given how it will decrease the amount of variety in this system. A
                     solution to this problem is to replace the calculated fitness scores with the ordinals of scoring
                     (meaning their rank).
                 </p><b>
-                <ul>
-                    <li>
-                        A: 50% (3/6)
-                    </li>
-                    <li>
-                        B: 33% (2/6)
-                    </li>
-                    <li>
-                        C: 17% (1/6)
-                    </li>
-                </ul></b>
-                <p> Rewrite the mating pool algorithm to use this method instead.
+                    <ul>
+                        <li>
+                            A: 50% (3/6)
+                        </li>
+                        <li>
+                            B: 33% (2/6)
+                        </li>
+                        <li>
+                            C: 17% (1/6)
+                        </li>
+                    </ul>
+                </b>
+                <p>
+                    Rewrite the mating pool algorithm to use this method instead.
                 </p>
             </div>
 
             <h3>Step 3: Reproduction</h3>
-            <p> With the mating pool ready to go, it’s time to make some babies. The first step is to pick two parents.
+            <p>
+                With the mating pool ready to go, it’s time to make some babies. The first step is to pick two parents.
                 Again, it’s somewhat of an arbitrary decision to pick two parents. It certainly mirrors human
                 reproduction and is the standard means in the traditional GA, but in terms of your work, there really
                 aren’t any restrictions here. You could choose to perform “asexual” reproduction with one parent, or
@@ -1192,8 +1266,7 @@
 
     int a = (int)Random.Range(0, matingPool.Count);
     int b = (int)Random.Range(0, matingPool.Count);
-
-            </pre>
+    </pre>
             <p>
                 We can use these indices to retrieve an actual DNA instance from the mating pool.
             </p>
@@ -1201,8 +1274,7 @@
 
     DNA partnerA = matingPool[a];
     DNA partnerB = matingPool[b];
-
-            </pre>
+    </pre>
             <p>
                 Because we have multiple instances of the same DNA objects in the mating pool (not to mention that we
                 could pick the same random number twice), it’s possible that parentA and parentB could be the
@@ -1212,7 +1284,8 @@
             </p>
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.4</h4>
+                    Exercise 9.4
+                </h4>
                 Add code to the above to guarantee that you have picked two unique “parents.”
             </div>
             <p>
@@ -1224,8 +1297,7 @@
     DNA child = partnerA.Crossover(partnerB);
 
     child.Mutate(mutationRate);
-
-            </pre>
+    </pre>
             <p>
                 Of course, the functions crossover() and mutate() don’t magically exist in our DNA class; we have to
                 write them. The way we called crossover() above indicates that the function receives an instance of DNA
@@ -1253,8 +1325,7 @@
 
         return child;
     }
-
-            </pre>
+    </pre>
             <p>
                 The above crossover function uses the “random midpoint” method of crossover, in which the first section
                 of genes is taken from parent A and the second section from parent B.
@@ -1262,7 +1333,8 @@
             </p>
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.5</h4>
+                    Exercise 9.5
+                </h4>
                 Rewrite the crossover function to use the “coin flipping” method instead, in which each gene has a 50%
                 chance of coming from parent A and a 50% chance of coming from parent B.
             </div>
@@ -1277,8 +1349,7 @@
     {
         genes[i] = (char)Random.Range(32, 128);
     }
-
-            </pre>
+    </pre>
             <p>
                 The entire function therefore reads:
 
@@ -1295,9 +1366,9 @@
             }
         }
     }
-
-            </pre>
-            <h2> 9.8 Genetic Algorithms: Putting It All Together
+    </pre>
+            <h2>
+                9.8 Genetic Algorithms: Putting It All Together
             </h2>
             <p>
                 You may have noticed that we’ve essentially walked through the steps of the genetic algorithm twice,
@@ -1305,7 +1376,6 @@
                 What I’d like to do in this section is condense the previous two sections into one page, with the
                 algorithm described in just three steps and the corresponding code alongside.
             </p>
-            ￼
             <span class="example">
                 Example 9.1: Genetic algorithm: Evolving Shakespeare
             </span>
@@ -1315,7 +1385,7 @@
                     <input type="radio" name="tabs0" id="tab0a" checked />
                     <label for="tab0a" role="tab" aria-selected="true" aria-controls="panel0" tabindex="2">Code</label>
                     <div id="tab-content1" class="tab-content" role="tabpanel" aria-labelledby="description"
-                        aria-hidden="false">
+                         aria-hidden="false">
                         <div id="example1" style="height: 500px"></div>
                     </div>
                 </li>
@@ -1324,12 +1394,12 @@
                     <input type="radio" name="tabs0" id="tab0b" />
                     <label for="tab0b" role="tab" aria-selected="false" aria-controls="panel1" tabindex="3">Demo</label>
                     <div id="tab-content2" class="tab-content" role="tabpanel" aria-labelledby="specification"
-                        aria-hidden="true">
+                         aria-hidden="true">
                         <div align="center">
                             <iframe class="lazy"
-                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure1/index.html"
-                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
-                                scrolling="no" Id="9.1">
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure1/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="9.1">
                             </iframe>
                         </div>
                     </div>
@@ -1402,16 +1472,16 @@
             }
         }
 
-        public string getPhrase()
+        public string GetPhrase()
         {
             return new string(genes);
         }
     }
-
-            </pre>
+    </pre>
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.6</h4>
+                    Exercise 9.6
+                </h4>
                 Add features to the above example to report more information about the progress of the genetic algorithm
                 itself. For example, show the phrase closest to the target each generation, as well as report on the
                 number of generations, average fitness, etc. Stop the genetic algorithm once it has solved the phrase.
@@ -1419,31 +1489,32 @@
 
                 <div id="ImageContainer">
                     <img src="https://natureofcode.com/book/imgs/chapter09/ch09_exc01.png" style="  width: 100%; height: 100%;"
-                        alt="">
+                         alt="">
                 </div>
 
-                ￼
             </div>
-            <h2> 9.9 Genetic Algorithms: Make Them Your Own
+            <h2>
+                9.9 Genetic Algorithms: Make Them Your Own
             </h2>
-            <p> The nice thing about using genetic algorithms in a project is that example code can easily be ported
+            <p>
+                The nice thing about using genetic algorithms in a project is that example code can easily be ported
                 from application to application. The core mechanics of selection and reproduction don’t need to change.
                 There are, however, three key components to genetic algorithms that you, the developer, will have to
                 customize for each use. This is crucial to moving beyond trivial demonstrations of evolutionary
                 simulations (as in the Shakespeare example) to creative uses in projects that you make in Unity and
                 other creative programming environments.
             </p>
-            <h3> Key #1: Varying the variables
+            <h3>
+                Key #1: Varying the variables
             </h3>
 
-            <p> There aren’t a lot of variables to the genetic algorithm itself. In fact, if you look at the previous
+            <p>
+                There aren’t a lot of variables to the genetic algorithm itself. In fact, if you look at the previous
                 example’s code, you’ll see only two global variables (not including the arrays and ArrayLists to store
                 the population and mating pool).
             </p>
-            <pre class="prettyprint">
-
-            </pre>
-            <p> These two variables can greatly affect the behavior of the system, and it’s not such a good idea to
+            <p>
+                These two variables can greatly affect the behavior of the system, and it’s not such a good idea to
                 arbitrarily assign them values (though tweaking them through trial and error is a perfectly reasonable
                 way to arrive at optimal values).
             </p>
@@ -1758,20 +1829,20 @@
 
             <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_08.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.8">
+                     alt="Figure 9.8">
                 <p>
                     Figure 9.8
                 </p>
             </div>
-            ￼<p> This is a linear graph; as the number of characters goes up, so does the fitness score. However, what
+            <p>
+                This is a linear graph; as the number of characters goes up, so does the fitness score. However, what
                 if the fitness increased exponentially as the number of correct characters increased? Our graph could
                 then look something like:
             </p>
 
-            ￼
             <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_09.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.9">
+                     alt="Figure 9.9">
                 <p>
                     Figure 9.9
                 </p>
@@ -1781,10 +1852,9 @@
                 number of different ways. For example, we could say:
 
             </p>
-            <code>
-                fitness = (number of correct characters) * (number of correct characters)
-
-            </code>
+            <pre class="prettyprint">
+    fitness = (number of correct characters) * (number of correct characters)
+    </pre>
             <p>
                 Let’s say we have two members of the population, one with five correct characters and one with six. The
                 number 6 is a 20% increase over the number 5. Let’s look at the fitness scores squared.
@@ -1833,12 +1903,15 @@
 
                 </tbody>
             </table>
-            <p> The fitness scores increase exponentially relative to the number of correct characters. 36 is a 44%
+            <p>
+                The fitness scores increase exponentially relative to the number of correct characters. 36 is a 44%
                 increase over 25.
             </p>
             <p>Here’s another formula.</p>
-            <code>            fitness = 2 to the power of (number of correct characters)
-</code>
+            <pre class="prettyprint">
+    fitness = 2 to the power of (number of correct characters)
+    </pre>
+
             <table>
 
                 <thead>
@@ -1906,11 +1979,13 @@
 
                 </tbody>
             </table>
-            <p> Here, the fitness scores increase at a faster rate, doubling with each additional correct character.
+            <p>
+                Here, the fitness scores increase at a faster rate, doubling with each additional correct character.
             </p>
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.7</h4>
+                    Exercise 9.7
+                </h4>
                 Rewrite the fitness function to increase exponentially according to the number of correct characters.
                 Note that you will also have to normalize the fitness values to a range between 0 and 1 so they can be
                 added to the mating pool a reasonable number of times.
@@ -1930,16 +2005,16 @@
                 Let’s consider a racing simulation in which a vehicle is evolving a design optimized for speed.
 
             </p>
-            <code>            fitness = total number of frames required for vehicle to reach target
-</code>
+            <pre class="prettyprint">
+    fitness = total number of frames required for vehicle to reach target
+    </pre>
             <p>
                 How about a cannon that is evolving the optimal way to shoot a target?
 
             </p>
-            <code>
+            <pre class="prettyprint">
     fitness = cannonball distance to target
-
-</code>
+    </pre>
             <p>
                 The design of computer-controlled players in a game is also a common scenario. Let’s say you are
                 programming a soccer game in which the user is the goalie. The rest of the players are controlled by
@@ -1947,10 +2022,9 @@
                 would the fitness score for any given player be?
 
             </p>
-            <code>
+            <pre class="prettyprint">
     fitness = total goals scored
-
-</code>
+    </pre>
             <p>
                 This, obviously, is a simplistic take on the game of soccer, but it illustrates the point. The more
                 goals a player scores, the higher its fitness, and the more likely its genetic information will appear
@@ -1974,13 +2048,13 @@
 
             <pre class="prettyprint">
 
-    void fitness() {
+    void fitness() 
+    {
         ????????????
         ????????????
         fitness = ??????????
-        }
-
-            </pre>
+    }
+    </pre>
             <h3>Key #3: Genotype and Phenotype</h3>
 
             <p>
@@ -2012,9 +2086,8 @@
         public Rigidbody body;
         private GameObject gameObject;
         private float radius;
-
-
-            </pre>
+    }
+    </pre>
             <p>
                 All we need to do to evolve those parameters is to turn them into an array, so that the array can be
                 used with all of the functions—crossover(), mutate(), etc.—found in the DNA class. One common solution
@@ -2044,8 +2117,7 @@
             }
         }
     }
-
-            </pre>
+    </pre>
             <p>
                 Notice how we’ve now put the genetic data (genotype) and its expression (phenotype) into two separate
                 classes. The DNA class is the genotype and the Vehicle class uses a DNA object to drive its behaviors
@@ -2088,10 +2160,7 @@
             g = GameObject.Instantiate(rocketObj, position, Quaternion.identity);
         }
     }
-
-
-
-            </pre>
+    </pre>
             <p>
                 Of course, you most likely don’t want all your variables to have a range between 0 and 1. But rather
                 than try to remember how to adjust those ranges in the DNA class itself, it’s easier to pull the genetic
@@ -2126,7 +2195,8 @@
                 example that involves moving bodies and an array of Vector2s as DNA.
 
             </p>
-            <h2> 9.10 Evolving Forces: Smart Rockets
+            <h2>
+                9.10 Evolving Forces: Smart Rockets
             </h2>
 
 
@@ -2143,18 +2213,17 @@
 
             </p>
 
-            ￼
             <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_10.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.10">
+                     alt="Figure 9.10">
                 <p>
                     Figure 9.10
                 </p>
             </div>
-            ￼
+            
             <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_11.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.11">
+                     alt="Figure 9.11">
                 <p>
                     Figure 9.11
                 </p>
@@ -2181,11 +2250,8 @@
                 Let’s start by taking our basic Mover class from Chapter 2 examples and renaming it Rocket.
 
             </p>
-            <pre class="prettyprint">
-
-            </pre>
             <p>
-                Using the above framework, we can implement our smart rocket by saying that for every frame of
+                Using this framework, we can implement our smart rocket by saying that for every frame of
                 animation, we call applyForce() with a new force. The “thruster” applies a single force to the rocket
                 each time through draw().
 
@@ -2228,8 +2294,7 @@
         float d = Vector2.Distance(position, targetPosition);
         Fitness = Mathf.Pow(1 / d);
     }
-
-            </pre>
+    </pre>
             <p>
                 This is perhaps the simplest fitness function we could write. By using one divided by distance, large
                 distances become small numbers and small distances become large.
@@ -2432,11 +2497,12 @@
         float d = Vector2.Distance(position, targetPosition);
         Fitness = Mathf.Pow(1 / d, 2);
     }
-
-            </pre>
-            <h3> Key #3: Genotype and Phenotype
+    </pre>
+            <h3>
+                Key #3: Genotype and Phenotype
             </h3>
-            <p> We stated that each rocket has a thruster that fires in a variable direction with a variable magnitude
+            <p>
+                We stated that each rocket has a thruster that fires in a variable direction with a variable magnitude
                 in each frame. And so we need a Vector2 for each frame of animation. Our genotype, the data required to
                 encode the rocket’s behavior, is therefore an array of Vector2s.
             </p>
@@ -2446,8 +2512,8 @@
     {
         // The genetic sequence
         public Vector2[] Genes { get; private set; }
-
-            </pre>
+    }
+    </pre>
             <p>
                 The happy news here is that we don’t really have to do anything else to the DNA class. All of the
                 functionality we developed for the typing monkey (crossover and mutation) applies here. The one
@@ -2460,13 +2526,11 @@
             <pre class="prettyprint">
 
     Vector2 v = new Vector2(Random.Ramge(-1f,1f),Random.Range(-1f,1f));
+    </pre>
 
-            </pre>
-
-            ￼
             <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_12.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.12">
+                     alt="Figure 9.12">
                 <p>
                     Figure 9.12
                 </p>
@@ -2480,10 +2544,9 @@
 
             </p>
 
-            ￼
             <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_13.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.13">
+                     alt="Figure 9.13">
                 <p>
                     Figure 9.13
                 </p>
@@ -2503,8 +2566,7 @@
         float angle = Random.Range(0f, 360f);
         Genes[i] = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
     }
-
-            </pre>
+    </pre>
             <p>
                 A Vector2 of length one is actually going to be quite a large force. Remember, forces are applied to
                 acceleration, which accumulates into velocity thirty times per second. So, for this example, we can also
@@ -2535,8 +2597,7 @@
             }
         }
     }
-
-            </pre>
+    </pre>
             <p>
                 Notice also that we created an array of Vector2s with length lifetime. We need a Vector2 for each frame
                 of the rocket’s life, and the above assumes the existence of a global variable lifetime that stores the
@@ -2565,9 +2626,8 @@
         // Fitness and DNA
         public float Fitness { get; private set; }
         public Chapter9Fig2DNA DNA { get; private set; }
-
-
-            </pre>
+    }
+    </pre>
             <p>
                 What are we using the DNA for? We are marching through the array of Vector2s and applying them one at a
                 time as a force to the rocket. To do this, we’ll also have to add an integer that acts as a counter to
@@ -2581,20 +2641,20 @@
 
     public void Run()
     {
-        checkTarget(); // Check to see if we've reached the target
+        CheckTarget(); // Check to see if we've reached the target
         if (!hitTarget)
         {
-            applyForce(DNA.Genes[geneCounter]);
+            ApplyForce(DNA.Genes[geneCounter]);
             geneCounter = (geneCounter + 1) % DNA.Genes.Length;
-            update();
+            UpdatePosition();
         }
 
-        display();
+        Display();
     }
+    </pre>
 
-            </pre>
-
-            <h2> 9.11 Smart Rockets: Putting It All Together
+            <h2>
+                9.11 Smart Rockets: Putting It All Together
             </h2>
             <p>
                 We now have our DNA class (genotype) and our Rocket class (phenotype). The last piece of the puzzle is
@@ -2611,7 +2671,7 @@
     {
         private float mutationRate; // Mutation rate
         private Chapter9Fig2Rocket[] population; // Array to hold the current population
-        private List<Chapter9Fig2Rocket> matingPool; // List which we will use for our "mating pool"
+        private List&lt;Chapter9Fig2Rocket> matingPool; // List which we will use for our "mating pool"
         public int Generations { get; private set; } // Number of generations
         private Vector2 screenSize;
         private Vector2 targetPosition;
@@ -2633,7 +2693,7 @@
             matingPool.Clear();
 
             // Calculate total fitness of whole population
-            float maxfitness = getMaxFitness();
+            float maxfitness = GetMaxFitness();
 
             // Calculate fitness for each member of the population (scaled to value between 0 and 1)
             // Based on fitness, each member will get added to the mating pool a certain number of times
@@ -2645,7 +2705,6 @@
                 // A number from one range to another.
                 // https://processing.org/reference/map_.html
                 float fitnessNormal = 0 + (population[i].Fitness - 0) * (1 - 0) / (maxfitness - 0);
-                // float fitnessNormal = 0 + (1 - 0) * ((population[i].Fitness - 0) / (maxFitness - 0));
                 int n = (int)fitnessNormal * 100; // Arbitary multiplier
                 for (int j = 0; j < n; j++)
                 {
@@ -2664,19 +2723,19 @@
                 population[i].Death();
 
                 // Spin the wheel of fourtune to pick two new parents
-                int m = Random.Range(0, matingPool.Count);
-                int d = Random.Range(0, matingPool.Count);
+                int a = Random.Range(0, matingPool.Count);
+                int b = Random.Range(0, matingPool.Count);
 
                 // Pick two parents
-                Chapter9Fig2Rocket mom = matingPool[m];
-                Chapter9Fig2Rocket dad = matingPool[d];
+                Chapter9Fig2Rocket partnerA = matingPool[a];
+                Chapter9Fig2Rocket partnerB = matingPool[b];
 
                 // Get their genes
-                Chapter9Fig2DNA momGenes = mom.DNA;
-                Chapter9Fig2DNA dadGenes = dad.DNA;
+                Chapter9Fig2DNA partnerAGenes = partnerA.DNA;
+                Chapter9Fig2DNA partnerBGenes = partnerB.DNA;
 
                 // Mate their genes
-                Chapter9Fig2DNA child = momGenes.Crossover(dadGenes);
+                Chapter9Fig2DNA child = partnerAGenes.Crossover(partnerBGenes);
 
                 // Mutate their genes
                 child.Mutate(mutationRate);
@@ -2690,7 +2749,7 @@
         }
 
         // Find highest fitness for the population
-        private float getMaxFitness()
+        private float GetMaxFitness()
         {
             float record = 0f;
             for (int i = 0; i < population.Length; i++)
@@ -2703,8 +2762,8 @@
 
             return record;
         }
-
-            </pre>
+    }
+    </pre>
             <p>
                 There is one fairly significant change, however. With typing monkeys, a random phrase was evaluated as
                 soon as it was created. The string of characters had no lifespan; it existed purely for the purpose of
@@ -2725,8 +2784,7 @@
             population[i].Run();
         }
     }
-
-            </pre>
+    </pre>
             <p>
                 Finally, we’re ready for setup() and draw(). Here in the main tab, our primary responsibility is to
                 implement the steps of the genetic algorithm in the appropriate order by calling the functions in
@@ -2758,8 +2816,7 @@
 
         infoText.text = $"Generation #: {population.Generations}\nCycles left: {lifetime - lifeCounter}";
     }
-
-            </pre>
+    </pre>
 
             <p>
                 However, unlike the Shakespeare example, we don’t want to do this every frame. Rather, our steps work as
@@ -2799,7 +2856,7 @@
                     <input type="radio" name="tabs2" id="tab3" checked />
                     <label for="tab3" role="tab" aria-selected="true" aria-controls="panel3" tabindex="0">Code</label>
                     <div id="tab-content3" class="tab-content" role="tabpanel" aria-labelledby="description"
-                        aria-hidden="false">
+                         aria-hidden="false">
                         <div id="example2" style="height: 500px"></div>
                     </div>
                 </li>
@@ -2808,12 +2865,12 @@
                     <input type="radio" name="tabs2" id="tab4" />
                     <label for="tab4" role="tab" aria-selected="false" aria-controls="panel4" tabindex="0">Demo</label>
                     <div id="tab-content4" class="tab-content" role="tabpanel" aria-labelledby="specification"
-                        aria-hidden="true">
+                         aria-hidden="true">
                         <div align="center">
                             <iframe class="lazy"
-                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure2/index.html"
-                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
-                                scrolling="no" Id="9.2">
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure2/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="9.2">
                             </iframe>
                         </div>
                     </div>
@@ -2847,7 +2904,7 @@
                     <input type="radio" name="tabs3" id="tab5" checked />
                     <label for="tab5" role="tab" aria-selected="true" aria-controls="panel5" tabindex="0">Code</label>
                     <div id="tab-content5" class="tab-content" role="tabpanel" aria-labelledby="description"
-                        aria-hidden="false">
+                         aria-hidden="false">
                         <div id="example3" style="height: 500px"></div>
                     </div>
                 </li>
@@ -2856,25 +2913,26 @@
                     <input type="radio" name="tabs3" id="tab6" />
                     <label for="tab6" role="tab" aria-selected="false" aria-controls="panel6" tabindex="0">Demo</label>
                     <div id="tab-content6" class="tab-content" role="tabpanel" aria-labelledby="specification"
-                        aria-hidden="true">
+                         aria-hidden="true">
                         <div align="center">
                             <iframe class="lazy"
-                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure3/index.html"
-                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
-                                scrolling="no" Id="9.3">
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure3/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="9.3">
                             </iframe>
                         </div>
                     </div>
                 </li>
             </ul>
+            <br />
             <pre class="prettyprint">
 
     public class Chapter9Fig3Obstacle
     {
         public Vector2 Position { get; private set; }
         private float w, h;
-
-                </pre>
+    }
+    </pre>
             <p>
                 We can also write a contains() function that will return true or return false to determine if a rocket
                 has hit the obstacle.
@@ -2893,8 +2951,7 @@
             return false;
         }
     }
-
-            </pre>
+    </pre>
             <p>
                 Assuming we make an ArrayList of obstacles, we can then have each rocket check to see if it has collided
                 with an obstacle and set a boolean flag to be true if it does, adding a function to the rocket class.
@@ -2907,59 +2964,56 @@
         Position = new Vector2(x, y);
         w = _w;
         h = _h;
-        spawnObstacle();
+        SpawnObstacle();
     }
 
-    private void spawnObstacle()
+    private void SpawnObstacle()
     {
         // Obstacle representation
         GameObject g = GameObject.CreatePrimitive(PrimitiveType.Quad);
 
         // Destroy components we do not need
-        Object.Destroy(g.GetComponent<Collider>());
+        Object.Destroy(g.GetComponent&lt;Collider>());
 
         // WebGL needs a new material
-        Renderer r = g.GetComponent<Renderer>();
+        Renderer r = g.GetComponent&lt;Renderer>();
         r.material = new Material(Shader.Find("Diffuse"));
 
         // Set GameObject's position and scale to this object's
         g.transform.position = Position;
         g.transform.localScale = new Vector3(w, h);
     }
-
-            </pre>
+    </pre>
             <p>
                 If the rocket hits an obstacle, we choose to stop it from updating its location.
 
             </p>
             <pre class="prettyprint">
 
-    public void Run(List<Chapter9Fig3Obstacle> os)
+    public void Run(List&lt;Chapter9Fig3Obstacle> os)
+    {
+        if (!HitObstacle && !HitTarget)
         {
-            if (!HitObstacle && !HitTarget)
-            {
-                applyForce(DNA.Genes[geneCounter]);
-                geneCounter = (geneCounter + 1) % DNA.Genes.Length;
-                update();
+            ApplyForce(DNA.Genes[geneCounter]);
+            geneCounter = (geneCounter + 1) % DNA.Genes.Length;
+            UpdatePosition();
 
-                // If I hit an edge or an obstacle
-                obstacles(os);
-            }
-
-            // Draw me!
-            if (!HitObstacle)
-            {
-                display();
-            }
-            else
-            {
-                // Disable gameObject representation
-                g.SetActive(false);
-            }
+            // If I hit an edge or an obstacle
+            obstacles(os);
         }
 
-
-            </pre>
+        // Draw me!
+        if (!HitObstacle)
+        {
+            Display();
+        }
+        else
+        {
+            // Disable gameObject representation
+            g.SetActive(false);
+        }
+    }
+    </pre>
             <p>
                 And we also have an opportunity to adjust the rocket’s fitness. We consider it to be pretty terrible if
                 the rocket hits an obstacle, and so its fitness should be greatly reduced.
@@ -2983,8 +3037,7 @@
         if (HitTarget)
             Fitness *= 2; // Twice the fitness for finishing!
     }
-
-            </pre>
+    </pre>
             <h3>
                 Improvement #2: Evolve reaching the target faster
 
@@ -3014,8 +3067,7 @@
             recordDist = d;
         }
     }
-
-            </pre>
+    </pre>
             <p>
                 In addition, a rocket should be rewarded according to how quickly it reaches the target. The faster it
                 reaches the target, the higher the fitness. The slower, the lower. To accomplish this, we can increment
@@ -3025,17 +3077,15 @@
             </p>
             <pre class="prettyprint">
 
-        if (target.Contains(position) && !HitTarget) // Target is now OBSTACLE
-        {
-            HitTarget = true;
-        }
-        else if (!HitTarget)
-        {
-            finishTime++;
-        }
+    if (target.Contains(position) && !HitTarget) // Target is now OBSTACLE
+    {
+        HitTarget = true;
     }
-
-            </pre>
+    else if (!HitTarget)
+    {
+        finishTime++;
+    }
+    </pre>
             <p>
                 Fitness is also inversely proportional to finishTime, and so we can improve our fitness function as
                 follows:
@@ -3060,8 +3110,7 @@
         if (HitTarget)
             Fitness *= 2; // Twice the fitness for finishing!
     }
-
-            </pre>
+    </pre>
             <p>
                 These improvements are both incorporated into the code for Example 9.3: Smart Rockets.
 
@@ -3069,26 +3118,30 @@
 
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.8</h4>
+                    Exercise 9.8
+                </h4>
                 Create a more complex obstacle course. As you make it more difficult for the rockets to reach the
                 target, do you need to improve other aspects of the GA—for example, the fitness function?
             </div>
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.9</h4>
+                    Exercise 9.9
+                </h4>
                 Implement the rocket firing pattern of Jer Thorp’s Smart Rockets. Each rocket only gets five thrusters
                 (of any direction and strength) that follow a firing sequence (of arbitrary length). Jer’s
                 simulation also gives the rockets a finite amount of fuel.
             </div>
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.10</h4>
+                    Exercise 9.10
+                </h4>
                 Visualize the rockets differently. Can you draw a line for the shortest path to the target? Can you add
                 particle systems that act as smoke in the direction of the rocket thrusters?
             </div>
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.11</h4>
+                    Exercise 9.11
+                </h4>
                 Another way to achieve a similar result is to evolve a flow field. Can you make the genotype of a rocket
                 a flow field of Vector2s?
             </div>
@@ -3109,8 +3162,8 @@
 
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.12</h4>
-                ￼
+                    Exercise 9.12
+                </h4>
                 Using toxiclibs or Box2D as the physics model, can you create a simplified 2D version of Sims’s
                 creatures? For a lengthier description of Sims’s techniques, I suggest you watch the video and read
                 Sims’s paper Virtual Creatures. In addition, you can find a similar example that uses Box2D to evolve a
@@ -3118,7 +3171,8 @@
                 ￼
             </div>
 
-            <h2> 9.12 Interactive Selection
+            <h2>
+                9.12 Interactive Selection
             </h2>
             <p>
                 In addition to Evolved Virtual Creatures, Sims is also well known for his museum installation Galapagos.
@@ -3137,10 +3191,9 @@
 
             </p>
 
-            ￼
             <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_14.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.14">
+                     alt="Figure 9.14">
                 <p>
                     Figure 9.14
                 </p>
@@ -3173,7 +3226,7 @@
             }
         }
     }
-            </pre>
+    </pre>
             <p>
                 The phenotype is a Face class that includes an instance of a DNA object.
 
@@ -3185,8 +3238,8 @@
 
         public float fitness = 1;
         public DNA9_4 DNA;
-
-            </pre>
+    }
+    </pre>
 
             <p>
                 When it comes time to draw the face on screen, we can use Processing’s map() function to convert any
@@ -3194,6 +3247,7 @@
                 using colorMode() to set the RGB ranges between 0 and 1.)
             </p>
             <pre class="prettyprint">
+
     public void Draw()
     {
         // Set colors for each image component:
@@ -3210,9 +3264,11 @@
         float mouthRight = Mathf.Lerp(mouthLeft, 1, DNA.genes[11]);
         float mouthBottom = DNA.genes[12];
         float mouthTop = Mathf.Lerp(mouthBottom, 1, DNA.genes[13]);
+
         // Restrict the mouth to the lower half of the face.
         mouthBottom *= 0.5f;
         mouthTop *= 0.5f;
+
         // Apply the corners of the mouth to the UI:
         mouth.anchorMin = new Vector2(mouthLeft, mouthBottom);
         mouth.anchorMax = new Vector2(mouthRight, mouthTop);
@@ -3222,20 +3278,22 @@
         float eyeRight = Mathf.Lerp(eyeLeft, 1, DNA.genes[15]);
         float eyeBottom = DNA.genes[16];
         float eyeTop = Mathf.Lerp(eyeBottom, 1, DNA.genes[17]);
+
         // Restrict the eye to the upper left quadrant of the face.
         eyeBottom = Mathf.Lerp(0.5f, 1, eyeBottom);
         eyeTop = Mathf.Lerp(0.5f, 1, eyeTop);
         eyeLeft *= 0.5f;
         eyeRight *= 0.5f;
+
         // Apply the corners of the eye to the left eye:
         leftEye.anchorMin = new Vector2(eyeLeft, eyeBottom);
         leftEye.anchorMax = new Vector2(eyeRight, eyeTop);
+
         // Apply the corners of the eye to the right eye(mirrored about the y axis):
         rightEye.anchorMin = new Vector2(1 - eyeRight, eyeBottom);
         rightEye.anchorMax = new Vector2(1 - eyeLeft, eyeTop);
     }
-</pre>
-
+    </pre>
 
             <p>
                 So far, we’re not really doing anything new. This is what we’ve done in every GA example so far. What’s
@@ -3275,7 +3333,7 @@
                     <input type="radio" name="tabs4" id="tab7" checked />
                     <label for="tab7" role="tab" aria-selected="true" aria-controls="panel7" tabindex="0">Code</label>
                     <div id="tab-content7" class="tab-content" role="tabpanel" aria-labelledby="description"
-                        aria-hidden="false">
+                         aria-hidden="false">
                         <div id="example4" style="height: 500px"></div>
                     </div>
                 </li>
@@ -3284,12 +3342,12 @@
                     <input type="radio" name="tabs4" id="tab8" />
                     <label for="tab8" role="tab" aria-selected="false" aria-controls="panel8" tabindex="0">Demo</label>
                     <div id="tab-content8" class="tab-content" role="tabpanel" aria-labelledby="specification"
-                        aria-hidden="true">
+                         aria-hidden="true">
                         <div align="center">
                             <iframe class="lazy"
-                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure4/index.html"
-                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
-                                scrolling="no" Id="9.4">
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure4/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="9.4">
                             </iframe>
                         </div>
                     </div>
@@ -3334,16 +3392,19 @@
 
             <div class="note">
                 <h4 style="text-align:right;">
-                    Exercise 9.14</h4>
+                    Exercise 9.14
+                </h4>
                 Build your own interactive selection project. In addition to a visual design, consider evolving
                 sounds—for example, a short sequence of tones. Can you devise a strategy, such as a Web application or
                 physical sensor system, to acquire ratings from many users over time?
             </div>
-            <h2> 9.13 Ecosystem Simulation
+            <h2>
+                9.13 Ecosystem Simulation
             </h2>
 
 
-            <p> You may have noticed something a bit odd about every single evolutionary system we’ve built so far in
+            <p>
+                You may have noticed something a bit odd about every single evolutionary system we’ve built so far in
                 this chapter. After all, in the real world, a population of babies isn’t born all at the same time.
                 Those babies don’t then grow up and all reproduce at exactly the same time, then instantly die to leave
                 the population size perfectly stable. That would be ridiculous. Not to mention the fact that there is
@@ -3385,24 +3446,24 @@
 
         float xoff, yoff; // Some variables for Perlin noise calculations
 
-        private Vector2 minPos, maxPos;
+        private Vector2 maximumPos;
         Material color;
 
         void Start()
         {
-            findWindowLimits();
-            setDNA(new DNA());
+            FindWindowLimits();
+            SetDNA(new DNA());
 
             xoff = Random.Range(-1f, 1f); // Create a seed for the random motion
             yoff = Random.Range(-1f, 1f);
 
-            transform.position = new Vector2(Random.Range(minPos.x, maxPos.x), Random.Range(minPos.y, maxPos.y)); // Set a random location for the bloop
+            transform.position = new Vector2(Random.Range(-maximumPos.x, maximumPos.x), Random.Range(-maximumPos.y, maximumPos.y)); // Set a random location for the bloop
 
-            rb = gameObject.AddComponent<Rigidbody>(); // Add a RigidBody for physics
+            rb = gameObject.AddComponent&lt;Rigidbody>(); // Add a RigidBody for physics
             rb.useGravity = false; // and turn off gravity since we wont need it
 
-            gameObject.GetComponent<SphereCollider>().isTrigger = true;
-            color = gameObject.GetComponent<Renderer>().material;
+            gameObject.GetComponent&lt;SphereCollider>().isTrigger = true;
+            color = gameObject.GetComponent&lt;Renderer>().material;
         }
 
         void Update()
@@ -3433,6 +3494,7 @@
                 healthRed = 255;
             else if (healthRed < 0)
                 healthRed = 0;
+
             float healthBlue;
             if (health < 1000)
                 healthBlue = map(health, 500, 1000, 0, 255);
@@ -3444,8 +3506,8 @@
                 healthBlue = 255;
             else if (healthBlue < 0)
                 healthBlue = 0;
-            float healthGreen = map(health, 1000, 1500, 0, 255);
 
+            float healthGreen = map(health, 1000, 1500, 0, 255);
             if (healthGreen > 255)
                 healthGreen = 255;
             else if (healthGreen < 0)
@@ -3454,28 +3516,26 @@
 
             // Enable screen wrapping
             Vector2 pos = transform.position;
-            if (pos.x < minPos.x)
+            if (pos.x < -maximumPos.x)
             {
-                pos.x = maxPos.x;
+                pos.x = maximumPos.x;
             }
-            if (pos.x > maxPos.x)
+            if (pos.x > maximumPos.x)
             {
-                pos.x = minPos.x;
+                pos.x = -maximumpos.x;
             }
-            if (pos.y < minPos.y)
+            if (pos.y < -maximumPos.y)
             {
-                pos.y = maxPos.y;
+                pos.y = maximumPos.y;
             }
-            if (pos.y > maxPos.y)
+            if (pos.y > maximumPos.y)
             {
-                pos.y = minPos.y;
+                pos.y = -maximum.y;
             }
             transform.position = pos;
         }
     }
-
-
-            </pre>
+    </pre>
             <p>
                 The above is missing a few details (such as initializing the variables in the constructor), but you get
                 the idea.
@@ -3504,27 +3564,29 @@
 
             </p>
             <pre class="prettyprint">
-                public class Bloop : MonoBehaviour
-                {
-                    Rigidbody rb; // The bloop's Rigid Body
 
-                    DNA dna; // A bloop now has DNA
+    public class Bloop : MonoBehaviour
+    {
+        Rigidbody rb; // The bloop's Rigid Body
 
-                    float maxSpeed; // Keep the max speed for a Bloop
-                    float size; // The size of the bloop
+        DNA dna; // A bloop now has DNA
 
-                    float health = 100; // A bloop is born with 100 hp
-            </pre>
+        float maxSpeed; // Keep the max speed for a Bloop
+        float size; // The size of the bloop
+
+        float health = 100; // A bloop is born with 100 hp
+    }
+    </pre>
             <p>
-            In each frame of animation, a bloop loses some health.
+                In each frame of animation, a bloop loses some health.
             </p>
             <pre class="prettyprint">
 
     void Update()
     {
-
-        health -= 10 * Time.deltaTime; // Death is always looming! (We multiply by Time.delta time to not rely on framrate which may change!)
-
+        // Death is always looming! (We multiply by Time.delta time to not rely on framrate which may change!)
+        health -= 10 * Time.deltaTime;
+    }
             </pre>
             <p>
                 If health drops below 0, the bloop dies.
@@ -3533,14 +3595,14 @@
             <pre class="prettyprint">
 
     public bool Dead()
-    { // We can use this to tell us if the bloop is dead or alive
+    { 
+        // We can use this to tell us if the bloop is dead or alive
         if (health < 0)
             return true;
         else
             return false;
     }
-
-            </pre>
+    </pre>
             <p>
                 This is a good first step, but we haven’t really achieved anything. After all, if all bloops start with
                 100 health points and lose 1 point per frame, then all bloops will live for the exact same amount of
@@ -3575,10 +3637,10 @@
             // Let's pick it up and give ourself some health
             health += 100;
             Destroy(other.gameObject); // The food is no longer avaliable for other bloops!
-            reproduce();
+            Reproduce();
         }
     }
-            </pre>
+    </pre>
             <p>
                 Now we have a scenario in which bloops that eat more food live longer and have a greater likelihood of
                 reproducing. Therefore, we expect that our system would evolve bloops with an optimal ability to find
@@ -3618,11 +3680,12 @@
                 genes[i] = Random.Range(0f, 1f);
             }
         }
-
-            </pre>
+    }
+    </pre>
+            <br />
             <div id="ImageContainer">
                 <img src="https://natureofcode.com/book/imgs/chapter09/ch09_15.png" style="  width: 100%; height: 100%;"
-                    alt="Figure 9.15">
+                     alt="Figure 9.15">
                 <p>
                     Figure 9.15
                 </p>
@@ -3650,24 +3713,25 @@
                 genes[i] = Random.Range(0f, 1f);
             }
         }
-
-            </pre>
+    }
+    </pre>
             <p>
                 The phenotype then is the bloop itself, whose size and speed is assigned by adding an instance of
                 a DNA object to the Bloop class.
 
             </p>
-            <pre class = "prettyprint">
+            <pre class="prettyprint">
 
-    public void setDNA(DNA newDNA)
+    public void SetDNA(DNA newDNA)
     {
         dna = newDNA;
-        maxSpeed = map(dna.genes[0], 0, 1, 10, 0); // MaxSpeed an Size are now mapped to values according to the DNA
-        size = map(dna.genes[0], 0, 1, 0, 2);
+        // MaxSpeed an Size are now mapped to values according to the DNA
+        maxSpeed = Map(dna.genes[0], 0, 1, 10, 0); 
+        size = Map(dna.genes[0], 0, 1, 0, 2);
 
         gameObject.transform.localScale *= size;
     }
-            </pre>
+    </pre>
 
             <p>
                 Notice that with maxspeed, the range is mapped to between 15 and 0, meaning a bloop with a gene value of
@@ -3719,16 +3783,14 @@
 
             <pre class="prettyprint">
 
-    GameObject reproduce() // This function will return a new bloop, the child.
+    GameObject Reproduce() // This function will return a new bloop, the child.
     {
         if (Random.Range(0f, 1f) < 0.20) // a 20% chance of executine the code. i.e. a 20% chance of reproducing
         {
             //Make a baby
         }
-
     }
-
-            </pre>
+    </pre>
             <p>
                 How does a bloop reproduce? In our previous examples, the reproduction process involved calling
                 the crossover() function in the DNA class and making a new object from the newly made DNA. Here, since
@@ -3737,16 +3799,16 @@
             </p>
             <pre class="prettyprint">
 
-    GameObject reproduce() // This function will return a new bloop, the child.
+    GameObject Reproduce() // This function will return a new bloop, the child.
     {
         if (Random.Range(0f, 1f) < 0.20) // a 20% chance of executine the code. i.e. a 20% chance of reproducing
         {
-            DNA childDNA = dna.copy(); // make a copy of the DNA
+            DNA childDNA = dna.Copy(); // make a copy of the DNA
             childDNA.mutate(0.001f); // 0.1% mutation rate
 
             GameObject bloopObj = GameObject.CreatePrimitive(PrimitiveType.Sphere); // Make an object
-            Bloop bloop = bloopObj.AddComponent<Bloop>(); // Turn it into a bloop!
-            bloop.setDNA(childDNA);
+            Bloop bloop = bloopObj.AddComponent&lt;Bloop>(); // Turn it into a bloop!
+            bloop.SetDNA(childDNA);
 
             bloopObj.transform.position = transform.position; // Set to the same location as parent
 
@@ -3757,7 +3819,7 @@
             return null;
         }
     }
-            </pre>
+    </pre>
             <p>
                 Note also that we’ve reduced the probability of reproducing from 1% to 0.05%. This value makes quite a
                 difference; with a high probability of reproducing, the system will quickly tend towards overpopulation.
@@ -3774,6 +3836,7 @@
     public class DNA
     {
         public float[] genes;
+
         public DNA()
         {
             /*
@@ -3793,7 +3856,7 @@
             genes = genes_;
         }
 
-        public void mutate(float rate)
+        public void Mutate(float rate)
         {
             for(int i = 0; i < genes.Length; i++)
             {
@@ -3801,13 +3864,14 @@
             }
         }
 
-        public DNA copy()
+        public DNA Copy()
         {
             float[] newgenes = new float[genes.Length];
             newgenes = (float[])genes.Clone();
             return new DNA(newgenes);
         }
-            </pre>
+    }        
+    </pre>
             <p>
                 Now that we have all the pieces in place for selection and reproduction, we can finalize the World class
                 that manages the list of all Bloop objects (as well as a Food object, which itself is a list
@@ -3823,7 +3887,8 @@
 
 
             <p>
-                <span class="example"> Example 9.5: Evolution ecosystem
+                <span class="example">
+                    Example 9.5: Evolution ecosystem
 
                     </h4>
                 </span>
@@ -3833,7 +3898,7 @@
                     <input type="radio" name="tabs5" id="tab9" checked />
                     <label for="tab9" role="tab" aria-selected="true" aria-controls="panel9" tabindex="0">Code</label>
                     <div id="tab-content9" class="tab-content" role="tabpanel" aria-labelledby="description"
-                        aria-hidden="false">
+                         aria-hidden="false">
                         <div id="example5" style="height: 500px"></div>
                     </div>
                 </li>
@@ -3841,14 +3906,14 @@
                 <li>
                     <input type="radio" name="tabs5" id="tab10" />
                     <label for="tab10" role="tab" aria-selected="false" aria-controls="panel10"
-                        tabindex="0">Demo</label>
+                           tabindex="0">Demo</label>
                     <div id="tab-content10" class="tab-content" role="tabpanel" aria-labelledby="specification"
-                        aria-hidden="true">
+                         aria-hidden="true">
                         <div align="center">
                             <iframe class="lazy"
-                                data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure5/index.html"
-                                src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
-                                scrolling="no" Id="9.5">
+                                    data-src="https://www.jafisherportfolio.com/nocur/figures/chapter9/Figure5/index.html"
+                                    src="" width="900" height="500" frameborder="0" overflow="hidden" seamless
+                                    scrolling="no" Id="9.5">
                             </iframe>
                         </div>
                     </div>
@@ -3914,52 +3979,67 @@
             <div class="footer">
                 <div class="col">
 
-                <h4>Licenses</h4>
-                <p>
-                    <a class="license-badge" rel="license"
-                        href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License"
-                            style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
-                    <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/"><img
-                            alt="LGPL License" style="border-width:0"
-                            src="http://www.gnu.org/graphics/lgplv3-88x31.png" /></a>
-                </p>
+                    <h4>Licenses</h4>
+                    <p>
+                        <a class="license-badge" rel="license"
+                           href="http://creativecommons.org/licenses/by-nc/3.0/">
+                            <img alt="Creative Commons License"
+                                 style="border-width:0" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" />
+                        </a>
+                        <a class="license-badge" rel="license" href="http://creativecommons.org/licenses/LGPL/2.1/">
+                            <img alt="LGPL License" style="border-width:0"
+                                 src="http://www.gnu.org/graphics/lgplv3-88x31.png" />
+                        </a>
+                    </p>
 
-                <p>
-                    The book's text and illustrations are licensed under a <a rel="license"
-                        href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons
-                        Attribution-NonCommercial 3.0 Unported License</a>.
-                </p>
+                    <p>
+                        The book's text and illustrations are licensed under a <a rel="license"
+                                                                                  href="http://creativecommons.org/licenses/by-nc/3.0/">
+                            Creative Commons
+                            Attribution-NonCommercial 3.0 Unported License
+                        </a>.
+                    </p>
 
-                <p>
-                    All of the book's source code is licensed under the <a rel="license"
-                        href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
-                    as published by the Free Software Foundation; either version 2.1 of the License, or (at your
-                    option) any later version.
-                </p>
-        </div>
-            <div class="col">
-                <h4>Remixer</h4>
-                <p>Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">Interactive
-                        Arts and Media Program</a> at Columbia College Chicago.</p>
+                    <p>
+                        All of the book's source code is licensed under the <a rel="license"
+                                                                               href="http://creativecommons.org/licenses/LGPL/2.1/">GNU Lesser General Public License</a>
+                        as published by the Free Software Foundation; either version 2.1 of the License, or (at your
+                        option) any later version.
+                    </p>
+                </div>
+                <div class="col">
+                    <h4>Remixer</h4>
+                    <p>
+                        Joshua A. Fisher is an Assistant Professor of the <a href="http://iam.colum.edu/">
+                            Interactive
+                            Arts and Media Program
+                        </a> at Columbia College Chicago.
+                    </p>
 
-                <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
+                    <p>His portfolio can be found <a href="http://www.jafisherportfolio.com">here</a></p>
 
-                <p><a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a
-                        href="https://github.com/jadlerfisher">GitHub</a></p>
+                    <p>
+                        <a href="https://www.linkedin.com/in/joshua-a-fisher-13945116/">LinkedIn</a> <a href="https://github.com/jadlerfisher">GitHub</a>
+                    </p>
 
+                </div>
+                <div class="col">
+                    <h4>Author</h4>
+                    <p>
+                        Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">
+                            Interactive
+                            Telecommunications Program
+                        </a> at New York University.
+                    </p>
+
+                    <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
+
+                    <p>
+                        <a href="https://twitter.com/shiffman">Twitter</a> <a href="http://github.com/shiffman">GitHub</a>
+                    </p>
+
+                </div>
             </div>
-            <div class="col">
-                <h4>Author</h4>
-                <p>Daniel Shiffman is a Professor of the <a href="http://itp.nyu.edu/">Interactive
-                        Telecommunications Program</a> at New York University.</p>
-
-                <p>He is the author of <a href="http://www.learningprocessing.com/">Learning Processing</a>.</p>
-
-                <p><a href="https://twitter.com/shiffman">Twitter</a> <a
-                        href="http://github.com/shiffman">GitHub</a></p>
-
-            </div>
-        </div>
         </section>
     </div>
 
