@@ -269,7 +269,7 @@
         // The window limits
         private Vector2 maximumPos;
     }
-        </pre>
+    </pre>
 
             <p>
                 Every class must have a constructor, a special function that is called when the object is first created.
@@ -286,10 +286,10 @@
         // Set location to Vector2.zero, shorthand for (0, 0)
         location = Vector2.zero;
         // We need to create a new material for WebGL
-        Renderer r = mover.GetComponent<Renderer>();
+        Renderer r = mover.GetComponent&lt;Renderer>();
         r.material = new Material(Shader.Find("Diffuse"));
     }
-                            </pre>
+    </pre>
 
             <p>
                 Finally, in addition to data, classes can be defined with functionality. In this example, a Mover has
@@ -331,11 +331,9 @@
 
         mover.transform.position += location * Time.deltaTime;
     }
-</pre>
+    </pre>
             <p>The two other methods: CheckEdges() and findWindowLimits() find the edge of the screen and check to see if the Mover is near the edge. If so, the move restarts at its origin. Remember, the origin is stored as x-location and y-location or (0,0). We can store these positions in a data type called a Vector2. Vector2.zero if the same as writing x-location = 0f and y-location = 0f.</p>
             <pre class="prettyprint">
-
-
 
     public void CheckEdges()
     {
@@ -364,7 +362,7 @@
         // The maximum position can be attributed to the minimum bounds by setting it negative
         // maximumPos and -maximumPos equate to maximum and minimum screen bounds
     }
-</pre>
+    </pre>
 
 
             <p>
@@ -388,7 +386,7 @@
         }
 
     }
-                            </pre>
+    </pre>
             <p>Finally, during each cycle through FixedUpdate(), we ask the Mover to take a step and check edges.</p>
             <pre class="prettyprint">
 
@@ -399,7 +397,7 @@
         mover.Step();
         mover.CheckEdges();
     }
-                </pre>
+    </pre>
 
             <p><span class="example">Example I.1: Traditional Random Mover</span></p>
             <ul class="tabs" role="tablist">
@@ -472,14 +470,14 @@
             // This creates a sphere GameObject
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             // We need to create a new material for WebGL
-            Renderer r = sphere.GetComponent<Renderer>();
+            Renderer r = sphere.GetComponent&lt;Renderer>();
             r.material = new Material(Shader.Find("Diffuse"));
             // This sets our sphere game objects at the position of the mover GameObject (moverGO) at the current frame to draw the path.
             sphere.transform.position = new Vector3(moverGO.transform.position.x, moverGO.transform.position.y, 0F);
             drawnSpheres.Add(sphere);
         }
     }
-                </pre>
+    </pre>
 
             <p>
                 There are a couple improvements we could make to the random Mover. For one, this Mover’s step choices
@@ -497,7 +495,7 @@ height: 100%;" alt="Figure I.1: ">
                 </p>
 
             </div>
-            <br></br>
+            <br />
             <p>
                 To implement a Mover object that can step to any neighboring pixel (or stay put), we could pick a number
                 between 0 and 8 (nine possible choices). However, a more efficient way to write the code would be to
@@ -515,7 +513,7 @@ height: 100%;" alt="Figure I.1: ">
         x += stepx;
         y += stepy;
     }
-                </pre>
+    </pre>
 
             <p>
                 Taking this further, we could use floating point numbers (i.e. decimal numbers) for x and y instead and
@@ -532,7 +530,7 @@ height: 100%;" alt="Figure I.1: ">
         x += stepx;
         y += stepy;
     }
-                </pre>
+    </pre>
 
             <p>
                 All of these variations on the “traditional” random walk have one thing in common: at any moment in time,
@@ -684,10 +682,10 @@ height: 100%;" alt="Figure I.1: ">
             </p>
             <pre class="prettyprint">
 
-        int[] numbers = new[] { 1, 1, 2, 3, 3 };
-        int randomInt = Random.Range(0, numbers.Length);
-        Debug.Log(numbers[randomInt]);
-                </pre>
+    int[] numbers = new[] { 1, 1, 2, 3, 3 };
+    int randomInt = Random.Range(0, numbers.Length);
+    Debug.Log(numbers[randomInt]);
+    </pre>
 
             <p>
                 Running this code will produce a 40% chance of printing the value 1, a 20% chance of printing 2, and a
@@ -709,7 +707,7 @@ height: 100%;" alt="Figure I.1: ">
         Debug.Log("Try Again!");
 
     }
-                </pre>
+    </pre>
 
             <p>
                 This method can also be applied to multiple outcomes. Let’s say that Outcome A has a 60% chance of
@@ -736,7 +734,7 @@ height: 100%;" alt="Figure I.1: ">
     else if (num > 0.7f && num < 1f) {
         Debug.Log("Outcome C!");
     }
-                </pre>
+    </pre>
 
             <p>
                 We could use the above methodology to create a random Mover that tends to move to the right. Here is an
@@ -1095,15 +1093,19 @@ height: 100%; float:left;" alt="Figure I.2: ">
                 taking a large step.
             </p>
             <pre class="prettyprint">
-        // Random.value Returns a random number between 0.0 [inclusive] and 1.0 [inclusive]
-        float r = Random.value
-        if (r < 0.01) {
-            xstep = Random.Range(-100f,100f);
-            ystep = Random.Range(-100f,100f);
-        } else {
-            xstep = Random.Range(-1F,1f);
-            ystep = Random.Range(-1f,1f);
-        }
+
+    // Random.value Returns a random number between 0.0 [inclusive] and 1.0 [inclusive]
+    float r = Random.value
+    if (r < 0.01) 
+    {
+        xstep = Random.Range(-100f,100f);
+        ystep = Random.Range(-100f,100f);
+    } 
+    else 
+    {
+        xstep = Random.Range(-1F,1f);
+        ystep = Random.Range(-1f,1f);
+    }
     </pre>
 
             <p>
@@ -1123,8 +1125,6 @@ height: 100%;" alt="Figure I.4: ">
             <p>
                 If we can figure out how to generate a distribution of random numbers according to the above graph, then
                 we will be able to apply the same methodology to any curve for which we have a formula.
-
-
             </p>
             <p>
                 One solution is to pick two random numbers instead of one. The first random number is just that, a random
@@ -1189,7 +1189,7 @@ height: 100%;" alt="Figure I.4: ">
 
     x += stepx;
     y += stepy;
-        </pre>
+    </pre>
 
                 <p>(Later we’ll see how to do this more efficiently using vectors.) </p>
             </div>
@@ -1309,7 +1309,6 @@ height: 100%; float:left;" alt="Figure I.2: ">
             </p>
             <pre class="prettyprint">
 
-
     // "Bobbing" animation from 1D Perlin noise.
 
     // Range over which height varies.
@@ -1325,7 +1324,6 @@ height: 100%; float:left;" alt="Figure I.2: ">
         pos.y = height;
         transform.position = pos;
     }
-
     </pre>
             <p>Note, that in this instance, heightScale and widthScale are referring to the distance covered per second. Our Time.time property handles the time between the frames.</p>
             <br></br>
@@ -1358,8 +1356,7 @@ height: 100%;" alt="Figure I.7: ">
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
 
     }
-
-            </pre>
+    </pre>
 
             <div id="ImageContainer">
 
@@ -1373,8 +1370,6 @@ height: 100%;" alt="Figure I.8: ">
                 range between 0 and the window’s width.
             </p>
             <pre class="prettyprint">
-
-
 
     // The widthScale will be the length of the screen
     float widthScale = Screen.width;
@@ -1390,9 +1385,6 @@ height: 100%;" alt="Figure I.8: ">
         pos.x  = width;
         transform.position = pos;
     }
-
-
-
     </pre>
             <p>
                 We can apply the exact same logic to our random Mover, and assign both its x- and y-values according
@@ -1550,71 +1542,71 @@ height: 100%;" alt="Noise 2D">
             </p>
             <p><span class="example">Example I.6: 2D Perlin noise</span></p>
             <pre class="prettyprint">
-        using UnityEngine;
-        using System.Collections;
 
-        // Create a texture and fill it with Perlin noise.
-        // Try varying the xOrg, yOrg and scale values in the inspector
-        // while in Play mode to see the effect they have on the noise.
+    using UnityEngine;
+    using System.Collections;
 
-        public class ExampleScript : MonoBehaviour
+    // Create a texture and fill it with Perlin noise.
+    // Try varying the xOrg, yOrg and scale values in the inspector
+    // while in Play mode to see the effect they have on the noise.
+
+    public class ExampleScript : MonoBehaviour
+    {
+        // Width and height of the texture in pixels.
+        public int pixWidth;
+        public int pixHeight;
+
+        // The origin of the sampled area in the plane.
+        public float xOrg;
+        public float yOrg;
+
+        // The number of cycles of the basic noise pattern that are repeated
+        // over the width and height of the texture.
+        public float scale = 1.0F;
+
+        private Texture2D noiseTex;
+        private Color[] pix;
+        private Renderer rend;
+
+        void Start()
         {
-            // Width and height of the texture in pixels.
-            public int pixWidth;
-            public int pixHeight;
+            rend = GetComponent&lt;Renderer>();
 
-            // The origin of the sampled area in the plane.
-            public float xOrg;
-            public float yOrg;
-
-            // The number of cycles of the basic noise pattern that are repeated
-            // over the width and height of the texture.
-            public float scale = 1.0F;
-
-            private Texture2D noiseTex;
-            private Color[] pix;
-            private Renderer rend;
-
-            void Start()
-            {
-                rend = GetComponent<Renderer>();
-
-                // Set up the texture and a Color array to hold pixels during processing.
-                noiseTex = new Texture2D(pixWidth, pixHeight);
-                pix = new Color[noiseTex.width * noiseTex.height];
-                rend.material.mainTexture = noiseTex;
-            }
-
-            void CalcNoise()
-            {
-                // For each pixel in the texture...
-                float y = 0.0F;
-
-                while (y < noiseTex.height)
-                {
-                    float x = 0.0F;
-                    while (x < noiseTex.width)
-                    {
-                        float xCoord = xOrg + x / noiseTex.width * scale;
-                        float yCoord = yOrg + y / noiseTex.height * scale;
-                        float sample = Mathf.PerlinNoise(xCoord, yCoord);
-                        pix[(int)y * noiseTex.width + (int)x] = new Color(sample, sample, sample);
-                        x++;
-                    }
-                    y++;
-                }
-
-                // Copy the pixel data to the texture and load it into the GPU.
-                noiseTex.SetPixels(pix);
-                noiseTex.Apply();
-            }
-
-            void Update()
-            {
-                CalcNoise();
-            }
+            // Set up the texture and a Color array to hold pixels during processing.
+            noiseTex = new Texture2D(pixWidth, pixHeight);
+            pix = new Color[noiseTex.width * noiseTex.height];
+            rend.material.mainTexture = noiseTex;
         }
 
+        void CalcNoise()
+        {
+            // For each pixel in the texture...
+            float y = 0.0F;
+
+            while (y < noiseTex.height)
+            {
+                float x = 0.0F;
+                while (x < noiseTex.width)
+                {
+                    float xCoord = xOrg + x / noiseTex.width * scale;
+                    float yCoord = yOrg + y / noiseTex.height * scale;
+                    float sample = Mathf.PerlinNoise(xCoord, yCoord);
+                    pix[(int)y * noiseTex.width + (int)x] = new Color(sample, sample, sample);
+                    x++;
+                }
+                y++;
+            }
+
+            // Copy the pixel data to the texture and load it into the GPU.
+            noiseTex.SetPixels(pix);
+            noiseTex.Apply();
+        }
+
+        void Update()
+        {
+            CalcNoise();
+        }
+    }
     </pre>
 
             <div class="note">

@@ -183,30 +183,29 @@
             </p>
             <pre class="prettyprint">
 
-
-public class Chapter3Fig1_basic : MonoBehaviour
-{
-
-    public GameObject Baton;
-    float xAngle;
-    float yAngle;
-    float zAngleDegree = 60f;
-
-    float zAngleRadian;
-
-    void Start()
+    public class Chapter3Fig1_basic : MonoBehaviour
     {
-        float zAngleRadian = zAngleDegree * Mathf.Deg2Ead;
 
+        public GameObject Baton;
+        float xAngle;
+        float yAngle;
+        float zAngleDegree = 60f;
+
+        float zAngleRadian;
+
+        void Start()
+        {
+            float zAngleRadian = zAngleDegree * Mathf.Deg2Ead;
+
+        }
+
+        void Update()
+        {
+            Baton.transform.Rotate(xAngle, yAngle, zAngleRadian, Space.World);
+
+        }
     }
-
-    void Update()
-    {
-        Baton.transform.Rotate(xAngle, yAngle, zAngleRadian, Space.World);
-
-    }
-}
-                                </pre>
+    </pre>
 
             <p>
                 If you are not familiar with how rotation is implemented in Unity, I would suggest this tutorial:
@@ -253,21 +252,21 @@ public class Chapter3Fig1_basic : MonoBehaviour
 
             <pre class="prettyprint">
 
-public class Chapter3Fig1 : MonoBehaviour
-{
-
-    public GameObject Baton;
-    Vector3 aVelocity = new Vector3(0f, 0f, 0f);
-    Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
-
-    // Update is called once per frame
-    void Update()
+    public class Chapter3Fig1 : MonoBehaviour
     {
-        aVelocity += aAcceleration;
-        Baton.transform.Rotate(aVelocity, Space.World);
+
+        public GameObject Baton;
+        Vector3 aVelocity = new Vector3(0f, 0f, 0f);
+        Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
+
+        // Update is called once per frame
+        void Update()
+        {
+            aVelocity += aAcceleration;
+            Baton.transform.Rotate(aVelocity, Space.World);
+        }
     }
-}
-                                </pre>
+    </pre>
 
             <p>Adding in our principles of motion brings us to the following example.</p>
             <p>
@@ -330,40 +329,38 @@ public class Chapter3Fig1 : MonoBehaviour
             </p>
             <pre class="prettyprint">
 
+    public class moverChapter3_2 : MonoBehaviour
+    {
+        public Vector3 location;
+        public Vector3 velocity;
+        public Vector3 acceleration;
 
-public class moverChapter3_2 : MonoBehaviour
-{
-    public Vector3 location;
-    public Vector3 velocity;
-    public Vector3 acceleration;
-
-    public Vector3 aVelocity = new Vector3(0f, 0f, 0f);
-    public Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
-    public Vector3 angle = new Vector3(0f, 0f, 0f);
-}
-                                </pre>
+        public Vector3 aVelocity = new Vector3(0f, 0f, 0f);
+        public Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
+        public Vector3 angle = new Vector3(0f, 0f, 0f);
+    }
+    </pre>
 
             <p>And then in update(), we update both location and angle according to the same algorithm!</p>
             <pre class="prettyprint">
 
-
-void Update()
-{
-    //add the value of acceleration each frame to the mover's velocity
-    velocity += new Vector3(acceleration.x, acceleration.y, acceleration.z);
-    //add that velocity value to the transform of the mover's position
-    location += new Vector3(velocity.x, velocity.y, velocity.z);
-    //reduce acceleration
-    acceleration *= 0f;
-}
-                            </pre>
+    void Update()
+    {
+        //add the value of acceleration each frame to the mover's velocity
+        velocity += new Vector3(acceleration.x, acceleration.y, acceleration.z);
+        //add that velocity value to the transform of the mover's position
+        location += new Vector3(velocity.x, velocity.y, velocity.z);
+        //reduce acceleration
+        acceleration *= 0f;
+    }
+    </pre>
 
             <p>Of course, for any of this to matter, we also would need to rotate the object when displaying it.</p>
             <pre class="prettyprint">
 
-angle += aVelocity;
-mover.transform.Rotate(angle, Space.World);
-                            </pre>
+    angle += aVelocity;
+    mover.transform.Rotate(angle, Space.World);
+    </pre>
 
             <p>
                 Now, if we were to actually go ahead and run the above code, we wouldn’t see anything new. This is
@@ -372,8 +369,8 @@ mover.transform.Rotate(angle, Space.World);
             </p>
             <pre class="prettyprint">
 
-Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
-                            </pre>
+    Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
+    </pre>
 
             <p>
                 However, we can produce a more interesting result by dynamically assigning an angular acceleration
@@ -387,16 +384,16 @@ Vector3 aAcceleration = new Vector3(0f, 0f, .1f);
             </p>
             <pre class="prettyprint">
 
-void Update()
-{
-    aAcceleration.x = acceleration.x / 10f;
-    aAcceleration.y = acceleration.y / 10f;
-    aAcceleration.z = acceleration.z / 10f;
-    angle += aVelocity;
-    aVelocity += aAcceleration;
-    mover.transform.Rotate(angle, Space.World);
-}
-                            </pre>
+    void Update()
+    {
+        aAcceleration.x = acceleration.x / 10f;
+        aAcceleration.y = acceleration.y / 10f;
+        aAcceleration.z = acceleration.z / 10f;
+        angle += aVelocity;
+        aVelocity += aAcceleration;
+        mover.transform.Rotate(angle, Space.World);
+    }
+    </pre>
             <p>
                 Yes, this is completely arbitrary. But it does do something. If the object is accelerating to the right,
                 its angular rotation accelerates in a clockwise direction; acceleration to the left results in a
@@ -408,10 +405,8 @@ void Update()
             </p>
             <pre class="prettyprint">
 
-
-aAcceleration.x = acceleration.x / 10f;
-
-                            </pre>
+    aAcceleration.x = acceleration.x / 10f;
+    </pre>
             <p>
                 <span class="example">
                     Example 3.2: Forces with (arbitrary) angular motion
@@ -621,16 +616,16 @@ aAcceleration.x = acceleration.x / 10f;
             </p>
             <pre class="prettyprint">
 
-void FixedUpdate()
-{
-    float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+    void FixedUpdate()
+    {
+        float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
 
-    mover.transform.position = location;
+        mover.transform.position = location;
 
-    angleFloat += Time.deltaTime * 100;
-    mover.transform.rotation = Quaternion.Euler(0, 0, angleFloat);
-}
-                            </pre>
+        angleFloat += Time.deltaTime * 100;
+        mover.transform.rotation = Quaternion.Euler(0, 0, angleFloat);
+    }
+    </pre>
 
             <p>
                 Now the above code is pretty darn close, and almost works. We still have a big problem,
@@ -773,7 +768,7 @@ void FixedUpdate()
 
     float x = r * Mathf.Cos(theta);
     float y = r * Mathf.Sin(theta);
-                                </pre>
+    </pre>
 
             <p>
                 This type of conversion can be useful in certain applications. For example, to move a shape
@@ -905,10 +900,8 @@ void FixedUpdate()
 
             <pre class="prettyprint">
 
-
     float amplitude = 100f;
-
-                                </pre>
+    </pre>
 
             <p>
                 Period is the amount of time it takes for one cycle, but what is time in our Unity
@@ -921,10 +914,8 @@ void FixedUpdate()
 
             <pre class="prettyprint">
 
-
     float period = 120f;
-
-                                </pre>
+    </pre>
 
             <p>
                 Our period is measured in frames (our unit of time for animation).
@@ -937,10 +928,8 @@ void FixedUpdate()
 
             <pre class="prettyprint">
 
-
     float x = amplitude * Mathf.Cos((2*Mathf.PI)* Time.time/period);
-
-                                </pre>
+    </pre>
 
             <p>
                 Let’s dissect the formula a bit more and try to understand each component. The first is
@@ -966,7 +955,6 @@ void FixedUpdate()
     //example
     float value = 110;
     float m = Mathf.Lerp (0f, 100f, Mathf.InverseLerp (-10f, -20f, 110f));
-
     </pre>
             <p>
                 Now, let’s look at what is inside the cosine function:
@@ -1099,19 +1087,16 @@ void FixedUpdate()
     </p>
     <pre class="prettyprint">
 
-
     float x = amplitude * Mathf.Cos((2*Mathf.PI)* Time.time/period);
-                                </pre>
+    </pre>
 
     <p>
         And let’s rewrite it a slightly different way:
     </p>
     <pre class="prettyprint">
 
-
     float x = amplitude * Mathf.Cos ( some value that increments slowly );
-
-                                </pre>
+    </pre>
 
     <p>
         If we care about precisely defining the period of oscillation in terms of frames of
@@ -1289,7 +1274,7 @@ void FixedUpdate()
     float angle = 0f;
     float angleVel = 0.2f;
     float amplitude = 100f;
-                                </pre>
+    </pre>
 
         <p>
             Then we’re going to loop through all of the x values where we want to draw a point of the
@@ -1307,16 +1292,16 @@ void FixedUpdate()
         </p>
         <pre class="prettyprint">
 
-for (int x = 0; x <= 90; x++)
-{
+    for (int x = 0; x <= 90; x++)
+    {
 
-    float y = map(Mathf.Sin(angle), -1f, 1f, 0f, 100f);
-    TheWave[x].transform.position = new Vector3(x, y, 0f);
+        float y = map(Mathf.Sin(angle), -1f, 1f, 0f, 100f);
+        TheWave[x].transform.position = new Vector3(x, y, 0f);
 
-    angle += angleVel;
+        angle += angleVel;
 
-}
-                                </pre>
+    }
+    </pre>
 
         <p>
             Try to achieveresults with different values for Period.
@@ -1606,22 +1591,21 @@ for (int x = 0; x <= 90; x++)
         </ul>
         <pre class="prettyprint">
 
+    public class pendulum : MonoBehaviour
+    {
 
-public class pendulum : MonoBehaviour
-{
+        Vector3 location;
+        Vector3 origin = new Vector3(0f,10f,0f);
 
-    Vector3 location;
-    Vector3 origin = new Vector3(0f,10f,0f);
-
-    public float r;
-    public float angle;
-    public float aVelocity =0.0f;
-    public float aAcceleration = 0.0f;
-    public float damping = 0.995f;
-    GameObject lineDrawing;
-    LineRenderer lineRender;
-}
-                                    </pre>
+        public float r;
+        public float angle;
+        public float aVelocity =0.0f;
+        public float aAcceleration = 0.0f;
+        public float damping = 0.995f;
+        GameObject lineDrawing;
+        LineRenderer lineRender;
+    }
+    </pre>
 
         <p>
             We’ll also need to write a function Update() to update the pendulum’s angle according to our
@@ -1629,21 +1613,20 @@ public class pendulum : MonoBehaviour
         </p>
         <pre class="prettyprint">
 
+    public void Update() 
+    {
+        float gravity = .4f;
+        aAcceleration = -1 * gravity * Mathf.Sin(angle);
+        aVelocity += aAcceleration;
+        angle += aVelocity;
 
-public void Update() 
-{
-    float gravity = .4f;
-    aAcceleration = -1 * gravity * Mathf.Sin(angle);
-    aVelocity += aAcceleration;
-    angle += aVelocity;
+        this.gameObject.transform.position = new Vector3(r * Mathf.Sin(angle), r * Mathf.Cos(angle), 0f);
+        this.gameObject.transform.position += origin;
 
-    this.gameObject.transform.position = new Vector3(r * Mathf.Sin(angle), r * Mathf.Cos(angle), 0f);
-    this.gameObject.transform.position += origin;
-
-    lineRender.SetPosition(0, origin);
-    lineRender.SetPosition(1, this.gameObject.transform.position);
-}
-                                    </pre>
+        lineRender.SetPosition(0, origin);
+        lineRender.SetPosition(1, this.gameObject.transform.position);
+    }
+    </pre>
 
         <p>
             …as well as functionality in Update() to draw the pendulum in the window. This begs the question: “Um,
@@ -1657,12 +1640,12 @@ public void Update()
         </p>
         <pre class="prettyprint">
 
-void Start()
-{
-    pendulum = pendulumObject.GetComponent<pendulum>();
-    pendulum.r = 125f;
-}
-                                    </pre>
+    void Start()
+    {
+        pendulum = pendulumObject.GetComponent&lt;pendulum>();
+        pendulum.r = 125f;
+    }
+    </pre>
 
         <p>
             We’ve got the current angle stored in our variable angle. So relative to the origin, the
@@ -1678,8 +1661,7 @@ void Start()
 
     this.gameObject.transform.position = new Vector3(r * Mathf.Sin(angle), r * Mathf.Cos(angle), 0f);
     this.gameObject.transform.position += origin;
-
-                                    </pre>
+    </pre>
         <p>
             And all that remains is the little matter of drawing a line and ellipse (you should be more
             creative, of course).
@@ -1701,7 +1683,7 @@ void Start()
         <pre class="prettyprint">
 
     pendulum.aAcceleration = (-1*gravity/pendulum.r) * Mathf.Sin(angle);
-                                        </pre>
+    </pre>
 
         <p>
             Finally, a real-world pendulum is going to experience some amount of friction (at the pivot
@@ -1717,7 +1699,7 @@ void Start()
         <pre class="prettyprint">
 
     aVelocity *= 0.99f;
-                                    </pre>
+    </pre>
 
         <p>
             Putting everything together, we have the following example (with the pendulum beginning at a
@@ -1902,7 +1884,7 @@ void Start()
 
     public GameObject bob;
     public GameObject anchor;
-                                    </pre>
+    </pre>
 
         <p>
             First, let’s use Hooke’s law to calculate the magnitude of the force. We need to know k and x. k
@@ -1913,7 +1895,7 @@ void Start()
         <pre class="prettyprint">
 
     float k = 0.1f;
-                                    </pre>
+    </pre>
 
         <p>
             x is perhaps a bit more difficult. We need to know the “difference between the current length and
@@ -1981,8 +1963,8 @@ void Start()
 
     Vector3.Normalize(force);
     force *= (-1 * k * stretch);
-    applyForce(force);
-                                        </pre>
+    ApplyForce(force);
+    </pre>
 
         <p>
             Now that we have the algorithm worked out for computing the spring force vector, the question
@@ -2004,34 +1986,34 @@ void Start()
         </p>
         <pre class="prettyprint">
 
-void Start()
-{
-    // Create a GameObject that will be the line
-    lineDrawing = new GameObject();
+    void Start()
+    {
+        // Create a GameObject that will be the line
+        lineDrawing = new GameObject();
 
-    //Add the Unity Component "LineRenderer" to the GameObject lineDrawing. We will see a black line.
-    lineRender = lineDrawing.AddComponent<LineRenderer>();
-}
+        //Add the Unity Component "LineRenderer" to the GameObject lineDrawing. We will see a black line.
+        lineRender = lineDrawing.AddComponent&lt;LineRenderer>();
+    }
 
-// Update is called once per frame
-void Update()
-{
-    connect(bob);
-    lineRender.SetPosition(0, anchor.transform.position);
-    lineRender.SetPosition(1, bob.transform.position);
-}
+    // Update is called once per frame
+    void Update()
+    {
+        connect(bob);
+        lineRender.SetPosition(0, anchor.transform.position);
+        lineRender.SetPosition(1, bob.transform.position);
+    }
 
-void connect (GameObject bob)
-{
-    Vector3 force = bob.transform.position - anchor.transform.position;
-    float d = force.magnitude;
-    float stretch = d - springLength;
+    void connect (GameObject bob)
+    {
+        Vector3 force = bob.transform.position - anchor.transform.position;
+        float d = force.magnitude;
+        float stretch = d - springLength;
 
-    Vector3.Normalize(force);
-    force *= (-1 * k * stretch);
-    applyForce(force);
-}
-                                        </pre>
+        Vector3.Normalize(force);
+        force *= (-1 * k * stretch);
+        applyForce(force);
+    }
+    </pre>
 
         <div id="ImageContainer">
             <img src="https://natureofcode.com/book/imgs/chapter03/ch03_17.png" style="  width: 100%;
