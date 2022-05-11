@@ -269,9 +269,7 @@
 
     private float xSpeed = .03f;
     private float ySpeed = .03f;
-
-
-</pre>
+    </pre>
 
             <p>
                 We could simply have…
@@ -280,9 +278,7 @@
 
     Vector2 location;
     Vector2 speed;
-
-
-</pre>
+    </pre>
 
             <p>
                 Taking this first step in using vectors won’t allow us to do anything new. Just adding vectors
@@ -376,9 +372,8 @@ height: 100%;" alt="Figure 1.4: ">
 
     public class Vector2
     {
-
-    public float x;
-    public float y;
+        public float x;
+        public float y;
 
         public Vector2(float x_, float y_)
         {
@@ -386,9 +381,7 @@ height: 100%;" alt="Figure 1.4: ">
             y = y_;
         }
     }
-
-
-</pre>
+    </pre>
 
             <p>
                 At its core, a Vector2 is just a convenient way to
@@ -405,9 +398,7 @@ height: 100%;" alt="Figure 1.4: ">
 
     private float xSpeed = .03f;
     private float ySpeed = .03f;
-
-
-</pre>
+    </pre>
 
             <p>
                 becomes …
@@ -417,9 +408,7 @@ height: 100%;" alt="Figure 1.4: ">
 
     private Vector2 location = new Vector2(0f, 0f);
     private Vector2 velocity = new Vector2(0.3f, 0.3f);
-
-
-</pre>
+    </pre>
 
             <p>
                 Now that we have two vector objects (location and velocity), we’re ready to implement
@@ -432,11 +421,7 @@ height: 100%;" alt="Figure 1.4: ">
 
     x += xSpeed;
     y += ySpeed;
-
-
-</pre>
-
-
+    </pre>
 
             <p>
                 In Unity, we could rewrite the above as:
@@ -536,7 +521,7 @@ height: 100%;" alt="Figure 1.4: ">
     //we will write this with built in vector arithmetic so everything plays nice.
 
     location += velocity;
-        </pre>
+    </pre>
 
             <p>
                 And here we are, ready to rewrite the bouncing mover example using
@@ -709,9 +694,7 @@ height: 100%;" alt="Figure 1.7: ">
         float newY = vectorA.y - vectorB.y;
         return new Vector2(newX, newY);
     }
-
-
-</pre>
+    </pre>
 
             <p>
                 The following example demonstrates vector subtraction by taking
@@ -861,9 +844,7 @@ height: 100%;" alt="Figure 1.7: ">
         // make the vector two times longer: prints (2.0, 4.0)
         print(new Vector2(1.0f, 2.0f) * 2.0f);
     }
-
-
-</pre>
+    </pre>
 
             <p>
                 Implementing multiplication in code is as simple as:
@@ -877,7 +858,7 @@ height: 100%;" alt="Figure 1.7: ">
     // or
 
     new Vector2(1.0f, 2.0f) * 2.0f;
-        </pre>
+    </pre>
 
             <p>
                 <span class="example">
@@ -1031,9 +1012,7 @@ height: 50%;" alt="Figure 1.11: The Pythagorean Theorem">
     //Returns the length of this vector (Read Only).
     //The length of the vector is square root of (x*x+y*y).
     vectorMagnitude = Vector2.Magnitude(subtractedVector);
-
-
-</pre>
+    </pre>
             <p><span class="example">Example 1.5: Vector Magnitude</span></p>
 
             <ul class="tabs" role="tablist">
@@ -1235,9 +1214,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             <pre class="prettyprint">
 
     location += velocity * Time.deltaTime;
-
-
-</pre>
+    </pre>
             <p>
                 Wait, do you notice that new bit of code? Time.deltaTime?
             </p>
@@ -1250,9 +1227,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             <pre class="prettyprint">
 
     mover.transform.position = new Vector2(location.x, location.y);
-
-
-</pre>
+    </pre>
 
             <p>This is Motion 101.</p>
             <ul>
@@ -1323,18 +1298,15 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             </p>
             <pre class="prettyprint">
 
-
     public class Mover
     {
         // The basic properties of a mover class
         private Vector2 location, velocity;
 
         // Gives the class a GameObject to draw on the screen
-        private GameObject mover =
-            GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
-
-</pre>
+        private GameObject mover = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    }
+    </pre>
 
             <p>
                 Its functionality is
@@ -1362,9 +1334,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
         // Updates the GameObject of this movement
         mover.transform.position = new Vector2(location.x, location.y);
     }
-
-
-</pre>
+    </pre>
             <p>
                 We’ve forgotten one crucial
                 item, however:
@@ -1400,12 +1370,10 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
         velocity = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
 
         // We need to create a new material for WebGL
-        Renderer r = mover.GetComponent<Renderer>();
+        Renderer r = mover.GetComponent&lt;Renderer>();
         r.material = new Material(Shader.Find("Diffuse"));
     }
-
-
-</pre>
+    </pre>
 
             <p>
                 In our case, let’s
@@ -1419,12 +1387,10 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             </p>
             <pre class="prettyprint">
 
-        location = new Vector2(Random.Range(-maximumPos.x, maximumPos.x), Random.Range(-maximumPos.y, maximumPos.y));
+    location = new Vector2(Random.Range(-maximumPos.x, maximumPos.x), Random.Range(-maximumPos.y, maximumPos.y));
 
-        velocity = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
-
-
-</pre>
+    velocity = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+    </pre>
 
             <p>
                 If
@@ -1507,7 +1473,6 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             </p>
             <pre class="prettyprint">
 
-
     public void CheckEdges()
     {
         if (location.x > maximumPos.x)
@@ -1539,8 +1504,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
         // Next we grab the maximum position for the screen
         maximumPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
     }
-
-</pre>
+    </pre>
 
 
             <p>
@@ -1829,7 +1793,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
         // Updates the GameObject of this movement
         mover.transform.position = new Vector2(location.x, location.y);
     }
-            </pre>
+    </pre>
 
             <p>
                 As
@@ -2003,8 +1967,8 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
         // The basic properties of a mover class
         private Vector2 location, velocity, acceleration;
         private float topSpeed;
-
-</pre>
+    }
+    </pre>
             <p>
                 Next,
                 incorporate
@@ -2021,9 +1985,8 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
     {
         // Speeds up the mover
         velocity += acceleration * Time.deltaTime;
-
-
-</pre>
+    }
+    </pre>
             <p>
                 We’re
                 almost
@@ -2048,9 +2011,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
         velocity = Vector2.zero;
         acceleration = new Vector2(-0.1f, -1f);
     }
-
-
-</pre>
+    </pre>
             <p>
                 Let’s
                 start
@@ -2082,7 +2043,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             <pre class="prettyprint">
 
     velocity = Vector2.zero;
-        </pre>
+    </pre>
             <p>
                 This
                 means
@@ -2137,7 +2098,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             <pre class="prettyprint">
 
     acceleration = new Vector2(-0.1f, -1f);
-                                                                                                </pre>
+    </pre>
 
             <p>
                 Maybe
@@ -2233,38 +2194,39 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
         // Gives the class a GameObject to draw on the screen
         private GameObject mover = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
-    public Mover()
-    {
-        FindWindowLimits();
+        public Mover()
+        {
+            FindWindowLimits();
 
-        // Vector2.zero is shorthand for a (0, 0) vector
-        location = Vector2.zero;
-        velocity = Vector2.zero;
+            // Vector2.zero is shorthand for a (0, 0) vector
+            location = Vector2.zero;
+            velocity = Vector2.zero;
 
-        // Assign a random acceleration between -.1f and 1f
-        acceleration = new Vector2(-0.1f, 1f);
-        topSpeed = 10f;
+            // Assign a random acceleration between -.1f and 1f
+            acceleration = new Vector2(-0.1f, 1f);
+            topSpeed = 10f;
 
-        // We need to create a new material for WebGL
-        Renderer r = mover.GetComponent<Renderer>();
-        r.material = new Material(Shader.Find("Diffuse"));
+            // We need to create a new material for WebGL
+            Renderer r = mover.GetComponent&lt;Renderer>();
+            r.material = new Material(Shader.Find("Diffuse"));
+        }
+
+        public void Step()
+        {
+            // Speeds up the mover, Time.deltaTime is the time passed since the last frame and ties movement to a fixed rate instead of framerate
+            velocity += acceleration * Time.deltaTime;
+
+            // Limit Velocity to the top speed
+            velocity = Vector2.ClampMagnitude(velocity, topSpeed);
+
+            // Moves the mover
+            location += velocity * Time.deltaTime;
+
+            // Updates the GameObject of this movement
+            mover.transform.position = new Vector2(location.x, location.y);
+        }
     }
-
-    public void Step()
-    {
-        // Speeds up the mover, Time.deltaTime is the time passed since the last frame and ties movement to a fixed rate instead of framerate
-        velocity += acceleration * Time.deltaTime;
-
-        // Limit Velocity to the top speed
-        velocity = Vector2.ClampMagnitude(velocity, topSpeed);
-
-        // Moves the mover
-        location += velocity * Time.deltaTime;
-
-        // Updates the GameObject of this movement
-        mover.transform.position = new Vector2(location.x, location.y);
-    }
-                </pre>
+    </pre>
 
             <p>
                 This
@@ -2511,17 +2473,15 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             </p>
             <pre class="prettyprint">
 
-        // Random acceleration but it's not normalized
-        acceleration = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+    // Random acceleration but it's not normalized
+    acceleration = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
 
-        // Normalize the acceletation
-        acceleration.Normalize();
+    // Normalize the acceletation
+    acceleration.Normalize();
 
-        // Now we can scale the magnitude as we wish
-        acceleration *= Random.Range(5f, 10f);
-
-
-</pre>
+    // Now we can scale the magnitude as we wish
+    acceleration *= Random.Range(5f, 10f);
+    </pre>
             <p>
                 While this may seem like an
                 obvious point, it’s crucial to
@@ -2579,9 +2539,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
     float y = 5;
 
     x = x + y;
-
-
-</pre>
+    </pre>
             <p>
                 Pretty simple, right? x has the
                 value of 0, we add y to it, and
@@ -2595,9 +2553,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
 
     Vector2 v = new Vector2(0,0);
     Vector2 u = new Vector2(4,5);
-
-
-</pre>
+    </pre>
             <p>
                 The vector v has the value of
                 (0,0), we add u to it, and now v
@@ -2613,9 +2569,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
     float y = 5;
 
     float z = x + y;
-
-
-</pre>
+    </pre>
             <p>
                 x has the value of 0, we add y
                 to it, and store the result in a
@@ -2636,10 +2590,8 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
 
     Vector2 v = new Vector2(0,0);
     Vector2 u = new Vector2(4,5);
-            <s>Vector2 w = AddVectors(v, u);</s>
-
-
-</pre>
+    <s>Vector2 w = AddVectors(v, u);</s>
+    </pre>
             <p>
                 The above might seem like a good
                 guess, but it’s just not the way
@@ -2656,7 +2608,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
         float newX = vectorA.x + vectorB.x;
         float newY = vectorA.y + vectorB.y;
     }
-                    </pre>
+    </pre>
             <p>
                 we see that this code does not
                 accomplish our goal. First, it
@@ -2686,13 +2638,10 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
 
             <pre class="prettyprint">
 
-
-    addVectors(v,u);
+    AddVectors(v,u);
     //Not static: called from an object instance.
-    v.add(u);
-
-
-</pre>
+    v.Add(u);
+    </pre>
             <p>
                 You might not have
                 encountered static methods before.
@@ -2709,9 +2658,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             <pre class="prettyprint">
 
     public static float Distance(Vector2 a, Vector2 b);
-
-
-</pre>
+    </pre>
 
             <p>
                 There are several differences
@@ -2745,16 +2692,13 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             </p>
             <pre class="prettyprint">
 
-
     static Vector2 addVectors(Vector2 vectorA, Vector2 vectorB)
     {
         float newX = vectorA.x + vectorB.x;
         float newY = vectorA.y + vectorB.y;
         return new Vector2(newX, newY);
     }
-
-
-</pre>
+    </pre>
             <p>
                 The Vector2 class has static
                 versions of
@@ -2794,14 +2738,11 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
 
                 <pre class="prettyprint">
 
-
     Vector2 v = new Vector2(1,5);
     Vector2 u = ________._____(__,__);
     Vector2 w = ________._____(__,__);
     ___________;
-
-
-</pre>
+    </pre>
 
             </div>
 
@@ -2870,9 +2811,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             <pre class="prettyprint">
 
     Vector2 mousePos = Input.mousePosition;
-
-
-</pre>
+    </pre>
             <p>
                 We now have a Vector2 that
                 points from the mover’s location
@@ -2890,9 +2829,7 @@ height: 100%;" alt="Figure 1.12: The Ecosystem Project">
             <pre class="prettyprint">
 
     mover.SubtractVectors(mousePos, mover.location);
-
-
-</pre>
+    </pre>
 
             <p>
                 To summarize, we take the
