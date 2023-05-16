@@ -1553,8 +1553,8 @@ height: 100%;" alt="Noise 2D">
     public class ExampleScript : MonoBehaviour
     {
         // Width and height of the texture in pixels.
-        public int pixWidth;
-        public int pixHeight;
+        public int pixWidth = 256;
+        public int pixHeight = 256;
 
         // The origin of the sampled area in the plane.
         public float xOrg;
@@ -1562,7 +1562,7 @@ height: 100%;" alt="Noise 2D">
 
         // The number of cycles of the basic noise pattern that are repeated
         // over the width and height of the texture.
-        public float scale = 1.0F;
+        public float scale = 10;
 
         private Texture2D noiseTex;
         private Color[] pix;
